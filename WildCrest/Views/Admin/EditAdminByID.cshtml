@@ -1,0 +1,205 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/colors/default-dark.css" id="theme" rel="stylesheet" />
+</head>
+<body class="fix-header card-no-border">
+    
+    <div id="main-wrapper">
+        <header class="topbar"></header>       
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                            <a class="btn btn-primary" style="margin-bottom:20px;" href="/Admin/Index">Go Back</a>
+                            <h4 class="card-title">Update Admin Detail</h4>
+                            <div class="form p-t-20">
+                                @if(Model.ID!=null && Model.ID!=0){
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter First Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.F_Name" class="form-control requiredFields" id="txt_Fname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Last Name </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.L_Name" class="form-control" id="txt_Lname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Address<span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <textarea id="txt_Address" class="form-control requiredFields">@Model.Address </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Email <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Email" class="form-control requiredFields" id="txt_Email" />
+                                    </div>
+                                    <i> <div id="errorMessage" style="color:red;font-weight: 400;"></div></i>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Password <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+                                        <input type="text" value="@Model.Password" class="form-control requiredFields" id="txt_Password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Phone No. <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.PhoneNo" class="form-control requiredFields" id="txt_Phone" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">DOB <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.DOB" class="form-control" readonly id="txt_DOB" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter City <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.City" class="form-control requiredFields" id="txt_City" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter State <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.State" class="form-control requiredFields" id="txt_State" />
+                                    </div>
+                                </div>
+
+                                <input type="button" class="btn btn-primary" value="Update" onclick="UpdateAdminByID(@Model.ID);" />
+                                <a href="/Admin/Index" class="btn btn-primary">Cancel</a>
+                                }
+                                else{
+                                 <label>No Record Found.</label>   
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#txt_DOB').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-116:+0",
+        });
+    });
+
+    function UpdateAdminByID(id) {
+        var fname = $("#txt_Fname").val().trim();
+        var lname = $("#txt_Lname").val().trim();
+        var address = $("#txt_Address").val().trim();
+        var email = $("#txt_Email").val().trim();
+        var phone = $("#txt_Phone").val().trim();
+        var city = $("#txt_City").val().trim();
+        var state = $("#txt_State").val().trim();
+        var password = $("#txt_Password").val().trim();
+        var dob=$("#txt_DOB").val();
+        if (fname != "" && address != "" && email != "" && phone != "" && city != "" && state != "" && password != "" && dob!="") {
+        //    if (!ValidateEmail($("#txt_Email").val())) {
+        //        $("#errorMessage").empty();
+        //        $("#errorMessage").html("Invalid Email.Please Enter it again...");
+        //        $("#errorMessage").css("display", "block");
+        //    }
+        
+        //else {
+            var prf = {
+                ID:@Model.ID,
+                F_Name: fname,
+                L_Name: lname,
+                Address: address,
+                Email: email,
+                PhoneNo: phone,
+                City: city,
+                State: state,
+                UserType: 2,
+                Password: password,
+                DOB:dob
+            };
+
+            
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Admin/UpdateDetailsByID",
+                data: JSON.stringify({ prf }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Updated Successfully.", function (result) {
+                        window.location.href = "/Admin/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+            //}
+        }
+            else{
+                bootbox.alert({
+                    message: 'Fields with *(Asterik Sign) are complusory.',
+                    size: "medium"
+                });
+            }
+        }
+
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#txt_Email").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#txt_Email").val("");
+                    $("#errorMessage").html('Already Exist...Enter again.');
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#txt_Email").focusout(function () {
+        if (!ValidateEmail($("#txt_Email").val().trim())) {
+            $("#txt_Email").val("");
+            $("#errorMessage").html("Invalid Email...Enter again.");
+        }
+        else {
+
+            $("#errorMessage").empty();
+            var emailFromBackend='@Model.Email';
+            if(emailFromBackend=="" || emailFromBackend!=$("#txt_Email").val().trim())
+            checkEmailDuplicasy();
+        }
+    });
+</script>

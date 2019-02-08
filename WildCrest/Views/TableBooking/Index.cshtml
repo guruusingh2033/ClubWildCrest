@@ -1,0 +1,89 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Table Booking (for 2 Hours) for Today</h4>
+                    <div class="form p-t-20">
+                        <div class="form-group">
+                            <label style="font-size:large;">Select Time :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                <select style="height:auto;" id="TimeForBooking" class="form-control">
+                                    <option value="0">Select-Time</option>
+                                    <option value="10.00">10.00 a.m</option>
+                                    <option value="12.00">12.00 pm</option>
+                                    <option value="14.00">02.00 p.m</option>
+                                    <option value="16.00">04.00 p.m</option>
+                                    <option value="18.00">06.00 p.m</option>
+                                    <option value="20.00">08.00 p.m</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <input type="button" class="btn btn-primary" value="Go" onclick="checkTablesAvailablity();" />
+                        <a href="" class="btn btn-primary">Cancel</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+      $(document).ready(function () {
+        var currentdate = new Date();
+        var datetime = currentdate.getHours() + "." + currentdate.getMinutes();
+        $("#TimeForBooking option").each(function () {
+            if ($(this).val() != 0) {
+                if ($(this).val() < datetime)
+                    $(this).attr("disabled", "disabled");
+                else
+                    $(this).removeAttr("disabled");
+            }
+        });
+    });
+
+    function checkTablesAvailablity() {
+        var TimeForBooking = $("#TimeForBooking").val();
+
+        if (TimeForBooking != 0) {
+
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/TableBooking/checkTablesAvailablity",
+                data: JSON.stringify({ TimeForBooking: TimeForBooking }),
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response.length > 0) {
+
+                        bootbox.confirm("Tables Available.", function (result) {
+                            window.location.href = "/TableBooking/AdvancedBookingofTable?TimeForBooking=" + TimeForBooking;
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                    else {
+                        bootbox.alert({
+                            message: "No Tables are Available.",
+                            size: "small"
+                        });
+                        $("#TimeForBooking").val('0');
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Please select Time to check Table is available or not.",
+                size: "small"
+            });
+        }
+    }
+
+</script>

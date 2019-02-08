@@ -1,0 +1,156 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Event>
+
+
+<div class="card">
+
+    <div class="card-block">
+        <ul class="list-inline list-unstyled events_main">
+            @if (Request.Cookies["PageSetting"] != null)
+            {
+                if (Request.Cookies["PageSetting"]["EventsPermission"] == "All")
+                {
+                <li>@Html.ActionLink("Add new Event", "AddNewEvent", "Events", null, new { @class = "btn btn-primary" })
+                </li>
+                }
+            }
+            else
+            {
+                <li>@Html.ActionLink("Add new Event", "AddNewEvent", "Events", null, new { @class = "btn btn-primary" })
+                </li>
+            }
+
+
+            <li>@Html.ActionLink("View Event As User", "Index", "EventsToUsers", null, new { @class = "btn btn-primary" })
+            </li>
+            @if (Request.Cookies["UserType"].Value == "1")
+            {
+                <li>@Html.ActionLink("Approve New Events", "EventsForApproval", "Events", null, new { @class = "btn btn-primary" })   </li>
+                <li>@Html.ActionLink("Delete Events(Request from Staff)", "DeleteEventBySuperAdminApproval", "Events", null, new { @class = "btn btn-primary" })
+                </li>
+            }
+        </ul>
+        <div class="table-responsive m-t-40">
+            <table id="eventsList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Place</th>
+                        <th>Added By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td style="width: 25%;">
+                                @if (Request.Cookies["PageSetting"] != null)
+                                {
+                                    if (Request.Cookies["PageSetting"]["EventsPermission"] == "View")
+                                    {
+                                    <a title="Detail" href="@Url.Action("EventDetailsByID", "Events", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    }
+                                    else if (Request.Cookies["PageSetting"]["EventsPermission"] == "All")
+                                    {
+                                    <a title="Detail" href="@Url.Action("EventDetailsByID", "Events", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Edit" href="@Url.Action("EventDetailsByID", "Events", new { id = i.ID, editDetail = "Edit" }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteEventById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                        string[] arrDate = i.EventDate.Split('/');
+                                        //var tempDate = arrDate[1] + "/" + arrDate[0] + "/" + arrDate[2];
+                                        DateTime EventDate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+                                        if (EventDate < DateTime.Today)
+                                        {
+                                    @Html.ActionLink("Add Images", "AddImagesToPastEvents", "Events", new { id = i.ID, eventName = i.EventName }, new { @class = "btn btn-primary" })
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <a title="Detail" href="@Url.Action("EventDetailsByID", "Events", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Edit" href="@Url.Action("EventDetailsByID", "Events", new { id = i.ID, editDetail = "Edit" }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteEventById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                    string[] arrDate = i.EventDate.Split('/');
+                                    //var tempDate = arrDate[1] + "/" + arrDate[0] + "/" + arrDate[2];
+                                    DateTime EventDate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+
+                                    if (EventDate < DateTime.Today)
+                                    {
+                                    @Html.ActionLink("Add Images", "AddImagesToPastEvents", "Events", new { id = i.ID, eventName = i.EventName }, new { @class = "btn btn-primary" })
+                                    }
+                                }
+
+                            </td>
+                            <td style="width: 20%;">@i.EventName</td>
+                            <td>@i.EventDate</td>
+                            <td>@i.EventTime</td>
+                            <td style="width: 30%;">@i.Place</td>
+                            <td>@i.AddedBy</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@*</div>*@
+<script>
+    $(document).ready(function () {
+        $("#eventsList").dataTable({
+            "order": [[2, "asc"]]
+        });
+    });
+    function DeleteEventById(id) {
+        bootbox.confirm("Are you sure to delete this Event?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Events/DeleteEventByID",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == 1) {
+                            bootbox.confirm("Event Deleted.", function (result) {
+                                window.location.href = "/Events/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                        else {
+                            bootbox.confirm("Event deleted only after SuperAdmin Approval.", function (result) {
+                                window.location.href = "/Events/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

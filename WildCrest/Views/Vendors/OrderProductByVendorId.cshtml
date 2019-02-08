@@ -1,0 +1,90 @@
+﻿
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Give Product Order to Vendor</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Product Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="PName" class="form-control" placeholder="Product Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Quantity :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="quantity" class="form-control" placeholder="Quantity" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Price :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="price" class="form-control" placeholder="Price" />
+                                    </div>
+                                </div>
+                                <input type="button" value="Create" onclick="OrderProductBy_VendorId(@ViewBag.VendorID);" class="btn btn-primary" />
+                                <a href="/Vendors/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#price,#quantity').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+    });
+    function OrderProductBy_VendorId(vendorID) {
+        var pname = $("#PName").val();
+        var quantity = $("#quantity").val();
+        var price = $("#price").val();
+
+        if (pname != "" && quantity != "" && price != "") {
+            var vendorOrder = {
+                VendorID: vendorID,
+                Product_Name: pname,
+                Quantity: quantity,
+                Price: price
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Vendors/OrderProductBy_VendorId",
+                data: JSON.stringify({ vendorOrder }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Product have been ordered.", function (result) {
+                        window.location.href = "/Vendors/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    //alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: 'All fields are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+</script>

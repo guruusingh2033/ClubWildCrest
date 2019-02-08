@@ -1,0 +1,183 @@
+﻿
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                            <a class="btn btn-primary" style="margin-bottom:20px;" href="/Vendors/Index">Go Back</a>
+                            <h4 class="card-title">Add New Vendor</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter First Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="FName" class="form-control requiredFields" placeholder="First Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Last Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="LName" class="form-control" placeholder="Last Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Address <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <textarea id="address" class="form-control requiredFields" placeholder="Address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Email <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="email" id="email" class="form-control requiredFields" placeholder="Email" />
+                                    </div>
+                                    <i> <div id="errorMessage" style="color:red;font-weight: 400;"></div></i>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Contact No. <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="phone" class="form-control requiredFields" placeholder="Phone No" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter City <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="city" class="form-control requiredFields" placeholder="City" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter State <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="state" class="form-control requiredFields" placeholder="State" />
+                                    </div>
+                                </div>                                                              
+
+                                <input type="button" value="Create" onclick="AddNewVendor();" class="btn btn-primary" />
+                                <a href="/Vendors/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    
+
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#phone').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+    });
+    function AddNewVendor() {
+        $(".preloader").css("display", "block");
+        var fname = $("#FName").val().trim();
+        var lname = $("#LName").val().trim();
+        var address = $("#address").val().trim();
+        var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
+        var city = $("#city").val().trim();
+        var state = $("#state").val().trim();
+        
+        if (fname != "" && address != "" && email != "" && phone != "" && city != "" && state != "") {
+            //if (!ValidateEmail($("#email").val())) {
+            //    $("#errorMessage").empty();
+            //    $("#errorMessage").html("Invalid Email.Please Enter it again...");
+            //    $("#errorMessage").css("display", "block");
+            //}
+            //else {
+                var vendor = {
+                    Vendor_First_Name: fname,
+                    Vendor_Last_Name: lname,
+                    Address: address,
+                    EmailID: email,
+                    Contact_No: phone,
+                    City: city,
+                    State: state                    
+                };
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Vendors/AddNewVendor",
+                    data: JSON.stringify({ vendor }),
+                    dataType: "json",
+                    success: function (response) {
+                        $(".preloader").css("display", "none");
+                        //if (response == 2) {
+                        //    bootbox.confirm("New Vendor created only after SuperAdmin Approval.", function (result) {
+                        //        window.location.href = "/Vendors/Index";
+                        //    });
+                        //    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        //}
+                        //else {
+                        //    bootbox.confirm("New Vendor Added Successfully.", function (result) {
+                        //        window.location.href = "/Vendors/Index";
+                        //    });
+                        //    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        //}
+                        bootbox.confirm("New Vendor Added Successfully.", function (result) {
+                            window.location.href = "/Vendors/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    },
+                    error: function () {
+                        $(".preloader").css("display", "none");
+                        alert('Some error occured.Try again after refresh.');
+                    }
+                });
+            //}
+
+            }
+        else {
+            $(".preloader").css("display", "none");
+                bootbox.alert({
+                    message: 'All fields are complusory.',
+                    size: "medium"
+                });
+            }
+        }
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#email").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#email").val("");
+                    $("#errorMessage").html('Already Exist...Enter again.');
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#email").focusout(function () {
+        if (!ValidateEmail($("#email").val().trim())) {
+            $("#email").val("");
+            $("#errorMessage").html("Invalid Email...Enter again.");
+        }
+        else {
+
+            $("#errorMessage").empty();
+            checkEmailDuplicasy();
+        }
+    });
+</script>

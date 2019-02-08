@@ -1,0 +1,60 @@
+﻿@model WildCrest.Models.WildCrestModels.MemberGroup
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/MemberGroups/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">MemberGroup Info</h4>
+                        <div class="form p-t-20">
+                            @*<div class="row p-t-20">*@
+                            <div class="col-md-4 col-sm-4 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Group Name</label>
+                                    <input type="text" id="firstName" readonly value="@Model.GroupName" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Group Details</label>
+                                    <input type="text" id="lastName" readonly value="@Model.GroupDetail" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">No. Of Members :</label>
+                                    <input type="text" id="lastName" readonly value="@Model.NoOfMembers" class="form-control">
+                                </div>
+                            </div>
+                            @*</div>*@
+                            <!--/row-->
+
+                            <div class="col-md-12 col-sm-12 form-profile-in">
+                                
+                                    <label class="control-label">Member(s) Name :</label>
+                                    <div class="mem_grp_info">
+                                        @foreach (var names in Model.MembersNameWithId)
+                                        {
+@*<input type="text" id="memName" readonly value="@names.Value" class="form-control">*@
+                                            <label>@names.Value</label>
+                                        }
+                                    </div>
+                               
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 add_new_member">
+                                @Html.ActionLink("Edit", "GroupDetailsByID", "MemberGroups", new { id = Model.ID }, new { @class = "btn btn-primary btn-margin" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>

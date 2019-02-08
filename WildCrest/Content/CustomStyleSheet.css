@@ -1,0 +1,721 @@
+﻿.complusoryFields {
+    float: right;
+    color: red;
+    font-size: 16px;
+    font-weight: 400;
+    margin-right: 0px;
+}
+
+.requiredFields {
+    background-color: #ebf19947;
+}
+
+/*input#DOB, input#txt_DOB, input#dob {
+    background-color: #ebf19947;
+}*/
+
+/*-------- 7.5.18 --------*/
+.mob_screen_header {
+    display: none;
+}
+
+    .mob_screen_header .navbar-header {
+        line-height: normal;
+        text-align: center;
+        margin: 10px 0 0 0;
+    }
+
+        .mob_screen_header .navbar-header .navbar-brand {
+            margin-right: 0px;
+            padding-bottom: 0px;
+            padding-top: 0px;
+        }
+
+            .mob_screen_header .navbar-header .navbar-brand b {
+                display: inline-block;
+                font-size: 22px;
+                text-align: center;
+                margin-top: 0px;
+                margin-left: 0;
+                color: #000;
+            }
+
+    .mob_screen_header .navbar-nav .nav-link {
+        padding: 0;
+    }
+
+    .mob_screen_header .nav-bar-layo li:nth-child(2) {
+        display: none;
+    }
+
+    .mob_screen_header .nav-bar-layo {
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    .mob_screen_header .profile {
+        margin-right: 15px;
+    }
+
+a.dropdown-item i {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.mob_screen_header .dropdown-menu {
+    top: 94%;
+}
+
+.info_common .p-t-20 {
+    padding: 18px 8px;
+}
+
+.members_Buttons {
+    margin-bottom: 0;
+}
+
+    .members_Buttons .btn-margin, .info_common .btn-margin {
+        margin-left: 0;
+    }
+
+    .members_Buttons li {
+        padding: 0 10px 0 0px !important;
+    }
+
+.form-profile-in {
+    float: left;
+}
+
+.member_stay_details .form-profile-in {
+    padding: 0 7px 0 8px;
+}
+
+.add_new_member {
+    margin-top: 10px;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+    .add_new_member .btn-margin {
+        margin-left: 15px;
+    }
+
+#cheque, #cheque1 {
+    margin-top: 15px;
+}
+
+.walk_in_members {
+    margin-bottom: 0;
+}
+
+    .walk_in_members li {
+        padding: 0 10px 0 0px !important;
+    }
+
+ul.walk_in_buttons li {
+    padding: 0px 8px 0px 0px !important;
+}
+
+ul.walk_in_buttons {
+    margin-bottom: 0;
+}
+
+.mem_grp_info {
+    display: inline-block;
+    width: 100%;
+    background: #f2f4f8;
+    padding: 15px;
+}
+
+.update_mem_details {
+    padding: 0;
+}
+
+.voucher_buttons li {
+    padding: 0 0px 0 15px !important;
+}
+
+.memShip_buttons li {
+    padding: 0 0px 0 15px !important;
+}
+
+.voucher_buttons {
+    margin-bottom: 0;
+}
+
+.memShip_buttons {
+    margin-bottom: 0;
+}
+
+.inventory_select {
+    padding: 0;
+    text-align: right;
+    display: inline-block;
+}
+
+.bill_number {
+    margin-bottom: 10px;
+}
+
+    .bill_number h1 {
+        font-size: 19px;
+        margin: 0;
+        font-weight: 500;
+        display: block;
+        width: auto;
+        float: left;
+        line-height: 26px;
+        margin-right: 10px;
+    }
+
+    .bill_number label {
+        display: block;
+        width: auto;
+        font-size: 19px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+#tempFoodType {
+    padding: 2px 15px;
+    box-shadow: none;
+    border: 1px solid #ccc;
+}
+
+.vendors_main .btn-primary {
+    margin-right: 5px;
+}
+
+.food_bill table {
+    margin-bottom: 0;
+}
+
+.billing_list {
+    text-align: center;
+}
+
+.billing_details {
+    padding: 0 15px;
+}
+
+.form-group i {
+    font-size: 20px;
+}
+
+#checkRooms .room_bookings {
+    padding: 10px 0 15px 0;
+}
+
+ul.events_main li {
+    padding: 0 5px 0 0px !important;
+}
+
+.event_details_img {
+    padding: 0 8px 0 7px;
+    margin-bottom: 15px;
+}
+
+#pastEventsSlider ul.bxslider li h5 {
+    margin-top: 10px;
+}
+
+#upcomingEventsSlider .bx-controls-auto-item, #pastEventsSlider .bx-controls-auto-item {
+    display: none;
+}
+
+#upcomingEventsSlider .bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager,
+#pastEventsSlider .bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+    text-align: center;
+    width: 100%;
+    padding: 0;
+}
+
+#upcomingEventsSlider .bx-wrapper .bx-controls-direction a, #pastEventsSlider .bx-wrapper .bx-controls-direction a {
+    z-index: 9;
+}
+
+#pastEventsSlider .bx-wrapper, #upcomingEventsSlider .bx-wrapper {
+    margin-left: 0;
+    margin-bottom: 30px;
+}
+
+#pastEventsSlider, #upcomingEventsSlider {
+    display: inline-block;
+    width: 100%;
+    padding: 0 0px 0 30px;
+}
+ul.ui-autocomplete {
+        font-size: 16px;
+        max-height: 200px;
+        height: 100%;
+        overflow: scroll;
+        z-index: 2;
+    }
+    ul.ui-autocomplete li {
+        border-bottom:1px solid #f3f3f3;
+    }
+
+/*------------------ MEDIA QUERIES -------------------*/
+@media (max-width:1250px) {
+    #checkRooms .main-border-class label {
+        font-size: 16px !important;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width:1200px) {
+    .page-wrapper {
+        padding-bottom: 0px !important;
+    }
+
+    .card-no-border .card {
+        margin-bottom: 20px;
+    }
+
+    .members_Buttons li a {
+        min-width: 280px;
+        width: 100%;
+    }
+
+    .members_Buttons li {
+        margin-bottom: 10px;
+    }
+
+    table tbody > tr > td:nth-child(2), table#eventsList tbody > tr > td:nth-child(1) , table#tbl_roomB tbody > tr > td:nth-child(1){
+        text-align: left;
+    }
+    
+
+        table tbody > tr > td:nth-child(2) a, table#eventsList tbody > tr > td:nth-child(1) a , table#tbl_roomB tbody > tr > td:nth-child(1) a{
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+
+    table#groupsList tbody > tr > td:nth-child(2) {
+        text-align: center;
+    }
+
+    table#groupsList tbody > tr > td a.btn-primary {
+        margin-top: 5px;
+    }
+
+    .food_bill label {
+        max-height: 54px;
+        height: 100%;
+    }
+
+    .ui-datepicker table tbody > tr > td:nth-child(2) a {
+        margin-bottom: 0;
+        display: block;
+    }
+
+    .ui-datepicker table tbody > tr > td:nth-child(2) {
+        text-align: right;
+    }
+
+    #eventsList tbody tr td:nth-child(1) .btn-primary {
+        margin-top: 8px;
+    }
+
+    #pastEventsSlider, #upcomingEventsSlider {
+        padding: 0;
+    }
+    .card-no-border .sidebar-footer {
+    background: none !important;
+    border: none;
+} 
+}
+
+
+
+
+
+    .mini-sidebar .sidebar-footer {
+        display: block !important;
+    }
+            .sidebar-footer {
+        width: 240px !important;
+        display:block !important;
+    }
+
+    .card-no-border .sidebar-footer {
+    background: none !important;
+}
+    .mini-sidebar  .sidebar-footer {
+        width: 60px !important;
+         display:block !important;
+    }
+
+    .mini-sidebar  .sidebar-footer a {
+        width: 60px !important;
+    }
+        .sidebar-footer a {
+        width: 240px !important;
+    }
+
+
+
+
+@media (max-width:991px) {
+    #checkRooms .main-border-class .extra_bed_data label {
+        margin-top: 15px;
+    }
+
+    .main-border-class .complementary-stays-left, .main-border-class .give-complementary-stays {
+        max-width: 100% !important;
+    }
+    #upcomingEventsSlider .bx-wrapper img {
+    width: 100% !important;
+    padding-left: 0 !important;
+}
+}
+
+@media (max-width:947px) {
+    .memShip_buttons li .btn-primary {
+        max-width: 350px;
+        width: 100%;
+        white-space: normal;
+    }
+
+    .memShip_buttons li {
+        max-width: 350px;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    #foodList tbody tr td input.btn-primary, #foodList tbody tr td input.btn-danger {
+        margin-bottom: 8px;
+        max-width: 100px;
+        width: 100%;
+    }
+
+    .events_main li, .events_main li .btn-primary {
+        max-width: 260px;
+        width: 100%;
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width:898px) {
+    .voucher_buttons li .btn-primary {
+        max-width: 305px;
+        width: 100%;
+    }
+
+    .voucher_buttons li {
+        max-width: 305px;
+        width: 100%;
+        margin-bottom: 8px;
+        white-space: normal;
+    }
+    #tbl_roomB {
+    max-width: 100%;
+    width: 100%;
+    overflow-x: scroll;
+    display: inline-block;
+}
+}
+
+@media (max-width:879px) and (min-width:768px) {
+    .member_stay_details label.control-label {
+        font-size: 15px;
+        height: 100%;
+        min-height: 45px;
+    }
+
+}
+
+@media (max-width:767px) {
+    .topbar {
+        display: none;
+    }
+
+    .mob_screen_header {
+        display: block;
+    }
+
+    html body .p-t-20 {
+        padding: 15px !important;
+    }
+
+    .container-fluid {
+        padding: 25px 20px 15px 20px !important;
+    }
+
+    .info_common .p-t-20 {
+        padding: 18px 0px !important;
+    }
+
+    .form-group i {
+        font-size: 18px !important;
+    }
+
+    .member_stay_details .p-t-20 {
+        padding: 15px !important;
+    }
+
+    .member_stay_details table {
+        margin-bottom: 0;
+    }
+
+    table > thead > tr > th {
+        font-weight: normal !important;
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    .info_common .card-block {
+        padding: 15px;
+    }
+
+    .add_NewMember .p-t-20 .input-group-addon {
+        padding: 6px 10px;
+    }
+
+    .p-t-20 .input-group-addon {
+        padding: 6px 10px;
+    }
+
+    .add_NewMember .card-block {
+        padding: 15px;
+    }
+
+    .walk_in_members li a {
+        min-width: 350px;
+        width: 100%;
+    }
+
+    .walk_in_members li:nth-child(1) {
+        margin-bottom: 10px;
+    }
+
+    #foodtypeDIV i, .plusVendor i {
+        font-size: 25px !important;
+    }
+
+    .inventory_select {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    .food_bill {
+        border: 1px solid #ccc;
+        display: inline-block;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+
+        .food_bill .col-sm-12 {
+            margin-bottom: 15px;
+        }
+
+        .food_bill label {
+            max-height: 0;
+        }
+
+    .room_bookings .col-sm-6 {
+        margin-bottom: 15px;
+    }
+
+    .room_book_GST label {
+        margin-top: 0 !important;
+    }
+
+    .room_bill_plus {
+        margin-top: 37px !important;
+    }
+
+    #checkRooms .main-border-class .col-12 {
+        margin: 0 0 10px 0 !important;
+    }
+
+        #checkRooms .main-border-class .col-12 label {
+            margin-top: 0 !important;
+        }
+
+    .main-border-class .complementary-stays-left {
+        margin-top: 0 !important;
+    }
+    #tbl_roomB_filter {
+        text-align:left;
+    }
+        #tbl_roomB_filter input {
+            margin-left:3px !important;
+        }
+
+    .card-no-border .sidebar-footer {
+    background: none !important;
+}
+    .mini-sidebar  .sidebar-footer {
+        width: 60px !important;
+    }
+
+    .mini-sidebar  .sidebar-footer a {
+        width: 60px !important;
+    }
+              .show-sidebar .sidebar-footer {
+        width: 240px !important;
+    }
+
+    .show-sidebar .sidebar-footer a {
+        width: 240px !important;
+    }
+            #upcomingEventsSlider .bx-wrapper img {
+    width: auto;
+    padding-left: 0 !important;
+    height: auto !important;
+    max-width:100%;
+        display: inline-block;
+}
+    .bx-wrapper li {
+        text-align:center;
+    }
+
+}
+
+@media (max-width:575px) {
+    .container-fluid {
+        padding: 25px 0px !important;
+    }
+
+    .card-no-border .card {
+        margin-bottom: 0;
+    }
+
+    #mode_pay {
+        margin-top: 15px;
+    }
+
+    ul.walk_in_buttons li {
+        max-width: 125px;
+        width: 100%;
+        padding: 0px 3px 0px 0px !important;
+    }
+
+
+        ul.walk_in_buttons li .btn-primary {
+            max-width: 220px;
+            width: 100%;
+            float: left;
+        }
+
+    .card_block_space {
+        margin-bottom: 20px !important;
+    }
+
+    .food_bill .addMoreItems {
+        padding-top: 15px !important;
+    }
+
+    #showDivForLeftQty label {
+        margin: 0;
+    }
+
+    #showDivForLeftQty div {
+        padding-top: 5px !important;
+    }
+
+    .billing_list {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+        .billing_list li {
+            padding: 0 !important;
+            max-width: 150px;
+            width: auto;
+        }
+
+    .total_GST_amt li {
+        padding: 0 !important;
+    }
+
+    .total_GST_amt {
+        text-align: left;
+    }
+
+    .room_bill_plus {
+        margin-top: 0px !important;
+    }
+
+    #RNo {
+        padding-left: 3px;
+    }
+
+    .events_main li, .events_main li .btn-primary {
+        max-width: 300px;
+    }
+
+    /*#checkRooms .main-border-class label {
+        max-height: 0px;
+    }*/
+    .main-border-class .complementary-stays-left, .main-border-class .give-complementary-stays {
+        max-width: 100% !important;
+    }
+ 
+}
+
+@media (max-width:480px) {
+    .walk_in_members li a {
+        min-width: 290px;
+        width: 100%;
+        white-space: normal;
+    }
+
+    .table_del_mem tbody, .table_del_mem tr {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .table_del_mem td {
+        max-width: 150px;
+        width: 100%;
+    }
+
+    .update_mem_details .btn-primary {
+        max-width: inherit;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .memShip_buttons li {
+        max-width: 300px;
+    }
+
+        .memShip_buttons li .btn-primary {
+            line-height: 20px;
+        }
+
+    .view_order_created {
+        margin-bottom: 0;
+        max-width: 500px;
+        width: 100%;
+        overflow-x: scroll;
+        display: inline-block;
+    }
+
+    .vendors_main .btn-primary {
+        margin-right: 5px;
+        max-width: 290px;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .stock_info_modal_popup .modal-body {
+    overflow-y: scroll;
+    padding-right:0;
+}
+    .bx-wrapper .bx-pager.bx-default-pager a {
+    margin: 0 2px !important;
+}
+}
+
+@media (max-width:390px) and (min-width:320px){
+    ul.ui-autocomplete {
+        width: 100% !important;
+        max-width: 215px;
+    }
+}

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Voucher>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Add Voucher Details with User</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Voucher Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 15px;font-size:initial"></i></div>
+                                        <select class="form-control" id="vname">
+                                            <option value="0">Select Voucher</option>
+                                            @foreach (var i in Model)
+                                            {
+                                                <option value="@i.ID">@i.VoucherName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Member Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-info" aria-hidden="true" style="width: 15px;font-size:initial"></i></div>
+                                        <select class="form-control" id="UserName">
+                                            <option value="0">Select UserName</option>
+                                            @foreach (var n in ViewBag.UserProfile)
+                                            {
+                                                <option value="@n.ID">@n.VoucherName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="button" class="btn btn-primary" value="Add Details" onclick="AddVoucherDetailsWithUser();" />
+                                <a href="/Vouchers/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function AddVoucherDetailsWithUser() {
+        debugger;
+        var vname = $("#vname").val();
+        var UserName = $("#UserName").val();
+        if (vname != 0 && UserName != 0) {
+            var userVoucher = {
+                VoucherID: vname,
+                UserID: UserName
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Vouchers/AddVoucherDetailsWithUser",
+                data: JSON.stringify({ userVoucher }),
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Saved") {
+                        bootbox.confirm("Details Saved.", function (result) {
+                            window.location.href = "/Vouchers/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                    else {
+                        bootbox.confirm("You have already used your voucher.", function (result) {
+                            window.location.href = "/Vouchers/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                },
+                error: function () {
+                    //alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "All fields are compulsory.",
+                size: "small"
+            });
+        }
+    }
+</script>

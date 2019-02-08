@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Rooms>
+
+<style>
+    .rooms {
+        background: #ddeff7;
+    }
+
+        .rooms img {
+            padding: 20px 0px 20px 20px;
+        }
+</style>
+
+<div class="container">
+    <div class="row">       
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <a href="/RoomBooking/Index" class="btn btn-primary" style="margin-bottom:20px;">Go Back</a>
+                    <h4 class="card-title">Available Rooms</h4>
+                    <div class="form p-t-20">
+                        @if (Model != null)
+                        {
+                            foreach (var i in Model)
+                            {
+                                <div class="form-group">
+                                    <div class="rooms">
+                                        <ul class="list-unstyled list-inline">
+                                            <li>
+                                                <img src="~/images/download.jpg" height="200" width="300" />
+                                            </li>
+                                            <li>
+                                                @*<label> ₹ @i.RoomCost</label>*@
+                                                <label>Room No. : @i.RoomNo</label>
+                                                @*<label id="roomID" style="visibility:hidden;">@i.ID</label>*@
+                                                <input type="button" class="btn btn-primary" value="Book Now" onclick="BookNow(@i.ID);" />
+                                            </li>
+                                        </ul>                                        
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function BookNow(roomId) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/RoomBooking/BookNow",
+            data: JSON.stringify({ roomId: roomId, checkin: "@ViewBag.CheckINDate", checkout: "@ViewBag.CheckOutDate", membershipID :"@ViewBag.MembershipID" }),
+            dataType: "json",
+            success: function (response) {               
+                    bootbox.confirm("Room Booked.", function (result) {
+                        window.location.href = "/RoomBooking/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();               
+            }
+        });
+    }
+</script>

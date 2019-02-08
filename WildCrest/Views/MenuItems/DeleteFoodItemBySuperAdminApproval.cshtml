@@ -1,0 +1,107 @@
+﻿
+@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                @Html.ActionLink("Go Back", "Index", "MenuItems",null, new { @class = "btn btn-success btn-margin" })
+
+            </div>
+            <div class="table-responsive m-t-40">
+                <table id="foodItemList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="hide">Id</th>
+                            <th>Actions</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                            <th>Price</th>
+                            <th>Type</th>
+                            <th>Deleted By</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="hide">@i.ID</td>
+                                <td style="width:20%;">
+                                    <a title="Detail" href="@Url.Action("NewDelFoodItemEditByID", "MenuItems", new { id = i.ID }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteFoodItemById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Again Store in DB" onclick="CancelDeleteFoodItemById(@i.ID);" href="#">
+                                        <i class="fa fa-database" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td style="width:20%;">@i.Food_Item_Name</td>
+                                <td style="width:30%;">@i.Details</td>
+                                <td>₹ @i.Price</td>
+                                <td>@i.FoodType</td>
+                                <td>@i.DeletedBy</td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#foodItemList").dataTable({ "order": [[0, "desc"]] });
+    });
+    function DeleteFoodItemById(id) {
+        bootbox.confirm("Are you sure to delete the Member?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/MenuItems/DeleteFoodItemById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Food item Deleted.", function (result) {
+                            window.location.href = "/MenuItems/DeleteUserBySuperAdminApproval";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "You pressed cancel.",
+                    size: "small"
+                });
+            }
+        });
+    }
+
+    function CancelDeleteFoodItemById(id) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/MenuItems/CancelDeleteFoodItemByID",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm("Food Item not Deleted. Again its stored in Database.", function (result) {
+                    window.location.href = "/MenuItems/DeleteFoodItemBySuperAdminApproval";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            }
+        });
+    }
+</script>

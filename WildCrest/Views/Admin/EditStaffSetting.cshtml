@@ -1,0 +1,143 @@
+﻿@model WildCrest.Models.WildCrestModels.PermissionsToStaff
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <a class="btn btn-primary" style="margin-bottom: 20px;" href="/Admin/Index">Go Back</a>
+                        <h4 class="card-title">Edit Staff Setting</h4>
+                        <div class="form p-t-20">
+                            @if (Model.ID != 0 && Model.ID != null)
+                            {
+                                <div class="form-group">
+                                    <label style="font-size: large;">Members Page :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="membersPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (View/Modify/Delete)</option>
+                                            <option value="View">View</option>
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Membership Plan Page :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="membershipPlanPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (View/Modify/Delete)</option>
+                                            <option value="View">View</option>
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Events Page :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="eventsPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (View/Modify/Delete)</option>
+                                            <option value="View">View</option>
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Vendors Page :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="vendorsPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (View/Modify/Delete)</option>
+                                            <option value="View">View</option>
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">MenuItems Page :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="menuitemsPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (View/Modify/Delete)</option>
+                                            <option value="View">View</option>
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <label style="font-size: large;">Food Billing Edit :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cogs" style="font-size: initial"></i></div>
+                                        <select id="foodBillingPermissions" class="form-control" style="height: auto;">
+                                            <option value="All">All (Modify/Delete)</option>
+                                            @*<option value="View">View</option>*@
+                                            <option value="None">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="button" value="Update Permissions" onclick="UpdatePermissions();" class="btn btn-primary" />
+                                <a href="/Admin/Index" class="btn btn-primary">Cancel</a>
+                            }
+                            else
+                            {
+                                <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#membersPermissions").val("@Model.MemberPermission");
+        $("#membershipPlanPermissions").val("@Model.MembershipPlanPermission");
+        $("#eventsPermissions").val("@Model.EventsPermission");
+        $("#vendorsPermissions").val("@Model.VendorsPermission");
+        $("#menuitemsPermissions").val("@Model.MenuItemsPermission");
+        $("#foodBillingPermissions").val("@Model.FoodBillingEditPermission");
+    });
+
+    function UpdatePermissions() {
+        var member = $("#membersPermissions").val();
+        var membershipPlan = $("#membershipPlanPermissions").val();
+        var events = $("#eventsPermissions").val();
+        var vendors = $("#vendorsPermissions").val();
+        var menuitems = $("#menuitemsPermissions").val();
+        var foodBilling = $("#foodBillingPermissions").val();
+        var pstaff = {
+            ID: @Model.ID,
+            UserID: @Model.UserID,
+            MemberPermission: member,
+            MembershipPlanPermission: membershipPlan,
+            EventsPermission: events,
+            VendorsPermission: vendors,
+            MenuItemsPermission: menuitems,
+            FoodBillingEditPermission:foodBilling
+        };
+
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Admin/UpdatePermissionsById",
+            data: JSON.stringify({ pstaff }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm("Permissions Updated.", function (result) {
+                    window.location.href = "/Admin/Index";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+
+            }
+        });
+    }
+</script>

@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ClubWildCrestModelStoreContainer" CdmEntityContainer="ClubWildCrestEntities">
+    <EntitySetMapping Name="tbl_BillingDetails">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BillingDetails">
+        <MappingFragment StoreEntitySet="tbl_BillingDetails">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount_Paid" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="Cheque_No" ColumnName="Cheque_No" />
+          <ScalarProperty Name="Transaction_No" ColumnName="Transaction_No" />
+          <ScalarProperty Name="UserStay_ID" ColumnName="UserStay_ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_BookingTable">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BookingTable">
+        <MappingFragment StoreEntitySet="tbl_BookingTable">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TableID" ColumnName="TableID" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="BookingStartTime" ColumnName="BookingStartTime" />
+          <ScalarProperty Name="BookingEndTime" ColumnName="BookingEndTime" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Events">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Events">
+        <MappingFragment StoreEntitySet="tbl_Events">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EventName" ColumnName="EventName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="OrganisedBy" ColumnName="OrganisedBy" />
+          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="Place" ColumnName="Place" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="NewEventsApprvFrmSuper" ColumnName="NewEventsApprvFrmSuper" />
+          <ScalarProperty Name="DelEventsApprvFrmSuper" ColumnName="DelEventsApprvFrmSuper" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_EventsImgVideo">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_EventsImgVideo">
+        <MappingFragment StoreEntitySet="tbl_EventsImgVideo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="Img_Video_Path" ColumnName="Img_Video_Path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Groups">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Groups">
+        <MappingFragment StoreEntitySet="tbl_Groups">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupDetail" ColumnName="GroupDetail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MembersWhileStayingWithUser">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MembersWhileStayingWithUser">
+        <MappingFragment StoreEntitySet="tbl_MembersWhileStayingWithUser">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="UserStay_ID" ColumnName="UserStay_ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Roles">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Roles">
+        <MappingFragment StoreEntitySet="tbl_Roles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_UserGroup">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_UserGroup">
+        <MappingFragment StoreEntitySet="tbl_UserGroup">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_UsersOrder">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_UsersOrder">
+        <MappingFragment StoreEntitySet="tbl_UsersOrder">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FoodItemName" ColumnName="FoodItemName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UserStay_ID" ColumnName="UserStay_ID" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_VendorOrders">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_VendorOrders">
+        <MappingFragment StoreEntitySet="tbl_VendorOrders">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Vendors">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Vendors">
+        <MappingFragment StoreEntitySet="tbl_Vendors">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Vendor_First_Name" ColumnName="Vendor_First_Name" />
+          <ScalarProperty Name="Vendor_Last_Name" ColumnName="Vendor_Last_Name" />
+          <ScalarProperty Name="Contact_No" ColumnName="Contact_No" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="IsNewApproved" ColumnName="IsNewApproved" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Voucher">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Voucher">
+        <MappingFragment StoreEntitySet="tbl_Voucher">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VoucherName" ColumnName="VoucherName" />
+          <ScalarProperty Name="VoucherDetails" ColumnName="VoucherDetails" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="VoucherForApprvFrmSuperAdm" ColumnName="VoucherForApprvFrmSuperAdm" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_VoucherUsedByUser">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_VoucherUsedByUser">
+        <MappingFragment StoreEntitySet="tbl_VoucherUsedByUser">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="VoucherID" ColumnName="VoucherID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_FoodType">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_FoodType">
+        <MappingFragment StoreEntitySet="tbl_FoodType">
+          <ScalarProperty Name="FoodItemTypeName" ColumnName="FoodItemTypeName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Menu">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Menu">
+        <MappingFragment StoreEntitySet="tbl_Menu">
+          <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="FoodType" ColumnName="FoodType" />
+          <ScalarProperty Name="DelItemApprvFromSuperAdm" ColumnName="DelItemApprvFromSuperAdm" />
+          <ScalarProperty Name="NewItemApprvFrmSuperAdm" ColumnName="NewItemApprvFrmSuperAdm" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Food_Item_Name" ColumnName="Food_Item_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Rooms">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Rooms">
+        <MappingFragment StoreEntitySet="tbl_Rooms">
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="RoomCost" ColumnName="RoomCost" />
+          <ScalarProperty Name="Room_Type" ColumnName="Room_Type" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_UserMembership">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_UserMembership">
+        <MappingFragment StoreEntitySet="tbl_UserMembership">
+          <ScalarProperty Name="MembershipExpiryDate" ColumnName="MembershipExpiryDate" />
+          <ScalarProperty Name="MembershipJoiningDate" ColumnName="MembershipJoiningDate" />
+          <ScalarProperty Name="MembershipID" ColumnName="MembershipID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MembershipPlans">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MembershipPlans">
+        <MappingFragment StoreEntitySet="tbl_MembershipPlans">
+          <ScalarProperty Name="MembershipPlanForYear" ColumnName="MembershipPlanForYear" />
+          <ScalarProperty Name="PlanAmount" ColumnName="PlanAmount" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="MemShipApprvFrmSuperAdm" ColumnName="MemShipApprvFrmSuperAdm" />
+          <ScalarProperty Name="NoOfStays" ColumnName="NoOfStays" />
+          <ScalarProperty Name="PlanDetails" ColumnName="PlanDetails" />
+          <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MembersBillingDetails">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MembersBillingDetails">
+        <MappingFragment StoreEntitySet="tbl_MembersBillingDetails">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Cheque_No" ColumnName="Cheque_No" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MembersPhoto">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MembersPhoto">
+        <MappingFragment StoreEntitySet="tbl_MembersPhoto">
+          <ScalarProperty Name="MemberImagePath" ColumnName="MemberImagePath" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MembersDocs">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MembersDocs">
+        <MappingFragment StoreEntitySet="tbl_MembersDocs">
+          <ScalarProperty Name="MemberDocsPath" ColumnName="MemberDocsPath" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Inventory">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Inventory">
+        <MappingFragment StoreEntitySet="tbl_Inventory">
+          <ScalarProperty Name="Measurement" ColumnName="Measurement" />
+          <ScalarProperty Name="Added_Date" ColumnName="Added_Date" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MenusBillingDetailsWithBillNo">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo">
+        <MappingFragment StoreEntitySet="tbl_MenusBillingDetailsWithBillNo">
+          <ScalarProperty Name="QtyUpdatedBy" ColumnName="QtyUpdatedBy" />
+          <ScalarProperty Name="QtyUpdatedDate" ColumnName="QtyUpdatedDate" />
+          <ScalarProperty Name="OldQuantity" ColumnName="OldQuantity" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_UsersStay">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_UsersStay">
+        <MappingFragment StoreEntitySet="tbl_UsersStay">
+          <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />
+          <ScalarProperty Name="TotalAmountWithoutTax" ColumnName="TotalAmountWithoutTax" />
+          <ScalarProperty Name="ComplementaryStays" ColumnName="ComplementaryStays" />
+          <ScalarProperty Name="NoOfNightStays" ColumnName="NoOfNightStays" />
+          <ScalarProperty Name="NonMemberPhoneNo" ColumnName="NonMemberPhoneNo" />
+          <ScalarProperty Name="NonMemberName" ColumnName="NonMemberName" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="NoOfMembers" ColumnName="NoOfMembers" />
+          <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+          <ScalarProperty Name="CheckoutDate" ColumnName="CheckoutDate" />
+          <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_RoomBilling">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_RoomBilling">
+        <MappingFragment StoreEntitySet="tbl_RoomBilling">
+          <ScalarProperty Name="AmtToBePaid" ColumnName="AmtToBePaid" />
+          <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+          <ScalarProperty Name="CGST" ColumnName="CGST" />
+          <ScalarProperty Name="SGST" ColumnName="SGST" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_NonGST_MenusBillDetWithBillNo">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_NonGST_MenusBillDetWithBillNo">
+        <MappingFragment StoreEntitySet="tbl_NonGST_MenusBillDetWithBillNo">
+          <ScalarProperty Name="QtyUpdatedBy" ColumnName="QtyUpdatedBy" />
+          <ScalarProperty Name="QtyUpdatedDate" ColumnName="QtyUpdatedDate" />
+          <ScalarProperty Name="OldQuantity" ColumnName="OldQuantity" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+          <ScalarProperty Name="NonGst_BillNo" ColumnName="NonGst_BillNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_TablesForBooking">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_TablesForBooking">
+        <MappingFragment StoreEntitySet="tbl_TablesForBooking">
+          <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
+          <ScalarProperty Name="TableNo" ColumnName="TableNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_RoomBooking_Details">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_RoomBooking_Details">
+        <MappingFragment StoreEntitySet="tbl_RoomBooking_Details">
+          <ScalarProperty Name="TAmtPerRoom" ColumnName="TAmtPerRoom" />
+          <ScalarProperty Name="ComplementaryStays" ColumnName="ComplementaryStays" />
+          <ScalarProperty Name="ExtraBed" ColumnName="ExtraBed" />
+          <ScalarProperty Name="NoOfPerson" ColumnName="NoOfPerson" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_NonGST_MenusBillingSection">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_NonGST_MenusBillingSection">
+        <MappingFragment StoreEntitySet="tbl_NonGST_MenusBillingSection">
+          <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+          <ScalarProperty Name="NonGstBillNo" ColumnName="NonGstBillNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_PermissionsToStaff">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_PermissionsToStaff">
+        <MappingFragment StoreEntitySet="tbl_PermissionsToStaff">
+          <ScalarProperty Name="FoodBillingEditPermission" ColumnName="FoodBillingEditPermission" />
+          <ScalarProperty Name="MenuItemsPermission" ColumnName="MenuItemsPermission" />
+          <ScalarProperty Name="VendorsPermission" ColumnName="VendorsPermission" />
+          <ScalarProperty Name="EventsPermission" ColumnName="EventsPermission" />
+          <ScalarProperty Name="MembershipPlanPermission" ColumnName="MembershipPlanPermission" />
+          <ScalarProperty Name="MemberPermission" ColumnName="MemberPermission" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Profile">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Profile">
+        <MappingFragment StoreEntitySet="tbl_Profile">
+          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+          <ScalarProperty Name="Relationship" ColumnName="Relationship" />
+          <ScalarProperty Name="Addon_Member" ColumnName="Addon_Member" />
+          <ScalarProperty Name="Additional_Notes" ColumnName="Additional_Notes" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="CustomMemberID" ColumnName="CustomMemberID" />
+          <ScalarProperty Name="PAN_Card" ColumnName="PAN_Card" />
+          <ScalarProperty Name="AadharNo" ColumnName="AadharNo" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="Reference_Of_Walk_In" ColumnName="Reference_Of_Walk_In" />
+          <ScalarProperty Name="Walk_In_Member" ColumnName="Walk_In_Member" />
+          <ScalarProperty Name="DelUsrBySuperApprv" ColumnName="DelUsrBySuperApprv" />
+          <ScalarProperty Name="NewUsrBySuperApprv" ColumnName="NewUsrBySuperApprv" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="EmailNotifications" ColumnName="EmailNotifications" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="L_Name" ColumnName="L_Name" />
+          <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_ConsumableItems">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_ConsumableItems">
+        <MappingFragment StoreEntitySet="tbl_ConsumableItems">
+          <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Inventory_ID" ColumnName="Inventory_ID" />
+          <ScalarProperty Name="MenuItem_ID" ColumnName="MenuItem_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_RoomBooking">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_RoomBooking">
+        <MappingFragment StoreEntitySet="tbl_RoomBooking">
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Cheque_No" ColumnName="Cheque_No" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="Billing_DateTime" ColumnName="Billing_DateTime" />
+          <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
+          <ScalarProperty Name="AmtToBePaid" ColumnName="AmtToBePaid" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="NoOfNightStays" ColumnName="NoOfNightStays" />
+          <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Check_Out" ColumnName="Check_Out" />
+          <ScalarProperty Name="Check_In" ColumnName="Check_In" />
+          <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />
+          <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_InventoryUsage">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_InventoryUsage">
+        <MappingFragment StoreEntitySet="tbl_InventoryUsage">
+          <ScalarProperty Name="GST_NonGST_Bill" ColumnName="GST_NonGST_Bill" />
+          <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+          <ScalarProperty Name="MenusBillingDetailsID" ColumnName="MenusBillingDetailsID" />
+          <ScalarProperty Name="Used_Date" ColumnName="Used_Date" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Used_Qty" ColumnName="Used_Qty" />
+          <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MenusBillingSection">
+      <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MenusBillingSection">
+        <MappingFragment StoreEntitySet="tbl_MenusBillingSection">
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="OrderTakenBy" ColumnName="OrderTakenBy" />
+          <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
+          <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
+          <ScalarProperty Name="TableID" ColumnName="TableID" />
+          <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FakeQtyAddedBy" ColumnName="FakeQtyAddedBy" />
+          <ScalarProperty Name="FakeQtyAddedDate" ColumnName="FakeQtyAddedDate" />
+          <ScalarProperty Name="FakeQuantity" ColumnName="FakeQuantity" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FoodItemName" ColumnName="FoodItemName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+          <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

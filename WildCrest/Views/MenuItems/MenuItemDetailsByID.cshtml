@@ -1,0 +1,63 @@
+﻿@model WildCrest.Models.WildCrestModels.MenuItems
+
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/MenuItems/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Food Item Details</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size: large;">Food Item Name :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Model.Food_Item_Name" id="FName" class="form-control" placeholder="Food Item Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Details :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea id="details" readonly class="form-control" placeholder="Details">@Model.Details</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Price :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-inr" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Model.Price" id="Cost" class="form-control floatNo" placeholder="Price" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Type :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Model.FoodType" id="foodType" class="form-control" />
+                                </div>
+
+                            </div>
+                            @if (Request.Cookies["PageSetting"] != null)
+                            {
+                                if (Request.Cookies["PageSetting"]["MenuItemsPermission"] != "View")
+                                {
+                                @Html.ActionLink("Edit", "FoodItemEditByID", "MenuItems", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Edit", "FoodItemEditByID", "MenuItems", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>

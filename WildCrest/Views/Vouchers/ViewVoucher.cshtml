@@ -1,0 +1,46 @@
+﻿@model WildCrest.Models.WildCrestModels.Voucher
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12 info_common">
+                    <div class="card">
+                        <div class="card-block">
+                            <a href="/Vouchers/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Voucher Info</h4>
+                            <div class="form p-t-20">
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Voucher Name :</label>
+                                        <input type="text" readonly id="Name" value="@Model.VoucherName" class="form-control">
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Added By :</label>
+                                        <input type="text" readonly id="Addeds" value="@Model.AddedBy" class="form-control form-control-danger">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Voucher Details :</label>
+                                        <input type="text" readonly id="Details" value="@Model.VoucherDetails" class="form-control form-control-danger">
+
+                                    </div>
+                                </div>
+                               <div class="col-md-12 col-sm-12 add_new_member">
+                                @Html.ActionLink("Edit Voucher", "VoucherDetailsByID", "Vouchers", new { id = Model.ID, editDetail = "Edit" }, new { @class = "btn btn-primary btn-margin" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+    </div>
+</body>

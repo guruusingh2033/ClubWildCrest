@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Order Food</h4>
+                    <div class="form p-t-20">
+                        <table id="FoodMenuList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <tbody>
+                                @foreach (var i in Model)
+                                {
+                                    if (i.FoodType == "Food")
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label style="font-weight: 500;font-size: 18px;">@i.Food_Item_Name</label>
+                                                <label>₹ @i.Price</label>
+                                                <label>@i.Details</label>
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-primary" value="Order" onclick="orderFood(@i.ID);" />
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <h4 class="card-title">Order Beverages</h4>
+                    <div class="form p-t-20">
+                        <table id="BeverageMenuList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <tbody>
+                                @foreach (var i in Model)
+                                {
+                                    if (i.FoodType == "Beverage")
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label style="font-weight: 500;font-size: 18px;">@i.Food_Item_Name</label>
+                                                <label>₹ @i.Price</label>
+                                                <label>@i.Details</label>
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-primary" value="Order" onclick="orderFood(@i.ID);" />
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function orderFood(foodID) {
+        alert(foodID);
+    }
+</script>

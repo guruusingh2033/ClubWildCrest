@@ -1,0 +1,139 @@
+﻿
+<div class="container">
+    <div class="row">
+        @if (ViewBag.MembershipID > 0)
+        {
+            if (ViewBag.LapseStays > 0)
+            {
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <a class="btn btn-primary" style="margin-bottom:20px;" href="/Member/Index">Go Back</a>
+                            <h4 class="card-title">Add Stay</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Check-in :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkIn" placeholder="Check-in" class="form-control pressenter" type="text" onchange="disableDatesAccToCheckIn();">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Check-out :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkOut" placeholder="Check-out" class="form-control pressenter" type="text">
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label style="font-size:large;">No. Of Members :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></div>
+                                        <input id="totalMembers" placeholder="noOfMembers" class="form-control" type="text">
+                                    </div>
+                                </div>*@
+                                <input type="button" class="btn btn-primary" value="Go" onclick="checkRoomsAvailablity();" />
+                                <a href="/Member/Index" class="btn btn-primary">Cancel</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="form p-t-20">
+                                <label style="font-size:18px;">No more Lapse Stays are left.</label><br /><br />
+                                <a href="/Member/Index" class="btn btn-primary">Go Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="form p-t-20">
+                            <label style="font-size:18px;">No such membership selected by this User</label><br /><br />
+                            <a href="/Member/Index" class="btn btn-primary">Go Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>    
+</div>
+<script>
+    $(document).ready(function () {
+        var date = new Date();
+        $('#checkIn,#checkOut').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date
+        });
+        $('#checkOut').attr("disabled", "true");
+
+    });
+    function disableDatesAccToCheckIn() {
+        $('#checkOut').val("");
+        var checkin = $('#checkIn').val();
+        $('#checkOut').removeAttr('disabled');
+        $('#checkOut').datepicker("option", "minDate", checkin);
+    }
+
+    function checkRoomsAvailablity() {
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        var memberID = "@ViewBag.MembershipID";
+        var UserID = "@ViewBag.UserID";
+        if (checkIn != "" && checkOut != "") {
+
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Member/checkRoomsAvailablity",
+                data: JSON.stringify({ checkIn: checkIn, checkOut: checkOut }),
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response.length > 0) {
+
+                        bootbox.confirm("Rooms Available.", function (result) {
+                            window.location.href = "/Member/RoomBooking?checkIn=" + checkIn + "&checkOut=" + checkOut + "&userID=" + UserID + "&membershipID=" + memberID;
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                    else {
+                        bootbox.alert({
+                            message: "No Rooms Available.",
+                            size: "small"
+                        });
+                        $("#checkIn").val("");
+                        $("#checkOut").val("");
+                        //$('#totalMembers').val("");
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Please enter Check-in/Check-out dates.",
+                size: "small"
+            });
+        }
+    }
+
+</script>

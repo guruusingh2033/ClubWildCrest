@@ -1,0 +1,374 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+<style>
+    ul.ui-autocomplete {
+        font-size: 16px;
+    }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"> </script>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            @*<a href="/Billing/Index" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>*@
+                            <h4 class="card-title">Food Bill</h4>
+                            <div class="form p-t-20">
+                                <div>
+                                    <label style="font-size: large;"><b>Bill Number :  @ViewBag.BillNumber</b></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Customer Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="CName" class="form-control" placeholder="First Name" value="@Model.F_Name @Model.L_Name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Phone No. :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="phone" class="form-control" placeholder="Phone No" value="@Model.PhoneNo"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Food Item Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="FName" class="form-control" placeholder="Food Item Name" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Price :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="Cost" class="form-control" readonly />
+                                    </div>
+
+                                </div>
+                                <div id="showDivForLeftQty" style="display: none;">
+                                    <label style="font-size: large;"><b>Left Quantity :  <span id="leftQty"></span></b></label>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Quantity :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="qty" class="form-control floatNo" placeholder="Enter Quantity" style="font-size: large;" />
+                                    </div>
+                                    <i>
+                                        <div id="errMsg" style="color: red; font-weight: 400;"></div>
+                                    </i>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">Total : <span id="total"></span></label>
+
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">SGST : 2.5%  ->  <span id="sgst"></span></label>
+
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">CGST : 2.5%  ->  <span id="cgst"></span></label>
+
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">Net Amount : <span id="netAmt"></span></label>
+
+                                </div>
+
+                                <input type="button" value="Save & Print" onclick="SaveAndPrint();" class="btn btn-primary" />
+                                <input type="hidden" id="HiddenFoodName" value="0" />
+                                <input type="button" value="Save Only" onclick="SaveOnly();" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('input.floatNo').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
+        $('#phone').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+        //$('nav a[href^="/' + location.pathname.split("/")[1] + '/"]').removeClass('active');
+    
+        $("#FName").autocomplete({        
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Billing/GetItemNames",
+                    data: JSON.stringify({ prefix: $('#FName').val() }),
+                    dataType: "Json",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.Value,
+                                Value:item.ID
+                            }
+                        }))
+                    },
+                    error: function (response) {
+
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#HiddenFoodName").val(i.item.Value);
+            }
+        });
+    });
+
+    $("#FName").focusout(function () {
+        if($("#FName").val().trim()==""){
+            $("#HiddenFoodName").val('0');
+            $("#showDivForLeftQty").css("display","none");
+            $("#errMsg").empty();
+            $("#qty").removeAttr("disabled");
+            $("#Cost").val('');
+        }
+        else{
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Billing/getFoodPrice",
+                data: JSON.stringify({ itemID: $("#HiddenFoodName").val() }),
+                dataType: "json",
+                success: function (response) {
+                    $("#Cost").val(response.Price);                  
+                    $("#leftQty").html(response.LeftQuantity);
+                    $("#qty").val("");
+                    if(response.LeftQuantity==-1)
+                    {
+                        $("#showDivForLeftQty").css("display","none");
+                        $("#errMsg").empty();
+                        $("#qty").removeAttr("disabled");
+                    }
+                    else{
+                        $("#showDivForLeftQty").css("display","block");
+                        if(response.LeftQuantity==0){
+                            $("#qty").attr("disabled",true);
+                            $("#errMsg").empty();
+                            $("#errMsg").append("Stock is empty.");
+                        }
+                        else{
+                            $("#errMsg").empty();
+                            $("#qty").removeAttr("disabled");
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    $("#qty").focusout(function () {
+        var LeftQty=$("#leftQty").html();
+        if(parseInt(LeftQty)!=-1){
+              
+            var newUsedVal = $("#qty").val();
+              
+            if (parseInt(LeftQty) < parseInt(newUsedVal)) {
+                $("#errMsg").empty();
+                $("#errMsg").append("Used Quantity should be less than or equal to Left Quantity.");
+                $("#qty").val("");
+            }
+            else {
+                $("#errMsg").empty();
+            }
+              
+        }
+
+        var qty = $("#qty").val();
+        var price = $("#Cost").val();
+        var total = (qty * price).toFixed(2);
+        var sgst = (total * (2.5 / 100)).toFixed(2);
+        var cgst = (total * (2.5 / 100)).toFixed(2);
+        var netAmt = (parseFloat(total) + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
+        $("#total").html("₹ " + total);
+        $("#sgst").html("₹ " + sgst);
+        $("#cgst").html("₹ " + cgst);
+        $("#netAmt").html("₹ " + netAmt);
+    });
+
+    
+
+    function SaveAndPrint() {
+        var cname = $("#CName").val().trim();
+        var phone = $("#phone").val();
+        var itemName = $("#FName").val();
+        var price = $("#Cost").val();
+        var qty = $("#qty").val();
+        if (cname != "" && phone != "" && itemName != "" && price != "" && qty != "") {
+            var model = {
+                Customer_Name: cname,
+                Phone: phone,
+                FoodItemName: itemName,
+                Price: price,
+                Quantity: qty,
+                Bill_Number:'@ViewBag.BillNumber',
+                ItemNameID:$("#HiddenFoodName").val(),
+                UserID:@Model.ID
+              };
+              $.ajax({
+                  type: "post",
+                  data: JSON.stringify({ model }),
+                  url: "/Billing/SaveBillingInfo",
+                  contentType: "application/json;charset=utf-8",
+                  datatype: "json",
+                  success: function (response) {
+                      console.log(response);
+                      var d = new Date();
+                      var strDate = d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+                      var tbl = '';
+                      tbl += '<table style="width: 80%; margin: 0 auto;" >'+
+    '<tbody>'+
+      '<tr>'+
+        '<th colspan ="4" style="padding: 5px;text-align: left; font-weight: 600;font-size: 20px;color: grey;">Wild Crest</th>'+
+        '<td style=" padding: 5px;text-align: left;font-size: 20px;font-weight: 600;text-align: right; color: grey;font-family: arial;"> INVOICE</td>'+
+      '</tr>'+
+      '<tr>'+
+        '<th colspan ="4" style="padding: 5px;text-align: left;font-size: 17px;">Address <br>'+
+          '<span style="font-weight: 400;text-align: left;font-size: 15px;line-height: 24px;">42 hamilton road <br>'+
+            'Ave Austin, U.S.A <br>'+
+          'TX 78701</span>'+
+        '</th>'+
+        '<th style="text-align: right; vertical-align: top;font-size: 15px; font-weight:400;line-height: 24px;"> Invoice-no : '+response.Bill_Number+' <br> Date : '+strDate+' </th>'+
+      '</tr>'+
+
+      '<tr>'+
+        '<th colspan ="4" style="font-size: 17px; text-align: left;"><br><br>'+response.Customer_Name+' <br>'+
+          '<span style="font-weight: 400;font-size: 15px;line-height: 24px;">'+
+            //'Ave Austin, U.S.A <br>'+
+            //'TX 78701 <br>'+
+          'Phone no: '+response.Phone+
+        '</th>'+
+      '</tr>'+
+
+      //'<tr>'+
+      //  '<th style="font-size: 17px; text-align: left; padding:  25px 0;"> Your Bill No. : '+response.Bill_Number+'</th>'+
+      //'</tr>'+
+
+    '</tbody>'+
+  '</table>';
+
+                      tbl+='<table id="tabel-heading" style=" width:80%;margin:0 auto; ">'+
+    '<thead  style="text-align: center;" >'+
+      '<tr style=" text-align: center; border-collapse: collapse;;">'+
+        '<th style=" border:1px solid;padding: 13px 0;">Item Name </th>'+
+        '<th  style=" width: 50%;border:1px solid;padding: 13px 0;">Price</th>'+
+        '<th style="border:1px solid;padding: 13px 0;">Quantity</th>'+
+        '<th style="border:1px solid;padding: 13px 0;">Amount</th>'+
+      '</tr>'+
+    '</thead>'+
+    '<tbody>'+
+      '<tr style="text-align: center;">'+
+        '<td style="border:1px solid; padding: 8px 0;font-size: 15px;">'+ response.FoodItemName +'</td>'+
+        '<td style=" border:1px solid;padding: 8px 0;font-size: 15px;" >₹ ' + response.Price + '</td>'+
+        '<td style=" border:1px solid;padding: 8px 0;font-size: 15px;">' + response.Quantity + '</td>'+
+        '<td style=" border:1px solid;padding: 8px 0;font-size: 15px;">' + $("#total").html() + '</td>'+
+      '</tr>'+
+
+      '<tr>'+
+        '<th colspan="3"   style="text-align: right; border:0;padding: 0px 11px;">Total : </th>'+
+        '<td  style="text-align: center;border:1px solid;border-bottom: 1px solid transparent; padding: 8px;font-size: 15px;">' + $("#total").html() + '</td>'+
+      '</tr>'+
+      
+      '<tr>'+
+        '<th colspan="3"   style="text-align: right; border:0;padding: 0px 11px; ">SGST (2.5%) : </th>'+
+        '<td  style="text-align: center;border:1px solid; border-bottom: 1px solid transparent; padding: 8px;font-size: 15px;">' + $("#sgst").html() + '</td>'+
+      '</tr>'+
+      '<tr>'+
+        '<th colspan="3"   style="text-align: right; border:0;padding: 0px 11px; ">CGST (2.5%) : </th>'+
+        '<td  style="text-align: center; border:1px solid; padding: 8px;font-size: 15px;">' + $("#cgst").html() + '</td>'+
+      '</tr>'+
+      '<tr>'+
+        '<th colspan="3"   style="text-align: right; border:0;padding: 0px 11px;">Net Amount : </th>'+
+        '<td  style="text-align: center; border: 1px solid ; padding: 8px;font-size: 15px;">' + $("#netAmt").html() + '</td>'+
+      '</tr>'+
+    '</tbody>'+
+
+  '</table>';
+      
+                      var htmlToPrint = '' +
+                          '<style type="text/css">' +
+                          'table, th, td {'+
+                          'border-collapse: collapse;'+
+                          '}' +
+                          'body{font-family: arial;}' +
+                          '</style>';
+                      htmlToPrint += tbl;
+                      newWin = window.open("");
+                      newWin.document.write(htmlToPrint);
+                      newWin.print();
+                      newWin.close();
+
+                      window.location.reload();
+                  }
+                                                      
+              });
+          }
+          else {
+              bootbox.alert({
+                  message: 'Complusory Fields.',
+                  size: "medium"
+              });
+          }
+      }
+    
+      function SaveOnly() {
+          var cname = $("#CName").val().trim();
+          var phone = $("#phone").val();
+          var itemName = $("#FName").val();
+          var price = $("#Cost").val();
+          var qty = $("#qty").val();
+          if (cname != "" && phone != "" && itemName != "" && price != "" && qty != "") {
+              var model = {
+                  Customer_Name: cname,
+                  Phone: phone,
+                  FoodItemName: itemName,
+                  Price: price,
+                  Quantity: qty,
+                  Bill_Number:'@ViewBag.BillNumber',
+                  ItemNameID:$("#HiddenFoodName").val(),
+                  UserID:@Model.ID
+            };
+            $.ajax({
+                type: "post",
+                data: JSON.stringify({ model }),
+                url: "/Billing/SaveBillingInfo",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (response) {
+                    bootbox.confirm("Saved.", function (result) {
+                        window.location.reload();
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                      
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: 'Complusory Fields.',
+                size: "medium"
+            });
+        }
+    }
+</script>

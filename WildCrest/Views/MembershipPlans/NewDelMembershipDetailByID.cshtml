@@ -1,0 +1,52 @@
+﻿@model WildCrest.Models.WildCrestModels.MembershipPlans
+
+@*<div class="container">*@
+
+    <div class="row">
+        <div class="col-md-12 info_common">
+            <div class="card">
+                <div class="card-block">
+                    @if (ViewBag.NewDelPlan)
+                    {
+                        <a class="btn btn-primary" href="/MembershipPlans/MemberShipForApproval" style="margin-bottom:15px;">Go Back</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" href="/MembershipPlans/MemberShipForDeletion" style="margin-bottom:15px;">Go Back</a>
+                    }
+
+                    <h4 class="card-title">Membership plan Info</h4>
+                    <div class="form p-t-20">
+                        <div class="col-md-6 col-sm-6 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">Plan ID :</label>
+                                <input type="text" id="firstName" readonly value="@Model.ID" class="form-control">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6 col-sm-6 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">Plan Name :</label>
+                                <input type="text" id="lastName" readonly value="@Model.PlanName" class="form-control form-control-danger">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">Plan Details : </label>
+                                <input type="text" id="DOB" readonly value="@Model.PlanDetails" class="form-control form-control-danger">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6 col-sm-6 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">No. of Stays :</label>
+                                <input type="text" id="Email" readonly value="@Model.NoOfStays" class="form-control form-control-danger">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,112 @@
+﻿@model WildCrest.Models.WildCrestModels.MenusBillingSection
+
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <a href="/Billing/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Update Bill Detail</h4>
+                            <div class="form p-t-20">
+                                <div>
+                                    <label style="font-size: large;"><b>Bill Number :  @Model.Bill_Number</b></label>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Customer Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Customer_Name" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Customer Phone No. :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Phone" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Food Item Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cutlery" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.FoodItemName" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Price :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Price" class="form-control" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Quantity :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></div>
+                                        <input type="text" value="@Model.Quantity" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Fake Quantity :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.FakeQuantity" class="form-control floatNo" id="txt_fakeQty" />
+                                    </div>
+                                </div>
+                               
+                                <input type="button" class="btn btn-primary" value="Update" onclick="EditBillByID(@Model.Bill_Number);" />
+                                <a href="/Billing/Index" class="btn btn-primary">Cancel</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function(){
+        $('input.floatNo').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
+    });
+    function EditBillByID(id) {
+
+        var fakeQty = $("#txt_fakeQty").val();
+        
+        if (fakeQty != "") {
+            var model = {
+                FakeQuantity:fakeQty,
+                Bill_Number:id
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Billing/EditBillByID",
+                data: JSON.stringify({ model }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Bill Quantity Updated.", function (result) {
+                        window.location.href = "/Billing/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+        }
+        else{
+            bootbox.alert({
+                message: 'Please enter Quantity.',
+                size: "medium"
+            });
+        }
+    }
+
+
+</script>

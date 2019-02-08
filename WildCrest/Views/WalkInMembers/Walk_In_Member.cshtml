@@ -1,0 +1,374 @@
+﻿
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                            <a class="btn btn-primary" style="margin-bottom:20px;" href="/WalkInMembers/Index">Go Back</a>
+                            <h4 class="card-title">Walk-In-Member</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter First Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="FName" class="form-control requiredFields" placeholder="First Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Last Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="LName" class="form-control" placeholder="Last Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Phone No. <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="phone" class="form-control requiredFields" placeholder="Phone No" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Address :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <textarea id="address" class="form-control" placeholder="Address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Email :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="email" id="email" class="form-control" placeholder="Email" />
+                                    </div>
+                                    <i> <div id="errorMessage" style="color:red;font-weight: 400;"></div></i>
+                                </div>
+                                @*<div class="form-group">
+                                    <label style="font-size:large;">Enter Password :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+                                        <input type="text" id="usrPassword" class="form-control" placeholder="Password" />
+                                    </div>
+                                </div>*@
+                                
+                                <div class="form-group">
+                                    <label style="font-size:large;">DOB :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input id="DOB" readonly placeholder="DOB" class="form-control pressenter" type="text"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter City :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="city" class="form-control" placeholder="City" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter State :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="state" class="form-control" placeholder="State"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Email Notifications :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" font-size:initial"></i></div>
+                                        <select id="emailNotifications" class="form-control">
+                                            <option value="True">Yes</option>
+                                            <option value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Reference :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" font-size:initial"></i></div>
+                                        <select id="ReferalUser" class="form-control">
+                                            <option value="0">Select</option>
+                                            @foreach (var s in ViewBag.ReferalUser)
+                                            {
+                                                <option value="@s.F_Name-@s.L_Name">@s.F_Name @s.L_Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        <label style="font-size:large;">Membership Plan :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-email" font-size:initial"></i></div>
+                                            <select id="MembershipPlan" class="form-control" style="font-size:large;">
+                                                <option value="0">Select Plan</option>
+                                                @foreach (var s in ViewBag.MembershipPlans)
+                                                {
+                                                    <option value="@s.ID">@s.PlanName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>*@
+                                <ul class="list-inline list-unstyled walk_in_buttons">
+                                <li><input type="button" value="Create" onclick="Add_Walk_In_member();" class="btn btn-primary" /></li>
+                                <li><input type="button" value="Food Billing" onclick="Add_Walk_In_member_FoodBilling();" class="btn btn-primary" /> </li>
+                                <li><input type="button" value="Book Room" onclick="Add_Walk_In_member_BookRoom();" class="btn btn-primary" /></li>
+                                <li><a href="/WalkInMembers/Index" class="btn btn-primary">Cancel</a></li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        
+
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#DOB').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-116:+0",
+        });
+        $('#phone').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+    });
+    function Add_Walk_In_member() {
+        $(".preloader").css("display", "block");
+        var fname = $("#FName").val().trim();
+        var lname = $("#LName").val().trim();
+        var address = $("#address").val().trim();
+        var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
+        var DOB = $("#DOB").val();
+        var city = $("#city").val().trim();
+        var state = $("#state").val().trim();
+        var emailNotifications = $("#emailNotifications").val();
+        var ReferalUser = $("#ReferalUser").val();
+        //var password = $("#usrPassword").val();
+        var Reference_Of_Walk_In = $("#ReferalUser").val();
+
+        //fname != "" && lname != "" && address != "" && email != "" && phone != "" && DOB != "" && city != "" && state != "" && emailNotifications != "" && password != ""
+
+        if (fname != "" && phone != "") {
+            //if (!ValidateEmail($("#email").val())) {
+            //    $("#errorMessage").empty();
+            //    $("#errorMessage").html("Invalid Email.Please Enter it again...");
+            //    $("#errorMessage").css("display", "block");
+            //}
+            //else {
+            var newMember = {
+                F_Name: fname,
+                L_Name: lname,
+                Address: address,
+                Email: email,
+                PhoneNo: phone,
+                DOB: DOB,
+                City: city,
+                State: state,
+                EmailNotifications: emailNotifications,
+                UserType: 3,
+                //Password: password,
+                Reference_Of_Walk_In: ReferalUser
+                    
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/WalkInMembers/AddNewMember",
+                data: JSON.stringify({ newMember }),
+                dataType: "json",
+                success: function (response) {
+                    $(".preloader").css("display", "none");
+                    //if (response.currentUserTypeLoggedin == 2) {
+                    //    bootbox.confirm("New Walk-In-Member created only after SuperAdmin Approval.", function (result) {
+                    //        window.location.href = "/WalkInMembers/Index";
+                    //    });
+                    //    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    //}
+                    //else {
+                    bootbox.confirm("New Walk-In-Member Added Successfully.", function (result) {
+                        window.location.href = "/WalkInMembers/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    //}
+                        
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+            //}
+
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'First Name and Phone No. are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#email").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#email").val("");
+                    $("#errorMessage").html('Already Exist.Enter again(or left blank, its optional).');
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#email").focusout(function () {
+        if($("#email").val().trim()!=""){
+            if (!ValidateEmail($("#email").val().trim())) {
+                $("#email").val("");
+                $("#errorMessage").html("Invalid Email.Enter again(or left blank, its optional).");
+            }
+            else {
+
+                $("#errorMessage").empty();
+                checkEmailDuplicasy();
+            }
+        }
+        else{
+            $("#errorMessage").empty();
+        }
+    });
+
+    function Add_Walk_In_member_BookRoom() {
+        $(".preloader").css("display", "block");
+        var fname = $("#FName").val().trim();
+        var lname = $("#LName").val().trim();
+        var address = $("#address").val().trim();
+        var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
+        var DOB = $("#DOB").val();
+        var city = $("#city").val().trim();
+        var state = $("#state").val().trim();
+        var emailNotifications = $("#emailNotifications").val();
+        var ReferalUser = $("#ReferalUser").val();
+        //var password = $("#usrPassword").val();
+        var Reference_Of_Walk_In = $("#ReferalUser").val();
+        if (fname != "" && phone != "") {
+            
+            var newMember = {
+                F_Name: fname,
+                L_Name: lname,
+                Address: address,
+                Email: email,
+                PhoneNo: phone,
+                DOB: DOB,
+                City: city,
+                State: state,
+                EmailNotifications: emailNotifications,
+                UserType: 3,
+                //Password: password,
+                Reference_Of_Walk_In: ReferalUser
+                    
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/WalkInMembers/AddNewMember",
+                data: JSON.stringify({ newMember }),
+                dataType: "json",
+                success: function (response) {
+                    //window.location.href = "/WalkInMembers/RoomBooking?id="+response.userId;
+                    window.location.href = "/RoomBookingBySa/RoomBooking";
+                        
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+            
+
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'First Name and Phone No. are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+    function Add_Walk_In_member_FoodBilling() {
+        $(".preloader").css("display", "block");
+        var fname = $("#FName").val().trim();
+        var lname = $("#LName").val().trim();
+        var address = $("#address").val().trim();
+        var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
+        var DOB = $("#DOB").val().trim();
+        var city = $("#city").val().trim();
+        var state = $("#state").val().trim();
+        var emailNotifications = $("#emailNotifications").val();
+        var ReferalUser = $("#ReferalUser").val();
+        //var password = $("#usrPassword").val();
+        var Reference_Of_Walk_In = $("#ReferalUser").val();
+        if (fname != "" && phone != "") {
+            
+            var newMember = {
+                F_Name: fname,
+                L_Name: lname,
+                Address: address,
+                Email: email,
+                PhoneNo: phone,
+                DOB: DOB,
+                City: city,
+                State: state,
+                EmailNotifications: emailNotifications,
+                UserType: 3,
+                //Password: password,
+                Reference_Of_Walk_In: ReferalUser
+                    
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/WalkInMembers/AddNewMember",
+                data: JSON.stringify({ newMember }),
+                dataType: "json",
+                success: function (response) {
+                    //window.location.href = "/WalkInMembers/FoodBilling?id="+response.userId;
+                    window.location.href = "/Billing/FoodBillingSection";
+                        
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+            
+
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'First Name and Phone No. are complusory.',
+                size: "medium"
+            });
+        }
+    }
+</script>

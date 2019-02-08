@@ -1,0 +1,204 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<body class="fix-header card-no-border">
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div><span class="complusoryFields" style="margin-top: 15px; margin-right: 15px;">*(Compulsory Fields)</span></div>
+                    <div class="card-block">
+                        <h4 class="card-title">Update Super Admin Profile</h4>
+                        <div class="form p-t-20">
+                            @if (Model.ID != null && Model.ID != 0)
+                            {
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter First Name <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.F_Name" id="fname" class="form-control requiredFields" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Last Name </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.L_Name" id="lname" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Address <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <textarea id="address" class="form-control requiredFields">@Model.Address</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Email <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.Email" id="emailId" class="form-control requiredFields" />
+                                    </div>
+                                    <i>
+                                        <label id="errorMessage" style="color: red; font-weight: 400;"></label>
+                                    </i>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Password <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+                                        <input type="text" value="@Model.Password" id="password" class="form-control requiredFields" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Phone No. <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.PhoneNo" id="phone" class="form-control requiredFields" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">DOB <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.DOB" id="dob" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter City <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.City" id="city" class="form-control requiredFields" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter State <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.State" id="state" class="form-control requiredFields" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Email Notifications :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <select id="emlNotify" class="form-control">
+                                            <option value="True">Yes</option>
+                                            <option value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="button" class="btn btn-primary" onclick="updateUserDetails(@Model.ID);" value="Update" />
+                            }
+                            else
+                            {
+                                <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#emlNotify").val("@Model.EmailNotifications");
+
+        $('#dob').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-116:+0",
+        });
+    });
+
+    function updateUserDetails(ID) {
+        var eFname = $("#fname").val().trim();
+        var eLname = $("#lname").val().trim();
+        var eml = $("#emailId").val().trim();
+        var pswd = $("#password").val().trim();
+        var phone = $("#phone").val().trim();
+        var add = $("#address").val().trim();
+        var cty = $("#city").val().trim();
+        var sta = $("#state").val().trim();
+        var emlNotify = $("#emlNotify").val();
+        var dob=$('#dob').val();
+        if (eFname != "" && dob != "" && eml != "" && pswd != "" && phone != "" && add != "" && cty != "" && sta != "" && emlNotify != "") {            
+            var prf = {
+                ID: ID,
+                Address: add,
+                Email: eml,
+                PhoneNo: phone,
+                City: cty,
+                State: sta,
+                EmailNotifications: emlNotify,
+                Password: pswd,
+                F_Name: eFname,
+                L_Name: eLname,
+                DOB:dob
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/SuperAdminProfile/UpdateProfileByID",
+                data: JSON.stringify({ prf }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Super Admin Details Updated.", function (result) {
+                        window.location.href = "";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    alert('error');
+                }
+            });            
+        }
+        else {
+            bootbox.alert({
+                message: "Fields with *(Asterik Sign) are complusory.",
+                size: "medium"
+            });
+        }
+    }
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#emailId").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#emailId").val("");
+                    $("#errorMessage").html('Already Exist...Enter again.');
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#emailId").focusout(function () {
+        if (!ValidateEmail($("#emailId").val().trim())) {
+            $("#emailId").val("");
+            $("#errorMessage").html("Invalid Email...Enter again.");
+        }
+        else {
+
+            $("#errorMessage").empty();
+            var emailFromBackend='@Model.Email';
+            if(emailFromBackend=="" || emailFromBackend!=$("#emailId").val().trim())
+                checkEmailDuplicasy();
+        }
+    });
+</script>

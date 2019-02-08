@@ -1,0 +1,257 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/Staff/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Staff Info</h4>
+
+                        <div class="form p-t-20">
+                            @if (Model.ID != null && Model.ID != 0)
+                            {
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">First Name</label>
+                                        <input type="text" id="firstName" readonly value="@Model.F_Name" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" id="lastName" readonly value="@Model.L_Name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Father Name</label>
+                                        <input type="text" id="fatherName" readonly value="@Model.FatherName" class="form-control">
+                                    </div>
+                                </div>
+                              
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">DOB :</label>
+                                        <input type="text" id="DOB" readonly value="@Model.DOB" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Aadhar_No. :</label>
+                                        <input type="text" id="AadharNo" readonly value="@Model.AadharNo" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">PAN_Card :</label>
+                                        <input type="text" id="PAN_Card" readonly value="@Model.PAN_Card" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Email :</label>
+                                        <input type="text" id="Email" readonly value="@Model.Email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Email Notifications:</label>
+                                        <input type="text" id="EmailNotification" readonly value="@(Model.EmailNotifications == true ? "Yes" : "No")" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Phone :</label>
+                                        <input type="text" id="Phone" readonly value="@Model.PhoneNo" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Address :</label>
+                                        <input type="text" id="Address" readonly value="@Model.Address" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">City :</label>
+                                        <input type="text" id="City" readonly value="@Model.City" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">State :</label>
+                                        <input type="text" id="State" readonly value="@Model.State" class="form-control">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Joining Date :</label>
+                                        <input type="text" id="joiningDate" readonly value="@Model.Staff_JoiningDate" class="form-control">
+                                    </div>
+                                </div>
+                              
+                                <div class="col-md-12 col-sm-12 form-profile-in">
+                                    <div class="form-group">
+                                        <label>Additional Notes</label>
+                                        <textarea id="notes" readonly rows="3" class="form-control">@Model.Additional_Notes</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 form-profile-in">
+                                    @Html.ActionLink("Edit", "StaffDetailsByID", "Staff", new { id = Model.ID }, new { @class = "btn btn-primary btn-margin" })
+                                </div>
+                            }
+                            else
+                            {
+                                <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @if (ViewBag.MembersPhoto != null || ViewBag.MembersDOcs != null)
+    {
+        if (ViewBag.MembersPhoto.Count != 0 || ViewBag.MembersDOcs.Count != 0)
+        {
+        <div class="row">
+            <div class="col-md-12 info_common member_stay_details">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Staff's Photo or Docs</h4>
+                        <div class="form p-t-20 membersImgDocs">
+                            @if (ViewBag.MembersPhoto.Count != 0)
+                            {
+                                <label><b>Staff's Photo :</b></label>
+                                <div class="row">
+                                    @foreach (var img in ViewBag.MembersPhoto)
+                                    {
+                                        <div class="col-md-3 col-sm-6">
+                                            <a href="@img.MemberImagePath" target="_blank">
+                                                <img src="@img.MemberImagePath" class="img-responsive" /></a>
+                                        </div>  
+                                    }
+                                </div>
+                            }
+
+                            @if (ViewBag.MembersDOcs.Count != 0)
+                            {
+                                <label><b>Staff's Docs :</b></label>
+                                <div class="row">
+                                    @foreach (var img in ViewBag.MembersDOcs)
+                                    {
+                                        <div class="col-md-3 col-sm-6">
+                                            <a href="@img.MemberDocsPath" target="_blank">
+                                                <img src="@img.MemberDocsPath" class="img-responsive" /></a>
+                                        </div>  
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    }
+</body>
+@*<script>
+    $(document).ready(function () {
+        var jsonString = '@Model.billingDetailsInJson';
+        if (jsonString != "") {
+            var data = jsonString.replace(/&quot;/g, "\"");
+            data = $.parseJSON(data);
+            $("#amt").val(data.Amount_Paid);
+            $("#paymentMode").val(data.Mode_Of_Payment);
+            $("#checkNo").val(data.Cheque_No);
+            $("#bankName").val(data.BankName);
+            var amt = $("#amt").val();
+            var planAmt = 0;
+            var gst = 0;
+            if (parseFloat(amt) > 0) {                          // Tax 18%
+                planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+                gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+                $("#pAmt").val(planAmt);
+                $("#Pgst").val(gst);
+            }
+
+
+            if (data.Mode_Of_Payment != "Cheque") {
+                $("#checkNo").closest(".form-profile-in").css("display", "none");
+                $("#bankName").closest(".form-profile-in").css("display", "none");
+            }
+            else {
+                $("#checkNo").closest(".form-profile-in").css("display", "block");
+                $("#bankName").closest(".form-profile-in").css("display", "block");
+            }
+        }
+    });
+
+    function PrintMemBill() {
+        $(".preloader").css("display", "block");
+        newWin = window.open("");
+        var amt = $("#amt").val();
+        var planAmt = 0;
+        var gst = 0;
+        if (parseFloat(amt) > 0) {                          // Tax 18%
+            planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+            gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+        }
+        var tbl = '';
+        tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+        tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+        tbl += '<table id="memberData" style="width:100%;margin:0 auto; ">' +
+   '<tbody  style="text-align: left;" >' +
+   '<tr style="font-size: 9px;">' +
+   '<td style="padding: 5px 0;">Customer Name : ' + '@Model.F_Name' + " " + '@Model.L_Name' + '</td>' +
+   '<td style="padding: 5px 0;">Phone No. : ' + '@Model.PhoneNo' + '</td>' +
+
+   '</tr>' +
+   '<tr style="font-size: 9px;">' +
+   '<td style="padding: 5px 0;">Membership Plan : ' + '@ViewBag.CurrentMembership' + '</td>' +
+   '<td style="padding: 5px 0;">Joining Date : ' + '@Model.MembershipJoiningDate' + '</td>' +
+
+   '</tr>' +
+   '<tr style="font-size: 9px;">' +
+   '<td style="padding: 5px 0;">Expiry Date : ' + '@Model.MembershipExpiryDate' + '</td>' +
+   '<td style="padding: 5px 0;">Plan Amount : ₹ ' + planAmt + '</td>' +
+
+   '</tr>' +
+   '<tr style="font-size: 9px;">' +
+   '<td style="padding: 5px 0;">GST(5%) : ₹ ' + gst + '</td>' +
+   '<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentMode").val() + '</td>' +
+
+   '</tr>' +
+   '<tr style="font-size: 9px;">' +
+   '<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amt").val() + '</td>' +
+   '<td style="padding: 5px 0;"></td>' +
+   '</tr>' +
+   '</tbody></table>';
+
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                   '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin.document.open();
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+    }
+</script>*@

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MemberGroup>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+        <div class="card">
+            <div class="card-block">
+                <div class="row">
+                    @Html.ActionLink("Create New Group", "AddNewGroup", "MemberGroups", new { @class = "btn btn-primary btn-margin" })
+                </div>
+                <div class="table-responsive m-t-40">
+                    <table id="groupsList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="hide">ID</th>
+                                <th>Actions</th>
+                                <th>Group Name</th>
+                                <th>No. of Members</th>
+                                <th>Group Detail</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td class="hide">@i.ID</td>
+                                     <td style="width:31%;">
+                                        <a title="Detail" href="@Url.Action("GroupDetailsByID", "MemberGroups", new { id = i.ID, editDetail = "Details" }, null)">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                        </a>
+                                        <a title="Edit" href="@Url.Action("GroupDetailsByID", "MemberGroups", new { id = i.ID, editDetail = "Edit" }, null)">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                        <a title="Delete" onclick="DeleteGroupById(@i.ID);" href="#">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+
+                                        @Html.ActionLink("Add Member in Group", "AddMemberInGroup", "MemberGroups", new { groupID = i.ID }, new { @class = "btn btn-primary" })
+                                    </td>
+                                    <td style="width:20%;">@i.GroupName</td>
+                                    <td>@i.NoOfMembers</td>
+                                    <td  style="width:25%;">@i.GroupDetail</td>
+                                   
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+@*</div>*@
+<script>
+    $(document).ready(function () {
+        $("#groupsList").dataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+
+    function DeleteGroupById(id) {
+        bootbox.confirm("ARe you sure To delete this Group?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/MemberGroups/DeleteGroupById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.alert({
+                            message: "Group Deleted.",
+                            size: "small"
+                        });
+                        window.setTimeout(function () {
+                            window.location.href = "/MemberGroups/Index";
+                        }, 4000);
+                    },
+                    error: function () {
+                        //alert('error');
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Group Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,138 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Voucher>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            <ul class="list-inline list-unstyled voucher_buttons">
+                <li>@Html.ActionLink("Create New Voucher", "AddNewVoucher", "Vouchers", new { @class = "btn btn-primary" })
+                </li>
+
+                @if (Request.Cookies["UserType"].Value == "1")
+                {
+                    <li>@Html.ActionLink("Approve Vouchers(Request from Staff)", "VouchersForApproval", "Vouchers", new { @class = "btn btn-primary" })
+                    </li>
+                    <li>@Html.ActionLink("Delete Vouchers(Request from Staff)", "VouchersForDeletion", "Vouchers", new { @class = "btn btn-primary" })
+                    </li>
+                }
+            </ul>
+            @*@Html.ActionLink("Send Vouchers", "SendVouchers", "Vouchers", new { @class = "btn btn-primary btn-margin" })*@
+        </div>
+        <div class="table-responsive m-t-40">
+            <table id="voucherList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="hide">ID</th>
+                        <th>Actions</th>
+                        <th>Voucher Name</th>
+                        <th>Voucher Details</th>
+                        <th>Added By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td class="hide">@i.ID</td>
+                            <td style="width: 20%;">
+                                <a title="Detail" href="@Url.Action("VoucherDetailsByID", "Vouchers", new { id = i.ID, editDetail = "Details" }, null)">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                                <a title="Edit" href="@Url.Action("VoucherDetailsByID", "Vouchers", new { id = i.ID, editDetail = "Edit" }, null)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                <a title="Delete" onclick="DeleteVoucherById(@i.ID);" href="#">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                                @*<a title="Send Voucher" onclick="SendVoucherToUsers(@i.ID);" href="#">
+                                                <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                                            </a>*@
+                                <a title="Send Voucher" href="@Url.Action("SendVouchers", "Vouchers", new { voucherID = i.ID }, null)">
+                                    <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td style="width: 20%;">@i.VoucherName</td>
+                            <td style="width: 30%;">@i.VoucherDetails</td>
+                            <td>@i.AddedBy</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#voucherList").dataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+    function DeleteVoucherById(id) {
+        bootbox.confirm("Are you sure To delete this Voucher?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Vouchers/DeleteVoucherById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == 1) {
+                            bootbox.confirm("Voucher Deleted.", function (result) {
+                                window.location.href = "/Vouchers/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                        else {
+                            bootbox.confirm("Voucher Deleted only after SuperAdmin Approval.", function (result) {
+                                window.location.href = "/Vouchers/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    },
+                    error: function () {
+                        //alert('error');
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Voucher Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+
+    }
+
+    function SendVoucherToUsers(id) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Vouchers/SendVoucherToUsers",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.alert({
+                    message: "Voucher Sent.",
+                    size: "small"
+                });
+                window.setTimeout(function () {
+                    window.location.href = "/Vouchers/Index";
+                }, 4000);
+            },
+            error: function () {
+                //alert('error');
+            }
+        });
+    }
+</script>

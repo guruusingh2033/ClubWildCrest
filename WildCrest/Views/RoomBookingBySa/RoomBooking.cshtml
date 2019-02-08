@@ -1,0 +1,738 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Profile>
+
+<style>
+    table tr td {
+        width: 1%;
+        color: black;
+        font-weight: 400;
+    }
+
+    span.chkBox_Style {
+        margin: 0 15px 0 3px;
+        vertical-align: top;
+    }
+
+    .main-border-class {
+        border: 1px solid #e4e4e4;
+        width: 100%;
+        margin: 0;
+        padding: 10px 0;
+    }
+</style>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+   
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div><span class="complusoryFields" style="margin-top:15px; margin-right:15px;">*(Compulsory Fields)</span></div>
+                        <div class="card-block">
+                            <h4 class="card-title">Room Booking</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-in <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkIn" readonly placeholder="Check-in" class="form-control pressenter" type="text" onchange="disableDatesAccToCheckIn();">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-out <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkOut" readonly placeholder="Check-out" class="form-control pressenter" type="text">
+                                    </div>
+                                </div>
+                                <div id="checkRooms" style="margin-top: 5px;">
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Customer <span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="CNo" class="form-control" onchange="MemberChange();">
+                                                <option value="Others">Non-Member</option>
+                                                <optgroup label="-----Members-----">
+                                                    @foreach (var i in Model)
+                                                    {
+                                                        if (i.Walk_In_Member == false)
+                                                        {
+                                                        <option value="@i.ID">@i.F_Name @i.L_Name</option>
+                                                        }
+                                                    }
+                                                </optgroup>
+                                                <optgroup label="-----Walkin-Members-----">
+                                                    @foreach (var i in Model)
+                                                    {
+                                                        if (i.Walk_In_Member == true)
+                                                        {
+                                                        <option value="@i.ID">@i.F_Name @i.L_Name</option>
+                                                        }
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div id="NonMemDiv">
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="MName" class="form-control requiredFields" placeholder="Enter Non-Member Name" />
+                                            </div>
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="phone" class="form-control requiredFields" placeholder="Enter Non-Member Phone No." />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Amount/Room without Extra Bed (including GST) :</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="priceToPay" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row main-border-class">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                                            <label style="font-size: large;">Room No. <span class="complusoryFields">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                                <select id="RNo" class="form-control">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                                            <label style="font-size: large;">No. of Person (Min-1 & Max-3) <span class="complusoryFields">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="noOfPerson" class="form-control requiredFields" />
+                                            </div>
+                                            <i>
+                                                <div id="errMsg" style="color: red; font-weight: 400;"></div>
+                                            </i>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 extra_bed_data">
+                                            @*<label>*@
+                                                <label style="font-size: large;">Extra Bed : </label>
+
+                                                <input type="checkbox" id="extraBed" />
+                                                ₹ 500
+                                            @*</label>*@
+                                        </div>
+
+
+                                        <div class="col-lg-12 col-md-6 col-sm-12 col-12" id="complementaryDetails" style="display: none;">
+                                            <div class="complementary-stays-left" style="float: left; max-width: 48%; width: 100%; margin-top: 15px;">
+                                                <label style="font-size: large;">Complementary Stays Left :</label>
+                                                <div class="input-group" style="margin-top: 5px;">
+                                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                    <input type="text" id="leftStays" readonly class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="give-complementary-stays" style="float: right; max-width: 47%; width: 100%; margin-top: 15px;">
+                                                <label style="font-size: large;">Give Complementary Stays :</label>
+                                                <div style="margin-top: 5px; padding: 0.5rem 0;" id="staysCheckbox">
+                                                    @*<div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                                            </select>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                            <label style="font-size: large; margin-top: 15px;">Total :</label>
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="amount" readonly class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-12" style="margin-top: 46px;">
+                                            <a title="Add More Rooms" style="cursor: pointer;" onclick="AddSelectedRoomInArray();">
+                                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                 
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <table style="width: 100%;">
+                                                <tbody id="selectedRooms"></tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Advanced Payment :</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="advancedPayment" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <input type="button" value="Save" onclick="SaveOnly();" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+ 
+    </div>
+
+    <input type="hidden" id="membershipID" value="0" />
+    <input type="hidden" id="UserID" value="0" />
+
+    <input type="hidden" id="hdn_MemberOrNot" value="No" />
+</body>
+
+<script>
+    var roomList = [];
+    var takenTempVal = 0;
+
+    var RoomPriceForMember = '@(System.Configuration.ConfigurationManager.AppSettings["RoomPriceForMember"])';
+    var RoomPriceForNonMember = '@(System.Configuration.ConfigurationManager.AppSettings["RoomPriceForNonMember"])';
+
+    $(document).ready(function () {
+        $(document).on('click', 'input[name="chk_box"]', function () {
+            $('input[name="chk_box"]').attr('checked', false);
+            $(this).prop('checked', true);
+            complementaryStays();
+        });
+        
+        var date = new Date();
+        $('#checkIn').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date
+        });
+        $('#checkOut').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date,
+            onClose: function (dateText, inst) {
+                checkRoomsAvailablity();
+                $('#extraBed').prop('checked', false);
+                roomList = [];
+                takenTempVal = 0;
+                $("#selectedRooms").empty();
+                $("#hdn_MemberOrNot").val('No');
+                $("#errMsg").empty();
+
+                $("#CNo").val('Others');
+                $("#NonMemDiv").css("display", "block");
+                $("#membershipID").val('0');
+                $("#UserID").val('0');
+                $("#ForOthers").css("display", "block");
+                $("#complementaryDetails").css("display", "none");
+
+                var checkinDate = new Date($("#checkIn").val());
+                var checkoutDate = new Date($("#checkOut").val());
+                var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                if (totalNightsStay == 0) {
+                    totalNightsStay = 1;
+                }
+                //var price = totalNightsStay * 3000;
+                var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+                //$("#priceToPay").val('3000');
+                $("#priceToPay").val(RoomPriceForNonMember);
+                $("#amount").val(price);
+            }
+        });
+        $("#phone,#priceToPay").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        $("#noOfPerson").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 49 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#advancedPayment").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#noOfPerson").focusout(function () {
+            if ($("#noOfPerson").val() != 1 && $("#noOfPerson").val() != 2 && $("#noOfPerson").val() != 3) {
+                $("#noOfPerson").val('');
+                $("#errMsg").empty();
+                $("#errMsg").append("Min-1 & Max-3 persons allowed in a Room.");
+            }
+            else {
+                $("#errMsg").empty();
+            }
+        });
+
+        $('#checkOut').attr("disabled", "true");
+        $("#checkRooms").css("display", "none");
+
+    });
+
+    $("#priceToPay").focusout(function () {
+        if (parseFloat($("#priceToPay").val()) > 0) {
+            calculateTotalAmount();
+        }
+        else {
+            $("#amount").val(0);
+        }
+    });
+
+    function disableDatesAccToCheckIn() {
+        $('#checkOut').val("");
+        var checkin = $('#checkIn').val();
+        $('#checkOut').removeAttr('disabled');
+        $('#checkOut').datepicker("option", "minDate", new Date((new Date(checkin)).valueOf() + 1000 * 3600 * 24));
+    }
+
+    function MemberChange() {
+        $("#phone").val('');
+        $("#MName").val('');
+        var CNo = $("#CNo").val();
+        $('#giveStays').empty();
+        $('#extraBed').prop('checked', false);
+        checkRoomsAvailablity();
+        roomList = [];
+        takenTempVal = 0;
+        $("#selectedRooms").empty();
+        $("#hdn_MemberOrNot").val('No');
+        $("#errMsg").empty();
+
+        var checkinDate = new Date($("#checkIn").val());
+        var checkoutDate = new Date($("#checkOut").val());
+        var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        if (totalNightsStay == 0) {
+            totalNightsStay = 1;
+        }
+
+        if (CNo == "Others") {
+            $("#NonMemDiv").css("display", "block");
+            $("#membershipID").val('0');
+            $("#UserID").val('0');
+            $("#ForOthers").css("display", "block");
+            $("#complementaryDetails").css("display", "none");
+
+            //var price = totalNightsStay * 3000;
+            //$("#priceToPay").val('3000');
+
+            var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+            $("#priceToPay").val(RoomPriceForNonMember);
+            $("#amount").val(price);
+        }
+        else {
+            $("#NonMemDiv").css("display", "none");
+            $("#ForOthers").css("display", "none");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/RoomBookingBySa/getMembershipDetailsbyUserID",
+                data: JSON.stringify({ id: CNo }),
+                dataType: "json",
+                success: function (response) {
+
+                    $("#membershipID").val(response.MembershipId);
+                    $("#UserID").val(response.UserID);
+                    $("#hdn_MemberOrNot").val(response.Member);
+
+                    $("#complementaryDetails").css("display", "none");
+                    if (response.Member == "Yes") {
+                        $("#complementaryDetails").css("display", "block");
+                        $("#leftStays").val(response.LapseStays);
+
+                        if (response.LapseStays == 0) {
+                            $('#staysCheckbox').empty();
+                            $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                            //$("#priceToPay").val('1500');
+                            $("#priceToPay").val(RoomPriceForMember);
+                        }
+                        else if (response.LapseStays == 1 || (response.LapseStays >= 2 && totalNightsStay == 1)) {
+                            $('#staysCheckbox').empty();
+                            $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                            $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                            //$("#priceToPay").val('1500');
+                            $("#priceToPay").val(RoomPriceForMember);
+                        }
+                        else if (response.LapseStays >= 2 && totalNightsStay > 1) {
+                            $('#staysCheckbox').empty();
+                            $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                            $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                            $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='2'/><span class='chkBox_Style'>2</span>");
+                            //$("#priceToPay").val('1500');
+                            $("#priceToPay").val(RoomPriceForMember);
+                        }
+                        else if (response.LapseStays == -2) {
+                            $("#leftStays").val("MembershipPlan expired.");
+                            $('#staysCheckbox').empty();
+                            $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                            //$("#priceToPay").val('3000');
+                            $("#priceToPay").val(RoomPriceForNonMember);
+                        }
+                        else {
+                            $("#leftStays").val("No membership selected by this user.");
+                            $('#staysCheckbox').empty();
+                            $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                            //$("#priceToPay").val('3000');
+                            $("#priceToPay").val(RoomPriceForNonMember);
+                        }
+                        complementaryStays();
+                    }
+                    else {
+                        $("#ForOthers").css("display", "block");
+                        //var price = totalNightsStay * 3000;
+                        //$("#priceToPay").val('3000');
+
+                        var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+                        $("#priceToPay").val(RoomPriceForNonMember);
+                        $("#amount").val(price)
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+    }
+
+    function checkRoomsAvailablity() {
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        if (checkIn != "" && checkOut != "") {
+
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/RoomBookingBySa/checkRoomsAvailablity",
+                data: JSON.stringify({ checkIn: checkIn, checkOut: checkOut }),
+                dataType: "json",
+                success: function (response) {
+                    if (response.length > 0) {
+                        $('#RNo').empty();
+                        $("#checkRooms").css("display", "block");
+                        for (var i = 0; i < response.length; i++) {
+                            $('#RNo').append($('<option>', {
+                                value: response[i].ID,
+                                text: response[i].RoomNo
+                            }));
+                        }
+                    }
+                    else {
+                        $("#checkRooms").css("display", "none");
+                        bootbox.alert({
+                            message: "No Rooms Available.",
+                            size: "small"
+                        });
+                        $("#checkIn").val("");
+                        $("#checkOut").val("");
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Please enter Check-in/Check-out dates.",
+                size: "small"
+            });
+        }
+    }
+
+    function SaveOnly() {
+        $(".preloader").css("display", "block");
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        var advancedPayment = $("#advancedPayment").val();
+
+        var totalNightsStay = parseInt((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+
+        var noOfPerson = $("#noOfPerson").val().trim();
+        if (checkIn != "" && checkOut != "") {
+            var RNo = $("#RNo").val();
+            var CNo = $("#CNo").val();
+            if (CNo == "Others") {
+                var MName = $("#MName").val().trim();
+                if (MName == "" || $("#phone").val() == "") {
+                    $(".preloader").css("display", "none");
+                    bootbox.alert("Either Non-Member Name or Non-Member Phone no. is empty.");
+                    return false;
+                }
+            }
+
+            if (roomList.length == 0) {
+                if (noOfPerson != "" && RNo != "" && RNo != null) {
+                    //var d = {
+                    //    'roomId': RNo,
+                    //    'noOfPerson': noOfPerson,
+                    //    'amtWithoutTax': $("#amount").val(),
+                    //    'complementaryStays': $('input[name="chk_box"]:checked').val()
+                    //};
+                    var d = {
+                        'RoomID': RNo,
+                        'NoOfPerson': noOfPerson,
+                        'TAmtPerRoom': $("#amount").val(),
+                        'ComplementaryStays': $('input[name="chk_box"]:checked').val(),
+                        'ExtraBed': (($('#extraBed').is(':checked')) ? 1 : 0)
+                    };
+                    roomList.push(d);
+                }
+                else {
+                    $(".preloader").css("display", "none");
+                    bootbox.alert("Either Room(s) not available or No. Of Persons field is empty.");
+                    return false;
+                }
+            }
+            else {
+                if (noOfPerson != "" && RNo != "" && RNo != null) {
+                    var d = {
+                        'RoomID': RNo,
+                        'NoOfPerson': noOfPerson,
+                        'TAmtPerRoom': $("#amount").val(),
+                        'ComplementaryStays': $('input[name="chk_box"]:checked').val(),
+                        'ExtraBed': (($('#extraBed').is(':checked')) ? 1 : 0)
+                    };
+                    roomList.push(d);
+                }
+            }
+
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/RoomBookingBySa/addStayOfCustomer",
+                data: JSON.stringify({ checkin: checkIn, checkout: checkOut, UserID: $("#UserID").val(), membershipID: $("#membershipID").val(), memberName: MName, phno: $("#phone").val(), noOfNights: totalNightsStay, roomInfo: roomList, advancedPayment: advancedPayment }),
+                dataType: "json",
+                success: function (response) {
+                    $(".preloader").css("display", "none");
+                    bootbox.confirm("Room Booked.", function (result) {
+                        window.location.reload();
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert("Checkin-Checkout dates & rooms info are compulsory.");
+        }
+    }
+    function complementaryStays() {
+        $('#extraBed').prop('checked', false);
+
+        var staysGivenToMember = $('input[name="chk_box"]:checked').val();
+
+        var checkinDate = new Date($("#checkIn").val());
+        var checkoutDate = new Date($("#checkOut").val());
+        var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        if (totalNightsStay == 0) {
+            totalNightsStay = 1;
+        }
+
+        if ($("#leftStays").val() == "MembershipPlan expired." || $("#leftStays").val() == "No membership selected by this user.") {
+            //var price = totalNightsStay * 3000;
+
+            //var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+            var price = totalNightsStay * parseInt($("#priceToPay").val());
+            $("#amount").val(price);
+        }
+        else {
+
+            if (parseInt(staysGivenToMember) == 0) {
+                //var price = totalNightsStay * 1500;
+                //var price = totalNightsStay * parseInt(RoomPriceForMember);
+                var price = totalNightsStay * parseInt($("#priceToPay").val());
+                $("#amount").val(price);
+            }
+            else if (parseInt(staysGivenToMember) == 1) {
+                //var price = (totalNightsStay - 1) * 1500;
+                //var price = (totalNightsStay - 1) * parseInt(RoomPriceForMember);
+                var price = (totalNightsStay - 1) * parseInt($("#priceToPay").val());
+                $("#amount").val(price);
+            }
+            else if (parseInt(staysGivenToMember) == 2) {
+                //var price = (totalNightsStay - 2) * 1500;
+                //var price = (totalNightsStay - 2) * parseInt(RoomPriceForMember);
+                var price = (totalNightsStay - 2) * parseInt($("#priceToPay").val());
+                $("#amount").val(price);
+            }
+        }
+    }
+
+    function AddSelectedRoomInArray() {
+        var roomId = $("#RNo").val();
+        var roomNo = $("#RNo option:selected").text();
+        var persons = $("#noOfPerson").val();
+        var extraBed = ($('#extraBed').is(':checked')) ? "Yes" : "No";
+        var total = $("#amount").val();
+        var staysTaken = $('input[name="chk_box"]:checked').val();
+        if (roomId != "" && roomId != null && persons != "") {
+
+            var tbl = '';
+            tbl += "<tr><td>" + roomNo + "</td>";
+            tbl += "<td>" + persons + "</td>";
+            tbl += "<td>" + extraBed + "</td>";
+            tbl += "<td>" + total + "</td></tr>";
+
+            $("#selectedRooms").append(tbl);
+
+            //var d = {
+            //    'roomId': roomId,
+            //    'noOfPerson': persons,
+            //    'amtWithoutTax': total,
+            //    'complementaryStays': staysTaken,
+            //    'extraBed':extraBed
+            //};
+            var d = {
+                'RoomID': roomId,
+                'NoOfPerson': persons,
+                'TAmtPerRoom': total,
+                'ComplementaryStays': staysTaken,
+                'ExtraBed': (($('#extraBed').is(':checked')) ? 1 : 0)
+            };
+            roomList.push(d);
+            console.log(roomList);
+
+            $("#RNo option[value='" + roomId + "']").remove();
+            $("#noOfPerson").val('');
+            takenTempVal = parseInt(takenTempVal) + parseInt(staysTaken);
+            
+            var checkinDate = new Date($("#checkIn").val());
+            var checkoutDate = new Date($("#checkOut").val());
+            var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+            if ($("#leftStays").val() == "MembershipPlan expired." || $("#leftStays").val() == "No membership selected by this user.") {
+                
+                $('#staysCheckbox').empty();
+                $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+            }
+            else {
+                $("#leftStays").val(parseInt($("#leftStays").val()) - parseInt(staysTaken));
+                if ($("#leftStays").val() >= 2 && totalNightsStay == 1) {
+                    if (takenTempVal == 0 || takenTempVal == 1) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                        $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                    }
+                    if (takenTempVal >= 2) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                    }
+                }
+                else if ($("#leftStays").val() == 0 && totalNightsStay >= 1) {
+                    $('#staysCheckbox').empty();
+                    $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                }
+                else if ($("#leftStays").val() == 1 && totalNightsStay >= 1) {
+                    if (takenTempVal == 0 || takenTempVal == 1) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                        $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                    }
+                    if (takenTempVal >= 2) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                    }
+                }
+                else if ($("#leftStays").val() >= 2 && totalNightsStay >= 2) {
+                    if (takenTempVal == 0) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                        $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                        $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='2'/><span class='chkBox_Style'>2</span>");
+                    }
+                    if (takenTempVal == 1) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                        $('#staysCheckbox').append("<input type='checkbox' class='example' name='chk_box' value='1'/><span class='chkBox_Style'>1</span>");
+                    }
+                    if (takenTempVal >= 2) {
+                        $('#staysCheckbox').empty();
+                        $('#staysCheckbox').append("<input type='checkbox' checked class='example' name='chk_box' value='0'/><span class='chkBox_Style'>0</span>");
+                    }
+                }
+            }
+            //}
+        }
+        else {
+            bootbox.alert("Either Room(s) not available or No. Of Persons field is empty.");
+        }
+        $('#extraBed').prop('checked', false);
+        $('input[name="chk_box"]').attr('checked', false);
+        $('input[name="chk_box"][value=0]').prop('checked', true);
+        calculateTotalAmount();
+    }
+
+    $('#extraBed').change(function () {
+        calculateTotalAmount();
+    });
+
+    function calculateTotalAmount() {
+        var amt = $("#priceToPay").val();
+        var extraBedAmt = 0;
+        var checkinDate = new Date($("#checkIn").val());
+        var checkoutDate = new Date($("#checkOut").val());
+        var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        if (totalNightsStay == 0) {
+            totalNightsStay = 1;
+        }
+
+        if ($("#hdn_MemberOrNot").val() == "Yes") {
+            if ($("#leftStays").val() == "MembershipPlan expired." || $("#leftStays").val() == "No membership selected by this user.") {
+                //var at = totalNightsStay * 3000;
+                //var at = totalNightsStay * parseInt(RoomPriceForNonMember);
+                var at = totalNightsStay * parseInt(amt);
+            }
+            else {
+                if (parseInt($('input[name="chk_box"]:checked').val()) == 0) {
+                    //var at = totalNightsStay * 1500;
+                    //var at = totalNightsStay * parseInt(RoomPriceForMember);
+                    var at = totalNightsStay * parseInt(amt);
+                }
+                else if (parseInt($('input[name="chk_box"]:checked').val()) == 1) {
+                    //var at = (totalNightsStay - 1) * 1500;
+                    //var at = (totalNightsStay - 1) * parseInt(RoomPriceForMember);
+                    var at = (totalNightsStay - 1) * parseInt(amt);
+                }
+                else if (parseInt($('input[name="chk_box"]:checked').val()) == 2) {
+                    //var at = (totalNightsStay - 2) * 1500;
+                    //var at = (totalNightsStay - 2) * parseInt(RoomPriceForMember);
+                    var at = (totalNightsStay - 2) * parseInt(amt);
+                }
+            }
+        }
+        else {
+            var at = parseInt(amt) * parseInt(totalNightsStay);
+        }
+
+        if ($('#extraBed').is(':checked')) {
+            extraBedAmt = 500;
+        }
+        var total = parseInt(at) + parseInt(extraBedAmt);
+        if (parseInt(at) > 0) {
+            $("#amount").val(total);
+        }
+        else {
+            $("#amount").val('0');
+        }
+
+    }
+
+</script>

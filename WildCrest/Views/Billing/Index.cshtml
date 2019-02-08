@@ -1,0 +1,149 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenusBillingSection>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+    <div class="card">
+        <div class="card-block">
+            <a href="/Billing/FoodBillingSection" class="btn btn-primary">Go Back</a>
+            <div class="table-responsive m-t-40">
+                <table id="billingList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="hide">Bill Number</th>
+                            <th>Customer Name</th>
+                            <th>Phone</th>
+                            <th>Food Item Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Updated DateTime</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="hide">@i.Bill_Number</td>
+                                <td>@i.Customer_Name</td>
+                                <td>@i.Phone</td>
+                                <td>@i.FoodItemName</td>
+                                <td>₹ @i.Price</td>
+                                <td>@i.Quantity</td>
+                                <td>@i.FakeQtyAddedDate</td>
+                                <td>                                   
+                                    <a title="Edit" href="@Url.Action("EditBill", "Billing", new { id = i.Bill_Number }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#billingList").dataTable({ "order": [[0, "desc"]] });
+    });
+
+    function DeleteInventoryById(id) {
+        debugger;
+        bootbox.confirm("Are you sure to delete this Item from Inventory?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Inventory/DeleteInventoryById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Item Deleted.", function (result) {
+                            window.location.href = "/Inventory/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+
+    function stockInfo(inventoryID) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Inventory/stockInfo",
+            data: JSON.stringify({ inventoryID: inventoryID }),
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+               
+                if (response.length > 0) {
+                    var tbl = '';
+                    var totalQuantity = 0;
+                    var used = 0;
+                    var left = 0;
+                    tbl += "<table class='display nowrap table table-hover table-striped table-bordered'><tr><th>Used Quantity</th><th>Description</th><th>Used_Date</th></tr>";
+
+                    for (var i = 0; i < response.length; i++) {
+                        tbl += "<tr><td>" + response[i].Used_Qty + "</td>";
+                        tbl += "<td>" + response[i].Description + "</td>";
+                        tbl += "<td>" + response[i].Used_Date + "</td></tr>";
+                        totalQuantity = response[i].TotalQuantity;
+                        used = used + response[i].Used_Qty;
+                    }
+                    left = totalQuantity - used;
+                    tbl += "</table>";
+                    tbl += "<br><b>Total Quantity = " + totalQuantity + "</b>" +
+                        "<br><b>Used Quantity = " + used + "</b>" +
+                        "<br><b>Left Quantity = " + left + "</b>";
+                    $(".modal-body").empty();
+                    $(".modal-body").append(tbl);
+
+                }
+                else {
+                    $(".modal-body").empty();
+                    $(".modal-body").append("Stock not used yet.");
+                }
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                //alert('error');
+            }
+        });
+    }
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <h4 class="modal-title">Stock Info</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

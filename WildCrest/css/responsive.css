@@ -1,0 +1,175 @@
+﻿body {
+}
+
+
+#adminList thead tr .nam::after {
+    width: 75px;
+    height: 9px;
+    content: '';
+    background: url("../images/down.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 11px;
+    position: relative;
+    top: 4px;
+    left: 2px;
+}
+
+#adminList thead tr .nam::before {
+    width: 15px;
+    height: 9px;
+    content: '';
+    background: url("../images/top.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: 61px;
+    top: 48px;
+}
+
+.nam1.sorting {
+    position: relative;
+}
+
+#adminList thead tr .nam1::after {
+    width: 75px;
+    height: 9px;
+    content: '';
+    background: url("../images/down.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 11px;
+    position: relative;
+    top: 4px;
+    left: 4px;
+}
+
+#adminList thead tr .nam1::before {
+    width: 15px;
+    height: 9px;
+    content: '';
+    background: url("../images/top.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: 59px;
+    top: 14px;
+}
+
+
+
+.nam2.sorting {
+    position: relative;
+}
+
+#adminList thead tr .nam2::after {
+    width: 75px;
+    height: 9px;
+    content: '';
+    background: url("../images/down.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 11px;
+    position: relative;
+    top: 4px;
+    left: 4px;
+}
+
+#adminList thead tr .nam2::before {
+    width: 15px;
+    height: 9px;
+    content: '';
+    background: url("../images/top.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: 47.5%;
+    top: 14px;
+}
+
+
+.nam3.sorting {
+    position: relative;
+}
+
+#adminList thead tr .nam3::after {
+    width: 75px;
+    height: 9px;
+    content: '';
+    background: url("../images/down.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 11px;
+    position: relative;
+    top: 4px;
+    left: 4px;
+}
+
+#adminList thead tr .nam3::before {
+    width: 15px;
+    height: 9px;
+    content: '';
+    background: url("../images/top.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: 43.5%;
+    top: 14px;
+}
+
+
+.nam4.sorting {
+    position: relative;
+}
+
+#adminList thead tr .nam4::after {
+    width: 75px;
+    height: 9px;
+    content: '';
+    background: url("../images/down.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 11px;
+    position: relative;
+    top: 4px;
+    left: 4px;
+}
+
+#adminList thead tr .nam4::before {
+    width: 15px;
+    height: 9px;
+    content: '';
+    background: url("../images/top.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: 45.5%;
+    top: 14px;
+}
+
+
+#adminList thead tr th:nth-child(7)::after {
+    display: none;
+}
+
+#adminList thead tr th:nth-child(7)::before {
+    display: none1;
+}
+
+
+
+@media (max-width:767px) {
+
+    .visible-xs-block {
+        display: none !important;
+    }
+
+    .collapse.in {
+        display: block !important;
+    }
+
+    .navbar-nav {
+        margin: 0px 0px 0px 0px;
+        text-align: right;
+    }
+}

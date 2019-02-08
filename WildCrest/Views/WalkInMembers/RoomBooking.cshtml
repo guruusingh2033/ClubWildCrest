@@ -1,0 +1,225 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Profile>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Room Booking</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-in :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkIn" placeholder="Check-in" class="form-control pressenter" type="text" onchange="disableDatesAccToCheckIn();">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-out :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkOut" placeholder="Check-out" class="form-control pressenter" type="text">
+                                    </div>
+                                </div>
+                                <div id="checkRooms" style="margin-top: 5px;">
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Room No. :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="RNo" class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">No. of Person :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="noOfPerson" class="form-control" />
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                        <label style="font-size: large;">Customer :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="CNo" class="form-control" onchange="MemberChange();">
+                                                <option value="NonMember">Non-Member</option>
+                                                <optgroup label="-----Members-----">
+                                                    @foreach (var i in Model)
+                                                    {
+                                                        <option value="@i.ID">@i.F_Name @i.L_Name</option>
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div id="NonMemDiv">
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="MName" class="form-control" placeholder="Enter Non-Member Name" />
+                                            </div>
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                                <input type="text" id="phone" class="form-control" placeholder="Enter Non-Member Phone No." />
+                                            </div>
+                                            </div>
+                                        </div>*@
+                                     <input type="button" value="Save" onclick="SaveOnly();" class="btn btn-primary" />
+                                    </div>                                                                      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <input type="hidden" id="membershipID" value="0" />
+    <input type="hidden" id="UserID" value="0" />
+</body>
+
+<script>
+    $(document).ready(function () {
+        var date = new Date();
+        $('#checkIn').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date
+        });
+        $('#checkOut').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date,
+            onClose: function (dateText, inst) {
+                checkRoomsAvailablity();
+                }
+        });
+        $('#phone,#noOfPerson').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+        
+        $('#checkOut').attr("disabled", "true");
+        $("#checkRooms").css("display", "none");
+    });
+    function disableDatesAccToCheckIn() {
+        $('#checkOut').val("");
+        var checkin = $('#checkIn').val();
+        $('#checkOut').removeAttr('disabled');
+        $('#checkOut').datepicker("option", "minDate", checkin);
+    }
+
+    //function MemberChange() {
+    //    $("#phone").val('');
+    //    $("#MName").val('');
+    //    var CNo = $("#CNo").val();
+    //    if (CNo == "NonMember") {
+    //        $("#NonMemDiv").css("display", "block");
+    //        $("#membershipID").val('0');
+    //        $("#UserID").val('0');
+    //    }
+    //    else {
+    //        $("#NonMemDiv").css("display", "none");
+    //        $.ajax({
+    //            type: "post",
+    //            contentType: "application/json; charset=utf-8",
+    //            url: "/RoomBookingBySa/getMembershipDetailsbyUserID",
+    //            data: JSON.stringify({ id: CNo }),
+    //            dataType: "json",
+    //            success: function (response) {
+                    
+    //                        $("#membershipID").val(response.MembershipId);
+    //                        $("#UserID").val(response.UserID);
+                        
+    //            },
+    //            error: function () {
+    //                alert('error');
+    //            }
+    //        });
+    //    }
+    //}
+
+    function checkRoomsAvailablity() {
+        debugger;
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        if (checkIn != "" && checkOut != "") {
+
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/RoomBookingBySa/checkRoomsAvailablity",
+                data: JSON.stringify({ checkIn: checkIn, checkOut: checkOut }),
+                dataType: "json",
+                success: function (response) {
+                    if (response.length > 0) {
+                        $('#RNo').empty();
+                        $("#checkRooms").css("display", "block");
+                        for (var i = 0; i < response.length; i++) {
+                            $('#RNo').append($('<option>', {
+                                value: response[i].ID,
+                                text: response[i].RoomNo
+                            }));
+                        }
+                    }
+                    else {
+                        $("#checkRooms").css("display", "none");
+                        bootbox.alert({
+                            message: "Rooms not Available.",
+                            size: "small"
+                        });
+                        $("#checkIn").val("");
+                        $("#checkOut").val("");
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Please enter Check-in/Check-out dates.",
+                size: "small"
+            });
+        }
+    }
+
+    function SaveOnly() {
+        debugger;
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        var noOfPerson = $("#noOfPerson").val().trim();
+        if (checkIn != "" && checkOut != "" && noOfPerson!="") {
+            var RNo = $("#RNo").val();
+            //var CNo = $("#CNo").val();
+            //if (CNo == "NonMember") {
+            //    var MName = $("#MName").val().trim();
+            //    if (MName == "") {
+            //        bootbox.alert("Enter Non-Member Name.");
+            //        return false;
+            //    }
+            //}
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/RoomBookingBySa/addStayOfCustomer",
+                data: JSON.stringify({ roomId: RNo, checkin: checkIn, checkout: checkOut, UserID: '@ViewBag.WalkinID', noOfPerson: noOfPerson }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Room Booked.", function (result) {
+                        window.location.reload();
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+        }
+        else {
+            bootbox.alert("Compulsory Fields.");
+        }
+    }
+
+</script>

@@ -1,0 +1,588 @@
+﻿<style>
+    #docPreview img {
+        margin: 7px 7px 0px 0px;
+    }
+</style>
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12 add_NewMember">
+                <div class="card">
+                    <div class="card-block">
+                        <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            @Html.ActionLink("Go Back", "Index", "Staff", null, new { @class = "btn btn-success btn-margin" })
+                        </div>
+                        <h4 class="card-title">Add New Staff</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter First Name <span class="complusoryFields">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="FName" class="form-control requiredFields" placeholder="First Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Last Name </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="LName" class="form-control" placeholder="Last Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Father's Name </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="fatherName" class="form-control" placeholder="Father's Name" />
+                                </div>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Address </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea id="address" class="form-control" placeholder="Address"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Email :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="email" id="email" class="form-control" placeholder="Email" />
+                                </div>
+                                <i>
+                                    <div id="errorMessage" style="color: red; font-weight: 400;font-size: 11pt;"></div>
+                                </i>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Phone No. <span class="complusoryFields">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="phone" class="form-control requiredFields" placeholder="Phone No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">DOB</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input id="DOB" readonly placeholder="DOB" class="form-control pressenter" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Aadhar No. :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                    <input id="aadharNo" placeholder="Aadhar No." class="form-control" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">PAN_No :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                    <input id="PAN_No" placeholder="PAN_No" class="form-control" type="text" />
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter City</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="city" class="form-control" placeholder="City" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter State</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="state" class="form-control" placeholder="State" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Member Photo</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-upload" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="file" id="memPhoto" class="form-control" accept="image/*" />
+                                </div>
+                                <div id="preview" style="margin-top: 5px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Member Documents</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-upload" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="file" id="memDocuments" class="form-control" multiple accept="image/*" />
+                                </div>
+                                <div id="docPreview"></div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Email Notifications :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                    <select id="emailNotifications" class="form-control">
+                                        <option value="True">Yes</option>
+                                        <option value="False">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label style="font-size: large;">Joining Date :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input id="joiningDate" readonly class="form-control pressenter" type="text" />
+
+                                </div>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label style="font-size: large;">Additional Notes</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea id="notes" rows="3" class="form-control" placeholder="Notes"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 add_new_member">
+                                <input type="button" value="Create" onclick="AddNewMember();" class="btn btn-primary" />
+                                <a href="/Staff/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#DOB,#joiningDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'mm/dd/yy',
+            yearRange: "-116:+0",
+        });
+
+        $("#joiningDate").datepicker("setDate", new Date());
+
+        $("#phone").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+    $("#memPhoto").change(function (event) {
+        if ((parseFloat(event.target.files[0].size) / 1024) < 5000) {
+            var tempPath = URL.createObjectURL(event.target.files[0]);
+            $("#preview").empty();
+            $("#preview").append("<img src='" + tempPath + "' width='170' height='100' />");
+        }
+        else {
+            $("#memPhoto").val('');
+            $("#preview").empty();
+            bootbox.alert("File should be less than 5mb. Select again after Resize.");
+        }
+    });
+
+    $("#memDocuments").change(function (event) {
+        $("#docPreview").empty();
+        var files = event.target.files;
+        for (var i = 0; i < files.length; i++) {
+            if ((parseFloat(event.target.files[i].size) / 1024) < 5000) {
+                var tempPath = URL.createObjectURL(event.target.files[i]);
+                $("#docPreview").append("<img src='" + tempPath + "' width='170' height='100' />");
+            }
+            else {
+                $("#docPreview").empty();
+                $("#memDocuments").val('');
+                bootbox.alert("File(s) should be less than 5mb. Select again after Resize.");
+                break;
+            }
+        }
+    });
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#email").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#email").val("");
+                    $("#errorMessage").html('Already Exist.Enter again(or left blank, its optional).');
+                    $("#email").focus();
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#email").focusout(function () {
+        if ($("#email").val().trim() != "") {
+            if (!ValidateEmail($("#email").val().trim())) {
+                $("#email").val("");
+                $("#errorMessage").html("Invalid Email.Enter again(or left blank, its optional).");
+            }
+            else {
+
+                $("#errorMessage").empty();
+                checkEmailDuplicasy();
+            }
+        }
+        else {
+            $("#errorMessage").empty();
+        }
+    });
+
+    //$("#amount").focusout(function () {
+    //    var amt = $("#amount").val().trim();
+    //    var planAmt = 0;
+    //    var gst = 0;
+    //    if (parseFloat(amt) > 0) {                          // Tax 18%
+    //        planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+    //        gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+
+    //        $("#pAmt").val(planAmt);
+    //        $("#Pgst").val(gst);
+    //    }
+    //    else {
+    //        $("#pAmt").val('0');
+    //        $("#Pgst").val('0');
+    //    }
+    //});
+
+    //function paymentMode() {
+    //    var mode = $("#paymentMode").val();
+    //    if (mode == "Cheque") {
+    //        $("#cheque").css("display", "block");
+    //        $("#cheque1").css("display", "block");
+    //        $("#chequeNo").val('');
+    //        $("#bankName").val('');
+    //    }
+    //        //else if (mode == "Card")
+    //        //{
+    //        //    $("#cheque").css("display", "none");
+    //        //    $("#card").css("display", "block");
+    //        //}
+    //    else {
+    //        $("#cheque").css("display", "none");
+    //        $("#cheque1").css("display", "none");
+    //        $("#chequeNo").val('');
+    //        $("#bankName").val('');
+    //    }
+    //}
+   // var newWin = "";
+    function AddNewMember() {
+        $(".preloader").css("display", "block");
+        var fname = $("#FName").val().trim();
+        var lname = $("#LName").val().trim();
+        var address = $("#address").val().trim();
+        var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
+        var DOB = $("#DOB").val();
+        var city = $("#city").val().trim();
+        var state = $("#state").val().trim();
+        var emailNotifications = $("#emailNotifications").val();
+        var joiningDate = $('#joiningDate').val();
+        //var PlanForYear=$("#PlanForYear").val();
+        //var password = $("#usrPassword").val();
+        var fatherName = $("#fatherName").val().trim();
+        //var mode = $("#paymentMode").val();
+        //var amount = $("#amount").val();
+        //var chequeNo = $("#chequeNo").val().trim();
+        //var bankName = $("#bankName").val().trim();
+        //var reference = $("#reference").val().trim();
+        var notes = $("#notes").val().trim();
+        //var addonMember = $("#addonMember").val().trim();
+        //var relation = $("#relation").val().trim();
+
+        if (fname != "" && phone != "") {
+            //if (!ValidateEmail($("#email").val())) {
+            //    $("#errorMessage").empty();
+            //    $("#errorMessage").html("Invalid Email.Please Enter it again...");
+            //    $("#errorMessage").css("display", "block");
+            //}
+            //else {
+            //if (mode == "Cheque" && (chequeNo == "" || bankName == "")) {
+            //    $(".preloader").css("display", "none");
+            //    bootbox.alert('Cheque no. & Bank Name are compulsory.');
+            //    return false;
+            //}
+            //else {
+
+            //    var billingDet = JSON.stringify({
+            //        Amount_Paid: amount,
+            //        Cheque_No: chequeNo,
+            //        Mode_Of_Payment: mode,
+            //        BankName: bankName
+            //    });
+                var memberPic = $("#memPhoto")[0].files;
+                var _FormData = new FormData;
+                if (memberPic.length > 0) {
+                    for (var i = 0; i < memberPic.length; i++) {
+                        _FormData.append("MemberPhoto", memberPic[i]);
+                    }
+                }
+                //===========================================================================
+
+                var memDocuments = $("#memDocuments")[0].files;
+                if (memDocuments.length > 0) {
+                    for (var i = 0; i < memDocuments.length; i++) {
+                        _FormData.append("MemberDocuments", memDocuments[i]);
+                    }
+                }
+                //===========================================================================
+
+                _FormData.append("F_Name", fname);
+                _FormData.append("L_Name", lname);
+                _FormData.append("Address", address);
+                _FormData.append("Email", email);
+                _FormData.append("PhoneNo", phone);
+                _FormData.append("DOB", DOB);
+                _FormData.append("City", city);
+                _FormData.append("State", state);
+                _FormData.append("EmailNotifications", emailNotifications);
+                _FormData.append("UserType", 4);
+                //_FormData.append("MembershipPlanIDForUser", $("#MembershipPlan").val());
+                _FormData.append("Staff_JoiningDate", joiningDate);
+                _FormData.append("AadharNo", $("#aadharNo").val().trim());
+                _FormData.append("PAN_Card", $("#PAN_No").val().trim());
+               // _FormData.append("billingDetailsInJson", billingDet);
+                _FormData.append("FatherName", fatherName);
+               // _FormData.append("Reference_Of_Walk_In", reference);
+
+                _FormData.append("Additional_Notes", notes);
+               // _FormData.append("Addon_Member", addonMember);
+                //_FormData.append("Relationship", relation);
+
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Staff/AddNewStaff",
+                    data: _FormData,
+                    dataType: "json",
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function (response) {
+                        $(".preloader").css("display", "none");
+                        if (response.currentUserTypeLoggedin == 2) {
+                            bootbox.confirm("New Staff created only after SuperAdmin Approval.", function (result) {
+                                window.location.href = "/Staff/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                        else {
+                            bootbox.confirm("New Staff Added Successfully.", function (result) {
+                                window.location.href = "/Staff/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+
+                    },
+                   // success: function (response) {
+                   //     newWin = window.open("");
+                   //     //==================================================================================
+
+                   //     var amt = $("#amount").val();
+                   //     var planAmt = 0;
+                   //     var gst = 0;
+                   //     if (parseFloat(amt) > 0) {                          // Tax 18%
+                   //         planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+                   //         gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+                   //     }
+
+                   //     var tbl = '';
+                   //     tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+                   //     tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+                   //     tbl += '<table id="memberData" style="width:100%;margin:0 auto; ">' +
+                   //'<tbody  style="text-align: left;" >' +
+                   //'<tr style="font-size: 9px;">' +
+                   //'<td style="padding: 5px 0;">Customer Name : ' + $("#FName").val().trim() + " " + $("#LName").val().trim() + '</td>' +
+                   //'<td style="padding: 5px 0;">Phone No. : ' + $("#phone").val().trim() + '</td>' +
+
+                   //'</tr>' +
+                   //'<tr style="font-size: 9px;">' +
+                   //'<td style="padding: 5px 0;">Membership Plan : ' + $("#MembershipPlan  option:selected").text() + '</td>' +
+                   //'<td style="padding: 5px 0;">Joining Date : ' + $('#joiningDate').val() + '</td>' +
+
+                   //'</tr>' +
+                   //'<tr style="font-size: 9px;">' +
+                   //'<td style="padding: 5px 0;">Expiry Date : ' + response.ExpiryDate + '</td>' +
+                   //'<td style="padding: 5px 0;">Plan Amount : ₹ ' + planAmt + '</td>' +
+
+                   //'</tr>' +
+                   //'<tr style="font-size: 9px;">' +
+                   //'<td style="padding: 5px 0;">GST(5%) : ₹ ' + gst + '</td>' +
+                   //'<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentMode").val() + '</td>' +
+
+                   //'</tr>' +
+                   //'<tr style="font-size: 9px;">' +
+                   //'<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amount").val() + '</td>' +
+                   //'<td style="padding: 5px 0;"></td>' +
+                   //'</tr>' +
+                   //'</tbody></table>';
+
+                   //     var htmlToPrint = '' +
+                   //                '<style type="text/css">' +
+                   //                'body{font-family: arial;}' +
+                   //                '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                   //                '</style>';
+                   //     htmlToPrint += tbl;
+                   //     newWin.document.open();
+                   //     newWin.document.write(htmlToPrint);
+                   //     newWin.print();
+                   //     newWin.close();
+
+                   //     //==================================================================================
+                   //     $(".preloader").css("display", "none");
+                   //     if (response.currentUserTypeLoggedin == 2) {
+                   //         bootbox.confirm("New Member created only after SuperAdmin Approval.", function (result) {
+                   //             window.location.href = "/Member/Index";
+                   //         });
+                   //         $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                   //     }
+                   //     else {
+                   //         bootbox.confirm("New Member Added Successfully.", function (result) {
+                   //             window.location.href = "/Member/Index";
+                   //         });
+                   //         $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                   //     }
+
+                   // },
+                    error: function (error) {
+                        $(".preloader").css("display", "none");
+                        alert(error.statusText);
+                    },
+                    failure: function (err) {
+                        $(".preloader").css("display", "none");
+                        alert(err.statusText);
+                    }
+                });
+                //}
+            //}
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'Fields with *(Asterik Sign) are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+    //function memberDocsUpload(userID, currentUserTypeLoggedin) {
+    //    var _FormDataForDocs = new FormData;
+    //    var memDocuments = $("#memDocuments")[0].files;
+    //    if (memDocuments.length > 0) {
+    //        for (var i = 0; i < memDocuments.length; i++) {
+    //            _FormDataForDocs.append("MemberDocuments", memDocuments[i]);
+    //        }
+
+    //        _FormDataForDocs.append("UserID", userID);
+
+    //        $.ajax({
+    //            type: "post",
+    //            data: _FormDataForDocs,
+    //            url: "/Member/MembersDocumentsUpload",
+    //            enctype: 'multipart/form-data',
+    //            processData: false,
+    //            contentType: false               
+
+    //        });
+
+    //        $(".preloader").css("display", "none");
+    //        if (currentUserTypeLoggedin == 2) {
+    //            bootbox.confirm("New Member created only after SuperAdmin Approval.", function (result) {
+    //                window.location.href = "/Member/Index";
+    //            });
+    //            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+    //        }
+    //        else {
+    //            bootbox.confirm("New Member Added Successfully.", function (result) {
+    //                window.location.href = "/Member/Index";
+    //            });
+    //            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+    //        }
+    //    }
+    //    else {                        
+    //        $(".preloader").css("display", "none");
+    //        if (currentUserTypeLoggedin == 2) {
+    //            bootbox.confirm("New Member created only after SuperAdmin Approval.", function (result) {
+    //                window.location.href = "/Member/Index";
+    //            });
+    //            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+    //        }
+    //        else {
+    //            bootbox.confirm("New Member Added Successfully.", function (result) {
+    //                window.location.href = "/Member/Index";
+    //            });
+    //            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+    //        }
+    //    }
+
+    //}
+
+    // function PrintBillOfMembership(expiryDate) {
+
+    //     var amt = $("#amount").val();
+    //     var planAmt = 0;
+    //     var gst = 0;
+    //     if (parseFloat(amt) > 0) {                          // Tax 5%
+    //         planAmt = ((parseFloat(amt) * 100) / 105).toFixed(2);
+    //         gst = (parseFloat(planAmt) * (5 / 100)).toFixed(2);
+    //     }
+
+    //     var tbl = '';
+    //     tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+    //     tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+    //     tbl += '<table id="memberData" style="width:100%;margin:0 auto; ">' +
+    //'<tbody  style="text-align: left;" >' +
+    //'<tr style="font-size: 9px;">' +
+    //'<td style="padding: 5px 0;">Customer Name : ' + $("#FName").val().trim() + " " + $("#LName").val().trim() + '</td>' +
+    //'<td style="padding: 5px 0;">Phone No. : ' + $("#phone").val().trim() + '</td>' +
+
+    //'</tr>' +
+    //'<tr style="font-size: 9px;">' +
+    //'<td style="padding: 5px 0;">Membership Plan : ' + $("#MembershipPlan  option:selected").text() + '</td>' +
+    //'<td style="padding: 5px 0;">Joining Date : ' + $('#joiningDate').val() + '</td>' +
+
+    //'</tr>' +
+    //'<tr style="font-size: 9px;">' +
+    //'<td style="padding: 5px 0;">Expiry Date : ' + expiryDate + '</td>' +
+    //'<td style="padding: 5px 0;">Plan Amount : ₹ ' + planAmt + '</td>' +
+
+    //'</tr>' +
+    //'<tr style="font-size: 9px;">' +
+    //'<td style="padding: 5px 0;">GST(5%) : ₹ ' + gst + '</td>' +
+    //'<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentMode").val() + '</td>' +
+
+    //'</tr>' +
+    //'<tr style="font-size: 9px;">' +
+    //'<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amount").val() + '</td>' +
+    //'<td style="padding: 5px 0;"></td>' +
+    //'</tr>' +
+    //'</tbody></table>';
+
+    //     var htmlToPrint = '' +
+    //                '<style type="text/css">' +
+    //                'body{font-family: arial;}' +
+    //                '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+    //                '</style>';
+    //     htmlToPrint += tbl;
+    //     newWin.document.open();
+    //     newWin.document.write(htmlToPrint);
+    //     newWin.print();
+    //     newWin.close();
+
+    // }
+</script>

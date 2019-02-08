@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.BillingDetails>
+
+<style>
+    .hide {
+    visibility:hidden;
+    }
+</style>
+<div class="card">
+    <div class="card-block">
+        @Html.ActionLink("Go Back", "Index", "Report",new { sDate = ViewBag.StartDate, eDate =  ViewBag.EndDate }, new { @class = "btn btn-primary" })
+       <div id="tableReports" class="table-responsive m-t-40">
+    <table id="billDets" class="display table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="hide">ID</th>
+                <th>Name</th>
+                <th>Amount Paid</th>
+                <th>Mode Of Payment</th>
+                <th>Payment_Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td class="hide">@i.ID</td>
+                    <td>@i.F_Name @i.L_Name</td>
+                    <td>@i.Amount_Paid</td>
+                    <td>@i.Mode_Of_Payment</td>
+                    <td>@i.Payment_Date</td>
+                    
+                </tr>   
+            }
+        </tbody>
+    </table>
+</div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#billDets").dataTable({ "order": [[0, "desc"]] });
+    });
+</script>

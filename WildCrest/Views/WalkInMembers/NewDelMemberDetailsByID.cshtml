@@ -1,0 +1,217 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/colors/default-dark.css" id="theme" rel="stylesheet" />
+</head>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        @if (ViewBag.NewDelWalkIn)
+                        {
+                            <a href="/WalkInMembers/ApproveWalkInMembers" class="btn btn-primary" style="margin-bottom: 10px;">Go back</a>
+                        }
+                        else
+                        {
+                            <a href="/WalkInMembers/DeleteWalkInMembers" class="btn btn-primary" style="margin-bottom: 10px;">Go back</a>
+                        }
+                        <h4 class="card-title">Walk-In-Member Details</h4>
+                        <div class="form p-t-20">
+                            @if (Model.ID != 0 && Model.ID != null)
+                            {
+                                <div class="form-group">
+                                    <label style="font-size: large;">First Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.F_Name" class="form-control" id="txt_Fname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Last Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.L_Name" class="form-control" id="txt_Lname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Address :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <textarea id="txt_Address" readonly class="form-control">@Model.Address </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Email :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.Email" class="form-control" id="txt_Email" />
+                                    </div>
+                                </div>
+@* <div class="form-group">
+                                    <label style="font-size:large;">Password :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+                                        <input type="text" readonly value="@Model.Password" class="form-control" id="txt_Password" />
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label style="font-size: large;">Phone No. :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.PhoneNo" class="form-control" id="txt_Phone" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">DOB :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.DOB" class="form-control" readonly id="txt_DOB" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">City :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.City" class="form-control" id="txt_City" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">State :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" readonly value="@Model.State" class="form-control" id="txt_State" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Email Notifications :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <select id="emailNotifications" class="form-control">
+                                            <option disabled value="True">Yes</option>
+                                            <option disabled value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Reference :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                        <select id="ReferalUser" class="form-control">
+                                            <option value="@Model.Reference_Of_Walk_In">@Model.Reference_Of_Walk_In</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.WalkInStayDetails != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Room(s) Alloted Details</h4>
+                            <div class="form p-t-20">
+                                @if (ViewBag.WalkInStayDetails.Count != 0)
+                                {
+                                
+                                    <div class="table-responsive m-t-40">
+                                        <table id="memberList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Check-in</th>
+                                                    <th>Check-out</th>
+                                                    <th>Room Alloted</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var a in ViewBag.WalkInStayDetails)
+                                                {
+                                                    <tr>
+                                                        <td>@a.Check_In</td>
+                                                        <td>@a.Check_Out</td>
+                                                        <td>@a.RoomNo</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label style="font-size: 20px;">------</label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.FoodBillingDetails!=null && ViewBag.FoodBillingDetails.Count != 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Food Details</h4>
+                            <div class="form p-t-20">
+
+
+                                <div class="table-responsive">
+                                    <table id="foodList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Food ItemName</th>
+                                                <th>Quantity</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var r in ViewBag.FoodBillingDetails)
+                                            {
+                                                foreach (var rd in r.MenusBillingDetailsWithBillNo)
+                                                {
+                                                <tr>
+                                                    <td>@rd.FoodName</td>
+                                                    <td>@rd.Quantity</td>
+                                                    <td>@r.PaymentDate</td>
+                                                </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#emailNotifications").val("@Model.EmailNotifications");
+    });
+</script>

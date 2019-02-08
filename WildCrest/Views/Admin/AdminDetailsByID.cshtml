@@ -1,0 +1,87 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>        
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                        <a class="btn btn-primary" style="margin-bottom: 20px;" href="/Admin/Index">Go Back</a>
+                        <h4 class="card-title">Admin Info</h4>
+                        <div class="form p-t-20">
+                            @if(Model.ID!=null && Model.ID!=0){
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <input type="text" id="firstName" readonly value="@Model.F_Name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <input type="text" id="lastName" readonly value="@Model.L_Name" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">DOB :</label>
+                                    <input type="text" id="DOB" readonly value="@Model.DOB" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Email :</label>
+                                    <input type="text" id="Email" readonly value="@Model.Email" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Phone :</label>
+                                    <input type="text" id="Phone" readonly value="@Model.PhoneNo" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Address :</label>
+                                    <input type="text" id="Address" readonly value="@Model.Address" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">City :</label>
+                                    <input type="text" id="City" readonly value="@Model.City" class="form-control form-control-danger">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">State :</label>
+                                    <input type="text" id="State" readonly value="@Model.State" class="form-control form-control-danger">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                @Html.ActionLink("Edit Profile", "AdminDetailsByID", "Admin", new { id = Model.ID, editDetail = "Edit" }, new { @class = "btn btn-primary btn-margin" })
+                            </div>
+                            }
+                            else{
+                             <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

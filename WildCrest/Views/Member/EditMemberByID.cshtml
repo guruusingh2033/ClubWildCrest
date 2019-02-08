@@ -1,0 +1,487 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<style>
+    #docPreview img {
+        margin: 7px 7px 0px 0px;
+    }
+</style>
+
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                        <a href="/Member/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Update Member Detail</h4>
+                        <div class="form p-t-20">
+                            @if (Model != null && Model.ID != 0)
+                            {
+                                <div class="form-group">
+                                    <label style="font-size: large;">MemberID @*<span class="complusoryFields"> *</span>*@</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.CustomMemberID" readonly class="form-control" id="txt_customMemberID" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">First Name <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.F_Name" class="form-control requiredFields" id="txt_Fname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Last Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.L_Name" class="form-control" id="txt_Lname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Father Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.FatherName" class="form-control" id="txt_fatherName" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6" style="margin: 10px 0;">
+                                        <label>Add on Member Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" class="form-control" id="addonMember" value="@Model.Addon_Member"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" style="margin: 10px 0;">
+                                        <label>Relationship</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" class="form-control" id="relation" value="@Model.Relationship"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Reference By :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.Reference_Of_Walk_In" class="form-control" id="txt_reference" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Address </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <textarea id="txt_Address" class="form-control">@Model.Address </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Email :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.Email" class="form-control" id="txt_Email" />
+                                    </div>
+                                    <i>
+                                        <div id="errorMessage" style="color: red; font-weight: 400;"></div>
+                                    </i>
+                                </div>
+                                @*<div class="form-group">
+                                    <label style="font-size:large;">Password(optional) :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></div>
+                                        <input type="text" value="@Model.Password" class="form-control" id="txt_Password" />
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label style="font-size: large;">Phone No. <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.PhoneNo" class="form-control requiredFields" id="txt_Phone" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">DOB </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.DOB" class="form-control" readonly id="txt_DOB">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Aadhar No. :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                        <input id="aadharNo" value="@Model.AadharNo" placeholder="Aadhar No." class="form-control" type="text"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">PAN_No :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                                        <input id="PAN_No" value="@Model.PAN_Card" placeholder="PAN_No" class="form-control" type="text"/>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">City </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.City" class="form-control" id="txt_City" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">State</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.State" class="form-control" id="txt_State" />
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                <label style="font-size: large;">Member Photo</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-upload" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="file" id="memPhoto" class="form-control" accept="image/*" />
+                                </div>
+                                <div id="preview" style="margin-top: 5px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Member Documents</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-upload" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="file" id="memDocuments" class="form-control" multiple accept="image/*" />
+                                </div>
+                                <div id="docPreview"></div>
+                            </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Email Notifications :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <select id="emailNotifications" class="form-control">
+                                            <option value="True">Yes</option>
+                                            <option value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Membership Plan :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        @if (Model.MembershipPlanIDForUser == 0)
+                                        {
+                                            <select id="MembershipPlan" onchange="ExpiryDateCalc();" class="form-control">
+                                                <option value="0">Select Plan</option>
+                                                @foreach (var s in ViewBag.MembershipPlans)
+                                                {
+                                                    <option value="@s.ID">@s.PlanName</option>
+                                                }
+
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select id="MembershipPlan" onchange="ExpiryDateCalc();" class="form-control">
+                                                @*<option value="0">Select Plan</option>*@
+                                                @foreach (var s in ViewBag.MembershipPlans)
+                                                {
+                                                    if (s.ID >= Model.MembershipPlanIDForUser)
+                                                    {
+                                                    <option value="@s.ID">@s.PlanName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                    <option disabled value="@s.ID">@s.PlanName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Membership Joining Date :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input id="joiningDate" readonly class="form-control pressenter" type="text" />
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Membership Expiry Date :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <input id="expireDate" readonly class="form-control pressenter" type="text" />
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Additional Notes </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                        <textarea id="notes" rows="3" class="form-control">@Model.Additional_Notes </textarea>
+                                    </div>
+                                </div>
+@*<div class="form-group">
+                                    <label style="font-size:large;">Membership Plan for :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" font-size:initial"></i></div>
+                                        <select id="PlanForYear" class="form-control">
+                                            <option value="1">1 Year</option>
+                                            <option value="2">2 Year</option>
+                                            <option value="3">3 Year</option>
+                                            <option value="4">4 Year</option>
+                                            <option value="5">5 Year</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <input type="button" class="btn btn-primary" value="Update" onclick="UpdateMemberByID(@Model.ID);" />
+                                <a href="/Member/Index" class="btn btn-primary">Cancel</a>
+                            }
+                            else
+                            {
+                                <label>No Record Found.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+</body>
+
+<script>
+    $(document).ready(function(){
+        if (@Model.ID != 0 && @Model.ID!=null)
+        {
+            $("#emailNotifications").val("@Model.EmailNotifications");
+            $("#MembershipPlan").val("@Model.MembershipPlanIDForUser");
+            $('#txt_Phone').keydown(function(e){-1!==$.inArray(e.keyCode,[46,8,9,27,13,110,190])||/65|67|86|88/.test(e.keyCode)&&(!0===e.ctrlKey||!0===e.metaKey)||35<=e.keyCode&&40>=e.keyCode||(e.shiftKey||48>e.keyCode||57<e.keyCode)&&(96>e.keyCode||105<e.keyCode)&&e.preventDefault()});
+        
+            $('#joiningDate,#txt_DOB').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy',
+                yearRange: "-116:+0",
+                onSelect: function (dateText, inst) {
+                    ExpiryDateCalc();
+                }
+            });
+            var usrJoinDate='@Model.MembershipJoiningDate';
+            if(usrJoinDate!="")
+                $("#joiningDate").datepicker("setDate", new Date(usrJoinDate));
+            else
+                $("#joiningDate").datepicker("setDate", new Date());
+    
+            //---------------------------------------------------------------------------------------
+
+            ExpiryDateCalc();
+        }
+
+        $("#memPhoto").change(function (event) {
+            if ((parseFloat(event.target.files[0].size) / 1024) < 5000) {
+                var tempPath = URL.createObjectURL(event.target.files[0]);
+                $("#preview").empty();
+                $("#preview").append("<img src='" + tempPath + "' width='170' height='100' />");
+            }
+            else {
+                $("#memPhoto").val('');
+                $("#preview").empty();
+                bootbox.alert("File should be less than 5mb. Select again after Resize.");
+            }
+        });
+
+        $("#memDocuments").change(function (event) {
+            $("#docPreview").empty();
+            var files = event.target.files;
+            for (var i = 0; i < files.length; i++) {
+                if ((parseFloat(event.target.files[i].size) / 1024) < 5000) {
+                    var tempPath = URL.createObjectURL(event.target.files[i]);
+                    $("#docPreview").append("<img src='" + tempPath + "' width='170' height='100' />");
+                }
+                else {
+                    $("#docPreview").empty();
+                    $("#memDocuments").val('');
+                    bootbox.alert("File(s) should be less than 5mb. Select again after Resize.");
+                    break;
+                }
+            }
+        });
+    });
+
+    function ExpiryDateCalc() {
+        var MembershipPlan=$("#MembershipPlan").val();
+        if(MembershipPlan!=0){
+            var splitJoiningDate=$("#joiningDate").val().split("/");
+            var getJoiningToSetExpiry = new Date(splitJoiningDate[2], splitJoiningDate[0] - 1, splitJoiningDate[1]); 
+            var jsonString='@Model.MembershipWithYear';
+            yourJsonString = jsonString.replace(/&quot;/g, "\"");
+            jsonString=$.parseJSON(yourJsonString);
+            $.each(jsonString, function( index, value ) {
+                if(value.Key==MembershipPlan)
+                {
+                    getJoiningToSetExpiry.setFullYear(getJoiningToSetExpiry.getFullYear() + parseInt(value.Value));
+                    return false;
+                }
+            });
+            var month = (1 + getJoiningToSetExpiry.getMonth()).toString();
+            month = month.length > 1 ? month : '0' + month;
+
+            var day = getJoiningToSetExpiry.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+            $("#expireDate").val(month+"/"+day+"/"+getJoiningToSetExpiry.getFullYear());
+        }
+    }
+
+    function UpdateMemberByID(id) {
+        var fname = $("#txt_Fname").val().trim();
+        var lname = $("#txt_Lname").val().trim();
+        var address = $("#txt_Address").val().trim();
+        var email = $("#txt_Email").val().trim();
+        var phone = $("#txt_Phone").val().trim();
+        var city = $("#txt_City").val().trim();
+        var state = $("#txt_State").val().trim();
+        //var password = $("#txt_Password").val();
+        var fatherName=$("#txt_fatherName").val().trim();
+        var reference=$("#txt_reference").val().trim();
+        var emailNotify=$("#emailNotifications").val();
+        var joiningDate=$('#joiningDate').val();
+        var dob=$("#txt_DOB").val();
+        var txt_customMemberID=$("#txt_customMemberID").val().trim();
+
+        var notes = $("#notes").val().trim();
+        var addonMember = $("#addonMember").val().trim();
+        var relation = $("#relation").val().trim();
+
+        if (fname != "" && phone != "") {
+                      
+            @*var prf = {
+                ID:@Model.ID,
+                F_Name: fname,
+                L_Name: lname,
+                Address: address,
+                Email: email,
+                PhoneNo: phone,
+                City: city,
+                State: state,
+                UserType: 3,
+                //Password: password,
+                EmailNotifications:emailNotify,
+                MembershipPlanIDForUser:$("#MembershipPlan").val(),
+                MembershipJoiningDate: joiningDate,
+                //PlanForYear:PlanForYear,
+                AadharNo:$("#aadharNo").val().trim(),
+                PAN_Card:$("#PAN_No").val().trim(),
+                DOB:dob,
+                FatherName:fatherName,
+                Reference_Of_Walk_In:reference,
+                Additional_Notes:notes,
+                Addon_Member:addonMember,
+                Relationship:relation
+                //CustomMemberID:txt_customMemberID
+            };*@
+            var memberPic = $("#memPhoto")[0].files;
+            var _FormData = new FormData;
+            if (memberPic.length > 0) {
+                for (var i = 0; i < memberPic.length; i++) {
+                    _FormData.append("MemberPhoto", memberPic[i]);
+                }
+            }
+            //===========================================================================
+
+            var memDocuments = $("#memDocuments")[0].files;
+            if (memDocuments.length > 0) {
+                for (var i = 0; i < memDocuments.length; i++) {
+                    _FormData.append("MemberDocuments", memDocuments[i]);
+                }
+            }
+            //===========================================================================
+            _FormData.append("ID", @Model.ID);
+            _FormData.append("F_Name", fname);
+            _FormData.append("L_Name", lname);
+            _FormData.append("Address", address);
+            _FormData.append("Email", email);
+            _FormData.append("PhoneNo", phone);
+            _FormData.append("DOB", dob);
+            _FormData.append("City", city);
+            _FormData.append("State", state);
+            _FormData.append("EmailNotifications", emailNotify);
+            _FormData.append("UserType", 3);
+            _FormData.append("MembershipPlanIDForUser", $("#MembershipPlan").val());
+            _FormData.append("MembershipJoiningDate", joiningDate);
+            _FormData.append("AadharNo", $("#aadharNo").val().trim());
+            _FormData.append("PAN_Card", $("#PAN_No").val().trim());
+            //_FormData.append("billingDetailsInJson", billingDet);
+            _FormData.append("FatherName", fatherName);
+            _FormData.append("Reference_Of_Walk_In", reference);
+
+            _FormData.append("Additional_Notes", notes);
+            _FormData.append("Addon_Member", addonMember);
+            _FormData.append("Relationship", relation);
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Member/UpdateDetailsByID",
+                //data: JSON.stringify({ prf }),
+                data: _FormData,
+                dataType: "json",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    bootbox.confirm("Member Updated Successfully.", function (result) {
+                        window.location.href = "/Member/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+            //}
+
+        }
+        else{
+            bootbox.alert({
+                message: 'Fields with *(Asterik Sign) are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+    function checkEmailDuplicasy() {
+        $.ajax({
+            type: "post",
+            data: "{'email':'" + $("#txt_Email").val().trim() + "'}",
+            url: "/Admin/CheckUserNameDuplicasy",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != 0) {
+                    $("#txt_Email").val("");
+                    $("#errorMessage").html('Already Exist.Enter again(or left blank, its optional).');
+                }
+                else {
+                    $("#errorMessage").empty();
+                }
+
+            }
+        });
+    }
+
+    $("#txt_Email").focusout(function () {
+        if($("#txt_Email").val().trim()!=""){
+            if (!ValidateEmail($("#txt_Email").val().trim())) {
+                $("#txt_Email").val("");
+                $("#errorMessage").html("Invalid Email.Enter again(or left blank, its optional).");
+            }
+            else {
+
+                $("#errorMessage").empty();
+                var emailFromBackend='@Model.Email';
+                if(emailFromBackend=="" || emailFromBackend!=$("#txt_Email").val().trim())
+                    checkEmailDuplicasy();
+            }
+        }
+        else{
+            $("#errorMessage").empty();
+        }
+    });
+</script>

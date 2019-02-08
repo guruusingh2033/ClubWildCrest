@@ -1,0 +1,174 @@
+﻿@model WildCrest.Models.WildCrestModels.Event
+@*
+    <style>
+        td {
+            padding: 5px;
+        }
+    </style>*@
+<style>
+    div.gallery {
+        border: 1px solid #ccc;
+        /*float: left;
+        width: 180px;*/
+        position: relative;
+        /*display: inline-block;*/
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        div.gallery .close {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            z-index: 9;
+            background-color: #FFF;
+            padding: 5px 2px 2px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: .2;
+            text-align: center;
+            font-size: 22px;
+            line-height: 10px;
+            border-radius: 50%;
+        }
+
+        div.gallery:hover .close {
+            opacity: 1;
+        }
+</style>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/Events/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Event Detail</h4>
+                        <div class="form p-t-20">
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event Name</label>
+                                    <input type="text" readonly id="EventName" value="@Model.EventName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event Date</label>
+                                    <input type="text" id="Date" readonly value="@Model.EventDate" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event Time :</label>
+                                    <input type="text" id="Time" readonly value="@Model.EventTime" class="form-control form-control-danger">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event Place :</label>
+                                    <input type="text" id="Place" readonly value="@Model.Place" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event Organised By :</label>
+                                    <input type="text" id="Organised" readonly value="@Model.OrganisedBy" class="form-control form-control-danger">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Event AddedBy :</label>
+                                    <input type="text" id="AddedBy" readonly value="@Model.AddedBy" class="form-control form-control-danger">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Description :</label>
+                                    <textarea id="Description" readonly class="form-control form-control-danger">@Model.Description</textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12" style="clear: both;">
+                                <div class="row">
+                                    @foreach (var item in ViewBag.ImageGallery)
+                                    {
+                                    
+                                        <div class="col-md-3 col-sm-6 col-xs-12 event_details_img">
+                                            <div class="gallery">
+
+                                                @*<a target="_blank" href="@item.Img_Video_Path">*@
+                                                <span class="close" title="Delete" onclick="deleteImage(@item.ID);">&times;</span>
+                                                <img src="@item.Img_Video_Path" class="img-responsive"/>
+                                                @*</a>*@
+                                            </div>
+                                        </div>
+                                   
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 add_new_member" style="padding: 0 8px 0 7px;">
+                                @if (Request.Cookies["PageSetting"] != null)
+                                {
+                                    if (Request.Cookies["PageSetting"]["EventsPermission"] != "View")
+                                    {
+                                    @Html.ActionLink("Edit", "EventDetailsByID", "Events", new { id = Model.ID, editDetail = "Edit" }, new { @class = "btn btn-primary" })
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Edit", "EventDetailsByID", "Events", new { id = Model.ID, editDetail = "Edit" }, new { @class = "btn btn-primary" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    function deleteImage(imgID) {
+        bootbox.confirm("Are you sure to delete this Image?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Events/DeleteImageByID",
+                    data: JSON.stringify({ imgID: imgID }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Image Deleted.", function (result) {
+                            window.location.href = "";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Image Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>
+@*@Url.Action("EventDetailsByID", "Events", new { id = Model.ID, editDetail = "Details" }, null)*@

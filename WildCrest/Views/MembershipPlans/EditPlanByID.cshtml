@@ -1,0 +1,143 @@
+﻿@model WildCrest.Models.WildCrestModels.MembershipPlans
+
+@*<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/colors/default-dark.css" id="theme" rel="stylesheet" />
+</head>*@
+<body class="fix-header card-no-border">
+   
+    <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                            <a href="/MembershipPlans/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Update Membership plan</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Plan Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sitemap" aria-hidden="true"></i></div>
+                                        <input type="text" id="PName" class="form-control requiredFields" value="@Model.PlanName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Plan Details <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                                        <textarea class="form-control requiredFields" id="PDetails">@Model.PlanDetails</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">No. of Stays/Year <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></div>
+                                        <input type="text" class="form-control requiredFields" id="noOfStays" value="@Model.NoOfStays" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Plan Amount <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></div>
+                                        <input type="text" class="form-control requiredFields" id="planAmt" value="@Model.PlanAmount" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Membership Plan Duration(in Year) :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email" style="font-size:initial"></i></div>
+                                        <select id="PlanForYear" class="form-control">
+                                           <option value="1">1 Year</option>
+                                            <option value="2">2 Years</option>
+                                            <option value="3">3 Years</option>
+                                            <option value="4">4 Years</option>
+                                            <option value="5">5 Years</option>
+                                            <option value="6">6 Years</option>
+                                            <option value="7">7 Years</option>
+                                            <option value="8">8 Years</option>
+                                            <option value="9">9 Years</option>
+                                            <option value="10">10 Years</option>
+                                            <option value="11">11 Years</option>
+                                            <option value="12">12 Years</option>
+                                            <option value="13">13 Years</option>
+                                            <option value="14">14 Years</option>
+                                            <option value="15">15 Years</option>
+                                            <option value="16">16 Years</option>
+                                            <option value="17">17 Years</option>
+                                            <option value="18">18 Years</option>
+                                            <option value="19">19 Years</option>
+                                            <option value="20">20 Years</option>
+                                            <option value="21">21 Years</option>
+                                            <option value="22">22 Years</option>
+                                            <option value="23">23 Years</option>
+                                            <option value="24">24 Years</option>
+                                            <option value="25">25 Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <input type="button" value="Update" class="btn btn-primary" onclick="UpdatePlanByid(@Model.ID);" />
+                                @Html.ActionLink("Cancel", "Index", "MembershipPlans", null, new { @class = "btn btn-primary" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#noOfStays,#planAmt').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+    
+        $("#PlanForYear").val(@Model.MembershipPlanForYear);
+    });
+
+    function UpdatePlanByid(id) {
+        var PName = $("#PName").val().trim();
+        var PDetails = $("#PDetails").val().trim();
+        var noOfStays = $("#noOfStays").val();
+        var planAmt=$("#planAmt").val();
+        var planDuration=$("#PlanForYear").val();
+        if (PName != "" && PDetails != "" && noOfStays != "" && planAmt!="") {
+            var newPlan = {
+                ID: id,
+                PlanName: PName,
+                PlanDetails: PDetails,
+                NoOfStays: noOfStays,
+                PlanAmount:planAmt,
+                MembershipPlanForYear:planDuration
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/MembershipPlans/EditMembershipPlan",
+                data: JSON.stringify({ newPlan }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Membership Plan Updated Successfully.", function (result) {
+                        window.location.href = "/MembershipPlans/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    //alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: 'All fields are complusory.',
+                size: "medium"
+            });
+        }
+    }
+</script>

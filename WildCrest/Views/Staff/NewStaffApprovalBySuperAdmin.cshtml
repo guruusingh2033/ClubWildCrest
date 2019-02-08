@@ -1,0 +1,94 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Profile>
+
+<div class="card">
+    <div class="card-block">
+        @Html.ActionLink("Go Back", "Index", "Staff", null, new { @class = "btn btn-success btn-margin", @style = "margin-left:0;" })
+        <div class="table-responsive m-t-40">
+            <table id="staffList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone No.</th>
+                        <th>Address</th>
+                        <th>Added By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td style="width: 20%;">
+                                <a title="Detail" href="@Url.Action("NewDelStaffDetailsByID", "Staff", new { id = i.ID, editDetail = "New" }, null)">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                                <a title="Approve" href="#" onclick="ApproveStaff(@i.ID);">
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                </a>
+                                <a title="Deny" onclick="DeleteStaffById(@i.ID);" href="#">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td style="width: 20%;">@i.F_Name @i.L_Name</td>
+                            <td>@i.Email</td>
+                            <td style="width: 20%;">@i.PhoneNo</td>
+                            <td style="width: 25%;">@i.Address</td>
+                            <td style="width: 20%;">@i.AddedBy</td>
+
+
+                        </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#staffList").dataTable();
+    });
+    function DeleteStaffById(id) {
+        bootbox.confirm("Deny New Member Approval & Delete?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Staff/DeleteStaffByID",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Staff Deleted.", function (result) {
+                            window.location.href = "/Staff/NewStaffApprovalBySuperAdmin";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+
+    function ApproveStaff(id) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Staff/ApproveStaff",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm("Staff Approved.", function (result) {
+                    window.location.href = "/Staff/NewStaffApprovalBySuperAdmin";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            }
+        });
+    }
+</script>

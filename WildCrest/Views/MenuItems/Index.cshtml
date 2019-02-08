@@ -1,0 +1,147 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            <ul class="list-inline list-unstyled voucher_buttons">
+                @if (Request.Cookies["PageSetting"] != null)
+                {
+                    if (Request.Cookies["PageSetting"]["MenuItemsPermission"] == "All")
+                    {
+                    <li>@Html.ActionLink("Create New Food Item", "AddNewFoodItem", "MenuItems", new { @class = "btn btn-primary" })
+                    </li>
+                    }
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Create New Food Item", "AddNewFoodItem", "MenuItems", new { @class = "btn btn-primary" })
+                    </li>
+                }
+
+                @if (Request.Cookies["UserType"].Value == "1")
+                {
+                    <li>
+                        @Html.ActionLink("Approve New Food Items", "NewFoodItemApprovalBySuperAdmin", "MenuItems", new { @class = "btn btn-primary" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Delete Food Items(Request from Staff)", "DeleteFoodItemBySuperAdminApproval", "MenuItems", new { @class = "btn btn-primary" })
+                    </li>
+                }
+                <li>@Html.ActionLink("Consumables", "ConsumablesItem", "MenuItems",null, new { @class = "btn btn-primary" })</li>
+            </ul>
+        </div>
+        <div class="table-responsive m-t-40">
+            <table id="foodItemList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="hide">Id</th>
+                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Added By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td class="hide">@i.ID</td>
+                            <td style="width: 20%;">
+                                @if (Request.Cookies["PageSetting"] != null)
+                                {
+                                    if (Request.Cookies["PageSetting"]["VendorsPermission"] == "View")
+                                    {
+                                    <a title="Detail" href="@Url.Action("FoodItemEditByID", "MenuItems", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    }
+                                    else if (Request.Cookies["PageSetting"]["VendorsPermission"] == "All")
+                                    {
+                                    <a title="Detail" href="@Url.Action("FoodItemEditByID", "MenuItems", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Edit" href="@Url.Action("FoodItemEditByID", "MenuItems", new { id = i.ID }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteFoodItemById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a title="Detail" href="@Url.Action("FoodItemEditByID", "MenuItems", new { id = i.ID, editDetail = "Details" }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Edit" href="@Url.Action("FoodItemEditByID", "MenuItems", new { id = i.ID }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteFoodItemById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                }
+
+                            </td>
+                            <td style="width: 20%;">@i.Food_Item_Name</td>
+                            <td style="width: 30%;">@i.Details</td>
+                            <td>₹ @i.Price</td>
+                            <td>@i.FoodType</td>
+                            <td>@i.AddedBy</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#foodItemList").dataTable({ "order": [[0, "desc"]] });
+    });
+    function DeleteFoodItemById(id) {
+        bootbox.confirm("Are you sure to delete this Food Item?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/MenuItems/DeleteFoodItemById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == 1) {
+                            bootbox.confirm("Food Item Deleted.", function (result) {
+                                window.location.href = "/MenuItems/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                        else {
+                            bootbox.confirm("Food Item Deleted only after SuperAdmin Approval.", function (result) {
+                                window.location.href = "/MenuItems/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

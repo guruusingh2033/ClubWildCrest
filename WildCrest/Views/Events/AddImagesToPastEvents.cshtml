@@ -1,0 +1,86 @@
+﻿<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+       
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <a href="/Events/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">File Upload</h4> 
+                            <div class="form p-t-20">
+                                <input type="file" id="input-file-now" class="dropify" multiple accept="image/*"/><br /><br />
+                                <input type='button' class='btn btn-primary' value='Add Images' onclick='addImagesByEvent(@ViewBag.EventID);' />
+                                @Html.ActionLink("Cancel", "Index", "Events", new { @class = "btn btn-primary" })
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+      
+    </div>
+    </body>
+    
+    <script>
+        function addImagesByEvent(EventID) {
+            $(".preloader").css("display", "block");
+            var files = $("#input-file-now")[0].files;
+            if (files.length > 0) {
+                if (files.length < 6) {
+                    var fileData = new FormData();
+                    fileData.append("EventID", EventID);
+                    for (var i = 0; i < files.length; i++) {
+                        
+                        if ((parseFloat(files[i].size) / 1024) < 5000) {
+                            fileData.append(files[i].name, files[i]);
+                        }
+                        else{
+                            $(".preloader").css("display", "none");
+                            $("#input-file-now").val('');
+                            
+                            bootbox.alert("File(s) should be less than 5mb. Select again after Resize.");
+                            return false;
+                        }
+                    }
+                    
+                    $.ajax({
+                        url: '/Events/AddImagesByEvent',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            $(".preloader").css("display", "none");
+                            bootbox.confirm("Image(s) added.", function (result) {
+                                window.location.href = "/Events/Index";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        },
+                        error: function (err) {
+                            $(".preloader").css("display", "none");
+                            bootbox.alert({
+                                message: err.statusText,
+                                size: "small"
+                            });
+                        }
+                    });
+                }
+                else {
+                    $(".preloader").css("display", "none");
+                    bootbox.alert({
+                        message: "Please select only 5 images.",
+                        size: "small"
+                    });
+                    $("#input-file-now").val("");
+                }
+            }
+            else {
+                $(".preloader").css("display", "none");
+                bootbox.alert({
+                    message: "Please select image(s).",
+                    size: "small"
+                });
+            }
+
+        }
+    </script>

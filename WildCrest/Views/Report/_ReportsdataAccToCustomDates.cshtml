@@ -1,0 +1,197 @@
+﻿@model WildCrest.Models.WildCrestModels.Reports
+
+<style>
+    .hide {
+    visibility:hidden;
+    }
+</style>
+<div id="tableReports" class="table-responsive m-t-40">
+    <table id="reports" class="display table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="hide">S.NO.</th>
+                <th></th>
+                <th>Sale (without GST)</th>
+                <th>Discount</th>
+                <th>GST</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="hide">1</td>
+                <td>@if (Model.Menus_Total != 0)
+                    {
+                        var arr = new[,]{ 
+                            {"Temp_Tax_Data","gst"},
+                            {"Temp_Day_Data","7"},
+                            {"Temp_AdminID_Data","0"},
+                            {"Temp_SDate_Data",Model.StartDate},
+                            {"Temp_EndDate_Data",Model.EndDate}
+                            };
+                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
+                        @Html.ActionLink("Food Billing", "BillsIndex", "Billing", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>Food Billing</span>}</td>
+                <td>@Model.Menus_Sale</td>
+                <td>@Model.Menus_Discount</td>
+                <td>@Model.Menus_GST</td>
+                <td>@Model.Menus_Total</td>
+            </tr>
+            <tr>
+                <td class="hide">2</td>
+                <td>@if (Model.NonMenusGst_Total != 0)
+                    {
+                        var arr = new[,]{ 
+                            {"Temp_Tax_Data","nonGst"},
+                            {"Temp_Day_Data","7"},
+                            {"Temp_AdminID_Data","0"},
+                            {"Temp_SDate_Data",Model.StartDate},
+                            {"Temp_EndDate_Data",Model.EndDate}
+                            };
+                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
+                        @Html.ActionLink("NonGST Food Billing", "BillsIndex", "Billing", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>NonGST Food Billing</span>}</td>
+                <td>@Model.NonMenusGst_Sale</td>
+                <td>@Model.NonMenusGst_Discount</td>
+                <td>@Model.NonMenusGst_GST</td>
+                <td>@Model.NonMenusGst_Total</td>
+            </tr>
+            <tr>
+                <td class="hide">3</td>
+                <td>@if (Model.Room_Total != 0)
+                    {@Html.ActionLink("Room Billing", "PreviousBookings", "AdvancedBookingFromMember", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>Room Billing</span>}</td>
+                <td>@Model.Room_Sale</td>
+                <td>@Model.Room_Discount</td>
+                <td>@Model.Room_GST</td>
+                <td>@Model.Room_Total</td>
+            </tr>
+            <tr>
+                <td class="hide">4</td>              
+                <td>@if (Model.MemBill_Total != 0)
+                    {@Html.ActionLink("Members Billing(Membership)", "Members_Membership_Info", "Report", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>Members Billing(Membership)</span>}</td>
+                <td>@Model.MemBill_Sale</td>
+                <td>@Model.MemBill_Discount</td>
+                <td>@Model.MemBill_GST</td>
+                <td>@Model.MemBill_Total</td>
+            </tr>
+            <tr>
+                <td class="hide">5</td>
+                <td>Total</td>
+                <td>@Model.Total_Sale</td>
+                <td>@Model.Total_Discount</td>
+                <td>@Model.Total_GST</td>
+                <td>@Model.Total_Amount</td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" value="Print" class="btn btn-primary" onclick="PrintReport();" />
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#reports").dataTable({ "order": [[0, "asc"]] });
+    });
+
+    function PrintReport() {
+        $(".preloader").css("display", "block");
+
+        var tbl = '';
+        tbl += '<center>Sale Report From @Model.StartDate to @Model.EndDate</center><br>';
+
+        tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+  '<thead  style="text-align: center;" >' +
+  '<tr style="font-size: 12px;font-weight:400; text-align: center;">' +
+  '<th style="padding: 5px 5px;"></th>' +
+
+  '<th style="padding: 5px 5px;">Sale</th>' +
+  '<th style="padding: 5px 5px;">Discount</th>' +
+
+  '<th style="padding: 5px 5px;">GST</th>' +
+  '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+  '</tr>' +
+  '</thead>' +
+  '<tbody>';
+        
+                tbl += '<tr style="font-size: 12px;text-align: center;">' +
+    '<td style="padding: 8px 5px;">Food Billing</td>' +
+
+    '<td style="padding: 8px 5px;"><label>@Model.Menus_Sale</label></td>' +
+    '<td style="padding: 8px 5px;"><label>@Model.Menus_Discount</label></td>' +
+    '<td style="padding: 8px 5px;"><label>@Model.Menus_GST</label></td>' +
+    '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Menus_Total</label></td>' +
+    '</tr>';
+           
+                tbl += '<tr style="font-size: 12px;text-align: center;">' +
+            '<td style="padding: 8px 5px;">NonGST Food Billing</td>' +
+
+            '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_Sale</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_Discount</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_GST</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>@Model.NonMenusGst_Total</label></td>' +
+            '</tr>';
+
+        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+            '<td style="padding: 8px 5px;">Room Billing</td>' +
+
+            '<td style="padding: 8px 5px;"><label>@Model.Room_Sale</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.Room_Discount</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.Room_GST</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Room_Total</label></td>' +
+            '</tr>';
+
+        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+           '<td style="padding: 8px 5px;">Room Billing</td>' +
+
+           '<td style="padding: 8px 5px;"><label>@Model.MemBill_Sale</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.MemBill_Discount</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.MemBill_GST</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>@Model.MemBill_Total</label></td>' +
+            '</tr>';
+
+        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+            '<td style="padding: 8px 5px;">Total</td>' +
+
+            '<td style="padding: 8px 5px;"><label>@Model.Total_Sale</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.Total_Discount</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.Total_GST</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Total_Amount</label></td>' +
+            '</tr>';
+            
+       
+        tbl += "</tbody></table>";
+
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                    'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                        'border-collapse:collapse;}' +
+
+        '#tabel-heading th {' +
+            'border:1px solid black;' +
+        '}' +
+        '#tabel-heading td {' +
+            'border-right:1px solid black;' +
+            'border-left:1px solid black;}' +
+
+        '#tabel-heading .border-bottom {' +
+           'border-bottom:1px solid black;}' +
+        '#tabel-heading .border-top {' +
+           'border-top:1px solid black;}' +
+        '#tabel-heading .border-left {' +
+            'border-left:none;}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+
+    }
+</script>

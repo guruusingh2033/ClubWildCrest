@@ -1,0 +1,88 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+<div class="col-md-12 admin-fom-inf">
+    @*<div class="container">*@
+
+
+    <div class="row">
+        <div class="form-body">
+            <h3 class="card-title">Profile</h3>
+            <hr>
+            @*<div class="row p-t-20">*@
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label">First Name</label>
+                    <input type="text" id="firstName" disabled="disabled" value="@Model.F_Name" class="form-control">
+
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="form-group has-danger">
+                    <label class="control-label">Last Name</label>
+                    <input type="text" id="lastName" disabled="disabled" value="@Model.L_Name" class="form-control form-control-danger">
+
+                </div>
+            </div>
+            @*</div>*@
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">DOB :</label>
+                        <input type="text" id="DOB" disabled="disabled" value="@Model.DOB" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Email :</label>
+                        <input type="text" id="Email" disabled="disabled" value="@Model.Email" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Phone :</label>
+                        <input type="text" id="Phone" disabled="disabled" value="@Model.PhoneNo" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Address :</label>
+                        <input type="text" id="Address" disabled="disabled" value="@Model.Address" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">City :</label>
+                        <input type="text" id="City" disabled="disabled" value="@Model.City" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group has-danger">
+                        <label class="control-label">State :</label>
+                        <input type="text" id="State" disabled="disabled" value="@Model.State" class="form-control form-control-danger">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

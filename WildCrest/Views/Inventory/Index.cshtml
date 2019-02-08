@@ -1,0 +1,337 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Inventory>
+
+<style>
+    .modal-body1 {
+        margin-left: 25px;
+    }
+
+    .fa-plus-square {
+        font-size: 19px;
+        color: #272c33;
+    }
+
+    /*.modal-body {
+        overflow-y: scroll;
+        height: 400px;
+    }*/
+    .loader_gif {
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+opacity: .8;
+}
+</style>
+<div class="loader_gif" style="display:none;"></div>
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            @Html.ActionLink("Add New Item", "AddNewItem", "Inventory", new { @class = "btn btn-primary btn-margin" })
+            @Html.ActionLink("Inventory Usage", "InventoryUsage", "Inventory", new { @class = "btn btn-primary btn-margin" })
+        </div>
+        <div class="table-responsive m-t-40">
+            <table id="inventoryList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+
+                        <th>Actions</th>
+                        <th>Item Name</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>In Stock</th>
+                        <th>Price</th>
+                        <th>Vendor Name</th>
+                        <th>Added Date</th>
+                        <th>Other Info</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <a title="Detail" href="@Url.Action("InventoryDetailsByID", "Inventory", new { id = i.ID }, null)">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                                @*<a title="Edit" href="@Url.Action("AdminDetailsByID", "Admin", new { id = i.ID, editDetail = "Edit" }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>*@
+
+                                <a href="#" title="Delete" onclick="DeleteInventoryById(@i.ID);">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                                @*<a class="plusItem" title="Add More Quantity" href="/Inventory/AddNewItem"><i class="fa fa-plus-square" aria-hidden="true"></i></a>*@
+                                <button type="button" title="Add More Quantity" class="btn btn-link" style="box-shadow:none;" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Price="@i.Price" data-toggle="modal" data-target="#qtyModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                            </td>
+                            <td>@i.Item_Name</td>
+                            <td>@i.Type</td>
+                            <td>@(String.Format("{0:0.##}", i.Quantity))</td>
+                            <td>@(String.Format("{0:0.##}", i.InStock)) (@i.Measurement)</td>
+                            <td>₹ @i.Price</td>
+                            <td>@i.VendorName</td>
+                            <td>@i.AddedDate1.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                <input type="button" class="btn-link" onclick="stockInfo(@i.ID);" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="Inventory_ID" value="" />
+
+<script>
+    $(document).ready(function () {
+        $("#inventoryList").dataTable({ 'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': [7,8] /* 1st one, start by the right */
+        }] });
+
+        $("#price").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        $("#qty").on("keypress keyup blur",function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    function DeleteInventoryById(id) {
+        bootbox.confirm("Are you sure to delete this Item from Inventory?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Inventory/DeleteInventoryById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Item Deleted.", function (result) {
+                            window.location.href = "/Inventory/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+
+    function stockInfo(inventoryID) {
+        
+        $(".modal-body").empty();
+        $(".loader_gif").css("display", "block");
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Inventory/stockInfo",
+            data: JSON.stringify({ inventoryID: inventoryID }),
+            dataType: "json",
+            success: function (response) {
+                //console.log(response);
+                
+                if (response.length > 0) {
+                    var tbl = '';
+                    var totalQuantity = 0;
+                    var used = 0;
+                    var left = 0;
+                    tbl += "<table class='display table table-hover table-striped table-bordered'><tr><th>Used Quantity</th><th>Description</th><th>Used_Date</th></tr>";
+                    for (var i = 0; i < response.length; i++) {
+                        var stylecolor=(response[i].Used_Qty==0)?"background-color:#fdd2d2;":"";
+                        tbl += "<tr style='" + stylecolor + "'><td>" + response[i].Used_Qty + "</td>";
+                        if(response[i].GST_NonGST_Bill!="" && response[i].GST_NonGST_Bill!=null){
+                            if(response[i].GST_NonGST_Bill=="NonGST"){
+                                tbl += "<td><a target='_blank' href='/Billing/NonGstBillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                            }
+                            else if(response[i].GST_NonGST_Bill=="GST"){
+                                tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                            }
+                        }
+                        else{
+                            tbl += "<td>" + response[i].Description + "</td>";
+                        }
+                        tbl += "<td>" + response[i].Used_Date + "</td></tr>";
+                        totalQuantity = response[i].TotalQuantity;
+                        used = used + response[i].Used_Qty;
+                    }
+                    var qtyTemp=used.toFixed(3);
+                    left = (totalQuantity - qtyTemp);
+                    left=Number.isInteger(left)?left:left.toFixed(2);
+                    used=Number.isInteger(used)?used:qtyTemp;
+                    tbl += "</table>";
+                    tbl += "<br><b>Total Quantity = " + totalQuantity + "</b>" +
+                        "<br><b>Used Quantity = " + used + "</b>" +
+                        "<br><b>Left Quantity = " + left + "</b>";
+                    
+                    $(".modal-body").append(tbl);
+                    
+                }
+                else {
+                    //$(".modal-body").empty();
+                    $(".modal-body").append("Stock not used yet.");
+                }
+                $('#myModal').modal('show');
+                $(".loader_gif").css("display", "none");
+            },
+            error: function () {
+                //alert('error');
+                $(".loader_gif").css("display", "none");
+            }
+        });
+    }
+
+    $(document).on('show.bs.modal','#qtyModal', function (e) {
+        var InventoryID = $(e.relatedTarget).data('inventoryid');
+        var Item_Name = $(e.relatedTarget).data('itemname');
+        var price = $(e.relatedTarget).data('price');
+        var vendorID = $(e.relatedTarget).data('vendorid');
+        $("#Inventory_ID").val(InventoryID);
+        $("#Item_Name").html(Item_Name);
+        $("#price").val(price);
+        $("#vendorID").val(vendorID);
+    });
+
+    function closeModal() {
+        $("#Inventory_ID").val("");
+        $("#Item_Name").empty();
+        $("#qty").val("");
+        $("#price").val("");
+        $("#vendorID").val(0);
+        $("#errorMsg").empty();
+        $("#qtyModal").modal('hide');
+    }
+
+    function addQuantity() {
+        var invID=$("#Inventory_ID").val();
+        var qty=$("#qty").val();
+        var price=$("#price").val();
+        var vendorID=$("#vendorID").val();
+        if(invID!="" && qty!="" && price!="" && vendorID!=0)
+        {
+            var newItem = {
+                ID: invID,
+                Price: price,
+                Quantity: qty,
+                VendorID: vendorID,
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Inventory/addQuantity",
+                data: JSON.stringify({ newItem }),
+                dataType: "Json",
+                success: function (data) {
+                    //closeModal();
+                    location.reload();
+                },
+                error: function (err) {
+                    bootbox.alert(err.statusText);
+                }
+            });
+        }
+        else{
+            $("#errorMsg").empty();
+            if(qty=="")
+                $("#errorMsg").append("Quantity Field is empty!");
+            else if(price=="")
+                $("#errorMsg").append("Price Field is empty!");
+            else if(vendorID==0)
+                $("#errorMsg").append("Please select Vendor.");
+            else if(invID=="")
+                $("#errorMsg").append("Couldn't found Inventory.");
+        }
+    }
+</script>
+
+<div id="myModal" class="modal fade stock_info_modal_popup" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width:130%;">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Stock Info</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="qtyModal" class="modal fade stock_info_modal_popup" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Quantity for <span id="Item_Name"></span></h4>
+                <button type="button" class="close" onclick="closeModal();">&times;</button>
+            </div>
+            <div class="modal-body1">
+                <table cellpadding="10">
+                    <tbody>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>
+                                <input type="text" id="qty" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td>
+                                <input type="text" id="price" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td>Vendor</td>
+                            <td>
+                                <select id="vendorID" class="form-control">
+                                    <option value="0">Select</option>
+                                    @if (ViewBag.VendorsList != null && ViewBag.VendorsList.Count != 0)
+                                    {
+                                        foreach (var vn in ViewBag.VendorsList)
+                                        {
+                                        <option value="@vn.ID">@vn.Vendor_First_Name @vn.Vendor_Last_Name</option>
+                                        }
+                                    }
+                                </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <i>
+                <div id="errorMsg" style="margin-left: 25px; color: red; font-size: 13px; font-weight: 400;"></div>
+            </i>
+            <div class="modal-footer">
+                <input type="button" value="Add" onclick="addQuantity();" class="btn btn-primary" />
+
+                <button type="button" class="btn btn-default" onclick="closeModal();">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MembershipPlans>
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+@*<div class="container">*@
+<div class="col-12">
+    <div class="card">
+        <div class="card-block">
+            @*@Html.ActionLink("View Membership", "ViewSelectedMembership", "MembershipDetails", null, new { @class = "btn btn-primary", @style = "margin-bottom:20px;" })*@
+            <div class="table-responsive m-t-40">
+                <table id="newMemberShipList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="hide">ID</th>
+                            <th>Plan Name</th>
+                            <th>Plan Details</th>
+                            <th>No. Of Stays</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="hide">@i.ID</td>
+                                <td>@i.PlanName</td>
+                                <td>@i.PlanDetails</td>
+                                <td>@i.NoOfStays</td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#newMemberShipList").dataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+    function SelectMemberShipByID(id) {
+        bootbox.confirm("Want to Select Membership?",function(result){
+            if(result){
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/MembershipDetails/BuyMembership",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.alert({
+                            message: "MemberShip Selected Successfully.",
+                            size: "small"
+                        });
+                        window.setTimeout(function () {
+                            window.location.href = "/MembershipDetails/Index";
+                        }, 4000);
+                    }
+                });
+            }
+            else{
+                bootbox.alert({
+                    message: "Membership not selected.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

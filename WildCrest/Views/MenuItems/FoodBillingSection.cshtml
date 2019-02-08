@@ -1,0 +1,204 @@
+﻿<style>
+    
+    ul.ui-autocomplete {
+        font-size: 16px;
+    }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"> </script>
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <header class="topbar"></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Bill</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Food Item Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="FName" class="form-control" placeholder="Food Item Name" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label style="font-size:large;">Price :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="Cost" class="form-control" readonly />
+                                    </div>
+
+                                </div>
+                                                               
+                                    <div class="form-group">
+                                        <label style="font-size:large;">Enter Quantity :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                            <input type="text" id="qty" class="form-control floatNo" placeholder="Enter Quantity" style="font-size:large;" />
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label style="font-size:large;font-weight: 400;">Total : <span id="total"></span></label>
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;font-weight: 400;">SGST : 2.5%  ->  <span id="sgst"></span></label>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;font-weight: 400;">CGST : 2.5%  ->  <span id="cgst"></span></label>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;font-weight: 400;">Net Amount : <span id="netAmt"></span></label>
+
+                                </div>
+
+                                <input type="button" value="Print" onclick="PrintBill();" class="btn btn-primary" />
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('input.floatNo').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
+
+        $('nav a[href^="/' + location.pathname.split("/")[1] + '/"]').removeClass('active');
+    
+    $("#FName").autocomplete({        
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/MenuItems/GetItemNames",
+                data: JSON.stringify({ prefix: $('#FName').val() }),
+                dataType: "Json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item
+                        }
+                    }))
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+        });
+    });
+
+    $("#FName").focusout(function () {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/MenuItems/getFoodPrice",
+            data: JSON.stringify({ itemname: $("#FName").val() }),
+            dataType: "json",
+            success: function (response) {
+                    $("#Cost").val(response);
+            }
+        });
+    });
+
+    $("#qty").focusout(function () {
+        var qty = $("#qty").val();
+        var price = $("#Cost").val();
+        var total = (qty * price).toFixed(2);
+        var sgst = (total * (2.5 / 100)).toFixed(2);
+        var cgst = (total * (2.5 / 100)).toFixed(2);
+        var netAmt = (parseFloat(total) + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
+        $("#total").html("₹ " + total);
+        $("#sgst").html("₹ " + sgst);
+        $("#cgst").html("₹ " + cgst);
+        $("#netAmt").html("₹ " + netAmt);
+    });
+
+    function PrintBill() {
+        var tbl = '';
+        tbl += "<center><h3>WildCrest</h3></center>";
+        tbl += "<center><h4>Address : #abc wert</h4></center>";
+        tbl += "<center><h4>Phone : 1234567 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        tbl += " Email : wildcrest@gmail.com</h4></center>";
+        tbl += "<center><h4>GSTIN : 123-456-789</h4></center><hr>";
+        tbl += "<h4>Billing Details</h4>";
+
+        tbl += "<table style='width:100%;'><tr><th>Item Name</th><th>Price</th><th>Qty</th><th>Amount</th></tr>";
+        tbl += "<tr><td>" + $("#FName").val() + "</td>";
+
+        tbl += "<td>₹ " + $("#Cost").val() + "</td>";
+
+        tbl += "<td>" + $("#qty").val() + "</td>";
+
+        tbl += "<td>" + $("#total").html() + "</td></tr></table><br><hr>";
+        tbl += "<div style='text-align:right;'><h4>Total : " + $("#total").html() + "</h4>";
+        tbl += "<h4>SGST (2.5%) : " + $("#sgst").html() + "</h4>";
+        tbl += "<h4>CGST (2.5%) : " + $("#cgst").html() + "</h4></div><hr>";
+        tbl += "<h4 style='text-align:right;'>Net Amount : " + $("#netAmt").html() + "</h4><hr>"
+      
+        var htmlToPrint = '' +
+            '<style type="text/css">' +
+            'table th, table td {' +
+            'padding:5px; font-size:20px;border:1px solid grey;' +
+            '}' +
+            //'table th { background-color:#A9A9A9; }' +                
+            '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+    }
+
+    //function PrintBill() {
+    //    var tbl = '';
+    //    tbl += "<table class='display nowrap table table-hover table-striped table-bordered'>";
+    //    tbl += "<tr><td>Item Name :</td> <td>" + $("#FName").val()+"</td></tr>";
+           
+    //    tbl += "<tr><td>Price :</td> <td>" + $("#Cost").val()+"</td></tr>";
+
+    //    tbl += "<tr><td>Quantity :</td> <td>" + $("#qty").val()+"</td></tr>";
+
+    //    tbl += "<tr><td>Total :</td> <td>" + $("#total").html()+"</td></tr>";
+
+    //    tbl += "<tr><td>SGST :</td> <td>" + $("#sgst").html() +"</td></tr>";
+
+    //    tbl += "<tr><td>CGST :</td> <td>" + $("#cgst").html() +"</td></tr>";
+
+    //    tbl += "<tr><td>Net Amount :</td> <td>" + $("#netAmt").html() +"</td></tr>";
+
+    //    tbl += "</table>";
+
+    //   // var divToPrint = document.getElementById('printClients');
+    //    var htmlToPrint = '' +
+    //        '<style type="text/css">' +
+    //        'table th, table td {' +
+    //        'padding:5px; font-size:20px;border:1px solid black;' +
+    //        '}' +
+    //        //'table th { background-color:#A9A9A9; }' +                
+    //        '</style>';
+    //    htmlToPrint += tbl;
+    //    newWin = window.open("");
+    //    newWin.document.write(htmlToPrint);
+    //    newWin.print();
+    //    newWin.close();
+    //}
+</script>

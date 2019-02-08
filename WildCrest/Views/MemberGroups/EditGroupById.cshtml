@@ -1,0 +1,140 @@
+﻿@model WildCrest.Models.WildCrestModels.MemberGroup
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/colors/default-dark.css" id="theme" rel="stylesheet" />
+</head>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                        <a href="/MemberGroups/Index" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Update MemberGroup Detail</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Group Name <span class="complusoryFields">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-users" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" class="form-control requiredFields" value="@Model.GroupName" id="gname" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Group Details <span class="complusoryFields">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-info" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea id="gdetails" class="form-control requiredFields">@Model.GroupDetail</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Members Name :</label>
+                                @*<div class="input-group">*@
+
+                                @if (Model.MembersNameWithId.Count() > 0)
+                                {
+                                    <table class="table table-responsive table_del_mem">
+                                        <tbody>
+                                            @foreach (var names in Model.MembersNameWithId)
+                                            {
+                                            
+                                                <tr id="@names.Key">
+                                                    <td>@names.Value</td>
+                                                    <td>
+                                                        <input title="Delete User From group" type="button" class="btn btn-primary" style="height:auto;" onclick="DeleteFromGroup(@names.Key,@Model.ID);" value="X" /></td>
+                                                </tr>
+
+
+@*<label id="@names.Key">
+                                                @names.Value
+
+                                                <input title="Delete User From group" type="button" class="btn btn-primary" style="width: 50px; margin-left: 50px;height:auto;" onclick="DeleteFromGroup(@names.Key,@Model.ID);" value="X" />
+                                            </label>*@
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <label>No Members in this Group.</label>
+                                }
+
+                                @*</div>*@
+                            </div>
+                            <div class="col-md-12 col-sm-12 update_mem_details">
+                                <input type="button" class="btn btn-primary" value="Update" onclick="updateGroupByID(@Model.ID);" />                                
+                                @Html.ActionLink("Add Member in Group", "AddMemberInGroup", "MemberGroups", new { groupID = @Model.ID }, new { @class = "btn btn-primary" })
+                                <a href="/MemberGroups/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    function updateGroupByID(id) {
+        var gname = $("#gname").val().trim();
+        var gdetails = $("#gdetails").val().trim();
+        if (gname != "" && gdetails != "") {
+            var updGroup = {
+                ID: id,
+                GroupName: gname,
+                GroupDetail: gdetails
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/MemberGroups/UpdateGroupById",
+                data: JSON.stringify({ updGroup }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Group Updated.", function (result) {
+                        window.location.href = "/MemberGroups/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    //alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Both fields are compulsory.",
+                size: "small"
+            });
+        }
+    }
+    function DeleteFromGroup(userID, GroupID) {        
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/MemberGroups/RemoveUserFromGroup",
+            data: JSON.stringify({ userID: userID, GroupID: GroupID }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm("Member Deleted from Group.", function (result) {
+                    //window.location.href = "/MemberGroups/Index";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                $("#" + userID).remove();
+            },
+            error: function () {
+                //alert('error');
+            }
+        });
+    }
+</script>

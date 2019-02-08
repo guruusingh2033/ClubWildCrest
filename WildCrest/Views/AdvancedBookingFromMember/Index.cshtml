@@ -1,0 +1,180 @@
+﻿<style>
+    .tablink {
+        background-color: #272c33;
+        color: white;
+        float: left;
+        border: none;
+        outline: none !important;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 25%;
+        font-weight: bold;
+    }
+
+    .hide {
+        visibility: hidden;
+    }
+
+    .tablink :hover {
+        background-color: #777;
+    }
+
+    .dataTables_wrapper {
+        background: rgb(242, 244, 248);
+        padding: 15px;
+    }
+</style>
+
+
+<div class="card">
+    <div class="card-block">
+        <a href="/AdvancedBookingFromMember/PreviousBookings" class="btn btn-primary" style="margin-bottom: 20px;">Previous Bookings Bills</a>
+        <br />
+        <button class="tablink" onclick="openCity('Room', this, 'rgb(242, 244, 248)')" id="defaultOpen" style="background-color: rgb(242, 244, 248); border-bottom: 1px solid #ccc; color: black;width: auto;">
+            Booked Room Info</button>
+        @*<button class="tablink" onclick="openCity('BookedTable', this, 'rgb(178, 207, 224)')">Booked Table Info</button>*@
+        <div class="tabcontent" id="Room">
+
+            <table id="tbl_roomB" class="display table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Member Name</th>
+                        <th>Phone No.</th>
+                        <th>Room No.</th>
+                        <th>Check-in Date</th>
+                        <th>Check-out Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in ViewBag.RoomBookingInfo)
+                    {
+                        <tr>
+                            <td>
+                                @{string[] arrDate = i.Check_In.Split('/');
+                                  DateTime Checkin = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+
+                                  if (Request.Cookies["UserType"].Value == "1" && Checkin >= DateTime.Today && i.Bill_Number==null)
+                                  {
+                                    <a title="Edit" href="@Url.Action("EditRoomBookingOfUser", "AdvancedBookingFromMember", new { userStayID = i.ID }, null)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" onclick="DeleteRoomBookingOfUser(@i.ID,@i.Booking_ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                  }
+                                }
+                                <a title="Detail" href="#" onclick='staysInfo(@i.ID,"@i.Check_Out","@i.Check_In","@i.MemberName");'>
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td>
+                                @i.MemberName
+                            </td>
+                            <td>
+                                @i.MemberPhoneNo
+                            </td>
+                            <td>@i.RoomNo</td>
+                            <td>@i.Check_In</td>
+                            <td>@i.Check_Out</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>       
+    </div>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function openCity(cityName, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+        document.getElementById(cityName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+    $(document).ready(function () {
+        //$("#tbl_tableB").dataTable();
+        $("#tbl_roomB").dataTable({ "order": [[4, "desc"]] });
+        document.getElementById("defaultOpen").click();
+    });
+
+    function staysInfo(stayID, Checkout, Checkin, MemberName) {
+        $.ajax({
+            type: "post",
+            data: { 'stayID': stayID },
+            url: "/AdvancedBookingFromMember/getOtherDetailsOfUser",
+            success: function (response) {
+                if (response != "") {
+                    var paidCompl = parseInt(response.NightStays) - parseInt(response.ComplementaryStays);
+                    var data = "<label><b>Customer Name : " + MemberName + "</b></label><label>Checkin Date : " + Checkin + "</label><label>Checkout Date : " + Checkout + "</label><label>Total Night Stays : " + response.NightStays + "</label><label>Complementary Stays : " + response.ComplementaryStays + "</label><label>Paid Stays : " + paidCompl + "</label><label>Amount : " + response.Amount + "</label>";
+                    $(".modal-body").empty();
+                    $(".modal-body").append(data);
+                }
+                else {
+                    var data = "No Data.";
+                    $(".modal-body").empty();
+                    $(".modal-body").append(data);
+                }
+                $('#myModal').modal('show');
+            }
+
+        });
+    }
+
+    function DeleteRoomBookingOfUser(stayID,bookingID) {
+        bootbox.confirm("Are you sure to delete Room Booking Of User?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/AdvancedBookingFromMember/DeleteRoomBookingOfUserByStayID",
+                    data: JSON.stringify({ 'stayID': stayID, 'bookingID': bookingID }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Room Booking Of User Deleted.", function (result) {
+                            window.location.href = "/AdvancedBookingFromMember/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Room Booking Of User not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

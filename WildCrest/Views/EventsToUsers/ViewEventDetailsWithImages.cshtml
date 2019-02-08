@@ -1,0 +1,135 @@
+﻿@model WildCrest.Models.WildCrestModels.Event
+
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: 200px;
+        }
+        @@media (max-width:991px) {
+            div.gallery {
+    margin: 5px 2%;
+    width: 29.3%;
+    margin-right: 2%;
+}
+    div.gallery:nth-child(3n) {
+        margin-right:0;
+    }
+    }
+    @@media (max-width:575px) {
+           div.gallery {
+    margin: 5px 0;
+    width: 92%;
+    margin-right: auto;
+    margin: 20px auto 20px;
+    display: block;
+    float: none;
+    overflow: hidden;
+}
+    div.gallery:nth-child(3n) {
+    margin-right: auto;
+}
+    }
+
+</style>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12 info_common">
+                    <div class="card">
+                        <div class="card-block">
+                            <a href="/EventsToUsers/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Event Info</h4>
+                            <div class="form p-t-20">
+                                @*<div class="row p-t-20">*@
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Event Name :</label>
+                                        <input type="text" id="firstName" readonly value="@Model.EventName" class="form-control">
+
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6 col-sm-6 form-profile-in">
+                                    <div class="form-group">
+                                        <label class="control-label">Event Date :</label>
+                                        <input type="text" id="lastName" readonly value="@Model.EventDate" class="form-control">
+
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                @*</div>*@
+                                <!--/row-->
+                                @*<div class="row">*@
+                                    <div class="col-md-6 col-sm-6 form-profile-in">
+                                        <div class="form-group" style="width:100%;">
+                                            <label class="control-label">Event Time :</label>
+                                            <input type="text" id="DOB" readonly value="@Model.EventTime" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6 col-sm-6 form-profile-in">
+                                        <div class="form-group" style="width:100%;">
+                                            <label class="control-label">Event Place :</label>
+                                            <input type="text" id="Email" readonly value="@Model.Place" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                @*</div>*@
+                                <!--/row-->
+                                @*<div class="row">*@
+                                    <div class="col-md-6 col-sm-6 form-profile-in">
+                                        <div class="form-group" style="width:100%;">
+                                            <label class="control-label">Event Organised By :</label>
+                                            <input type="text" id="Phone" readonly value="@Model.OrganisedBy" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-12 col-sm-12 form-profile-in">
+                                        <div class="form-group" style="width:100%;">
+                                            <label class="control-label">Description :</label>
+                                            <textarea class="form-control" readonly>@Model.Description</textarea>
+                                            @*<input type="text" id="Address" readonly value="@Model.Description" class="form-control">*@
+
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+
+
+                                @*</div>*@
+                                @*<div class="row">*@
+                                    @foreach (var item in ViewBag.ImageGallery)
+                                    {
+                                        <div class="gallery">
+                                            <a target="_blank" href="@item.Img_Video_Path">
+                                                <img src="@item.Img_Video_Path" width="300" height="200" />
+                                            </a>
+                                        </div>
+                                    }
+                                @*</div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+   
+
+    </div>
+</body>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.UserMembership>
+<div class="col-md-12 admin-fom-inf">
+    <div class="row">
+        <div class="form-body">
+            <h3 class="card-title">Membership Info</h3>
+            <div class="admin-form-back">
+                @if (Model != null)
+            {
+                foreach (var i in Model)
+                {
+                        <div class="col-md-5 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">Plan Name :</label>
+                                <input type="text" id="firstName" disabled="disabled" value="@i.PlanName" class="form-control">
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">Plan Details :</label>
+                                <input type="text" id="lastName" disabled="disabled" value="@i.PlanDetails" class="form-control">
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 form-profile-in">
+                            <div class="form-group">
+                                <label class="control-label">No. Of Stays :</label>
+                                <input type="text" id="lastName" disabled="disabled" value="@i.NoOfStays" class="form-control">
+
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <label class="control-label">No Membership</label>
+                }
+                <br/>
+                @Html.ActionLink("Go Back", "Index", "MembershipDetails", null, new { @class = "btn btn-primary" })
+
+            </div>
+        </div>
+    </div>
+</div>
+

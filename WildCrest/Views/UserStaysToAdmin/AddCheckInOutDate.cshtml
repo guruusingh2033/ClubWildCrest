@@ -1,0 +1,154 @@
+﻿@model WildCrest.Models.WildCrestModels.Profile
+
+<style>
+    td {
+        padding: 13px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <th colspan="2"><label>Details</label></th>
+                </tr>
+                <tr>
+                    <td><label>ID :</label></td>
+                    <td>@Model.ID</td>
+                </tr>
+                <tr>
+                    <td><label>Name :</label></td>
+                    <td>@Model.F_Name  @Model.L_Name</td>
+                </tr>
+                <tr>
+                    <td><label>Address :</label></td>
+                    <td>@Model.Address  @Model.City  @Model.State</td>
+                </tr>
+
+                <tr>
+                    <td style="vertical-align:text-top;"><label>Previous & Lapse Stays :</label></td>
+
+                    @if (ViewBag.UserStays != null)
+                    {
+                        <td>
+                            @foreach (var i in ViewBag.UserStays)
+                            {
+                                <label>Membership Name : </label>@i.MembershipName <br />
+                                <label>Previous Stays : </label>@i.PreviousStays <br />
+                                <label>Lapse Stays : </label>@i.LapseStays  <br /><br />
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        <td>No Stays Yet.</td>
+                    }
+
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <th colspan="2">Add Stay</th>
+                </tr>
+                <tr>
+                    <td><label>Check-in :</label></td>
+                    <td><input id="checkIn" placeholder="Check-in" class="form-control pressenter" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label>Check-out :</label></td>
+                    <td><input id="checkOut" placeholder="Check-out" class="form-control pressenter" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" class="btn btn-primary" value="Add" onclick="addStay();" />
+                    </td>
+                </tr>
+                <tr style="display:none;">
+                    <td>
+                        @if (ViewBag.UserStays != null)
+                        {
+                            foreach (var i in ViewBag.UserStays)
+                            {
+                                if (i.LapseStays >= 1)
+                                {
+                                    <input type="hidden" id="usrID" value="@i.UserID" />
+                                    <input type="hidden" id="memberID" value="@i.MemberID" />
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var m in ViewBag.UserMembership)
+                            {
+                                <input type="hidden" id="usrID" value="@m.UserID" />
+                                <input type="hidden" id="memberID" value="@m.MembershipID" />
+                                break;
+                            }
+                        }
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#checkIn,#checkOut').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-116:+0",
+        });
+    });
+
+    function addStay() {
+        debugger;
+        var memberID = $("#memberID").val();
+        var UserID = $("#usrID").val();
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+        if (checkIn != "" && checkOut != "") {
+            if (memberID == undefined || UserID == undefined) {
+                bootbox.alert({
+                    message: "No more Lapse Stays.",
+                    size: "small"
+                });
+                $("#checkIn").val("");
+                $("#checkOut").val("");
+            }
+            else {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/UserStaysToAdmin/addStay",
+                    data: JSON.stringify({ UserID: UserID, memberID: memberID, checkIn: checkIn, checkOut: checkOut }),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.alert({
+                            message: "Stay Added.",
+                            size: "small"
+                        });
+                        window.setTimeout(function () {
+                            window.location.href = "/UserStaysToAdmin/Index";
+                        }, 4000);
+                        $("#checkIn").val("");
+                        $("#checkOut").val("");
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                });
+            }
+        }
+        else {
+            bootbox.alert({
+                message: "Please enter Check-in Check-out date.",
+                size: "small"
+            });
+        }
+    }
+</script>

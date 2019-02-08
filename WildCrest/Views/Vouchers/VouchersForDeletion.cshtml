@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Voucher>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                @Html.ActionLink("Go Back", "Index", "Vouchers",null, new { @class = "btn btn-primary btn-margin" })
+
+            </div>
+            <div class="table-responsive m-t-40">
+                <table id="voucherList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="hide">ID</th>
+                            <th>Actions</th>
+                            <th>Voucher Name</th>
+                            <th>Voucher Details</th>
+                            <th>Deleted By</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="hide">@i.ID</td>
+                                <td style="width:20%;">
+                                    <a title="Detail" href="@Url.Action("NewDelVoucherDetailsByID", "Vouchers", new { id = i.ID }, null)">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Delete" href="#" onclick="DeleteVouchers(@i.ID);">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+
+                                </td>
+                                <td style="width:20%;">@i.VoucherName</td>
+                                <td style="width:30%;">@i.VoucherDetails</td>
+                                <td>@i.DeletedBy</td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $("#voucherList").dataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+    function DeleteVouchers(id) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Vouchers/DeleteVoucherById",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm("Voucher Deleted.", function (result) {
+                    window.location.href = "/Vouchers/VouchersForDeletion";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            }
+        });
+    }
+</script>

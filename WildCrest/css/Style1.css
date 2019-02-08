@@ -1,0 +1,91 @@
+﻿body {
+}
+
+.user-image {
+    width: 7% !important;
+    text-align: right;
+    border-radius: 50%;
+}
+
+.img-drop-down {
+    float: left;
+}
+
+.btn-profil {
+    margin-top: 10px;
+}
+
+.drop-down-cro {
+    left: -310px !important;
+}
+
+.bx-wrapper .bx-controls-direction a {
+    z-index: 0 !important;
+}
+
+.nav-bar-layo {
+    padding-left: 0;
+}
+
+.mini-sidebar .entry_table {
+    width: 90%;
+    margin-left: 6%;
+}
+
+.mini-sidebar .bx-wrapper {
+    max-width: 100% !important;
+}
+
+.mini-sidebar #upcomingEventsSlider .bx-wrapper img {
+    padding-left: 32%;
+}
+
+
+
+
+
+@media (max-width:767px) {
+    .nav-bar-layo li {
+        float: left;
+    }
+
+    .topbar .top-navbar .navbar-header .navbar-brand b {
+        margin-left: 0;
+    }
+
+    .mini-sidebar .top-navbar .navbar-header {
+        width: 36%;
+        text-align: center;
+        float: left;
+    }
+
+    .navbar-collapse {
+        width: 63% !important;
+        float: right;
+    }
+
+
+    .nav-bar-layo {
+        width: 45%;
+        float: left;
+    }
+
+    .navbar-collapse .profile {
+        float: left;
+        width: 45%;
+        padding-left:0;
+    }
+
+    .profile li .app-search {
+        display: none !important;
+    }
+
+    .profile li {
+        width: 27% !important;
+        float: right;
+    }
+
+    .topbar .top-navbar .navbar-header .navbar-brand b {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.TablesForBooking>
+
+<style>
+    .rooms {
+        background: #ddeff7;
+    }
+
+        .rooms img {
+            padding: 20px 0px 20px 20px;
+        }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <a href="/TableBooking/Index" class="btn btn-primary" style="margin-bottom:20px;">Go Back</a>
+                    <h4 class="card-title">Available Tables</h4>
+                    <div class="form p-t-20">
+                        @if (Model != null)
+                        {
+                            foreach (var i in Model)
+                            {
+                                <div class="form-group">
+                                    <div class="rooms">
+                                        <ul class="list-unstyled list-inline">
+                                            <li>
+                                                <img src="~/images/downloadTableImg.jpg" height="200" width="300" />
+                                            </li>
+                                            <li>
+                                                <label> @i.TableNo</label>
+                                                @*<label id="roomID" style="visibility:hidden;">@i.ID</label>*@
+                                                <input type="button" class="btn btn-primary" value="Book Now" onclick="BookTableNow(@i.ID);" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function BookTableNow(tableId) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/TableBooking/BookTableNow",
+            data: JSON.stringify({ tableId: tableId, TimeForBooking:"@ViewBag.TimeForBooking" }),
+            dataType: "json",
+            success: function (response) {
+                    bootbox.confirm("Table Booked.", function (result) {
+                        window.location.href = "";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            }
+        });
+    }
+</script>

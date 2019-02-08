@@ -1,0 +1,243 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.RoomBooking>
+
+<div class="table-responsive m-t-40">
+    <div class="text-center">
+        <ul class="list-inline list-unstyled total_GST_amt">
+            <li><b>Total Amount :</b> @ViewBag.TotalAmount</li>
+            <li><b>GST :</b> @ViewBag.CSGST</li>
+        </ul>
+    </div>
+    <div style="float: right; margin-bottom: 5px;">
+        <input type="button" value="Print All(A4)" class="btn btn-primary" onclick="printAll();" />
+    </div>
+    <table id="tbl_roomB" class="display table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="hide">booking_id</th>
+                <th>Actions</th>
+                <th>Invoice No.</th>
+                <th>Member Name</th>
+                <th>Check-in Date</th>
+                <th>Check-out Date</th>
+                <th>Total Amt (with GST)</th>
+                <th>Advanced Payment</th>
+                <th>Discount</th>
+                <th>Paid Amt</th>
+                <th>Billing DateTime</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+                var tbl = "<center><b>Total Amount :</b> @ViewBag.TotalAmount  &nbsp;&nbsp; <b>GST :</b> @ViewBag.CSGST<br><br></center>";
+                tbl += '<table width="100%" cellpadding="10" id="printAllBills"><tr><th>Invoice Number</th><th>Member Name</th><th>Check-in Date</th><th>Check-out Date</th><th>Total Amt (with GST)</th><th>Advanced Payment</th><th>Discount</th><th>Paid Amt</th></tr>';
+            </script>
+            @if (Model.Count() > 0)
+            {
+                foreach (var i in Model)
+                {
+                    var stylecolor = (i.Mode_Of_Payment != "Cash") ? ((i.Mode_Of_Payment != "Card") ? ((i.Mode_Of_Payment == "Cheque") ? "background-color:#f9e1e5" : "background-color:#f2f4f8") : "background-color:#d5d8f1") : "background-color:#f7f4d7";
+                <tr>
+                    <td class="hide">@i.Booking_ID</td>
+                    @*<td>
+                                <a title="Detail" href="#" onclick='staysInfo(@i.UserID,"@i.CheckinDate",@i.RoomID,"@i.MemberName","@i.NonMember");'>
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+                            </td>*@
+                    <td style="@stylecolor">
+                        <input type="button" value="Print (A4)" onclick="PrintBill(@i.Booking_ID);" class="btn btn-primary"/></td>
+                    <td style="@stylecolor">@i.Bill_Number</td>
+                    <td style="@stylecolor">
+                        @i.Customer
+                    </td>
+                    <td style="@stylecolor">@i.Check_In</td>
+                    <td style="@stylecolor">@i.Check_Out</td>
+                    <td style="@stylecolor">@i.Total</td>
+                    <td style="@stylecolor">@i.AdvancedPayment</td>
+                    <td style="@stylecolor">@i.Discount</td>
+                    <td style="@stylecolor">@i.AmtToBePaid</td>
+                    <td style="@stylecolor">@i.Billing_DateTime</td>
+                </tr>
+                <script>
+                    tbl += '<tr><td>@i.Bill_Number</td><td>@i.Customer</td>' +
+                    '<td>@i.Check_In</td>' +
+                '<td>@i.Check_Out</td>' +
+                '<td>@i.Total</td>' +
+                '<td>@i.AdvancedPayment</td>' +
+                '<td>@i.Discount</td>'+
+                '<td>@i.AmtToBePaid</td>'+
+                '</tr>';
+                </script>
+                }
+            }
+            else
+            {
+                <script>
+                    tbl += "<tr><td colspan='8' style='text-align:center;'>No data available in table</td></tr>";
+                </script>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#tbl_roomB").dataTable({ "order": [[2, "desc"]] });
+    });
+
+    function PrintBill(bookingID) {
+        $(".preloader").css("display", "block");
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/AdvancedBookingFromMember/RoomBookingDetailsByBookingID",
+            data: JSON.stringify({ 'bookingID': bookingID }),
+            dataType: "json",
+            async:false,
+            success: function (response) {
+                var tbl = '';
+                //var csgst=(parseFloat(response.GST)/2).toString().substring(0, (parseFloat(response.GST)/2).toString().indexOf(".") + 3);
+                var csgst=(parseFloat(response.GST)/2).toFixed(2);
+                var tp=parseFloat(response.AdvancedPayment)+parseFloat(response.AmtToBePaid);
+                var AmtWithoutGST=parseFloat(tp)-parseFloat(response.GST);
+                tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+                tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                
+                tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+           '<tbody  style="text-align: left;" >' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">Customer Name: '+ response.Customer + '</td>' +
+           '<td style="padding: 5px 0;">Bill No. : '+ response.Bill_Number + '</td>' +
+           '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+           '<td style="padding: 5px 0;">Check-IN: '+ response.Check_In + '</td>' +
+           '<td style="padding: 5px 0;">Check-OUT: '+ response.Check_Out + '</td>' +
+         
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+             '<td style="padding: 5px 0;">No. of Stays: '+ response.NoOfNightStays + '</td>' +
+           '<td style="padding: 5px 0;">Amount: ₹ '+ response.Amount + '</td>' +
+           '<td style="padding: 5px 0;">Advanced Payment: ₹ '+ response.AdvancedPayment + '</td>' +
+           
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">Discount: ₹ '+ response.Discount + '</td>' +
+           '<td style="padding: 5px 0;">GST: ₹'+ response.GST + '</td>' +
+           '<td style="padding: 5px 0;">Paid Amount: ₹ '+ response.AmtToBePaid + '</td>' +           
+           '</tr>' +
+           '</tbody></table><br>';
+
+                tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+          '<thead  style="text-align: center;" >' +
+          '<tr style="font-size: 12px;font-weight:400; text-align: center;">' +
+          '<th style="padding: 5px 5px;">RNo. </th>' +
+            
+          '<th style="padding: 5px 5px;">No. of Person</th>' +
+          '<th style="padding: 5px 5px;">Extra-Bed</th>' +
+            
+          '<th style="padding: 5px 5px;">Complementary Stays</th>' +
+          '<th style="padding: 5px 5px;text-align: right;">Amount/Room</th>' +
+          '</tr>' +
+          '</thead>' +
+          '<tbody>';
+                if(response.roomDetails.length!=0){
+                    for(var i =0;i<response.roomDetails.length;i++)
+                    {
+                        tbl+=  '<tr style="font-size: 12px;text-align: center;">' +
+            '<td style="padding: 8px 5px;">' + response.roomDetails[i].RoomNo + '</td>' +
+                       
+            '<td style="padding: 8px 5px;"><label>' + response.roomDetails[i].NoOfPerson + '</label></td>' +
+            '<td style="padding: 8px 5px;"><label>' + ((response.roomDetails[i].ExtraBed==true)?'Yes':'No') + '</label></td>' +
+            '<td style="padding: 8px 5px;"><label>' + ((response.roomDetails[i].ComplementaryStays!=null)?response.roomDetails[i].ComplementaryStays:'0') + '</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.roomDetails[i].TAmtPerRoom + '</label></td>' +
+            '</tr>';
+                    }
+                    tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                        
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">Amount (without GST) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + AmtWithoutGST.toFixed(2) + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                        '<td colspan="3" class="border-left"></td>'+
+                           '<td  class="border-bottom"  style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + csgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + csgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<th class="border-bottom"   style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tp.toFixed(2) + '</td>' +
+                         '</tr>';
+                }
+                else{
+                    tbl+=  '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+                '<td colspan="5" style="padding: 8px 0;">No Data Available.</td>' +
+                '</tr>';
+                }
+                tbl+="</tbody></table>";
+
+                var htmlToPrint = '' +
+                           '<style type="text/css">' +
+                           'body{font-family: arial;}' +
+                            'table#tabel-heading,#tabel-heading th,#tabel-heading td{'+
+                                'border-collapse:collapse;}'+
+                            
+                '#tabel-heading th {'+
+                    'border:1px solid black;'+
+                '}'+
+                '#tabel-heading td {'+
+                    'border-right:1px solid black;'+
+                    'border-left:1px solid black;}'+
+               
+                '#tabel-heading .border-bottom {'+
+                   'border-bottom:1px solid black;}'+
+                '#tabel-heading .border-top {'+
+                   'border-top:1px solid black;}'+
+                '#tabel-heading .border-left {'+
+                    'border-left:none;}'+
+                           '</style>';
+                htmlToPrint += tbl;
+                newWin = window.open("");
+                newWin.document.write(htmlToPrint);
+                newWin.print();
+                newWin.close();
+                $(".preloader").css("display", "none");
+            },
+            failure:function(err){
+                $(".preloader").css("display", "none");
+                bootbox.alert(err.statusText);
+            },
+            error:function(err){
+                $(".preloader").css("display", "none");
+                bootbox.alert(err.statusText);
+            }
+        });
+    }
+
+    function printAll() {
+        $(".preloader").css("display", "block");
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                   'table#printAllBills,#printAllBills th,#printAllBills td{' +
+                                'border-collapse:collapse;}' +
+
+                '#printAllBills th,#printAllBills td {' +
+                    'border:1px solid black;' +
+                '}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+       
+    }
+</script>

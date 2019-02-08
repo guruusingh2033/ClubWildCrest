@@ -1,0 +1,423 @@
+﻿@model WildCrest.Models.WildCrestModels.RoomBooking_Details
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-block">
+                        <div>
+                            <span class="complusoryFields">*(Complusory Fields)</span>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <a href="/AdvancedBookingFromMember/Index" class="btn btn-primary btn-margin">Go Back</a>
+                        </div>
+                        <h4 class="card-title">Edit Room Booking Of User</h4>
+                        <div class="form p-t-20">
+                            @if (Model != null)
+                            {
+                                <div class="form-group">
+                                    <label style="font-size: large;">Customer Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" id="MName" class="form-control" value="@Model.Customer" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-in <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkIn" readonly class="form-control pressenter" type="text" onchange="disableDatesAccToCheckIn();">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Check-out <span class="complusoryFields">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        <input id="checkOut" readonly placeholder="Check-out" class="form-control pressenter" type="text">
+                                    </div>
+                                </div>
+                                <div id="checkRooms" style="margin-top: 5px;">
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Room Alloted <span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="RNo" class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;">No. of Person (Min-1 & Max-3) <span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="noOfPerson" value="@Model.NoOfPerson" class="form-control requiredFields" />
+                                        </div>
+                                        <i>
+                                            <div id="errMsg" style="color: red; font-weight: 400;"></div>
+                                        </i>
+                                    </div>
+                                    @if (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).MemberOrNot == "Yes")
+                                    {
+                                        <div class="form-group" id="complementaryDetails">
+                                            <label style="font-size: large;">Complementary Stays Left :</label>
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                @if (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays >= 0)
+                                                {
+                                                    <input type="text" id="leftStays" value="@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays" readonly class="form-control" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" id="leftStays" value="Membership Expired or Membership not selected." readonly class="form-control" />
+                                                }
+                                            </div>
+                                            <label style="font-size: large;">Give Complementary Stays :</label>
+                                            <div class="input-group" style="margin-top: 5px;">
+                                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                                @{
+                                                string[] arrDate = Model.Check_In.Split('/');
+                                                //var tempDate = arrDate[1] + "/" + arrDate[0] + "/" + arrDate[2];
+                                                DateTime Checkin = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+
+                                                string[] arrDate1 = Model.Check_Out.Split('/');
+                                                //var tempDate = arrDate[1] + "/" + arrDate[0] + "/" + arrDate[2];
+                                                DateTime Checkout = new DateTime(Convert.ToInt32(arrDate1[2]), Convert.ToInt32(arrDate1[0]), Convert.ToInt32(arrDate1[1]));
+
+                                                int noOfNights = (Checkout - Checkin).Days;
+                                                if (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays == 0)
+                                                {
+                                                    <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                                                        <option value="0">0</option>
+                                                    </select>
+                                                }
+                                                else if (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays == 1 || (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays >= 2 && noOfNights == 1))
+                                                {
+                                                    <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                    </select>
+                                                }
+                                                else if (Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays >= 2 && noOfNights > 1)
+                                                {
+                                                    <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                                                        <option value="0">0</option>
+                                                    </select>
+                                                }
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div>
+                                        <label style="font-size: large;">
+                                            Extra Bed :
+                                          <input type="checkbox" id="extraBed" />
+                                            ₹ 500</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Amount(including GST) :</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="priceToPay" value="@Model.TAmtPerRoom" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <input type="button" value="Update" onclick="UpdateRoomBooking();" class="btn btn-primary" />
+                                    <a href="/AdvancedBookingFromMember/Index" class="btn btn-primary">Cancel</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <label>No Data Available.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+@*<script src="~/js/underscore-min.js"></script>*@
+<script>
+    var RoomPriceForMember = '@(System.Configuration.ConfigurationManager.AppSettings["RoomPriceForMember"])';
+    var RoomPriceForNonMember = '@(System.Configuration.ConfigurationManager.AppSettings["RoomPriceForNonMember"])';
+
+    $(document).ready(function () {
+        var date = new Date();
+        $('#checkIn').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date
+        });
+        $('#checkOut').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "-116:+0",
+            minDate: date,
+            onSelect: function (dateText, inst) {
+                $("#extraBed").attr("checked",false);
+                checkRoomsAvailablity();
+                getMembershipDetailsbyUserID();
+
+            }
+        });
+        var extrabed=('@Model.ExtraBed').toLowerCase();
+        if(extrabed=="true"){
+            $("#extraBed").attr("checked",true);            
+        }
+        else{
+            $("#extraBed").attr("checked",false);
+        }
+
+        $("#noOfPerson").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 49 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#priceToPay").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#noOfPerson").focusout(function () {
+            if ($("#noOfPerson").val() != 1 && $("#noOfPerson").val() != 2 && $("#noOfPerson").val() != 3) {
+                $("#noOfPerson").val('');
+                $("#errMsg").empty();
+                $("#errMsg").append("Min-1 & Max-3 persons allowed in a Room.");
+            }
+            else {
+                $("#errMsg").empty();
+            }
+        });            
+
+        $("#checkIn").val("@Model.Check_In");
+        $("#checkOut").val("@Model.Check_Out");
+        $('#checkOut').datepicker("option", "minDate", new Date((new Date($("#checkIn").val())).valueOf() + 1000 * 3600 * 24));        
+        checkRoomsAvailablity();
+
+        $("#giveStays").val("@Model.ComplementaryStays");
+    });
+
+    $('#extraBed').change(function () {
+        complementaryStays();
+    });
+
+    function disableDatesAccToCheckIn() {
+        $('#checkOut').val("");
+        var checkin = $('#checkIn').val();
+        $('#checkOut').datepicker("option", "minDate", new Date((new Date(checkin)).valueOf() + 1000 * 3600 * 24));
+    }
+
+    function getMembershipDetailsbyUserID() {
+
+        var checkinDate = new Date($("#checkIn").val());
+        var checkoutDate = new Date($("#checkOut").val());
+        var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        if (totalNightsStay == 0) {
+            totalNightsStay = 1;
+        }
+
+        $('#giveStays').empty();
+        if ("@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).MemberOrNot" == "Yes") {
+            if (@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays == 0) {
+                $('#giveStays').append("<option value='0'>0</option>");
+            }
+            else if (@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays == 1 || (@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays >= 2 && totalNightsStay == 1)) {
+                $('#giveStays').append("<option value='0'>0</option>");
+                $('#giveStays').append("<option value='1'>1</option>");
+            }
+            else if (@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays >= 2 && totalNightsStay > 1) {
+                $('#giveStays').append("<option value='0'>0</option>");
+                $('#giveStays').append("<option value='1'>1</option>");
+                $('#giveStays').append("<option value='2'>2</option>");
+            }
+            else if (@Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).LapseStays == -2) {
+                $("#leftStays").val("MembershipPlan expired.");
+                $('#giveStays').append("<option value='0'>0</option>");
+                $("#priceToPay").val('');
+            }
+            else {
+                $("#leftStays").val("No membership selected by this user.");
+                $('#giveStays').append("<option value='0'>0</option>");
+            }
+    complementaryStays();
+}
+else {
+            //var price = totalNightsStay * 3000;
+    var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+    $("#leftStays").val("0");
+    $('#giveStays').append("<option value='0'>0</option>");
+    $("#priceToPay").val(price);
+}
+            
+}
+
+function checkRoomsAvailablity() {
+    var checkIn = $("#checkIn").val();
+    var checkOut = $("#checkOut").val();
+    if (checkIn != "" && checkOut != "") {
+
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/AdvancedBookingFromMember/checkRoomsAvailablity",
+            data: JSON.stringify({ checkIn: checkIn, checkOut: checkOut,UserStayID:'@Model.ID' }),
+                dataType: "json",
+                success: function (response) {
+                    
+                    if (response.length > 0) {
+                        $('#RNo').empty();
+                        for (var i = 0; i < response.length; i++) {
+                            $('#RNo').append($('<option>', {
+                                value: response[i].ID,
+                                text: response[i].RoomNo
+                            }));
+                        }
+                        @*var e=_.where(response, {ID: '@Model.RoomId'});
+                        //https://stackoverflow.com/questions/5181493/how-to-find-a-value-in-a-multidimensional-object-array-in-javascript/15299578
+                        //if($.inArray('@Model.RoomId', response)==-1){
+                            $('#RNo').append($('<option>', {
+                                value: '@Model.RoomId',
+                                text: '@Model.RoomNo'
+                            }));
+                        //}
+                        $("#RNo option").val(function(idx, val) {
+                            $(this).siblings("[value='"+ val +"']").remove();
+                        });*@
+                        $('#RNo').val('@Model.RoomID');
+                    }
+                    else {
+                        $('#RNo').append($('<option>', {
+                            value: 0,
+                            text: "No Rooms Available"
+                        }));
+                        $("#checkIn").val("");
+                        $("#checkOut").val("");
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Please enter Check-in/Check-out dates to check Room's Availability.",
+                size: "medium"
+            });
+        }
+    }
+
+    function UpdateRoomBooking() {
+        var checkIn = $("#checkIn").val();
+        var checkOut = $("#checkOut").val();
+
+        var totalNightsStay = parseInt((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+        var RNo = $("#RNo").val();
+        var noOfPerson = $("#noOfPerson").val().trim();
+        if(checkIn!="" && checkOut!=""){
+            if (noOfPerson != "" && RNo != null) {
+
+                var d = {
+                    ID: '@Model.ID',
+                    Check_In: checkIn,
+                    Check_Out: checkOut,
+                    NoOfPerson: noOfPerson,
+                    RoomID: RNo,
+                    NoOfNightStays: totalNightsStay,
+                    ComplementaryStays: $("#giveStays").val(),
+                    TAmtPerRoom: $("#priceToPay").val(),
+                    ExtraBed:($('#extraBed').is(':checked'))?1:0
+                };
+
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/AdvancedBookingFromMember/UpdateRoomBookingOfUserByStayID",
+                    data: JSON.stringify(d),
+                    dataType: "json",
+                    success: function (response) {
+                        bootbox.confirm("Room Booking Updated.", function (result) {
+                            window.location.href = "/AdvancedBookingFromMember/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                });
+            }
+            else {
+                bootbox.alert("No. of persons & Room No are complusory.");
+            }
+        }
+        else{
+            bootbox.alert("Check-in & Check-out Dates are complusory.");
+        }
+    }
+
+    function complementaryStays() {
+        var staysGivenToMember = $("#giveStays").val();
+
+        var checkinDate = new Date($("#checkIn").val());
+        var checkoutDate = new Date($("#checkOut").val());
+        var extraBedCharges=($('#extraBed').is(':checked'))?500:0;
+
+        var totalNightsStay = parseInt((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        if (totalNightsStay == 0) {
+            totalNightsStay = 1;
+        }
+        if ('@(Model.getMembershipDetailsbyUserID(Model.UserID, Model.ID).MemberOrNot)' == "Yes")
+        {
+            if (parseInt(staysGivenToMember) == 0) {
+                //var price = totalNightsStay * 1500;
+                var price = totalNightsStay * parseInt(RoomPriceForMember);
+                if(parseInt(price)>0){
+                    price=parseInt(price)+parseInt(extraBedCharges);
+                }
+                $("#priceToPay").val(price);
+            }
+            else if (parseInt(staysGivenToMember) == 1) {
+                //var price = (totalNightsStay - 1) * 1500;
+                var price = (totalNightsStay - 1) * parseInt(RoomPriceForMember);
+                if(parseInt(price)>0){
+                    price=parseInt(price)+parseInt(extraBedCharges);
+                }
+                $("#priceToPay").val(price);
+            }
+            else if (parseInt(staysGivenToMember) == 2) {
+                //var price = (totalNightsStay - 2) * 1500;
+                var price = (totalNightsStay - 2) * parseInt(RoomPriceForMember);
+                if(parseInt(price)>0){
+                    price=parseInt(price)+parseInt(extraBedCharges);
+                }
+                $("#priceToPay").val(price);
+            }
+        }
+        else{
+            var price = totalNightsStay * parseInt(RoomPriceForNonMember);
+            if(parseInt(price)>0){
+                price=parseInt(price)+parseInt(extraBedCharges);
+            }
+            $("#priceToPay").val(price);
+        }
+    }
+</script>

@@ -1,0 +1,163 @@
+﻿<style>
+    th, td {
+        padding: 5px;
+    }
+</style>
+
+<body class="fix-header card-no-border">
+    
+    <div id="main-wrapper">
+       
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                            <div class="row" style="margin-bottom:20px;">
+                                @Html.ActionLink("Go Back", "Index", "Events", null, new { @class = "btn btn-success btn-margin" })
+                            </div>
+                            <h4 class="card-title">Add New Event</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Event Title <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" class="form-control requiredFields" id="eventName" placeholder="Event Title" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Event Organised By<span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sitemap" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" class="form-control requiredFields" id="eventOrganisedBy" placeholder="Event Organised By" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Description <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-asterisk" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <textarea id="description" class="form-control requiredFields" placeholder="Description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Date <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input id="eventDate" readonly class="form-control pressenter" type="text" placeholder="Date">
+                                    </div>
+                                    <div id="errorMessage" style="color:red;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Time <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="time" style="display:-webkit-box;" value="09:00" class="form-control requiredFields" id="eventTime"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Place <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" class="form-control requiredFields" id="eventPlace" placeholder="Place"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Image <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-picture-o" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type='file' class="form-control requiredFields" id='eventImage' accept='video/*,image/*' />
+                                       
+                                    </div>
+                                    <div id="preview" style="margin-top:5px;"></div>
+                                </div>
+
+                                <input  type="button" class="btn btn-primary" onclick="AddNewEvent();" value="Add Event" />
+                                <a href="/Events/Index" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+       
+
+    </div>
+ 
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        $('#eventDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-116:+0",
+        });
+    });
+
+    $("#eventImage").change(function (event) {
+        var tempPath = URL.createObjectURL(event.target.files[0]);
+        $("#preview").empty();
+        $("#preview").append("<img src='" + tempPath + "' width='170' height='100' />");
+    });
+
+    function AddNewEvent() {
+        $(".preloader").css("display", "block");
+        var eventTitle = $("#eventName").val().trim();
+        var eventDesc = $("#description").val().trim();
+        var eventDate = $("#eventDate").val();
+        var eventTime = $("#eventTime").val().trim();
+        var eventOrgBy = $("#eventOrganisedBy").val().trim();
+        var evtPlace = $("#eventPlace").val().trim();
+        var files = $("#eventImage")[0].files;
+        var _FormData = new FormData;
+        _FormData.append("EventName", eventTitle);
+        _FormData.append("Description", eventDesc);
+        _FormData.append("EventDate", eventDate);
+        _FormData.append("EventTime", eventTime);
+        _FormData.append("OrganisedBy", eventOrgBy);
+        _FormData.append("Place", evtPlace);
+        if (files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                _FormData.append(files[i].name, files[i]);
+            }
+        }
+        if (eventTitle != "" && eventDesc != "" && eventDate != "" && eventTime != "" && eventOrgBy != "" && evtPlace != "" && files.length != 0) {
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Events/CreateNewEvent",
+                data: _FormData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (response) {
+                    $(".preloader").css("display", "none");
+                    if (response == 1) {
+                        bootbox.confirm("New Event Added Successfully.", function (result) {
+                            window.location.href = "/Events/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                    else {
+                        bootbox.confirm("New Event goes for Approval from Super Admin.", function (result) {
+                            window.location.href = "/Events/Index";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'All fields are complusory to create an Event.',
+                size: "medium"
+            });
+        }
+    }
+</script>

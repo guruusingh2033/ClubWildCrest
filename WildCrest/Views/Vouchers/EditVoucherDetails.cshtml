@@ -1,0 +1,83 @@
+﻿@model WildCrest.Models.WildCrestModels.Voucher
+@*<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/colors/default-dark.css" id="theme" rel="stylesheet" />
+</head>*@
+<body class="fix-header card-no-border">
+    
+    <div id="main-wrapper">        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                            <a href="/Vouchers/Index" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Update Voucher</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Voucher Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true" style="width: 15px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.VoucherName" class="form-control requiredFields" id="vname" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Voucher Details <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-info" aria-hidden="true" style="width: 15px;font-size:initial"></i></div>
+                                        <textarea id="vdetails" class="form-control requiredFields">@Model.VoucherDetails</textarea>
+                                    </div>
+                                </div>
+                                <input type="button" class="btn btn-primary" value="Update" onclick="updateVoucherByID(@Model.ID);" />
+                                <a href="/Vouchers/Index" class="btn btn-primary">Cancel</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+    </div>
+</body>
+
+<script>
+    function updateVoucherByID(id) {
+        
+        var vname = $("#vname").val().trim();
+        var vdetail = $("#vdetails").val().trim();
+        if (vname != "" && vdetail != "") {
+            var updVoucher = {
+                ID: id,
+                VoucherName: vname,
+                VoucherDetails: vdetail
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Vouchers/UpdateVoucherById",
+                data: JSON.stringify({ updVoucher }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Voucher Updated.", function (result) {
+                        window.location.href = "/Vouchers/Index";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                },
+                error: function () {
+                    //alert('error');
+                }
+            });
+        }
+        else {
+            bootbox.alert({
+                message: "Both fields are compulsory.",
+                size: "small"
+            });
+        }
+    }
+</script>

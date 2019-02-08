@@ -1,0 +1,124 @@
+﻿@*@model IEnumerable<WildCrest.Models.WildCrestModels.Event>*@
+<style>
+    #upcomingEventsSlider .bx-wrapper img {
+        width: 90%;
+        padding-left: 120px;
+        height: 300px;
+    }
+
+    .bx-wrapper img {
+        width: 98%;
+        height: 200px;
+    }
+</style>
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+
+        <div class="card">
+            <div class="card-block">
+                @if (Request.Cookies["UserType"].Value == "1" || Request.Cookies["UserType"].Value == "2")
+                {
+                    <a class="btn btn-primary" style="margin-bottom: 20px;" href="/Events/Index">Go Back</a>
+                }
+                <h4 class="card-title">Upcoming Events</h4>
+                @*<label style="font-size:large;"></label>*@
+                <div class="form p-t-20">
+
+                    @if (ViewBag.UpcomingEvents.Count > 0)
+                    {
+                        <div id="upcomingEventsSlider">
+
+                            <ul class="bxslider">
+                                @foreach (var i in ViewBag.UpcomingEvents)
+                                {
+                                    //    string[] arrDate = i.EventDate.Split('/');
+                                    //    DateTime EventDate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+
+                                    //    if (EventDate > DateTime.Today)
+                                    //{
+                                    <li>
+                                        <a href="/EventsToUsers/ViewEventDetailsWithImages?id=@i.ID">
+                                            <img src="@i.ImagePath" title="@i.EventName" /><center><h3>Event Name : @i.EventName<br />@i.Description</h3></center>
+                                        </a>
+                                    </li>
+                                    //}
+                                }
+
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <label>No Upcoming Events.</label>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="main-wrapper">
+
+        @*<div class="col-md-12" style="width:151%">*@
+        <div class="card">
+
+            <div class="card-block card-title-3">
+                <h4 class="card-title">Past Events</h4>
+                <div class="form p-t-20">
+                    @if (ViewBag.PastEvents.Count > 0)
+                    {
+                    <div id="pastEventsSlider">
+                        <ul class="bxslider">
+                            @foreach (var i in ViewBag.PastEvents)
+                            {
+                                //string[] arrDate = i.EventDate.Split('/');
+                                //DateTime EventDate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+
+                                //if (EventDate < DateTime.Today)
+                                //{
+                                <li>
+                                    <a href="/EventsToUsers/ViewEventDetailsWithImages?id=@i.ID">
+                                        <img src="@i.ImagePath" title="@i.EventName" /><h5>Event Name : @i.EventName<br />@i.Description</h5>
+                                    </a>
+                                </li>
+                                //}
+                            }
+                        </ul>
+                    </div>
+                    }
+                    else
+                    {
+                        <label>No Past Events.</label>
+                    }
+
+                </div>
+            </div>
+        </div>
+        @*  </div>*@
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#upcomingEventsSlider ul.bxslider").bxSlider({
+            auto: true,
+            autoControls: true,
+            mode: 'horizontal',
+            autoDelay: 500,
+            slideWidth: 883,
+            maxSlides: 1,
+            adaptiveHeight: false
+        });
+
+        $("#pastEventsSlider ul.bxslider").bxSlider({
+            auto: true,
+            autoControls: true,
+            mode: 'horizontal',
+            autoDelay: 500,
+            slideWidth: 305,
+            maxSlides: 3,
+            minSlides: 1
+
+        });
+    });
+</script>

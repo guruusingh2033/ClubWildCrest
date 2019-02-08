@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Inventory>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+
+    <div class="card">
+        <div class="card-block">
+            <a class="btn btn-primary"  href="/Vendors/Index">Go Back</a>
+            <div class="table-responsive m-t-40">
+                <table id="inventoryList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="hide">Id</th>
+                            <th>Item Name</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Vendor Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="hide">@i.ID</td>
+                                <td>@i.Item_Name</td>
+                                <td>@i.Type</td>
+                                <td>@i.Quantity</td>
+                                <td>₹ @i.Price</td>
+                                <td>@i.VendorName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#inventoryList").dataTable({ "order": [[0, "desc"]] });
+    });
+</script>

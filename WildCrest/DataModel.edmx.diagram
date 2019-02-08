@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e1d586efe7f24d9d878519bb509e46a8" Name="Diagram1">
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BillingDetails" Width="1.5" PointX="10.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BookingTable" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Events" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_EventsImgVideo" Width="1.5" PointX="15" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Groups" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersWhileStayingWithUser" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Roles" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UserGroup" Width="1.5" PointX="3.875" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UsersOrder" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_VendorOrders" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Vendors" Width="1.5" PointX="8.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Voucher" Width="1.5" PointX="6.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_VoucherUsedByUser" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_EventsImgVideo_tbl_Events" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserGroup_tbl_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_VoucherUsedByUser_tbl_Voucher" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_FoodType" Width="1.5" PointX="8.625" PointY="18.375" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Menu" Width="1.5" PointX="11.125" PointY="18" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Rooms" Width="1.5" PointX="7.3286431521776327" PointY="1.0495831822276036" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UserMembership" Width="1.5" PointX="10.875" PointY="4.875" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembershipPlans" Width="1.5" PointX="1.094498802486108" PointY="14.008934906688022" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserMembership_tbl_MembershipPlans" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersBillingDetails" Width="1.5" PointX="8.483447015510615" PointY="31.098118230280523" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersPhoto" Width="1.5" PointX="1.7563264620287" PointY="14.491159579945338" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersDocs" Width="1.5" PointX="1.3477263121622272" PointY="16.654702268845728" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Inventory" Width="1.5" PointX="4" PointY="9.625" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo" Width="1.5" PointX="9.9529358772341787" PointY="17.357577987647417" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UsersStay" Width="1.5" PointX="11.814255818638138" PointY="26.060532626724118" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_BillingDetails_tbl_UsersStay" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersStay_tbl_MembershipPlans" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersOrder_tbl_UsersStay" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBilling" Width="1.5" PointX="8.4962411972210941" PointY="21.952686573356711" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillDetWithBillNo" Width="1.5" PointX="3.2152391389083297" PointY="11.670015385220767" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_TablesForBooking" Width="1.5" PointX="0.69217224451348758" PointY="4.0222854931011263" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBooking_Details" Width="1.5" PointX="5.5" PointY="5.625" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillingSection" Width="1.5" PointX="3.4380849653100993" PointY="15.13362849463412" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_PermissionsToStaff" Width="1.5" PointX="2.564801625239105" PointY="31.515031710041235" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Profile" Width="1.5" PointX="8.7428880579503669" PointY="12.211278190934694" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_PermissionsToStaff_tbl_Profile" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_Profile_tbl_Roles" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserGroup_tbl_Profile" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserMembership_tbl_Profile" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersStay_tbl_Profile" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_VoucherUsedByUser_tbl_Profile" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_ConsumableItems" Width="1.5" PointX="2.9429439673865883" PointY="7.6348309999494024" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBooking" Width="1.5" PointX="5.8743453164931134" PointY="26.439124387893418" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_InventoryUsage" Width="1.5" PointX="7.3885238205029271" PointY="30.305205761597122" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MenusBillingSection" Width="1.5" PointX="3.1243818565850994" PointY="2.8096051229208729" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

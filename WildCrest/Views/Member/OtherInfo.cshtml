@@ -1,0 +1,430 @@
+﻿
+<style>
+    .tablink {
+        background-color: #272c33;
+        color: white;
+        float: left;
+        border: none;
+        outline: none !important;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 25%;
+        font-weight: bold;
+    }
+    .hide {
+        visibility: hidden;
+    }
+        .tablink :hover {
+            background-color: #777;
+        }
+    .dataTables_wrapper {
+        background: rgb(178, 207, 224);
+        padding: 15px 15px 0px 15px;
+    }
+    .tabel-sec{
+        background: rgb(178, 207, 224);
+    }
+</style>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Other Information</h4>
+                    <div class="form p-t-20">
+                        <button class="tablink" onclick="openTab('TotalMembers', this, 'rgb(178, 207, 224)')" id="defaultOpen">Total Members</button>
+                        <button class="tablink" onclick="openTab('Orders', this, 'rgb(178, 207, 224)')">Other Misc. Orders</button>
+                        <button class="tablink" onclick="openTab('BillingDetails', this, 'rgb(178, 207, 224)')">Billing Details</button>
+                        <div class="tabel-sec tabcontent" id="TotalMembers">
+                            @*<br /> <br /> <br />*@
+                            <div class="row" style="margin:10px;float:left;">
+                                <div class="col-md-3">
+                                    <label>Name :</label> <br />
+                                    <input type="text" class="form-control" id="memberName" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Age :</label> <br />
+                                    <input type="text" class="form-control floatNo" id="memberAge" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Gender :</label> <br />
+                                    <select class="form-control" id="memberGender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <br /> <br />
+                                    <input type="button" onclick="AddMemberWhileStaying();" value="Add Member" class="btn btn-primary" />
+                                </div>
+                            </div>
+
+                            <div style="margin-top:52px;">
+                                <table id="getUsersWhileStaying" class="display nowrap table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="hide">Id</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stayData"></tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="tabel-sec tabcontent" id="Orders">
+                            @*<br /> <br /> <br />*@
+                            <div class="row" style="margin:10px;float:left;">
+                                <div class="col-md-3">
+                                    <label>Food Name :</label> <br />
+                                    <input type="text" class="form-control" id="foodName" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Description :</label> <br />
+                                    <textarea id="description" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Cost :</label> <br />
+                                    <input type="text" class="form-control floatNo" id="foodCost" />
+                                </div>
+                                <div class="col-md-3">
+                                    <br /> <br />
+                                    <input type="button" value="Order" onclick="AddOrderByUserStayID();" class="btn btn-primary" />
+                                </div>
+                            </div>
+                            <div style="margin-top:52px;">
+                                <table width="100%" id="getOrderWhileStaying" class="display nowrap table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="hide">Id</th>
+                                            <th>Food Name</th>
+                                            <th>Description</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orderData"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tabel-sec tabcontent" id="BillingDetails">
+                            @*<br /> <br /> <br />*@
+                            <div class="row" style="padding:15px 0px 15px 15px;width:100%;">
+                                <div class="col-md-3">
+                                    <label>Amount Paid :</label> <br />
+                                    <input type="text" class="form-control floatNo" id="amount" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Mode of Payment :</label> <br />
+                                    <select onchange="paymentMode();" class="form-control" id="paymentMode">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="Card">Card</option>
+                                    </select>
+                                </div>
+                                <div id="cheque" style="display:none;" class="col-md-3">
+                                    <label>Cheque No. :</label> <br />
+                                    <input type="text" class="form-control" id="chequeNo" />
+                                </div>
+                                <div id="card" style="display:none;" class="col-md-3">
+                                    <label>Transaction No. :</label> <br />
+                                    <input type="text" class="form-control" id="transactionNo" />
+                                </div>
+                                <div class="col-md-2">
+                                    <br /> <br />
+                                    <input type="button" value="Add" onclick="AddBillingDetails();" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        document.getElementById("defaultOpen").click();
+        $("#getUsersWhileStaying").dataTable({ "order": [[0, "desc"]] });
+        $("#getOrderWhileStaying").dataTable({ "order": [[0, "desc"]] });
+        $('input.floatNo').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
+        getMembersWhileStaying();
+        getOrderWhileStaying();
+    });
+
+    function paymentMode() {
+        var mode = $("#paymentMode").val();
+        if (mode == "Cheque") {
+            $("#cheque").css("display", "block");
+            $("#card").css("display", "none");
+        }
+        else if (mode == "Card")
+        {
+            $("#cheque").css("display", "none");
+            $("#card").css("display", "block");
+        }
+        else {
+            $("#cheque").css("display", "none");
+            $("#card").css("display", "none");
+        }
+    }
+
+    function openTab(tabName, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+        document.getElementById(tabName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+    }
+
+
+    function AddMemberWhileStaying() {
+        var memberName = $("#memberName").val();
+        var memberAge = $("#memberAge").val();
+        var memberGender = $("#memberGender").val();
+
+        if (memberName != "" && memberAge != "" && memberGender != "") {
+            var member = {
+                Name: memberName,
+                Age: memberAge,
+                Gender: memberGender,
+                UserStay_ID: '@ViewBag.UserStayID',
+                UserID: "@ViewBag.MemberID"
+            };
+                    $.ajax({
+                        type: "post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Member/AddMemberWhileStaying",
+                        data: JSON.stringify({ member }),
+                        dataType: "json",
+                        success: function (response) {
+                            debugger;
+                            getMembersWhileStaying();
+                            $("#memberName").val("");
+                            $("#memberAge").val("");
+                            $("#memberGender").val("Male");
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                    });
+            }
+            else {
+                bootbox.alert({
+                    message: "All Fields are complusory.",
+                    size: "small"
+                });
+            }
+    }
+
+    function getMembersWhileStaying() {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/getMembersWhileStaying",
+            data: JSON.stringify({ userStay_ID: '@ViewBag.UserStayID'}),
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                $("#stayData").empty();
+
+                if (response.length > 0) {
+                    for (var l = 0; l < response.length; l++) {
+                        var tr = $('<tr/>');
+                        tr.append("<td class='hide'>" + response[l].ID + "</td>");
+                        tr.append("<td>" + response[l].Name + "</td>");
+                        tr.append("<td>" + response[l].Age + "</td>");
+                        tr.append("<td>" + response[l].Gender + "</td>");
+                        $("#stayData").append(tr);
+                    }
+                }
+                else {
+                    var tr = $('<tr/>');
+                    tr.append("<td colspan='4'>No data to display.</td>");
+                    $("#stayData").append(tr);
+                }
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+
+    function AddOrderByUserStayID() {
+        var foodName = $("#foodName").val();
+        var description = $("#description").val();
+        var foodCost = $("#foodCost").val();
+        if (foodName != "" && description != "" && foodCost != "") {
+            var order = {
+                FoodItemName: foodName,
+                Description: description,
+                UserStay_ID: '@ViewBag.UserStayID',
+                Cost: foodCost,
+                UserID: "@ViewBag.MemberID"
+            };
+              $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/OrderWhileStaying",
+            data: JSON.stringify({ order }),
+            dataType: "json",
+            success: function (response) {
+                $("#foodName").val("");
+                $("#description").val("");
+                $("#foodCost").val("");
+                getOrderWhileStaying();
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+        }
+        else {
+            bootbox.alert({
+                message: "All Fields are complusory.",
+                size: "small"
+            });
+        }
+    }
+
+    function getOrderWhileStaying() {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/getOrderWhileStaying",
+            data: JSON.stringify({ userStay_ID: '@ViewBag.UserStayID'}),
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                $("#orderData").empty();
+
+                if (response.length > 0) {
+                    for (var l = 0; l < response.length; l++) {
+                        var tr1 = $('<tr/>');
+                        tr1.append("<td class='hide'>" + response[l].ID + "</td>");
+                        tr1.append("<td>" + response[l].FoodItemName + "</td>");
+                        tr1.append("<td>" + response[l].Description + "</td>");
+                        tr1.append("<td>₹ " + response[l].Cost + "</td>");
+                        $("#orderData").append(tr1);
+                    }
+                }
+                else {
+                    var tr = $('<tr/>');
+                    tr.append("<td colspan='4'>No data to display.</td>");
+                    $("#orderData").append(tr);
+                }
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+
+    function AddBillingDetails() {
+        var mode = $("#paymentMode").val();
+        var amount = $("#amount").val();
+        var chequeNo = $("#chequeNo").val();
+        var transactionNo = $("#transactionNo").val();
+        debugger;
+        if (mode == "Cheque") {
+            if (amount != "" && chequeNo != "") {
+                var billingDetails = {
+                    Amount_Paid: amount,
+                    Cheque_No: chequeNo,
+                    Mode_Of_Payment: mode,
+                    UserStay_ID: '@ViewBag.UserStayID',
+                    UserID: "@ViewBag.MemberID"
+                };
+                 $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/AddBillingDetails",
+            data: JSON.stringify({ billingDetails }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.alert("Amount Paid.");
+                $("#paymentMode").val("Cash");
+                $("#amount").val("");
+                $("#chequeNo").val("");
+                $("#transactionNo").val("");
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+            }
+            else {
+                bootbox.alert("Amount or Cheque No. can't be empty.");
+            }
+        }
+        else if (mode == "Card") {
+            if (amount != "" && transactionNo != "") {
+                var billingDetails = {
+                    Amount_Paid: amount,
+                    Transaction_No: transactionNo,
+                    Mode_Of_Payment: mode,
+                    UserStay_ID: '@ViewBag.UserStayID',
+                    UserID: "@ViewBag.MemberID"
+                };
+                 $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/AddBillingDetails",
+            data: JSON.stringify({ billingDetails }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.alert("Amount Paid.");
+                $("#paymentMode").val("Cash");
+                $("#amount").val("");
+                $("#chequeNo").val("");
+                $("#transactionNo").val("");
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+            }
+            else {
+                bootbox.alert("Amount or Transaction No. can't be empty.");
+            }
+        }
+        else {
+            var billingDetails = {
+                    Amount_Paid: amount,
+                    Mode_Of_Payment: mode,
+                    UserStay_ID: '@ViewBag.UserStayID',
+                    UserID: "@ViewBag.MemberID"
+                };
+                 $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/AddBillingDetails",
+            data: JSON.stringify({ billingDetails }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.alert("Amount Paid.");
+                $("#paymentMode").val("Cash");
+                $("#amount").val("");
+                $("#chequeNo").val("");
+                $("#transactionNo").val("");
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+        }
+    }
+</script>

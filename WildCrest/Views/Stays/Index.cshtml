@@ -1,0 +1,109 @@
+﻿@model WildCrest.Models.WildCrestModels.UserStays
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+<div class="col-md-12 admin-fom-inf">
+    <div class="row">
+       
+        <div class="form-body">
+            <h3 class="card-title">Stays Info</h3>
+
+            <div class="admin-form-back">
+                 @if(Model!=null){
+                @*<div class="row p-t-20">*@
+                <div class="col-md-5 form-profile-in">
+                    <div class="form-group">
+                        <label class="control-label">Membership Name :</label>
+                        <input type="text" id="firstName" disabled="disabled" value="@Model.MembershipName" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-5 form-profile-in">
+                    <div class="form-group">
+                        <label class="control-label">Taken Stays :</label>
+                        <input type="text" id="firstName" disabled="disabled" value="@Model.PreviousStays" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-5 form-profile-in">
+                    <div class="form-group">
+                        <label class="control-label">Lapse Stays :</label>
+                        <input type="text" id="firstName" disabled="disabled" value="@Model.LapseStays" class="form-control">
+
+                    </div>
+                </div>
+                @*</div>*@
+                <!--/row-->
+                <div class="col-md-5 form-profile-in">
+                    <div class="form-group">
+                        <label class="control-label">Total Stays :</label>
+                        <input type="text" id="firstName" disabled="disabled" value="@Model.TotalStays" class="form-control">
+
+                    </div>
+                </div>
+                @*<div class="col-12">*@
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12">
+
+                        </div>
+                        <div class="table-responsive m-t-40">
+                            <table id="adminList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="hide">ID</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>No. of Members</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.UserStays.Count != 0)
+                                    {
+                                        foreach (var a in ViewBag.UserStays)
+                                        {
+                                            <tr>
+                                                <td class="hide">@a.ID</td>
+                                                <td>@a.CheckInDate</td>
+                                                <td>@a.CheckoutDate</td>
+                                                <td>
+                                                    @if (a.NoOfMembers != 0)
+                                                {@a.NoOfMembers}
+                                                else
+                                                {
+                                                    <center>  <label>1</label></center>
+                                                }
+                                                </td>
+                                                @*<td>@a.NoOfMembers</td>*@
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                }
+                 else{
+         <label>No Membership Selected.</label>   
+        }
+            </div>
+        </div>
+        
+       
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#UserStaysList").dataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+</script>
