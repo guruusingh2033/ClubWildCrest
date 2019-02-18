@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenusBillingSection>
+
+<style>
+    .total_GST_amt li:nth-child(1) {
+        margin-right: 10px;
+    }
+
+    .total_GST_amt {
+        margin-top: 15px;
+    }
+</style>
+<div class="text-center">
+    <ul class="list-inline list-unstyled total_GST_amt">
+        <li><b>Total Amount :</b> @ViewBag.TotalAmount</li>
+        <li><b>GST :</b> @ViewBag.CSGST</li>
+        <li><b>Discount :</b> @ViewBag.Discount</li>
+    </ul>
+</div>
+<div style="float: right; margin-bottom: 5px;">
+    <input type="button" value="Print(A4)" class="btn btn-primary" onclick="printAll();" />
+</div>
+<table id="billingList" class="display table table-hover table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th style="width: 10%;">Actions</th>
+            <th>Invoice Number</th>
+            <th>Customer Name</th>
+            <th>Phone</th>
+            <th>Order Taken By</th>
+            <th>Amount Paid</th>
+            <th>Payment Mode</th>
+            <th>Date</th>
+
+        </tr>
+    </thead>
+    <tbody id="bills">
+        <script>
+            var tbl = "<center><b>Total Amount :</b> @ViewBag.TotalAmount  &nbsp;&nbsp; <b>GST :</b> @ViewBag.CSGST<br><br></center>";
+            tbl += '<table width="100%" cellpadding="10" id="printAllBills"><tr><th>Invoice Number</th><th>Customer Name</th><th>Phone</th><th>Order Taken By</th><th>Amount Paid</th><th>Payment Mode</th><th>Date</th></tr>';
+        </script>
+        @if (Model.Count() > 0)
+        {
+            foreach (var i in Model)
+            {
+                var stylecolor = (i.Mode_Of_Payment != "Paytm") ? ((i.Mode_Of_Payment == "Card") ? "background-color:#f5c8c8" : "background-color:#f7f9fd") : "background-color:#b4e0fb";
+            <tr>
+                <td style="width: 10%;@stylecolor;">
+                    <a title="Details" href="@Url.Action("Bar_BillDetailsByBillNo", "Bar", new { id = i.Bill_Number }, null)">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </a>
+                    @if (Request.Cookies["UserType"].Value == "1")
+                    {
+                        <a title="Edit" href="@Url.Action("Bar_EditBillByBillNo", "Bar", new { id = i.Bill_Number }, null)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                    }
+                    else if (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null)
+                    {
+                        if (Request.Cookies["PageSetting"]["FoodBillingEditPermission"] != "None")
+                        {
+                        <a title="Edit" href="@Url.Action("Bar_EditBillByBillNo", "Bar", new { id = i.Bill_Number }, null)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        }
+                    }
+                </td>
+                <td style="@stylecolor;">@i.Bill_Number</td>
+                <td style="@stylecolor;">@i.Customer_Name</td>
+                <td style="@stylecolor;">@i.Phone</td>
+                <td style="@stylecolor;">@i.OrderTakenBy</td>
+                <td style="@stylecolor;">@i.Price</td>
+                <td style="@stylecolor;">@i.Mode_Of_Payment</td>
+                <td style="@stylecolor;">@i.PaymentDate</td>
+            </tr>
+            <script>
+                tbl += '<tr><td>@i.Bill_Number</td><td>@i.Customer_Name</td>' +
+                '<td>@i.Phone</td>' +
+                '<td>@i.OrderTakenBy</td>' +
+                '<td>@i.Price</td>' +
+                '<td>@i.Mode_Of_Payment</td>' +
+                '<td>@i.PaymentDate</td>' +
+                '</tr>';
+            </script>
+            }
+        }
+        else
+        {
+            <script>
+                tbl += "<tr><td colspan='7' style='text-align:center;'>No data available in table</td></tr>";
+            </script>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#billingList").dataTable({ "order": [[1, "desc"]] });
+    });
+
+    function printAll() {
+        $(".preloader").css("display", "block");
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                   'table#printAllBills,#printAllBills th,#printAllBills td{' +
+                                'border-collapse:collapse;}' +
+
+                '#printAllBills th,#printAllBills td {' +
+                    'border:1px solid black;' +
+                '}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+    }
+</script>

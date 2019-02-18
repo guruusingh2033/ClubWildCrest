@@ -243,6 +243,12 @@ namespace WildCrest.Controllers.SuperAdmin
                         context.Entry(inv).State = EntityState.Deleted;
                         context.SaveChanges();
                     }
+                    var barInventory = context.tbl_BarInventory.Where(b => b.VendorID == id).ToList();
+                    foreach (var bar in barInventory)
+                    {
+                        context.Entry(bar).State = EntityState.Deleted;
+                        context.SaveChanges();
+                    }
                     var vendorOrders = context.tbl_VendorOrders.Where(o => o.VendorID == id).ToList();
                     if (vendorOrders != null)
                     {

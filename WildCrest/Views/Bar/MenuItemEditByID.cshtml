@@ -1,0 +1,109 @@
+﻿@model WildCrest.Models.WildCrestModels.MenuItems
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                            <a href="/Bar/MenuItems" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Update Item</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size: large;">Item Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cutlery" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.Food_Item_Name" id="FName" class="form-control requiredFields" placeholder="Food Item Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: large;">Details <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cutlery" style="width: 20px; font-size: initial"></i></div>
+                                        <textarea id="details" class="form-control requiredFields" placeholder="Details">@Model.Details</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Enter Price <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
+                                        <input type="text" value="@Model.Price" id="Cost" class="form-control floatNo requiredFields" placeholder="Price" />
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size: large;">Select Type <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-cutlery" style="width: 20px; font-size: initial"></i></div>                                       
+                                        <input list="foodType" name="browser" id="tempFoodType" class="requiredFields">
+                                        <datalist id="foodType">
+                                             @foreach(var fd in ViewBag.FoodType){
+                                            <option value="@fd.FoodItemTypeName">@fd.FoodItemTypeName</option>
+                                            }
+                                        </datalist>
+                                    </div>
+
+                                </div>
+
+                                <input type="button" value="Update" onclick="UpdateDetailsByID(@Model.ID);" class="btn btn-primary" />
+                                <a href="/Bar/MenuItems" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('input.floatNo').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
+        //$("#foodType").val("@Model.FoodType");
+        $("#tempFoodType").val("@Model.FoodType");
+    });
+    function UpdateDetailsByID(id) {
+        var FName = $("#FName").val().trim();
+        var details = $("#details").val().trim();
+        var price = $("#Cost").val();        
+        var foodType = $("#tempFoodType").val().trim();
+        if (FName != "" && details != "" && price != "" && foodType!="") {
+
+            var menu = {
+                ID: id,
+                Food_Item_Name: FName,
+                Details: details,
+                Price: price,
+                FoodType: foodType
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/UpdateDetailsByID",
+                data: JSON.stringify({ menu }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm("Item Updated Successfully.", function (result) {
+                        window.location.href = "/Bar/MenuItems";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+        }
+        else{
+            bootbox.alert({
+                message: 'All fields are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+
+</script>

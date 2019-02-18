@@ -105,6 +105,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult SaveBillingInfo(MenusBillingSection model)
         {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             double? amtWithoutTax = 0;
             double? gst = 0;
             var date = DateTime.Today;
@@ -184,8 +185,9 @@ namespace WildCrest.Controllers.SuperAdmin
                     }
                 }
             }
-            gst = amtWithoutTax * (2.5 / 100);
-            gst = (gst * 2);
+            //gst = amtWithoutTax * (2.5 / 100);
+            //gst = (gst * 2);
+            gst = amtWithoutTax * ((double)gstPercentFromConfig / (double)100);
             gst = Math.Round((double)gst, 2);
             amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
             tbl_MenusBillingSection menus = new tbl_MenusBillingSection();
@@ -449,7 +451,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         Customer_Name = i.Customer_Name,
                         Phone = i.Phone,
                         PaymentDate = i.PaymentDate,
-                        Price = i.Price - i.Discount,
+                        Price = Math.Round((Double)(i.Price - i.Discount), 2),
                         Mode_Of_Payment = i.Mode_Of_Payment,
                         OrderTakenBy = i.OrderTakenBy,
                         Discount = i.Discount
@@ -662,6 +664,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
         public void calculateAmount(int? billNo)
         {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             double? total = 0;
             double? csgst = 0;
             double? pricewithoutTax = 0;
@@ -671,8 +674,9 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 pricewithoutTax = pricewithoutTax + (i.Price * i.Quantity);
             }
-            csgst = pricewithoutTax * (2.5 / 100);
-            csgst = (csgst * 2);
+            //csgst = pricewithoutTax * (2.5 / 100);
+            //csgst = (csgst * 2);
+            csgst = pricewithoutTax * ((double)gstPercentFromConfig / (double)100);
             total = csgst + pricewithoutTax;
             var d = context.tbl_MenusBillingSection.SingleOrDefault(a => a.Bill_Number == billNo);
             if (d != null)

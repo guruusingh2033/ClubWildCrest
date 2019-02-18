@@ -1,0 +1,194 @@
+﻿@model WildCrest.Models.WildCrestModels.MenusBillingSection
+
+<style>
+    .view_order_created thead {
+        background: transparent;
+        color: #242424;
+    }
+
+        .view_order_created thead tr th, .view_order_created tbody tr td {
+            padding: 8px;
+            font-size: 15px;
+        }
+
+    .view_order_created {
+        margin-bottom: 0;
+    }
+</style>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <a href="/Bar/BarOrders" class="btn btn-primary" style="margin-bottom: 20px;">Go Back</a>
+                    <h4 class="card-title">Create Bill</h4>
+                    <div class="form p-t-20">
+                        @if (Model.Bill_Number != 0)
+                        {
+                            
+                                <div class="bill_number">
+                                    <h1>Bill Number : </h1><label id="billNo">@Model.Bill_Number</label>
+                                </div>
+                            
+
+                            <div class="form-group" style="clear:both;">
+                                <label style="font-size: large;">Customer Name </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="CName" class="form-control" value="@Model.Customer_Name" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Enter Phone No. </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="phone" class="form-control" value="@Model.Phone" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Order Received By </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-user-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="orderTakenBy" class="form-control" value="@Model.OrderTakenBy" readonly />
+                                </div>
+                            </div>
+                           
+                                <table class="table view_order_created">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Amt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="viewOrderList">
+                                        @foreach (var i in Model.MenusBillingDetailsWithBillNo)
+                                        {
+                                            <tr>
+                                                <td>@i.FoodName</td>
+                                                <td>@i.Price</td>
+                                                <td>@i.Quantity</td>
+                                                <td>@(i.Price * i.Quantity)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <br />
+
+                                <div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">Total : ₹ <span id="total">@Model.PriceWithoutTax</span></label>
+
+                                </div>
+                                <div class="taxBlock">
+                                    @*<div class="form-group">
+                                    <label style="font-size: large; font-weight: 400;">SGST : 2.5%  -> ₹  <span id="sgst">@(Model.GST/2)</span></label>
+
+                                </div>*@
+                                    <div class="form-group">
+                                        <label style="font-size: large; font-weight: 400;">GST : 18%  -> ₹  <span id="cgst">@Model.GST</span></label>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large; font-weight: 400;">Net Amount : ₹ <span id="netAmt">@Model.Price</span></label>
+
+                                    </div>
+                                </div>
+                                <input type="button" value="Print" onclick="PrintBill();" class="btn btn-primary" />
+                            
+                        }
+                        else
+                        {
+                            <label>No Record Found.</label>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<script>
+    function PrintBill() {
+        $(".preloader").css("display", "block");
+        newWin = window.open("");
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/Bar/CreateBill",
+            data: JSON.stringify({ billNo: @Model.Bill_Number }),
+            dataType: "Json",
+            success: function (response) {
+                var d = new Date();
+                var strDate = d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                var tbl = '';
+                tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+                tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                tbl += "<p style='font-size:10px;'>GSTIN : 09AAECV4514H1ZA";
+                tbl += "<br>Bill No. : " +'@Model.Bill_Number';
+                tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : " + time;
+                tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date : " + strDate;
+                tbl += "<br>Customer : " + '@Model.Customer_Name';
+        tbl += "<br>Customer PhoneNo : " + '@Model.Phone' + "</p>";
+                    
+                tbl += '<table id="tabel-heading" style="font-size: 9px;width:100%;margin:0; ">' +
+        '<thead>'+
+        '<tr style="font-weight:400;">'+
+        '<td style="text-align: left;width: 50%;padding: 13px 0;">Item Name </td>' +
+        '<td  style="text-align: center;width: 15%;padding: 13px 0;">Price</td>' +
+        '<td style="text-align: center;width: 10%;padding: 13px 0;">Qty</td>' +
+        '<td style="text-align: right;width: 25%;padding: 13px 0;">Amount</td>' +
+        '</tr>'+
+        '</thead>'+
+        '<tbody>';
+                var tbl_rows='';
+                for(var j=0;j<response.length;j++){
+                    tbl_rows+= '<tr>'+
+                      '<td style="text-align: left; padding:0 2px 0 2px;">' + response[j].FoodName + '</td>' +
+                      '<td style="text-align: center;padding:0 2px 0 2px" >' + response[j].Price + '</td>' +
+                      '<td style="text-align: center;padding:0 2px 0 2px">' + response[j].Quantity + '</td>' +
+                    '<td style="text-align: right;padding:0 2px 0 2px">' + (response[j].Price * response[j].Quantity) + '</td>' +
+                    '</tr>';
+                }
+                tbl+=tbl_rows+ '<tr>'+
+                   '<th colspan="3"   style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>'+
+                   '<td  style="text-align: right;padding: 10px 2px 2px 2px;">' + $("#total").html() + '</td>' +
+                 '</tr>'+
+      
+                 //'<tr>'+
+                 //  '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">SGST (2.5%) : </td>'+
+                 //  '<td  style="text-align: right;padding: 2px;">' + $("#sgst").html() + '</td>' +
+                 //'</tr>'+
+                 '<tr>'+
+                   '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">GST (18%) : </td>'+
+                   '<td  style="text-align: right;padding: 2px;">' + $("#cgst").html() + '</td>' +
+                 '</tr>'+
+                 '<tr>'+
+                   '<th colspan="3"   style="text-align: right;padding: 0px 11px;">Net Amount : </th>'+
+                   '<td  style="text-align: right;padding: 2px;font-size: 9px;">' + $("#netAmt").html() + '</td>' +
+                 '</tr>'+
+               '</tbody>'+
+
+             '</table><p style="font-size: 9px;">GOOD SERVICE DESERVES A TIP!!</p>';
+      
+                var htmlToPrint = '' +
+                    '<style type="text/css">' +
+                    'body{font-family: arial;}' +
+                    '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                    '</style>';
+                htmlToPrint += tbl;
+                   
+                newWin.document.write(htmlToPrint);
+                newWin.print();
+                newWin.close();
+                $(".preloader").css("display", "none");
+                window.location.href="/Bar/BarOrders";
+            },
+            error: function (response) {
+                $(".preloader").css("display", "none");
+            }
+        });        
+    }
+</script>

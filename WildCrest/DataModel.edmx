@@ -6,8 +6,14 @@
     <edmx:StorageModels>
     <Schema Namespace="ClubWildCrestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ClubWildCrestModelStoreContainer">
+          <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_BarBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_BarBillingSection" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_BarInventory" EntityType="ClubWildCrestModel.Store.tbl_BarInventory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_BarInventoryUsage" EntityType="ClubWildCrestModel.Store.tbl_BarInventoryUsage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.Store.tbl_BarMenu" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_BillingDetails" EntityType="ClubWildCrestModel.Store.tbl_BillingDetails" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_BookingTable" EntityType="ClubWildCrestModel.Store.tbl_BookingTable" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.Store.tbl_Consumable_BarItems" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_ConsumableItems" EntityType="ClubWildCrestModel.Store.tbl_ConsumableItems" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Events" EntityType="ClubWildCrestModel.Store.tbl_Events" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_EventsImgVideo" EntityType="ClubWildCrestModel.Store.tbl_EventsImgVideo" store:Type="Tables" Schema="dbo" />
@@ -41,6 +47,10 @@
           <EntitySet Name="tbl_Vendors" EntityType="ClubWildCrestModel.Store.tbl_Vendors" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Voucher" EntityType="ClubWildCrestModel.Store.tbl_Voucher" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_VoucherUsedByUser" EntityType="ClubWildCrestModel.Store.tbl_VoucherUsedByUser" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_BarInventory_tbl_Vendors">
+            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+            <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="ClubWildCrestModel.Store.FK_tbl_BillingDetails_tbl_UsersStay">
             <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
             <End Role="tbl_BillingDetails" EntitySet="tbl_BillingDetails" />
@@ -102,6 +112,80 @@
             <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tbl_BarBillingDetailsWithBillNo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BillNo" Type="int" />
+          <Property Name="ItemName" Type="varchar(max)" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="OldQuantity" Type="float" />
+          <Property Name="QtyUpdatedDate" Type="varchar(max)" />
+          <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_BarBillingSection">
+          <Key>
+            <PropertyRef Name="Bill_Number" />
+          </Key>
+          <Property Name="Bill_Number" Type="int" Nullable="false" />
+          <Property Name="Customer_Name" Type="varchar(max)" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="Price" Type="float" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="PaymentDate" Type="varchar(max)" />
+          <Property Name="GST" Type="float" />
+          <Property Name="PriceWithoutTax" Type="float" />
+          <Property Name="TableID" Type="int" />
+          <Property Name="Table_Status" Type="varchar(max)" />
+          <Property Name="Order_Time" Type="time" Precision="0" />
+          <Property Name="OrderTakenBy" Type="varchar(max)" />
+          <Property Name="Mode_Of_Payment" Type="varchar(max)" />
+          <Property Name="Billed_By" Type="int" />
+          <Property Name="Discount" Type="float" />
+        </EntityType>
+        <EntityType Name="tbl_BarInventory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Name" Type="varchar(max)" />
+          <Property Name="Type" Type="varchar(max)" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="Price" Type="int" />
+          <Property Name="VendorID" Type="int" />
+          <Property Name="Added_Date" Type="varchar" MaxLength="150" />
+          <Property Name="Measurement" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tbl_BarInventoryUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BarInventoryID" Type="int" />
+          <Property Name="Used_Qty" Type="float" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Used_Date" Type="varchar" MaxLength="150" />
+          <Property Name="Bar_MenusBillingDetailsID" Type="int" />
+          <Property Name="Bar_BillNo" Type="int" />
+          <Property Name="GST_NonGST_Bill" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_BarMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Name" Type="varchar(max)" />
+          <Property Name="Details" Type="varchar(max)" />
+          <Property Name="Price" Type="float" />
+          <Property Name="NewItemApprvFrmSuperAdm" Type="bit" />
+          <Property Name="DelItemApprvFromSuperAdm" Type="bit" />
+          <Property Name="FoodType" Type="varchar(max)" />
+          <Property Name="AddedBy" Type="varchar" MaxLength="300" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="300" />
+          <Property Name="InventoryID" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_BillingDetails">
           <Key>
             <PropertyRef Name="ID" />
@@ -124,6 +208,16 @@
           <Property Name="BookingStartTime" Type="varchar(max)" />
           <Property Name="BookingEndTime" Type="varchar(max)" />
           <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Consumable_BarItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BarMenuItem_ID" Type="int" />
+          <Property Name="Inventory_ID" Type="int" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="MeasurementUnit" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tbl_ConsumableItems">
           <Key>
@@ -453,6 +547,7 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TableNo" Type="varchar(max)" />
           <Property Name="Table_Status" Type="varchar(max)" />
+          <Property Name="Bar_Status" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tbl_UserGroup">
           <Key>
@@ -548,6 +643,18 @@
           <Property Name="UserID" Type="int" />
           <Property Name="VoucherID" Type="int" />
         </EntityType>
+        <Association Name="FK_tbl_BarInventory_tbl_Vendors">
+          <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
+          <End Role="tbl_BarInventory" Type="ClubWildCrestModel.Store.tbl_BarInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Vendors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_BarInventory">
+              <PropertyRef Name="VendorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_BillingDetails_tbl_UsersStay">
           <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="0..1" />
           <End Role="tbl_BillingDetails" Type="ClubWildCrestModel.Store.tbl_BillingDetails" Multiplicity="*" />
@@ -770,11 +877,6 @@
           <EntitySet Name="tbl_MembersBillingDetails" EntityType="ClubWildCrestModel.tbl_MembersBillingDetails" />
           <EntitySet Name="tbl_MembersPhoto" EntityType="ClubWildCrestModel.tbl_MembersPhoto" />
           <EntitySet Name="tbl_MembersDocs" EntityType="ClubWildCrestModel.tbl_MembersDocs" />
-          <EntitySet Name="tbl_Inventory" EntityType="ClubWildCrestModel.tbl_Inventory" />
-          <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors">
-            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
-            <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
-          </AssociationSet>
           <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo" />
           <EntitySet Name="tbl_UsersStay" EntityType="ClubWildCrestModel.tbl_UsersStay" />
           <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="ClubWildCrestModel.FK_tbl_BillingDetails_tbl_UsersStay">
@@ -795,7 +897,6 @@
           </AssociationSet>
           <EntitySet Name="tbl_RoomBilling" EntityType="ClubWildCrestModel.tbl_RoomBilling" />
           <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillDetWithBillNo" />
-          <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
           <EntitySet Name="tbl_RoomBooking_Details" EntityType="ClubWildCrestModel.tbl_RoomBooking_Details" />
           <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillingSection" />
           <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.tbl_PermissionsToStaff" />
@@ -828,6 +929,22 @@
           <EntitySet Name="tbl_RoomBooking" EntityType="ClubWildCrestModel.tbl_RoomBooking" />
           <EntitySet Name="tbl_InventoryUsage" EntityType="ClubWildCrestModel.tbl_InventoryUsage" />
           <EntitySet Name="tbl_MenusBillingSection" EntityType="ClubWildCrestModel.tbl_MenusBillingSection" />
+          <EntitySet Name="tbl_Inventory" EntityType="ClubWildCrestModel.tbl_Inventory" />
+          <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors">
+            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+            <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
+          </AssociationSet>
+          <EntitySet Name="tbl_BarInventory" EntityType="ClubWildCrestModel.tbl_BarInventory" />
+          <EntitySet Name="tbl_BarInventoryUsage" EntityType="ClubWildCrestModel.tbl_BarInventoryUsage" />
+          <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors">
+            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+            <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
+          </AssociationSet>
+          <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.tbl_BarBillingDetailsWithBillNo" />
+          <EntitySet Name="tbl_BarBillingSection" EntityType="ClubWildCrestModel.tbl_BarBillingSection" />
+          <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.tbl_BarMenu" />
+          <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" />
+          <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
           </EntityContainer>
         <EntityType Name="tbl_BillingDetails">
           <Key>
@@ -958,6 +1075,7 @@
           <Property Name="AddedBy" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
           <Property Name="DeletedBy" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="tbl_Inventory" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Vendors" ToRole="tbl_Inventory" />
+          <NavigationProperty Name="tbl_BarInventory" Relationship="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors" FromRole="tbl_Vendors" ToRole="tbl_BarInventory" />
         </EntityType>
         <EntityType Name="tbl_Voucher">
           <Key>
@@ -1118,32 +1236,6 @@
           <Property Type="Int32" Name="UserID" />
           <Property Type="String" Name="MemberDocsPath" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tbl_Inventory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="Double" Name="Quantity" />
-          <Property Type="Int32" Name="Price" />
-          <Property Type="Int32" Name="VendorID" />
-          <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Inventory" ToRole="tbl_Vendors" />
-        </EntityType>
-        <Association Name="FK_tbl_Inventory_tbl_Vendors">
-          <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
-          <End Type="ClubWildCrestModel.tbl_Inventory" Role="tbl_Inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Vendors">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tbl_Inventory">
-              <PropertyRef Name="VendorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tbl_MenusBillingDetailsWithBillNo">
           <Key>
             <PropertyRef Name="ID" />
@@ -1258,14 +1350,6 @@
           <Property Type="Double" Name="OldQuantity" />
           <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tbl_TablesForBooking">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="TableNo" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_RoomBooking_Details">
           <Key>
@@ -1484,6 +1568,138 @@
           <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="Billed_By" />
           <Property Type="Double" Name="Discount" />
+        </EntityType>
+        <EntityType Name="tbl_Inventory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="Int32" Name="Price" />
+          <Property Type="Int32" Name="VendorID" />
+          <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Inventory" ToRole="tbl_Vendors" />
+        </EntityType>
+        <Association Name="FK_tbl_Inventory_tbl_Vendors">
+          <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
+          <End Type="ClubWildCrestModel.tbl_Inventory" Role="tbl_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Vendors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_Inventory">
+              <PropertyRef Name="VendorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_BarInventory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="Int32" Name="Price" />
+          <Property Type="Int32" Name="VendorID" />
+          <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors" FromRole="tbl_BarInventory" ToRole="tbl_Vendors" />
+        </EntityType>
+        <EntityType Name="tbl_BarInventoryUsage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="BarInventoryID" />
+          <Property Type="Double" Name="Used_Qty" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Used_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Bar_MenusBillingDetailsID" />
+          <Property Type="Int32" Name="Bar_BillNo" />
+          <Property Type="String" Name="GST_NonGST_Bill" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_tbl_BarInventory_tbl_Vendors">
+          <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
+          <End Type="ClubWildCrestModel.tbl_BarInventory" Role="tbl_BarInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Vendors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_BarInventory">
+              <PropertyRef Name="VendorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_BarBillingDetailsWithBillNo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="BillNo" />
+          <Property Type="String" Name="ItemName" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Price" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="Double" Name="OldQuantity" />
+          <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_BarBillingSection">
+          <Key>
+            <PropertyRef Name="Bill_Number" />
+          </Key>
+          <Property Type="Int32" Name="Bill_Number" Nullable="false" />
+          <Property Type="String" Name="Customer_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Price" />
+          <Property Type="Int32" Name="UserID" />
+          <Property Type="String" Name="PaymentDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="GST" />
+          <Property Type="Double" Name="PriceWithoutTax" />
+          <Property Type="Int32" Name="TableID" />
+          <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Time" Name="Order_Time" Precision="0" />
+          <Property Type="String" Name="OrderTakenBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Billed_By" />
+          <Property Type="Double" Name="Discount" />
+        </EntityType>
+        <EntityType Name="tbl_BarMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Details" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Price" />
+          <Property Type="Boolean" Name="NewItemApprvFrmSuperAdm" />
+          <Property Type="Boolean" Name="DelItemApprvFromSuperAdm" />
+          <Property Type="String" Name="FoodType" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AddedBy" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DeletedBy" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="InventoryID" />
+        </EntityType>
+        <EntityType Name="tbl_Consumable_BarItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="BarMenuItem_ID" />
+          <Property Type="Int32" Name="Inventory_ID" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="String" Name="MeasurementUnit" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_TablesForBooking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TableNo" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Bar_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1736,20 +1952,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Inventory">
-            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Inventory">
-              <MappingFragment StoreEntitySet="tbl_Inventory">
-                <ScalarProperty Name="Measurement" ColumnName="Measurement" />
-                <ScalarProperty Name="Added_Date" ColumnName="Added_Date" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_MenusBillingDetailsWithBillNo">
             <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo">
               <MappingFragment StoreEntitySet="tbl_MenusBillingDetailsWithBillNo">
@@ -1812,15 +2014,6 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="FoodName" ColumnName="FoodName" />
                 <ScalarProperty Name="NonGst_BillNo" ColumnName="NonGst_BillNo" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_TablesForBooking">
-            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_TablesForBooking">
-              <MappingFragment StoreEntitySet="tbl_TablesForBooking">
-                <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
-                <ScalarProperty Name="TableNo" ColumnName="TableNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1969,6 +2162,120 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Inventory">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Inventory">
+              <MappingFragment StoreEntitySet="tbl_Inventory">
+                <ScalarProperty Name="Measurement" ColumnName="Measurement" />
+                <ScalarProperty Name="Added_Date" ColumnName="Added_Date" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarInventory">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BarInventory">
+              <MappingFragment StoreEntitySet="tbl_BarInventory">
+                <ScalarProperty Name="Measurement" ColumnName="Measurement" />
+                <ScalarProperty Name="Added_Date" ColumnName="Added_Date" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarInventoryUsage">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BarInventoryUsage">
+              <MappingFragment StoreEntitySet="tbl_BarInventoryUsage">
+                <ScalarProperty Name="GST_NonGST_Bill" ColumnName="GST_NonGST_Bill" />
+                <ScalarProperty Name="Bar_BillNo" ColumnName="Bar_BillNo" />
+                <ScalarProperty Name="Bar_MenusBillingDetailsID" ColumnName="Bar_MenusBillingDetailsID" />
+                <ScalarProperty Name="Used_Date" ColumnName="Used_Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Used_Qty" ColumnName="Used_Qty" />
+                <ScalarProperty Name="BarInventoryID" ColumnName="BarInventoryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarBillingDetailsWithBillNo">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BarBillingDetailsWithBillNo">
+              <MappingFragment StoreEntitySet="tbl_BarBillingDetailsWithBillNo">
+                <ScalarProperty Name="QtyUpdatedBy" ColumnName="QtyUpdatedBy" />
+                <ScalarProperty Name="QtyUpdatedDate" ColumnName="QtyUpdatedDate" />
+                <ScalarProperty Name="OldQuantity" ColumnName="OldQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="BillNo" ColumnName="BillNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarBillingSection">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BarBillingSection">
+              <MappingFragment StoreEntitySet="tbl_BarBillingSection">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+                <ScalarProperty Name="OrderTakenBy" ColumnName="OrderTakenBy" />
+                <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
+                <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
+                <ScalarProperty Name="TableID" ColumnName="TableID" />
+                <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarMenu">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_BarMenu">
+              <MappingFragment StoreEntitySet="tbl_BarMenu">
+                <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="FoodType" ColumnName="FoodType" />
+                <ScalarProperty Name="DelItemApprvFromSuperAdm" ColumnName="DelItemApprvFromSuperAdm" />
+                <ScalarProperty Name="NewItemApprvFrmSuperAdm" ColumnName="NewItemApprvFrmSuperAdm" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Consumable_BarItems">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_Consumable_BarItems">
+              <MappingFragment StoreEntitySet="tbl_Consumable_BarItems">
+                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Inventory_ID" ColumnName="Inventory_ID" />
+                <ScalarProperty Name="BarMenuItem_ID" ColumnName="BarMenuItem_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_TablesForBooking">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_TablesForBooking">
+              <MappingFragment StoreEntitySet="tbl_TablesForBooking">
+                <ScalarProperty Name="Bar_Status" ColumnName="Bar_Status" />
+                <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
+                <ScalarProperty Name="TableNo" ColumnName="TableNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

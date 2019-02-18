@@ -46,12 +46,10 @@ namespace WildCrest
         public DbSet<tbl_MembersBillingDetails> tbl_MembersBillingDetails { get; set; }
         public DbSet<tbl_MembersPhoto> tbl_MembersPhoto { get; set; }
         public DbSet<tbl_MembersDocs> tbl_MembersDocs { get; set; }
-        public DbSet<tbl_Inventory> tbl_Inventory { get; set; }
         public DbSet<tbl_MenusBillingDetailsWithBillNo> tbl_MenusBillingDetailsWithBillNo { get; set; }
         public DbSet<tbl_UsersStay> tbl_UsersStay { get; set; }
         public DbSet<tbl_RoomBilling> tbl_RoomBilling { get; set; }
         public DbSet<tbl_NonGST_MenusBillDetWithBillNo> tbl_NonGST_MenusBillDetWithBillNo { get; set; }
-        public DbSet<tbl_TablesForBooking> tbl_TablesForBooking { get; set; }
         public DbSet<tbl_RoomBooking_Details> tbl_RoomBooking_Details { get; set; }
         public DbSet<tbl_NonGST_MenusBillingSection> tbl_NonGST_MenusBillingSection { get; set; }
         public DbSet<tbl_PermissionsToStaff> tbl_PermissionsToStaff { get; set; }
@@ -60,5 +58,13 @@ namespace WildCrest
         public DbSet<tbl_RoomBooking> tbl_RoomBooking { get; set; }
         public DbSet<tbl_InventoryUsage> tbl_InventoryUsage { get; set; }
         public DbSet<tbl_MenusBillingSection> tbl_MenusBillingSection { get; set; }
+        public DbSet<tbl_Inventory> tbl_Inventory { get; set; }
+        public DbSet<tbl_BarInventory> tbl_BarInventory { get; set; }
+        public DbSet<tbl_BarInventoryUsage> tbl_BarInventoryUsage { get; set; }
+        public DbSet<tbl_BarBillingDetailsWithBillNo> tbl_BarBillingDetailsWithBillNo { get; set; }
+        public DbSet<tbl_BarBillingSection> tbl_BarBillingSection { get; set; }
+        public DbSet<tbl_BarMenu> tbl_BarMenu { get; set; }
+        public DbSet<tbl_Consumable_BarItems> tbl_Consumable_BarItems { get; set; }
+        public DbSet<tbl_TablesForBooking> tbl_TablesForBooking { get; set; }
     }
 }

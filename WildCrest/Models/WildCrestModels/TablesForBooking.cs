@@ -11,7 +11,7 @@ namespace WildCrest.Models.WildCrestModels
         public string TableNo { get; set; }
 
         public string Table_Status { get; set; }
-
+        public string Bar_Status { get; set; }
         public string OrderReceivedBy { get; set; }
     }
 }

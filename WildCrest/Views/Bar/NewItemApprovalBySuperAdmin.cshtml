@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
 
 <style>
     .hide {
@@ -11,8 +10,8 @@
     <div class="card">
         <div class="card-block">
             <div class="row">
-                @Html.ActionLink("Go Back", "Index", "MenuItems",null, new { @class = "btn btn-success btn-margin" })
-
+                @Html.ActionLink("Go Back", "MenuItems", "Bar",null, new { @class = "btn btn-success btn-margin" })
+               
             </div>
             <div class="table-responsive m-t-40">
                 <table id="foodItemList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
@@ -24,7 +23,7 @@
                             <th>Details</th>
                             <th>Price</th>
                             <th>Type</th>
-                            <th>Deleted By</th>
+                            <th>Added By</th>
                             
                         </tr>
                     </thead>
@@ -34,21 +33,21 @@
                             <tr>
                                 <td class="hide">@i.ID</td>
                                 <td style="width:20%;">
-                                    <a title="Detail" href="@Url.Action("NewDelFoodItemEditByID", "MenuItems", new { id = i.ID }, null)">
+                                    <a title="Detail" href="@Url.Action("NewDelItemEditByID", "Bar", new { id = i.ID, editDetail = "New" }, null)">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    <a title="Delete" onclick="DeleteFoodItemById(@i.ID);" href="#">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <a title="Approve" href="#" onclick="ApproveFoodItem(@i.ID);">
+                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                     </a>
-                                    <a title="Again Store in DB" onclick="CancelDeleteFoodItemById(@i.ID);" href="#">
-                                        <i class="fa fa-database" aria-hidden="true"></i>
+                                    <a title="Deny" onclick="DeleteFoodItemById(@i.ID);" href="#">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
                                     </a>
                                 </td>
                                 <td style="width:20%;">@i.Food_Item_Name</td>
                                 <td style="width:30%;">@i.Details</td>
                                 <td>₹ @i.Price</td>
                                 <td>@i.FoodType</td>
-                                <td>@i.DeletedBy</td>
+                                <td>@i.AddedBy</td>
                                 
                             </tr>
                         }
@@ -64,17 +63,17 @@
         $("#foodItemList").dataTable({ "order": [[0, "desc"]] });
     });
     function DeleteFoodItemById(id) {
-        bootbox.confirm("Are you sure to delete this food item?", function (result) {
+        bootbox.confirm("Deny New Item Approval?", function (result) {
             if (result) {
                 $.ajax({
                     type: "post",
                     contentType: "application/json; charset=utf-8",
-                    url: "/MenuItems/DeleteFoodItemById",
+                    url: "/Bar/DeleteItemById",
                     data: JSON.stringify({ id: id }),
                     dataType: "json",
                     success: function (response) {
-                        bootbox.confirm("Food item Deleted.", function (result) {
-                            window.location.href = "/MenuItems/DeleteFoodItemBySuperAdminApproval";
+                        bootbox.confirm("Item Deleted.", function (result) {
+                            window.location.href = "/Bar/NewItemApprovalBySuperAdmin";
                         });
                         $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
                     }
@@ -82,23 +81,23 @@
             }
             else {
                 bootbox.alert({
-                    message: "You pressed cancel.",
+                    message: "Not Deleted.",
                     size: "small"
                 });
             }
         });
     }
 
-    function CancelDeleteFoodItemById(id) {
+    function ApproveFoodItem(id) {
         $.ajax({
             type: "post",
             contentType: "application/json; charset=utf-8",
-            url: "/MenuItems/CancelDeleteFoodItemByID",
+            url: "/Bar/ApproveItem",
             data: JSON.stringify({ id: id }),
             dataType: "json",
             success: function (response) {
-                bootbox.confirm("Food Item not Deleted. Again its stored in Database.", function (result) {
-                    window.location.href = "/MenuItems/DeleteFoodItemBySuperAdminApproval";
+                bootbox.confirm("Item Approved.", function (result) {
+                    window.location.href = "/Bar/NewItemApprovalBySuperAdmin";
                 });
                 $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
             }

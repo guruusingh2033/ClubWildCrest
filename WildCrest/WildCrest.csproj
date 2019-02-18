@@ -129,6 +129,7 @@
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\SuperAdmin\AdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\AdvancedBookingFromMemberController.cs" />
+    <Compile Include="Controllers\SuperAdmin\BarController.cs" />
     <Compile Include="Controllers\SuperAdmin\BillingController.cs" />
     <Compile Include="Controllers\SuperAdmin\EventsController.cs" />
     <Compile Include="Controllers\SuperAdmin\InventoryController.cs" />
@@ -200,6 +201,21 @@
     <Compile Include="Models\WildCrestModels\Voucher.cs" />
     <Compile Include="Models\WildCrestModels\VoucherUsedByUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tbl_BarBillingDetailsWithBillNo.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BarBillingSection.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BarInventory.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BarInventoryUsage.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BarMenu.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_BillingDetails.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -207,6 +223,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_ConsumableItems.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Consumable_BarItems.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Events.cs">
@@ -1002,6 +1021,27 @@
     <Content Include="Views\MenuItems\ConsumableFoodItemEditByID.cshtml" />
     <Content Include="Views\MenuItems\AddNewConsumableItem.cshtml" />
     <Content Include="Views\Report\Members_Membership_Info.cshtml" />
+    <Content Include="Views\Bar\Inventory.cshtml" />
+    <Content Include="Views\Bar\AddNewItem.cshtml" />
+    <Content Include="Views\Bar\InventoryUsage.cshtml" />
+    <Content Include="Views\Bar\InventoryDetailsByID.cshtml" />
+    <Content Include="Views\Bar\MenuItems.cshtml" />
+    <Content Include="Views\Bar\NewItemApprovalBySuperAdmin.cshtml" />
+    <Content Include="Views\Bar\DeleteItemBySuperAdminApproval.cshtml" />
+    <Content Include="Views\Bar\ConsumablesItem.cshtml" />
+    <Content Include="Views\Bar\ConsumableItemEditByID.cshtml" />
+    <Content Include="Views\Bar\MenuItemDetailsByID.cshtml" />
+    <Content Include="Views\Bar\MenuItemEditByID.cshtml" />
+    <Content Include="Views\Bar\NewDelItemEditByID.cshtml" />
+    <Content Include="Views\Bar\AddNewBarItem.cshtml" />
+    <Content Include="Views\Bar\AddNewConsumableItem.cshtml" />
+    <Content Include="Views\Bar\BarBillingSection.cshtml" />
+    <Content Include="Views\Bar\_BarBillsDataAccToDay.cshtml" />
+    <Content Include="Views\Bar\BarBillsIndex.cshtml" />
+    <Content Include="Views\Bar\Bar_BillDetailsByBillNo.cshtml" />
+    <Content Include="Views\Bar\Bar_EditBillByBillNo.cshtml" />
+    <Content Include="Views\Bar\BarOrders.cshtml" />
+    <Content Include="Views\Bar\CreateTableBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

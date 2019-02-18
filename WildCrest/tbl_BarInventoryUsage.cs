@@ -12,11 +12,15 @@ namespace WildCrest
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_TablesForBooking
+    public partial class tbl_BarInventoryUsage
     {
         public int ID { get; set; }
-        public string TableNo { get; set; }
-        public string Table_Status { get; set; }
-        public string Bar_Status { get; set; }
+        public Nullable<int> BarInventoryID { get; set; }
+        public Nullable<double> Used_Qty { get; set; }
+        public string Description { get; set; }
+        public string Used_Date { get; set; }
+        public Nullable<int> Bar_MenusBillingDetailsID { get; set; }
+        public Nullable<int> Bar_BillNo { get; set; }
+        public string GST_NonGST_Bill { get; set; }
     }
 }

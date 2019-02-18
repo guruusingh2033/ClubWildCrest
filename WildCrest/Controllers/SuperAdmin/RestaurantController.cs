@@ -49,6 +49,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult CreateOrder(MenusBillingSection model)
         {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             double? amtWithoutTax = 0;
             double? gst = 0;
             var date = DateTime.Today;
@@ -131,8 +132,9 @@ namespace WildCrest.Controllers.SuperAdmin
                         }
                     }
                 }
-                gst = amtWithoutTax * (2.5 / 100);
-                gst = (gst * 2);
+                //gst = amtWithoutTax * (2.5 / 100);
+                //gst = (gst * 2);
+                gst = amtWithoutTax * ((double)gstPercentFromConfig / (double)100);
                 gst = Math.Round((double)gst, 2);
                 amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
 
@@ -311,6 +313,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult addMoreNewItemsInDB(MenusBillingSection model)
         {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             double? amtWithoutTax = 0;
             double? gst = 0;
             var date = DateTime.Today;
@@ -376,8 +379,9 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 amtWithoutTax = amtWithoutTax + billDet.PriceWithoutTax;
 
-                gst = amtWithoutTax * (2.5 / 100);
-                gst = (gst * 2);
+                //gst = amtWithoutTax * (2.5 / 100);
+                //gst = (gst * 2);
+                gst = amtWithoutTax * ((double)gstPercentFromConfig / (double)100);
                 gst = Math.Round((double)gst, 2);
                 amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
 

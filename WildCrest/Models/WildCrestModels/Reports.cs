@@ -32,6 +32,11 @@ namespace WildCrest.Models.WildCrestModels
         public decimal MemBill_GST { get; set; }
         public decimal MemBill_Total { get; set; }
 
+        public decimal Bar_Sale { get; set; }
+        public decimal Bar_GST { get; set; }
+        public decimal Bar_Discount { get; set; }
+        public decimal Bar_Total { get; set; }
+
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
@@ -66,5 +71,13 @@ namespace WildCrest.Models.WildCrestModels
         public decimal MemBill_Discount { get; set; }
         public decimal MemBill_GST { get; set; }
         public decimal MemBill_Total { get; set; }
+    }
+
+    public class BarReports
+    {
+        public decimal Bar_Sale { get; set; }
+        public decimal Bar_GST { get; set; }
+        public decimal Bar_Discount { get; set; }
+        public decimal Bar_Total { get; set; }
     }
 }

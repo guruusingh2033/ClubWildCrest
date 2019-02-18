@@ -38,11 +38,6 @@
     <EntitySet Name="tbl_MembersBillingDetails" EntityType="ClubWildCrestModel.tbl_MembersBillingDetails" />
     <EntitySet Name="tbl_MembersPhoto" EntityType="ClubWildCrestModel.tbl_MembersPhoto" />
     <EntitySet Name="tbl_MembersDocs" EntityType="ClubWildCrestModel.tbl_MembersDocs" />
-    <EntitySet Name="tbl_Inventory" EntityType="ClubWildCrestModel.tbl_Inventory" />
-    <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors">
-      <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
-      <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
-    </AssociationSet>
     <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo" />
     <EntitySet Name="tbl_UsersStay" EntityType="ClubWildCrestModel.tbl_UsersStay" />
     <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="ClubWildCrestModel.FK_tbl_BillingDetails_tbl_UsersStay">
@@ -63,7 +58,6 @@
     </AssociationSet>
     <EntitySet Name="tbl_RoomBilling" EntityType="ClubWildCrestModel.tbl_RoomBilling" />
     <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillDetWithBillNo" />
-    <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
     <EntitySet Name="tbl_RoomBooking_Details" EntityType="ClubWildCrestModel.tbl_RoomBooking_Details" />
     <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillingSection" />
     <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.tbl_PermissionsToStaff" />
@@ -96,6 +90,22 @@
     <EntitySet Name="tbl_RoomBooking" EntityType="ClubWildCrestModel.tbl_RoomBooking" />
     <EntitySet Name="tbl_InventoryUsage" EntityType="ClubWildCrestModel.tbl_InventoryUsage" />
     <EntitySet Name="tbl_MenusBillingSection" EntityType="ClubWildCrestModel.tbl_MenusBillingSection" />
+    <EntitySet Name="tbl_Inventory" EntityType="ClubWildCrestModel.tbl_Inventory" />
+    <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors">
+      <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+      <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
+    </AssociationSet>
+    <EntitySet Name="tbl_BarInventory" EntityType="ClubWildCrestModel.tbl_BarInventory" />
+    <EntitySet Name="tbl_BarInventoryUsage" EntityType="ClubWildCrestModel.tbl_BarInventoryUsage" />
+    <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors">
+      <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+      <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
+    </AssociationSet>
+    <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.tbl_BarBillingDetailsWithBillNo" />
+    <EntitySet Name="tbl_BarBillingSection" EntityType="ClubWildCrestModel.tbl_BarBillingSection" />
+    <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.tbl_BarMenu" />
+    <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" />
+    <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
   </EntityContainer>
   <EntityType Name="tbl_BillingDetails">
     <Key>
@@ -226,6 +236,7 @@
     <Property Name="AddedBy" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
     <Property Name="DeletedBy" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="tbl_Inventory" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Vendors" ToRole="tbl_Inventory" />
+    <NavigationProperty Name="tbl_BarInventory" Relationship="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors" FromRole="tbl_Vendors" ToRole="tbl_BarInventory" />
   </EntityType>
   <EntityType Name="tbl_Voucher">
     <Key>
@@ -386,32 +397,6 @@
     <Property Type="Int32" Name="UserID" />
     <Property Type="String" Name="MemberDocsPath" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="tbl_Inventory">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Type="Double" Name="Quantity" />
-    <Property Type="Int32" Name="Price" />
-    <Property Type="Int32" Name="VendorID" />
-    <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Inventory" ToRole="tbl_Vendors" />
-  </EntityType>
-  <Association Name="FK_tbl_Inventory_tbl_Vendors">
-    <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
-    <End Type="ClubWildCrestModel.tbl_Inventory" Role="tbl_Inventory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_Vendors">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="tbl_Inventory">
-        <PropertyRef Name="VendorID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="tbl_MenusBillingDetailsWithBillNo">
     <Key>
       <PropertyRef Name="ID" />
@@ -526,14 +511,6 @@
     <Property Type="Double" Name="OldQuantity" />
     <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="tbl_TablesForBooking">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Type="String" Name="TableNo" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tbl_RoomBooking_Details">
     <Key>
@@ -752,5 +729,137 @@
     <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="Int32" Name="Billed_By" />
     <Property Type="Double" Name="Discount" />
+  </EntityType>
+  <EntityType Name="tbl_Inventory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Quantity" />
+    <Property Type="Int32" Name="Price" />
+    <Property Type="Int32" Name="VendorID" />
+    <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" FromRole="tbl_Inventory" ToRole="tbl_Vendors" />
+  </EntityType>
+  <Association Name="FK_tbl_Inventory_tbl_Vendors">
+    <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
+    <End Type="ClubWildCrestModel.tbl_Inventory" Role="tbl_Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Vendors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_Inventory">
+        <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_BarInventory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Type" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Quantity" />
+    <Property Type="Int32" Name="Price" />
+    <Property Type="Int32" Name="VendorID" />
+    <Property Type="String" Name="Added_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Measurement" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_Vendors" Relationship="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors" FromRole="tbl_BarInventory" ToRole="tbl_Vendors" />
+  </EntityType>
+  <EntityType Name="tbl_BarInventoryUsage">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="BarInventoryID" />
+    <Property Type="Double" Name="Used_Qty" />
+    <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Used_Date" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Bar_MenusBillingDetailsID" />
+    <Property Type="Int32" Name="Bar_BillNo" />
+    <Property Type="String" Name="GST_NonGST_Bill" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_tbl_BarInventory_tbl_Vendors">
+    <End Type="ClubWildCrestModel.tbl_Vendors" Role="tbl_Vendors" Multiplicity="0..1" />
+    <End Type="ClubWildCrestModel.tbl_BarInventory" Role="tbl_BarInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Vendors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_BarInventory">
+        <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_BarBillingDetailsWithBillNo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="BillNo" />
+    <Property Type="String" Name="ItemName" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Double" Name="Quantity" />
+    <Property Type="Double" Name="OldQuantity" />
+    <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_BarBillingSection">
+    <Key>
+      <PropertyRef Name="Bill_Number" />
+    </Key>
+    <Property Type="Int32" Name="Bill_Number" Nullable="false" />
+    <Property Type="String" Name="Customer_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Int32" Name="UserID" />
+    <Property Type="String" Name="PaymentDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="GST" />
+    <Property Type="Double" Name="PriceWithoutTax" />
+    <Property Type="Int32" Name="TableID" />
+    <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Time" Name="Order_Time" Precision="0" />
+    <Property Type="String" Name="OrderTakenBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Billed_By" />
+    <Property Type="Double" Name="Discount" />
+  </EntityType>
+  <EntityType Name="tbl_BarMenu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Item_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Details" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Boolean" Name="NewItemApprvFrmSuperAdm" />
+    <Property Type="Boolean" Name="DelItemApprvFromSuperAdm" />
+    <Property Type="String" Name="FoodType" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AddedBy" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DeletedBy" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="InventoryID" />
+  </EntityType>
+  <EntityType Name="tbl_Consumable_BarItems">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="BarMenuItem_ID" />
+    <Property Type="Int32" Name="Inventory_ID" />
+    <Property Type="Double" Name="Quantity" />
+    <Property Type="String" Name="MeasurementUnit" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_TablesForBooking">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="TableNo" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Bar_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

@@ -44,6 +44,9 @@ namespace WildCrest.Controllers.SuperAdmin
             var membersMemShipReport = "select Cast(IsNull(sum((mbs.TotalAmount*100)/118),0) as decimal(18,2)) MemBill_Sale, Cast((IsNull(sum((mbs.TotalAmount*100)/118),0)*18/100) as decimal(18,2)) MemBill_GST,Cast(0 as decimal) MemBill_Discount,Cast(IsNull(sum(mbs.TotalAmount),0) as decimal(18,2)) MemBill_Total from tbl_MembersBillingDetails mbs join tbl_Profile prf on mbs.UserID=prf.ID where Cast(mbs.Payment_Date as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Payment_Date as date)<=Cast('" + eDate + "' as date)";
             var membersMemShipData = context.Database.SqlQuery<Members_MemShipReport>(membersMemShipReport).FirstOrDefault();
 
+            var barReport = "select Cast(IsNull(sum(mbs.PriceWithoutTax),0) as decimal(18,2)) Bar_Sale, Cast(IsNull(Sum(mbs.GST),0) as decimal(18,2)) Bar_GST,Cast(IsNull(Sum(mbs.Discount),0) as decimal(18,2)) Bar_Discount,Cast((IsNull(sum(mbs.PriceWithoutTax),0)+IsNull(Sum(mbs.GST),0))-IsNull(Sum(mbs.Discount),0) as decimal(18,2)) Bar_Total from tbl_BarBillingSection mbs where Cast(mbs.PaymentDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.PaymentDate as date)<=Cast('" + eDate + "' as date) and mbs.Table_Status is null";
+            var barData = context.Database.SqlQuery<BarReports>(barReport).FirstOrDefault();
+
             Reports sale_Report = new Reports();
 
             sale_Report.Menus_Sale = menusData.Menus_Sale;
@@ -67,10 +70,15 @@ namespace WildCrest.Controllers.SuperAdmin
             sale_Report.MemBill_GST = membersMemShipData.MemBill_GST;
             sale_Report.MemBill_Total = membersMemShipData.MemBill_Total;
 
-            sale_Report.Total_Sale = (menusData.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale);
-            sale_Report.Total_Discount = (menusData.Menus_Discount + nonGstMenusData.NonMenusGst_Discount + roomData.Room_Discount + membersMemShipData.MemBill_Discount);
-            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST);
-            sale_Report.Total_Amount = (menusData.Menus_Total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total);
+            sale_Report.Bar_Sale = barData.Bar_Sale;
+            sale_Report.Bar_Discount = barData.Bar_Discount;
+            sale_Report.Bar_GST = barData.Bar_GST;
+            sale_Report.Bar_Total = barData.Bar_Total;
+
+            sale_Report.Total_Sale = (menusData.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale);
+            sale_Report.Total_Discount = (menusData.Menus_Discount + nonGstMenusData.NonMenusGst_Discount + roomData.Room_Discount + membersMemShipData.MemBill_Discount + barData.Bar_Discount);
+            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST + barData.Bar_GST);
+            sale_Report.Total_Amount = (menusData.Menus_Total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total);
 
             sale_Report.StartDate = sDate;
             sale_Report.EndDate = eDate;

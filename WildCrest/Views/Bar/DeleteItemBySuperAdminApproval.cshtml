@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-block">
             <div class="row">
-                @Html.ActionLink("Go Back", "Index", "MenuItems",null, new { @class = "btn btn-success btn-margin" })
+                @Html.ActionLink("Go Back", "MenuItems", "Bar",null, new { @class = "btn btn-success btn-margin" })
 
             </div>
             <div class="table-responsive m-t-40">
@@ -34,13 +34,13 @@
                             <tr>
                                 <td class="hide">@i.ID</td>
                                 <td style="width:20%;">
-                                    <a title="Detail" href="@Url.Action("NewDelFoodItemEditByID", "MenuItems", new { id = i.ID }, null)">
+                                    <a title="Detail" href="@Url.Action("NewDelItemEditByID", "Bar", new { id = i.ID }, null)">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </a>
-                                    <a title="Delete" onclick="DeleteFoodItemById(@i.ID);" href="#">
+                                    <a title="Delete" onclick="DeleteItemById(@i.ID);" href="#">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </a>
-                                    <a title="Again Store in DB" onclick="CancelDeleteFoodItemById(@i.ID);" href="#">
+                                    <a title="Again Store in DB" onclick="CancelDeleteItemById(@i.ID);" href="#">
                                         <i class="fa fa-database" aria-hidden="true"></i>
                                     </a>
                                 </td>
@@ -63,18 +63,18 @@
     $(document).ready(function () {
         $("#foodItemList").dataTable({ "order": [[0, "desc"]] });
     });
-    function DeleteFoodItemById(id) {
-        bootbox.confirm("Are you sure to delete this food item?", function (result) {
+    function DeleteItemById(id) {
+        bootbox.confirm("Are you sure to delete this Item?", function (result) {
             if (result) {
                 $.ajax({
                     type: "post",
                     contentType: "application/json; charset=utf-8",
-                    url: "/MenuItems/DeleteFoodItemById",
+                    url: "/Bar/DeleteItemById",
                     data: JSON.stringify({ id: id }),
                     dataType: "json",
                     success: function (response) {
-                        bootbox.confirm("Food item Deleted.", function (result) {
-                            window.location.href = "/MenuItems/DeleteFoodItemBySuperAdminApproval";
+                        bootbox.confirm("Item Deleted.", function (result) {
+                            window.location.href = "/Bar/DeleteItemBySuperAdminApproval";
                         });
                         $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
                     }
@@ -89,16 +89,16 @@
         });
     }
 
-    function CancelDeleteFoodItemById(id) {
+    function CancelDeleteItemById(id) {
         $.ajax({
             type: "post",
             contentType: "application/json; charset=utf-8",
-            url: "/MenuItems/CancelDeleteFoodItemByID",
+            url: "/Bar/CancelDeleteItemById",
             data: JSON.stringify({ id: id }),
             dataType: "json",
             success: function (response) {
                 bootbox.confirm("Food Item not Deleted. Again its stored in Database.", function (result) {
-                    window.location.href = "/MenuItems/DeleteFoodItemBySuperAdminApproval";
+                    window.location.href = "/Bar/DeleteItemBySuperAdminApproval";
                 });
                 $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
             }

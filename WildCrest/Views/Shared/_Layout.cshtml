@@ -29,7 +29,6 @@
         $(function () {
             $('nav a[href*="/' + location.pathname.split("/")[1] + '/"]').addClass('active');
         });
-
     </script>
 
 </head>
@@ -214,6 +213,16 @@
                             <li>
                                 <a class="has-arrow" href="/MembershipPlans/Index" aria-expanded="false"><i class="fa fa-handshake-o" aria-hidden="true"></i><span class="hide-menu">Membership Plans</span></a>
                             </li>
+                            
+                              <li>
+                                <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-beer" aria-hidden="true"></i><span class="hide-menu">Bar</span></a>
+                                <ul aria-expanded="false" class="collapse">                                    
+                                    <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
+                                    <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
+                                    <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
+                                    <li><a href="/Bar/BarBillingSection">Bar-Billing</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <a class="has-arrow" href="/MenuItems/Index" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Menu Item</span></a>
                             </li>
@@ -334,6 +343,15 @@
                                     <a class="has-arrow" href="/MembershipPlans/Index" aria-expanded="false"><i class="fa fa-handshake-o" aria-hidden="true"></i><span class="hide-menu">Membership Plans</span></a>
                                 </li>
                             }
+                             <li>
+                                <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-beer" aria-hidden="true"></i><span class="hide-menu">Bar</span></a>
+                                <ul aria-expanded="false" class="collapse">                                    
+                                    <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
+                                    <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
+                                    <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
+                                    <li><a href="/Bar/BarBillingSection">Bar-Billing</a></li>
+                                </ul>
+                            </li>
                             @if (Request.Cookies["PageSetting"] != null)
                             {
                                 if (Request.Cookies["PageSetting"]["MenuItemsPermission"] != "None")

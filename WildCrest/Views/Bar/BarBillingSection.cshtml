@@ -24,12 +24,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-
                     <div class="card-block">
-                        @*<a href="/Billing/Index" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>*@
                         <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
-                        <a href="/Billing/BillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
-                        <h4 class="card-title">Food Bill</h4>
+                        <a href="/Bar/BarBillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
+                        <h4 class="card-title">Bill</h4>
                         <div class="form p-t-20">
                             <div class="bill_number">
                                 <h1>Bill Number : </h1>
@@ -54,7 +52,7 @@
                                 <div class="row">
 
                                     <div class="col-md-3 col-sm-12">
-                                        <label style="font-size: large;">Enter Food Item Name <span class="complusoryFields">*</span></label>
+                                        <label style="font-size: large;">Enter Item Name <span class="complusoryFields">*</span></label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
                                             <input type="text" id="FName" class="form-control requiredFields" placeholder="Food Item" />
@@ -114,7 +112,7 @@
                                 </div>
                             </div>
                             <label style="display: none;">
-                                <input type="checkbox" id="includeGST" />
+                                <input type="checkbox" id="includeGST" checked/>
                                 Include GST
                             </label>
 
@@ -124,11 +122,11 @@
                             </div>
                             <div class="taxBlock">
                                 <div class="form-group">
-                                    <label style="font-size: large; font-weight: 400;">SGST : 2.5%  -> ₹  <span id="sgst"></span></label>
+                                    <label style="font-size: large; font-weight: 400;">SGST : 9%  -> ₹  <span id="sgst"></span></label>
 
                                 </div>
                                 <div class="form-group">
-                                    <label style="font-size: large; font-weight: 400;">CGST : 2.5%  -> ₹  <span id="cgst"></span></label>
+                                    <label style="font-size: large; font-weight: 400;">CGST : 9%  -> ₹  <span id="cgst"></span></label>
 
                                 </div>
                                 <div class="form-group">
@@ -149,7 +147,7 @@
     </div>
 
 </body>
-@*<input type="hidden" value="0" id="hdn_TotalPrice" />*@
+
 <script>
     var foodList=[];
     var SNo=0;
@@ -170,7 +168,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    url: "/Billing/GetItemNames",
+                    url: "/Bar/GetBarItemNames",
                     data: JSON.stringify({ prefix: $('#FName').val() }),
                     dataType: "Json",
                     success: function (data) {
@@ -295,7 +293,7 @@
             $.ajax({
                 type: "post",
                 contentType: "application/json; charset=utf-8",
-                url: "/Billing/getFoodPrice",
+                url: "/Bar/getFoodPrice",
                 data: JSON.stringify({ itemID: $("#HiddenFoodName").val() }),
                 dataType: "json",
                 success: function (response) {
@@ -425,7 +423,8 @@
     }
 
     function calculateTotalAmount() {
-        var gstPercentFromConfig = '@(Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]))';
+        debugger;
+        var gstPercentFromConfig = '@(Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["BarGstPercent"]))';
         var txt_Food=$("#FName").val().trim();
         var txt_Price=$("#Cost").val();
         var txt_Quantity=$("#qty").val();
@@ -450,8 +449,8 @@
         var sgst = (price * (gstPercentFromConfig / 100)).toFixed(2);
         sgst = sgst/2;
         cgst = sgst;
-        //var sgst = (price * (2.5 / 100)).toFixed(2);
-        //var cgst = (price * (2.5 / 100)).toFixed(2);
+        //var sgst = (price * (9 / 100)).toFixed(2);
+        //var cgst = (price * (9 / 100)).toFixed(2);
         var netAmt = (parseFloat(price) + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
         $("#total").html(price);
         $("#sgst").html(sgst);
@@ -497,7 +496,7 @@
                 }
                 else {
                     $(".preloader").css("display", "none");
-                    bootbox.alert("Either FoodItem or Price or Quantity field is empty.");
+                    bootbox.alert("Either Item Name or Price or Quantity field is empty.");
                     return false;
                 }
             }
@@ -530,7 +529,7 @@
                 $.ajax({
                     type: "post",
                     data: JSON.stringify({ model }),
-                    url: "/Billing/SaveBillingInfo",
+                    url: "/Bar/SaveBillingInfo",
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     async:false,
@@ -575,11 +574,11 @@
                          '</tr>'+
       
                          '<tr>'+
-                           '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">SGST (2.5%) : </td>'+
+                           '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>'+
                            '<td  style="text-align: right;padding: 2px;">' + $("#sgst").html() + '</td>' +
                          '</tr>'+
                          '<tr>'+
-                           '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">CGST (2.5%) : </td>'+
+                           '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>'+
                            '<td  style="text-align: right;padding: 2px;">' + $("#cgst").html() + '</td>' +
                          '</tr>'+
                          '<tr>'+
@@ -626,7 +625,7 @@
                 $.ajax({
                     type: "post",
                     data: JSON.stringify({ model }),
-                    url: "/Billing/SaveBillingInfo_Of_NonGSTBill",
+                    url: "/Bar/SaveBillingInfo_Of_NonGSTBill",
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     async:false,
@@ -711,8 +710,6 @@
         var txt_Quantity=$("#qty").val();
         var paymentMode=$("#paymentMode").val();
 
-        //if (cname != "" && phone != "") {
-
             if(foodList.length==0){
                 if(txt_Food!="" && txt_Price!="" && txt_Quantity!=""){
                     var d={
@@ -758,7 +755,7 @@
                 $.ajax({
                     type: "post",
                     data: JSON.stringify({ model }),
-                    url: "/Billing/SaveBillingInfo",
+                    url: "/Bar/SaveBillingInfo",
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (response) {
@@ -787,7 +784,7 @@
                 $.ajax({
                     type: "post",
                     data: JSON.stringify({ model }),
-                    url: "/Billing/SaveBillingInfo_Of_NonGSTBill",
+                    url: "/Bar/SaveBillingInfo_Of_NonGSTBill",
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (response) {
@@ -803,20 +800,6 @@
                         alert('Some error occured.Try again after refresh.');
                     }
                 });
-            }
-        //}
-        //else {
-        //    $(".preloader").css("display", "none");
-        //    bootbox.alert({
-        //        message: 'Either Customer Name or Customer Phone Number is empty.',
-        //        size: "medium"
-        //    });
-        //}
+            }        
     }
 </script>
-
-
-
-
-@*https://stackoverflow.com/questions/49083854/css-how-to-set-the-height-of-page-on-print-preview-according-to-the-page-conte --> same issue page layout *@
-

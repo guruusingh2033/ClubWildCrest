@@ -17,6 +17,7 @@ namespace WildCrest
         public tbl_Vendors()
         {
             this.tbl_Inventory = new HashSet<tbl_Inventory>();
+            this.tbl_BarInventory = new HashSet<tbl_BarInventory>();
         }
     
         public int ID { get; set; }
@@ -33,5 +34,6 @@ namespace WildCrest
         public string DeletedBy { get; set; }
     
         public virtual ICollection<tbl_Inventory> tbl_Inventory { get; set; }
+        public virtual ICollection<tbl_BarInventory> tbl_BarInventory { get; set; }
     }
 }

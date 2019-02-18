@@ -1,0 +1,197 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Vendors>
+
+<style>
+    .plusVendor {
+        color: black;
+        font-size: 28px;
+        margin-left: 15px;
+    }
+    ul.ui-autocomplete {
+        font-size: 16px;
+    }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" /> 
+<script src="//code.jquery.com/jquery-1.11.2.min.js" > </script> <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js" > </script>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+       
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                            <a class="btn btn-primary" style="margin-bottom:20px;" href="/Bar/Inventory">Go Back</a>
+                            <h4 class="card-title">Add New Item</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Item Name <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="IName" class="form-control requiredFields" placeholder="Item Name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Type <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="type" class="form-control requiredFields" placeholder="Type" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Quantity <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="qty" class="form-control requiredFields" placeholder="Quantity" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Measurement in <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px;font-size:initial"></i></div>
+                                    <select id="measurement" class="form-control requiredFields">
+                                        <option value="KG">KG</option>
+                                        <option value="Litres">Litre(s)</option>
+                                        <option value="Pieces">Piece(s)</option>
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size:large;">Enter Price <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" id="price" class="form-control requiredFields" placeholder="price" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Select Vendor <span class="complusoryFields"> *</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <select id="vendorId" class="form-control requiredFields" style="height: inherit;">
+                                            <option value="0">--Select--</option>
+                                            @foreach (var i in Model)
+                                            {
+                                                <option value="@i.ID">@i.Vendor_First_Name @i.Vendor_Last_Name</option>
+                                            }
+                                        </select>
+                                        @*<a class="plusVendor" title="Add New Vendor" href="/BarInventory/AddNewVendor"><i class="fa fa-plus-square" aria-hidden="true"></i></a>*@
+                                    </div>
+                                </div>
+
+                                <input type="button" value="Add" onclick="AddNewItem();" class="btn btn-primary" />
+                                <a href="/Bar/Inventory" class="btn btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#qty,#price').keydown(function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+    });
+    function AddNewItem() {
+        $(".preloader").css("display", "block");
+        var IName = $("#IName").val().trim();
+        var type = $("#type").val().trim();
+        var qty = $("#qty").val();
+        var price = $("#price").val();
+        var vendorId = $("#vendorId").val();
+
+        if (IName != "" && type != "" && qty != "" && price != "" && vendorId != 0) {
+            var newItem = {
+                Item_Name: IName,
+                Type: type,
+                Price: price,
+                Quantity: qty,
+                VendorID: vendorId,
+                Measurement:$("#measurement").val()
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/AddNewItem",
+                data: JSON.stringify({ newItem }),
+                dataType: "json",
+                success: function (response) {
+                    $(".preloader").css("display", "none");
+                    if (response == "Added") {
+                        bootbox.confirm("New Item Added Successfully.", function (result) {
+                            window.location.href = "/Bar/Inventory";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }
+                    else {
+                        bootbox.confirm("Item Updated Successfully.", function (result) {
+                            window.location.href = "/Bar/Inventory";
+                        });
+                        $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                    }  
+                  
+                },
+                error: function () {
+                    $(".preloader").css("display", "none");
+                    alert('Some error occured.Try again after refresh.');
+                }
+            });
+        }
+        else {
+            $(".preloader").css("display", "none");
+            bootbox.alert({
+                message: 'All fields are complusory.',
+                size: "medium"
+            });
+        }
+    }
+
+
+    $("#IName").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/GetItemNames",
+                data: JSON.stringify({ prefix: $('#IName').val() }),
+                dataType: "Json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item
+                        }
+                    }))
+                },
+                error: function (response) {
+                   
+                }
+            });
+        }
+    });
+
+    $("#type").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/GetItemType",
+                data: JSON.stringify({ prefix: $('#type').val() }),
+                dataType: "Json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item
+                        }
+                    }))
+                },
+                error: function (response) {
+
+                }
+            });
+        }
+    });
+
+</script>

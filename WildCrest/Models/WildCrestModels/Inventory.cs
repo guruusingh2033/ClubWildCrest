@@ -21,5 +21,6 @@ namespace WildCrest.Models.WildCrestModels
         public string Measurement { get; set; }
 
         public DateTime AddedDate1 { get; set; }
+        
     }
 }

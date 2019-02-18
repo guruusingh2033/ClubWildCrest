@@ -1,0 +1,273 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.ConsumableItems>
+
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/Bar/ConsumablesItem" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Item Name : @ViewBag.Menu_Item_Name</h4>
+                        <div class="form p-t-20">
+                            <div class="table-responsive m-t-40 billing_details">
+                                <table id="foodList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="button" value="Delete" class="btn btn-danger" onclick="DeleteParticularConsumableQty();" /></th>
+                                            <th>Item Name</th>
+                                            <th>Measurement Unit</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var a in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" value="@a.ID"/></td>
+                                                <td>@a.Inventory_ItemName</td>
+                                                <td>@a.Measurement</td>
+                                                <td>
+                                                    <input type="text" id="@a.ID" class="form-control floatNo" value="@a.Quantity"/>
+                                                    <i>
+                                                        <div class="@a.ID" style="color: red; font-size: 14px; font-weight: 400;"></div>
+                                                    </i>
+                                                </td>
+
+                                                <td>
+                                                    <input type="button" value="Update" class="btn btn-primary" onclick="UpdateQty(@a.ID,'@a.Measurement');"/>
+                                                </td>
+                                            </tr>                        
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input type="button" value="Add More Items" class="btn btn-primary" data-toggle="modal" data-target="#addMoreModal" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var selectedItems=[];
+
+    $('#foodList').on('click','input:checkbox', function(event) {
+        if($(this).is(':checked')){
+            selectedItems.push($(this).val());
+        }
+        else{
+            var indx = selectedItems.indexOf($(this).val());
+            if(indx!=-1)
+                selectedItems.splice(indx,1);
+        }
+    });
+
+    function UpdateQty(idOfConsumableItem,measurement) {
+        var qty=$('#'+idOfConsumableItem).val();
+        $('.'+idOfConsumableItem).empty();
+        if(qty!="" && qty!="."){
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/UpdateQuantityOfConsumableItem",
+                data: JSON.stringify({ idOfConsumableItem: idOfConsumableItem,quantity:qty }),
+                dataType: "json",
+                success: function (response) {
+                    bootbox.confirm(response, function (result) {
+                        window.location.href = "";
+                    });
+                    $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                }
+            });
+        }
+        else{
+            $('.'+idOfConsumableItem).append("Quantity can't be empty.");
+            $('#'+idOfConsumableItem).val("");
+        }
+    }
+
+    function DeleteParticularConsumableQty() {
+        if(selectedItems.length!=0){
+            bootbox.confirm("Are you sure to delete selected Consumable Items?", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Bar/DeleteQuantityOfConsumableItem",
+                        data: JSON.stringify({ selectedItems:selectedItems }),
+                        dataType: "json",
+                        success: function (response) {
+                            bootbox.confirm(response, function (result) {
+                                window.location.href = "";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    });
+                }
+                else {
+                    bootbox.alert({
+                        message: "Not Deleted.",
+                        size: "small"
+                    });
+                }
+            });
+        }
+    }
+</script>
+
+<div id="addMoreModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add More Item</h4>
+                <button type="button" class="close" onclick="closeModal();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="10">
+                    <tbody>
+                        <tr>
+                            <td>Consumable Item</td>
+                            <td>
+                                <select id="consumableItem" class="form-control" onchange="getMeasurementUnit();">
+                                    <option value="-1">Select Item</option>
+                                    @if (ViewBag.InventoryItems != null && ViewBag.InventoryItems.Count != 0)
+                                    {
+                                        foreach (var i in ViewBag.InventoryItems)
+                                        {
+                                        <option value="@i.ID">@i.Food_Item_Name</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>
+                                <input type="text" id="qty" class="form-control floatNo requiredFields" placeholder="Enter Qty" />
+                                <i>
+                                    <div id="errMsg" style="color: red; font-size: 14px; font-weight: 400;"></div>
+                                </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Measurement</td>
+                            <td>
+                                <select id="measurement" class="form-control">
+                                    <option value="KG">KG</option>
+                                    <option value="Litres">Litre(s)</option>
+                                    <option value="Pieces">Piece(s)</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <i>
+                <div id="errorMsg" style="margin-left: 25px; color: red; font-size: 13px; font-weight: 400;"></div>
+            </i>
+            <div class="modal-footer">
+                <input type="button" value="Add" onclick="addMoreItems();" class="btn btn-primary" />
+
+                <button type="button" class="btn btn-default" onclick="closeModal();">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".floatNo").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    function getMeasurementUnit() {
+        var inventoryID = $("#consumableItem").val();
+        if(inventoryID!=-1){
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/getMeasurementUnit",
+                data: JSON.stringify({ inventoryID:inventoryID }),
+                dataType: "json",
+                success: function (response) {
+                    $("#measurement").val(response);
+                    $("#measurement").attr("disabled",true);
+                    $("#qty").val("");
+                    $("#errMsg").empty();
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+        else{
+            $("#measurement").attr("disabled",false);
+        }
+    }
+
+    function closeModal() {        
+        $("#consumableItem").val(-1);
+        $("#qty").val("");
+        $("#addMoreModal").modal('hide');
+        $("#errorMsg").empty();
+        $("#errMsg").empty();
+    }
+
+    function addMoreItems() {
+        $(".preloader").css("display", "block");
+        $("#errorMsg").empty();
+        var menuItemID = '@ViewBag.Menu_Item_ID';
+        var inventoryID = $("#consumableItem").val();
+        var txt_Quantity = $("#qty").val();
+        var measurement = $("#measurement").val();       
+        if (txt_Quantity != "" && txt_Quantity != "." && inventoryID != -1 && measurement != "" && menuItemID != "") {
+            var d = {
+                'MenuItem_ID': menuItemID,
+                'Inventory_ID': inventoryID,
+                'Quantity': txt_Quantity,
+                'Measurement': measurement                
+            };           
+            var foodList=[];
+            foodList.push(d);
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/SaveConsumableQuantity",
+                data: JSON.stringify({ foodList }),
+                dataType: "json",
+                success: function (response) {                        
+                    window.location.reload();
+                },
+                error: function (err) {
+                    $(".preloader").css("display", "none");
+                    $("#errorMsg").append(err.statusText);
+                }
+            });
+        }
+        else {
+            $(".preloader").css("display", "none");
+            if(menuItemID==-1)
+                $("#errorMsg").append("Please select Food Item Name.");
+            else if(inventoryID==-1)
+                $("#errorMsg").append("Please select Consumable Item.");
+            else if(txt_Quantity == "" || txt_Quantity == ".")
+                $("#errorMsg").append("Quantity field can't be empty!");
+            else
+                $("#errorMsg").append("Measurement field can't be empty!");
+
+            return false;
+        }        
+    }   
+</script>

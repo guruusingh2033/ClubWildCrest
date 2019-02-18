@@ -1,0 +1,253 @@
+﻿<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <a href="/Bar/ConsumablesItem" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Add New Consumable Item</h4>
+                        <div class="form p-t-20">
+                            @if (ViewBag.MenuItems != null && ViewBag.MenuItems.Count != 0)
+                            { 
+                                <div class="form-group">
+                                    <label style="font-size: large;">Item Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                        <select id="menuItems" class="form-control" onchange="resetSelectedTable();">
+                                            <option value="-1">Select One</option>
+                                            @foreach (var i in ViewBag.MenuItems)
+                                            {
+                                                <option value="@i.ID">@i.Food_Item_Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label style="font-size: large;">Consumable Item :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="consumableItem" class="form-control" onchange="getMeasurementUnit();">
+                                                <option value="-1">Select Item</option>
+                                                @if (ViewBag.InventoryItems != null && ViewBag.InventoryItems.Count != 0)
+                                                {
+                                                    foreach (var i in ViewBag.InventoryItems)
+                                                    {
+                                                    <option value="@i.ID">@i.Item_Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label style="font-size: large;">Enter Quantity <span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="qty" class="form-control floatNo requiredFields" placeholder="Enter Qty" />
+                                        </div>
+                                        <i>
+                                            <div id="errMsg" style="color: red; font-size: 14px; font-weight: 400;"></div>
+                                        </i>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label style="font-size: large;">Measurement in <span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="measurement" class="form-control">
+                                                <option value="KG">KG</option>
+                                                <option value="Litres">Litre(s)</option>
+                                                <option value="Pieces">Piece(s)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding-top: 35px;">
+                                        <a title="Add More Items" style="cursor: pointer;" onclick="AddMore();">
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 col-sm-10">
+                                        <table style="width: 100%;" class="table">
+                                            <tbody id="selectedItems"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-2"></div>
+
+                                </div>
+                                <input type="button" class="btn btn-primary" value="Save" onclick="SaveConsumableQuantity();" style="margin-top: 5px;" />
+                            }
+                            else
+                            {
+                                <label>No Menus to display.</label>   
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var foodList = [];
+
+    $(document).ready(function () {
+        $(".floatNo").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    var indexDelete = 0;
+    function AddMore() {
+        var menuItemID = $("#menuItems").val();
+        var inventoryID = $("#consumableItem").val();
+        var txt_Quantity = $("#qty").val();
+        var measurement = $("#measurement").val();
+       
+        if (txt_Quantity != "" && txt_Quantity!="." && inventoryID != -1 && menuItemID != -1) {
+            var tbl = "";
+            tbl += "<tr><td>" + $("#consumableItem  option:selected").text() + "</td>";
+            tbl += "<td>" + txt_Quantity + "</td>";
+            tbl += "<td>" + $("#measurement  option:selected").text() + "</td>";
+            tbl += "<td><a title='Delete' onclick='DeleteFoodItemFromArray(" + indexDelete + ");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+            $("#selectedItems").append(tbl);
+
+            var d = {
+                'MenuItem_ID': menuItemID,
+                'Inventory_ID': inventoryID,
+                'Quantity': txt_Quantity,
+                'Measurement': measurement,
+                'MenuItem_Name': $("#menuItems  option:selected").text(),
+                'InventoryItem_Name': $("#consumableItem  option:selected").text(),
+                'Measurement_Name': $("#measurement  option:selected").text()
+            };
+            foodList.push(d);
+            $("#qty").val('');
+            $("#qty").focus();
+            indexDelete = indexDelete + 1;
+        }
+    }
+
+    function DeleteFoodItemFromArray(foodName) {
+        for (var i = 0; i < foodList.length; i++) {
+            if (i == foodName) {
+                foodList.splice(i, 1);
+                indexDelete = indexDelete - 1;
+            }
+        }
+        $("#selectedItems").empty();
+        var tbl = "";
+        for (var i = 0; i < foodList.length; i++) {
+
+            tbl += "<tr><td>" + foodList[i].InventoryItem_Name + "</td>";
+            tbl += "<td>" + foodList[i].Quantity + "</td>";
+            tbl += "<td>" + foodList[i].Measurement_Name + "</td>";
+            tbl += "<td><a title='Delete' onclick='DeleteFoodItemFromArray(" + i + ");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+
+        }
+        $("#selectedItems").append(tbl);
+    }
+
+    function resetSelectedTable() {
+        $("#selectedItems").empty();
+        foodList = [];
+        $("#consumableItem").val(-1);
+        $("#qty").val("");
+    }
+
+    function SaveConsumableQuantity() {
+        $(".preloader").css("display", "block");
+        var menuItemID = $("#menuItems").val();
+        var inventoryID = $("#consumableItem").val();
+        var txt_Quantity = $("#qty").val();
+        var measurement = $("#measurement").val();
+        if (foodList.length == 0) {
+            if (txt_Quantity != "" && txt_Quantity != "." && inventoryID != -1 && measurement != "" && menuItemID != -1) {
+                var d = {
+                    'MenuItem_ID': menuItemID,
+                    'Inventory_ID': inventoryID,
+                    'Quantity': txt_Quantity,
+                    'Measurement': measurement,
+                    'MenuItem_Name': $("#menuItems  option:selected").text(),
+                    'InventoryItem_Name': $("#consumableItem  option:selected").text(),
+                    'Measurement_Name': $("#measurement  option:selected").text()
+                };
+                foodList.push(d);
+            }
+            else {
+                $(".preloader").css("display", "none");
+                if(menuItemID==-1)
+                    bootbox.alert("Please select Food Item Name.");
+                else if(inventoryID==-1)
+                    bootbox.alert("Please select Consumable Item.");
+                else if(txt_Quantity != "" || txt_Quantity != ".")
+                    bootbox.alert("Quantity field can't empty!");
+                else
+                    bootbox.alert("Measurement field can't empty!");
+
+                return false;
+            }
+        }
+        else {
+            if (txt_Quantity != "") {
+                var d = {
+                    'MenuItem_ID': menuItemID,
+                    'Inventory_ID': inventoryID,
+                    'Quantity': txt_Quantity,
+                    'Measurement': measurement,
+                    'MenuItem_Name': $("#menuItems  option:selected").text(),
+                    'InventoryItem_Name': $("#consumableItem  option:selected").text(),
+                    'Measurement_Name': $("#measurement  option:selected").text()
+                };
+                foodList.push(d);
+            }
+        }
+
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Bar/SaveConsumableQuantity",
+            data: JSON.stringify({ foodList }),
+            dataType: "json",
+            success: function (response) {
+                $(".preloader").css("display", "none");
+                bootbox.confirm("Saved.", function (result) {
+                    window.location.reload();
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            },
+            error: function (err) {
+                $(".preloader").css("display", "none");
+                alert(err.statusText);
+            }
+        });
+    }
+
+    function getMeasurementUnit() {
+        var inventoryID = $("#consumableItem").val();
+        if(inventoryID!=-1){
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Bar/getMeasurementUnit",
+                data: JSON.stringify({ inventoryID:inventoryID }),
+                dataType: "json",
+                success: function (response) {
+                    $("#measurement").val(response);
+                    $("#measurement").attr("disabled",true);
+                    $("#qty").val("");
+                    $("#errMsg").empty();
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+        else{
+            $("#measurement").attr("disabled",false);
+        }
+    }
+</script>
