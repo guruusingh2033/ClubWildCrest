@@ -29,6 +29,8 @@
           <EntitySet Name="tbl_Menu" EntityType="ClubWildCrestModel.Store.tbl_Menu" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingSection" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
@@ -401,6 +403,32 @@
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Discount" Type="float" />
+        </EntityType>
+        <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NonGst_BillNo" Type="int" />
+          <Property Name="FoodName" Type="varchar(max)" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="OldQuantity" Type="float" />
+          <Property Name="QtyUpdatedDate" Type="varchar(max)" />
+          <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_NonGST_BarBillingSection">
+          <Key>
+            <PropertyRef Name="NonGstBillNo" />
+          </Key>
+          <Property Name="NonGstBillNo" Type="int" Nullable="false" />
+          <Property Name="Customer_Name" Type="varchar(max)" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="PriceWithoutTax" Type="float" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="PaymentDate" Type="varchar(max)" />
+          <Property Name="Mode_Of_Payment" Type="varchar(max)" />
+          <Property Name="Billed_By" Type="int" />
         </EntityType>
         <EntityType Name="tbl_NonGST_MenusBillDetWithBillNo">
           <Key>
@@ -945,6 +973,8 @@
           <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.tbl_BarMenu" />
           <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" />
           <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
+          <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo" />
+          <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.tbl_NonGST_BarBillingSection" />
           </EntityContainer>
         <EntityType Name="tbl_BillingDetails">
           <Key>
@@ -1701,6 +1731,32 @@
           <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Bar_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="NonGst_BillNo" />
+          <Property Type="String" Name="FoodName" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Price" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="Double" Name="OldQuantity" />
+          <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_NonGST_BarBillingSection">
+          <Key>
+            <PropertyRef Name="NonGstBillNo" />
+          </Key>
+          <Property Type="Int32" Name="NonGstBillNo" Nullable="false" />
+          <Property Type="String" Name="Customer_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="PriceWithoutTax" />
+          <Property Type="Int32" Name="UserID" />
+          <Property Type="String" Name="PaymentDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Billed_By" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2276,6 +2332,34 @@
                 <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
                 <ScalarProperty Name="TableNo" ColumnName="TableNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_NonGST_BarBillDetWithBillNo">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo">
+              <MappingFragment StoreEntitySet="tbl_NonGST_BarBillDetWithBillNo">
+                <ScalarProperty Name="QtyUpdatedBy" ColumnName="QtyUpdatedBy" />
+                <ScalarProperty Name="QtyUpdatedDate" ColumnName="QtyUpdatedDate" />
+                <ScalarProperty Name="OldQuantity" ColumnName="OldQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="NonGst_BillNo" ColumnName="NonGst_BillNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_NonGST_BarBillingSection">
+            <EntityTypeMapping TypeName="ClubWildCrestModel.tbl_NonGST_BarBillingSection">
+              <MappingFragment StoreEntitySet="tbl_NonGST_BarBillingSection">
+                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="NonGstBillNo" ColumnName="NonGstBillNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

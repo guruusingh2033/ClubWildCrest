@@ -106,6 +106,8 @@
     <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.tbl_BarMenu" />
     <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" />
     <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.tbl_TablesForBooking" />
+    <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo" />
+    <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.tbl_NonGST_BarBillingSection" />
   </EntityContainer>
   <EntityType Name="tbl_BillingDetails">
     <Key>
@@ -861,5 +863,31 @@
     <Property Type="String" Name="TableNo" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="Table_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="Bar_Status" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="NonGst_BillNo" />
+    <Property Type="String" Name="FoodName" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Double" Name="Quantity" />
+    <Property Type="Double" Name="OldQuantity" />
+    <Property Type="String" Name="QtyUpdatedDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="QtyUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_NonGST_BarBillingSection">
+    <Key>
+      <PropertyRef Name="NonGstBillNo" />
+    </Key>
+    <Property Type="Int32" Name="NonGstBillNo" Nullable="false" />
+    <Property Type="String" Name="Customer_Name" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="PriceWithoutTax" />
+    <Property Type="Int32" Name="UserID" />
+    <Property Type="String" Name="PaymentDate" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Mode_Of_Payment" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Billed_By" />
   </EntityType>
 </Schema>

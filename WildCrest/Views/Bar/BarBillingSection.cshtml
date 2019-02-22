@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <label style="display: none;">
-                                <input type="checkbox" id="includeGST" checked/>
+                                <input type="checkbox" id="includeGST"/>
                                 Include GST
                             </label>
 
@@ -247,7 +247,7 @@
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "/Billing/NonGst_BillNo",
+                url: "/Bar/NonGst_BillNo",
                 data: {},
                 dataType: "Json",
                 success: function (data) {
@@ -423,7 +423,6 @@
     }
 
     function calculateTotalAmount() {
-        debugger;
         var gstPercentFromConfig = '@(Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["BarGstPercent"]))';
         var txt_Food=$("#FName").val().trim();
         var txt_Price=$("#Cost").val();

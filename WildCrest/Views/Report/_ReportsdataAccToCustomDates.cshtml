@@ -102,6 +102,26 @@
             </tr>
             <tr>
                 <td class="hide">6</td>
+                <td>@if (Model.NonGst_BarTotal != 0)
+                    {
+                        var arr = new[,]{ 
+                            {"Temp_Tax_Data","nonGst"},
+                            {"Temp_Day_Data","7"},
+                            {"Temp_AdminID_Data","0"},
+                            {"Temp_SDate_Data",Model.StartDate},
+                            {"Temp_EndDate_Data",Model.EndDate}
+                            };
+                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
+                        @Html.ActionLink("NonGST Bar Billing", "BarBillsIndex", "Bar", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>NonGST Bar Billing</span>}</td>
+                <td>@Model.NonGst_BarSale</td>
+                <td>@Model.NonGst_BarDiscount</td>
+                <td>@Model.NonGst_BarGST</td>
+                <td>@Model.NonGst_BarTotal</td>
+            </tr>
+            <tr>
+                <td class="hide">7</td>
                 <td>Total</td>
                 <td>@Model.Total_Sale</td>
                 <td>@Model.Total_Discount</td>
@@ -174,7 +194,7 @@
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.MemBill_Total</label></td>' +
             '</tr>';
 
-        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+        tbl += '<tr style="font-size: 12px;text-align: center;">' +
  '<td style="padding: 8px 5px;">Bar Billing</td>' +
 
  '<td style="padding: 8px 5px;"><label>@Model.Bar_Sale</label></td>' +
@@ -182,6 +202,15 @@
     '<td style="padding: 8px 5px;"><label>@Model.Bar_GST</label></td>' +
     '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Bar_Total</label></td>' +
     '</tr>';
+
+        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+            '<td style="padding: 8px 5px;">NonGST Bar Billing</td>' +
+
+            '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarSale</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarDiscount</label></td>' +
+            '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarGST</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>@Model.NonGst_BarTotal</label></td>' +
+            '</tr>';
 
         tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
             '<td style="padding: 8px 5px;">Total</td>' +

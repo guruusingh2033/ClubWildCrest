@@ -24,6 +24,8 @@
     <EntitySet Name="tbl_Menu" EntityType="ClubWildCrestModel.Store.tbl_Menu" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
@@ -396,6 +398,32 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Discount" Type="float" />
+  </EntityType>
+  <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NonGst_BillNo" Type="int" />
+    <Property Name="FoodName" Type="varchar(max)" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="OldQuantity" Type="float" />
+    <Property Name="QtyUpdatedDate" Type="varchar(max)" />
+    <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_NonGST_BarBillingSection">
+    <Key>
+      <PropertyRef Name="NonGstBillNo" />
+    </Key>
+    <Property Name="NonGstBillNo" Type="int" Nullable="false" />
+    <Property Name="Customer_Name" Type="varchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="PriceWithoutTax" Type="float" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="PaymentDate" Type="varchar(max)" />
+    <Property Name="Mode_Of_Payment" Type="varchar(max)" />
+    <Property Name="Billed_By" Type="int" />
   </EntityType>
   <EntityType Name="tbl_NonGST_MenusBillDetWithBillNo">
     <Key>

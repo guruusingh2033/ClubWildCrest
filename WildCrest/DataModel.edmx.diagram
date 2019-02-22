@@ -62,6 +62,8 @@
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarMenu" Width="1.5" PointX="5.804193190207795" PointY="20.18275489852892" />
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" Width="1.5" PointX="6.3821289569056265" PointY="28.839980287868521" />
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_TablesForBooking" Width="1.5" PointX="1.3027616596327918" PointY="25.221221980276155" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo" Width="1.5" PointX="7.5521412079930972" PointY="29.33964870746231" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillingSection" Width="1.5" PointX="1.7472683180809339" PointY="7.7452908790415576" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

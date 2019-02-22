@@ -37,6 +37,11 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Bar_Discount { get; set; }
         public decimal Bar_Total { get; set; }
 
+        public decimal NonGst_BarSale { get; set; }
+        public decimal NonGst_BarDiscount { get; set; }
+        public decimal NonGst_BarGST { get; set; }
+        public decimal NonGst_BarTotal { get; set; }
+
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
@@ -79,5 +84,13 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Bar_GST { get; set; }
         public decimal Bar_Discount { get; set; }
         public decimal Bar_Total { get; set; }
+    }
+
+    public class NonMenusBarReports
+    {
+        public decimal NonGst_BarSale { get; set; }
+        public decimal NonGst_BarDiscount { get; set; }
+        public decimal NonGst_BarGST { get; set; }
+        public decimal NonGst_BarTotal { get; set; }
     }
 }

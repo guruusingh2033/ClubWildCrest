@@ -270,6 +270,12 @@
     <Compile Include="tbl_MenusBillingSection.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_NonGST_BarBillDetWithBillNo.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_NonGST_BarBillingSection.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_NonGST_MenusBillDetWithBillNo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -1042,6 +1048,9 @@
     <Content Include="Views\Bar\Bar_EditBillByBillNo.cshtml" />
     <Content Include="Views\Bar\BarOrders.cshtml" />
     <Content Include="Views\Bar\CreateTableBill.cshtml" />
+    <Content Include="Views\Bar\_NonGstBarBillsAccToDay.cshtml" />
+    <Content Include="Views\Bar\NonGstBillDetailsByBillNo.cshtml" />
+    <Content Include="Views\Bar\NonGstEditBillByBillNo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

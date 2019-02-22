@@ -66,5 +66,7 @@ namespace WildCrest
         public DbSet<tbl_BarMenu> tbl_BarMenu { get; set; }
         public DbSet<tbl_Consumable_BarItems> tbl_Consumable_BarItems { get; set; }
         public DbSet<tbl_TablesForBooking> tbl_TablesForBooking { get; set; }
+        public DbSet<tbl_NonGST_BarBillDetWithBillNo> tbl_NonGST_BarBillDetWithBillNo { get; set; }
+        public DbSet<tbl_NonGST_BarBillingSection> tbl_NonGST_BarBillingSection { get; set; }
     }
 }

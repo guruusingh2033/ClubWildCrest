@@ -1013,7 +1013,7 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             string startDateFormat = startdate.ToString(@"MM\/dd\/yyyy");
             string LastDateFormat = LastDate.ToString(@"MM\/dd\/yyyy");
-            List<MenusBillingSection> menusBill = new List<MenusBillingSection>();
+            
             if (tax == "gst")
             {
                 string queryForBills = "";
@@ -1032,7 +1032,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 var data = context.Database.SqlQuery<MenusBillingSection>(queryForBills);
                 double? finaltotalVal = 0;
                 double? finalcsgst = 0, finalDiscount = 0;
-
+                List<MenusBillingSection> menusBill = new List<MenusBillingSection>();
                 foreach (var i in data)
                 {
                     menusBill.Add(new MenusBillingSection()
@@ -1056,44 +1056,43 @@ namespace WildCrest.Controllers.SuperAdmin
                 ViewBag.TotalAmount = finaltotalVal;
                 ViewBag.CSGST = Math.Round((Double)finalcsgst, 2);
                 ViewBag.Discount = Math.Round((Double)finalDiscount, 2);
+                return PartialView("~/Views/Bar/_BarBillsDataAccToDay.cshtml", menusBill);
+            }            
+            else
+            {
+                string queryForBills = "";
+                if (UserType == 1 || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
+                {
+                    if (adminID == 0)
+                        queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_BarBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date)";
+                    else
+                        queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_BarBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Billed_By=" + adminID;
+                }
+                else
+                {
+                    queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_BarBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Billed_By=" + Billed_By;
+                }
 
+                var data = context.Database.SqlQuery<NonGST_MenusBillingSection>(queryForBills);
+                double? totalVal = 0;
+                List<NonGST_MenusBillingSection> menusBill = new List<NonGST_MenusBillingSection>();
+                foreach (var i in data)
+                {
+                    menusBill.Add(new NonGST_MenusBillingSection()
+                    {
+                        NonGstBillNo = i.NonGstBillNo,
+                        Customer_Name = i.Customer_Name,
+                        Phone = i.Phone,
+                        PaymentDate = i.PaymentDate,
+                        PriceWithoutTax = i.PriceWithoutTax,
+                        Mode_Of_Payment = i.Mode_Of_Payment
+                    });
+                    totalVal += i.PriceWithoutTax;                    
+                }
+                totalVal = Math.Round((Double)totalVal, 2);
+                ViewBag.TotalAmount = totalVal;
+                return PartialView("~/Views/Bar/_NonGstBarBillsAccToDay.cshtml", menusBill);
             }
-            return PartialView("~/Views/Bar/_BarBillsDataAccToDay.cshtml", menusBill);
-            //else
-            //{
-            //    string queryForBills = "";
-            //    if (UserType == 1 || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
-            //    {
-            //        if (adminID == 0)
-            //            queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_MenusBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date)";
-            //        else
-            //            queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_MenusBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Billed_By=" + adminID;
-            //    }
-            //    else
-            //    {
-            //        queryForBills = "select m.NonGstBillNo as NonGstBillNo,m.PriceWithoutTax as PriceWithoutTax,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_NonGST_MenusBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Billed_By=" + Billed_By;
-            //    }
-
-            //    var data = context.Database.SqlQuery<NonGST_MenusBillingSection>(queryForBills);
-            //    double? totalVal = 0;
-            //    List<NonGST_MenusBillingSection> menusBill = new List<NonGST_MenusBillingSection>();
-            //    foreach (var i in data)
-            //    {
-            //        menusBill.Add(new NonGST_MenusBillingSection()
-            //        {
-            //            NonGstBillNo = i.NonGstBillNo,
-            //            Customer_Name = i.Customer_Name,
-            //            Phone = i.Phone,
-            //            PaymentDate = i.PaymentDate,
-            //            PriceWithoutTax = i.PriceWithoutTax,
-            //            Mode_Of_Payment = i.Mode_Of_Payment
-            //        });
-            //        totalVal += i.PriceWithoutTax;                    
-            //    }
-            //    totalVal = Math.Round((Double)totalVal, 2);
-            //    ViewBag.TotalAmount = totalVal;
-            //    return PartialView("~/Views/Billing/_NonGstBillsAccToDay.cshtml", menusBill);
-            //}
         }
 
         [Authorize(Roles = "1,2")]
@@ -1255,6 +1254,263 @@ namespace WildCrest.Controllers.SuperAdmin
             calculateAmount(model.Bill_Number);
             return Json("");
         }
+
+        public JsonResult NonGst_BillNo()
+        {
+            var data = context.tbl_NonGST_BarBillingSection.ToList().LastOrDefault();
+            int NonGstBillNo = 1;
+            if (data != null)
+            {
+                NonGstBillNo = data.NonGstBillNo + 1;
+            }
+            return Json(NonGstBillNo);
+        }
+
+        [HttpPost]
+        public JsonResult SaveBillingInfo_Of_NonGSTBill(NonGST_MenusBillingSection model)
+        {
+            if (model.UserID == 0 && model.Customer_Name != "" && model.Customer_Name != null)
+            {
+                tbl_Profile prf = new tbl_Profile();
+                prf.F_Name = model.Customer_Name;
+                prf.PhoneNo = model.Phone;
+                prf.Walk_In_Member = true;
+
+                prf.Status = true;
+                prf.UserType = 3;
+                prf.AddedBy = Request.Cookies["AddedBy"].Value;
+                prf.NewUsrBySuperApprv = true;
+                prf.DelUsrBySuperApprv = false;
+                prf.Reference_Of_Walk_In = "0";
+                prf.EmailNotifications = true;
+                context.tbl_Profile.Add(prf);
+                context.SaveChanges();
+                model.UserID = prf.ID;
+            }
+
+            tbl_NonGST_BarBillingSection menus = new tbl_NonGST_BarBillingSection();
+            menus.NonGstBillNo = model.NonGstBillNo;
+            menus.Customer_Name = model.Customer_Name;
+            menus.Phone = model.Phone;
+            menus.PriceWithoutTax = model.PriceWithoutTax;
+            menus.UserID = model.UserID;
+            menus.Mode_Of_Payment = model.Mode_Of_Payment;
+            menus.Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
+
+            var date = DateTime.Today;
+            string DateFormat = date.ToString(@"MM\/dd\/yyyy");
+
+            menus.PaymentDate = DateFormat;
+            context.tbl_NonGST_BarBillingSection.Add(menus);
+            context.SaveChanges();
+
+            foreach (var f in model.NonGST_MenusBillDetWithBillNo)
+            {
+                tbl_NonGST_BarBillDetWithBillNo menusdetails = new tbl_NonGST_BarBillDetWithBillNo();
+                menusdetails.NonGst_BillNo = model.NonGstBillNo;
+                menusdetails.FoodName = f.FoodName;
+                menusdetails.Price = f.Price;
+                menusdetails.Quantity = f.Quantity;
+
+                menusdetails.OldQuantity = f.Quantity;
+
+                context.tbl_NonGST_BarBillDetWithBillNo.Add(menusdetails);
+                context.SaveChanges();
+
+                var data = context.tbl_BarMenu.SingleOrDefault(a => a.ID == f.ItemNameID);    // && a.Price==model.Price);
+                if (data != null)
+                {
+                    if (data.InventoryID != 0)
+                    {
+
+                        tbl_BarInventoryUsage usage = new tbl_BarInventoryUsage();
+                        usage.BarInventoryID = data.InventoryID;
+                        usage.Used_Qty = f.Quantity;
+                        usage.Description = "(Non-Gst Bill No. : " + model.NonGstBillNo + ") Sold to customer on " + DateFormat;
+                        usage.Used_Date = DateFormat;
+                        usage.Bar_BillNo = model.NonGstBillNo;
+                        usage.Bar_MenusBillingDetailsID = menusdetails.ID;
+                        usage.GST_NonGST_Bill = "NonGST";
+                        context.tbl_BarInventoryUsage.Add(usage);
+                        context.SaveChanges();
+                    }
+                }
+                var consumeItem = context.tbl_Consumable_BarItems.Where(s => s.BarMenuItem_ID == f.ItemNameID).ToList();
+                if (consumeItem.Count > 0)
+                {
+                    foreach (var m in consumeItem)
+                    {
+                        string tempUsedQty = Convert.ToString(f.Quantity * m.Quantity);
+                        tbl_BarInventoryUsage usage = new tbl_BarInventoryUsage();
+                        usage.BarInventoryID = m.Inventory_ID;
+                        usage.Used_Qty = Convert.ToDouble(tempUsedQty);
+                        //usage.Used_Qty = f.Quantity * m.Quantity;   // Math.Round((double)(f.Quantity * m.Quantity), 2);
+                        usage.Description = "Non-Gst Bill No. : " + model.NonGstBillNo + " | " + f.FoodName;
+                        usage.Used_Date = DateFormat;
+                        usage.Bar_BillNo = model.NonGstBillNo;
+                        usage.Bar_MenusBillingDetailsID = menusdetails.ID;
+                        usage.GST_NonGST_Bill = "NonGST";
+                        context.tbl_BarInventoryUsage.Add(usage);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            return Json("Saved");
+        }
+
+        [Authorize(Roles = "1,2")]
+        public ActionResult NonGstBillDetailsByBillNo(int id)
+        {
+            var data = context.tbl_NonGST_BarBillingSection.SingleOrDefault(s => s.NonGstBillNo == id);
+            NonGST_MenusBillingSection menusDetails = new NonGST_MenusBillingSection();
+            List<NonGST_MenusBillDetWithBillNo> details = new List<NonGST_MenusBillDetWithBillNo>();
+            if (data != null)
+            {
+
+                var d = context.tbl_NonGST_BarBillDetWithBillNo.Where(a => a.NonGst_BillNo == id).ToList();
+                foreach (var i in d)
+                {
+                    details.Add(new NonGST_MenusBillDetWithBillNo()
+                    {
+                        NonGst_BillNo = i.NonGst_BillNo,
+                        FoodName = i.FoodName,
+                        Price = i.Price,
+                        Quantity = i.Quantity,
+                        ID = i.ID
+                    });
+                }
+                menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
+                menusDetails.PriceWithoutTax = data.PriceWithoutTax;
+                menusDetails.Customer_Name = data.Customer_Name;
+                menusDetails.Phone = data.Phone;
+                menusDetails.PaymentDate = data.PaymentDate;
+                menusDetails.NonGstBillNo = data.NonGstBillNo;
+                menusDetails.NonGST_MenusBillDetWithBillNo = details;
+
+                menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
+                menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
+                menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
+                menusDetails.Temp_SDate_Data = (Session["StartDate"] != null) ? Session["StartDate"].ToString() : "";
+                menusDetails.Temp_EndDate_Data = (Session["EndDate"] != null) ? Session["EndDate"].ToString() : "";
+            }
+            return View(menusDetails);
+        }
+
+        [Authorize(Roles = "1,2")]
+        public ActionResult NonGstEditBillByBillNo(int id)
+        {
+            //double? totalVal = 0;
+            var data = context.tbl_NonGST_BarBillingSection.SingleOrDefault(s => s.NonGstBillNo == id);
+            NonGST_MenusBillingSection menusDetails = new NonGST_MenusBillingSection();
+            List<NonGST_MenusBillDetWithBillNo> details = new List<NonGST_MenusBillDetWithBillNo>();
+            if (data != null)
+            {
+
+                var d = context.tbl_NonGST_BarBillDetWithBillNo.Where(a => a.NonGst_BillNo == id).ToList();
+                foreach (var i in d)
+                {
+                    details.Add(new NonGST_MenusBillDetWithBillNo()
+                    {
+                        NonGst_BillNo = i.NonGst_BillNo,
+                        FoodName = i.FoodName,
+                        Price = i.Price,
+                        Quantity = i.Quantity,
+                        ID = i.ID
+                    });
+                    //totalVal += i.Price;
+                }
+                //totalVal = Math.Round((Double)totalVal, 2);
+                menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
+                menusDetails.PriceWithoutTax = data.PriceWithoutTax;
+                menusDetails.Customer_Name = data.Customer_Name;
+                menusDetails.Phone = data.Phone;
+                menusDetails.PaymentDate = data.PaymentDate;
+                menusDetails.NonGstBillNo = data.NonGstBillNo;
+                menusDetails.NonGST_MenusBillDetWithBillNo = details;
+
+                menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
+                menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
+                menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
+                menusDetails.Temp_SDate_Data = (Session["StartDate"] != null) ? Session["StartDate"].ToString() : "";
+                menusDetails.Temp_EndDate_Data = (Session["EndDate"] != null) ? Session["EndDate"].ToString() : "";
+            }
+            return View(menusDetails);
+        }
+
+        [HttpPost]
+        public JsonResult NonGst_UpdateQuantityOfFood(int idOfBillingDetOrBillNo, double? quantity, int invoiceNo)
+        {
+            var date = DateTime.Today;
+            string DateFormat = date.ToString(@"MM\/dd\/yyyy");
+            var data = context.tbl_NonGST_BarBillDetWithBillNo.SingleOrDefault(s => s.ID == idOfBillingDetOrBillNo);
+            if (data != null)
+            {
+                data.Quantity = quantity;
+
+                data.QtyUpdatedDate = DateFormat;
+                data.QtyUpdatedBy = Request.Cookies["AddedBy"].Value;
+
+                context.Entry(data).State = EntityState.Modified;
+                context.SaveChanges();
+                calculateAmountOfNonGst(invoiceNo);
+                return Json("Quantity Updated.");
+            }
+            return Json("Data not Found.");
+        }
+
+        [HttpPost]
+        public JsonResult NonGst_DeleteQuantityOfFood(List<int> selectedItems, int invoiceNo)
+        {
+            foreach (var id in selectedItems)
+            {
+                var data = context.tbl_NonGST_BarBillDetWithBillNo.SingleOrDefault(s => s.ID == id);
+                if (data != null)
+                {
+                    context.Entry(data).State = EntityState.Deleted;
+                    context.SaveChanges();
+                }
+            }
+            calculateAmountOfNonGst(invoiceNo);
+            return Json("Deleted.");
+        }
+
+        public void calculateAmountOfNonGst(int billNo)
+        {
+            double? total = 0;
+
+            var data = context.tbl_NonGST_BarBillDetWithBillNo.Where(s => s.NonGst_BillNo == billNo).ToList();
+            foreach (var i in data)
+            {
+                total = total + (i.Price * i.Quantity);
+            }
+
+            total = Math.Round((Double)total, 2);
+            var d = context.tbl_NonGST_BarBillingSection.SingleOrDefault(a => a.NonGstBillNo == billNo);
+            if (d != null)
+            {
+                d.PriceWithoutTax = total;
+                context.Entry(d).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public JsonResult SaveNewItemsInNonGstBills(MenusBillingSection model)
+        {
+            foreach (var i in model.MenusBillingDetailsWithBillNo)
+            {
+                tbl_NonGST_BarBillDetWithBillNo menuDet = new tbl_NonGST_BarBillDetWithBillNo();
+                menuDet.FoodName = i.FoodName;
+                menuDet.OldQuantity = i.Quantity;
+                menuDet.Price = i.Price;
+                menuDet.NonGst_BillNo = model.Bill_Number;
+                menuDet.Quantity = i.Quantity;
+                context.tbl_NonGST_BarBillDetWithBillNo.Add(menuDet);
+                context.SaveChanges();
+            }
+            calculateAmountOfNonGst(model.Bill_Number);
+            return Json("");
+        }
+
 
         //  ---------------------------------------- ORDERS -----------------------------------
 
