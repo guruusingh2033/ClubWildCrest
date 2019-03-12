@@ -1102,6 +1102,7 @@
     <Content Include="Views\Wine\Bar_BillDetailsByBillNo.cshtml" />
     <Content Include="Views\Wine\NonGstBillDetailsByBillNo.cshtml" />
     <Content Include="Views\Wine\NonGstEditBillByBillNo.cshtml" />
+    <Content Include="Views\Wine\NewDelItemEditByID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
