@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-block">
-                    <a href="/Bar/BarOrders" class="btn btn-primary" style="margin-bottom: 20px;">Go Back</a>
+                    <a href="/Wine/BarOrders" class="btn btn-primary" style="margin-bottom: 20px;">Go Back</a>
                     <h4 class="card-title">Create Bill</h4>
                     <div class="form p-t-20">
                         @if (Model.Bill_Number != 0)
@@ -116,7 +116,7 @@
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            url: "/Bar/CreateBill",
+            url: "/Wine/CreateBill",
             data: JSON.stringify({ billNo: @Model.Bill_Number }),
             dataType: "Json",
             success: function (response) {
@@ -184,7 +184,7 @@
                 newWin.print();
                 newWin.close();
                 $(".preloader").css("display", "none");
-                window.location.href="/Bar/BarOrders";
+                window.location.href="/Wine/BarOrders";
             },
             error: function (response) {
                 $(".preloader").css("display", "none");

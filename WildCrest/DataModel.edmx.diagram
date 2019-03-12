@@ -64,6 +64,16 @@
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_TablesForBooking" Width="1.5" PointX="1.3027616596327918" PointY="25.221221980276155" />
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo" Width="1.5" PointX="7.5521412079930972" PointY="29.33964870746231" />
         <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillingSection" Width="1.5" PointX="1.7472683180809339" PointY="7.7452908790415576" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.sysdiagram" Width="1.5" PointX="7.4879357011466912" PointY="31.08012668745598" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineBillingDetailsWithBillNo" Width="1.5" PointX="7.9917022529950836" PointY="8.7189857702325035" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineBillingSection" Width="1.5" PointX="10.061291622957816" PointY="25.025649007887417" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineInventory" Width="1.5" PointX="2.1077281917015691" PointY="25.1838056562393" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineInventoryUsage" Width="1.5" PointX="3.4533572455185269" PointY="25.399089050199411" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineMenu" Width="1.5" PointX="2.9023396311804373" PointY="10.360230122860628" />
+        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_WineInventory_tbl_Vendors" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Consumable_WineItems" Width="1.5" PointX="1.2541741585611246" PointY="29.459362669596153" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_WineBillDetWithBillNo" Width="1.5" PointX="7.6732856648384065" PointY="7.3847349767502095" />
+        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_WineBillingSection" Width="1.5" PointX="5.5591799065280609" PointY="4.4847505709551045" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

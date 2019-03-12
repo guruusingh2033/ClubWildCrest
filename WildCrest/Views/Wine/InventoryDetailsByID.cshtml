@@ -1,0 +1,61 @@
+﻿@{@model WildCrest.Models.WildCrestModels.Inventory
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <a href="/Wine/Inventory" style="margin-bottom:20px;" class="btn btn-primary">Go Back</a>
+                            <h4 class="card-title">Item Details</h4>
+                            <div class="form p-t-20">
+                                <div class="form-group">
+                                    <label style="font-size:large;">Item Name :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Item_Name" readonly id="IName" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Type :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-product-hunt" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Type" readonly id="type" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size:large;">Quantity :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Quantity" readonly id="qty" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="font-size:large;">Price :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.Price" readonly id="price" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:large;">Vendor Name:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                        <input type="text" value="@Model.VendorName" readonly id="vname" class="form-control" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+    </div>
+</body>
+
+}

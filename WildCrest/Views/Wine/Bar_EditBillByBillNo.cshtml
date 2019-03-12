@@ -1,0 +1,645 @@
+﻿@model WildCrest.Models.WildCrestModels.MenusBillingSection
+
+<style>
+    td {
+        padding: 5px;
+    }
+
+    input[type='text'].quantity {
+        width: 60%;
+    }
+     .view_plus_icon .plus_icon {
+        margin-top: 25px;
+    }
+
+    .view_plus_icon {
+        text-align: center;
+    }
+        .ui-autocomplete {
+    z-index: 9999 !important;
+}
+       #addMoreModal  .modal-dialog {
+   width: 570px;
+   max-width:100%;
+}
+
+@@media (min-width: 767px) and (max-width:2000px) {
+.ui-autocomplete {
+    width: 170px !important;
+}
+    }
+
+@@media (min-width: 571px) and (max-width:766px) {
+.ui-autocomplete {
+    width: 170px !important;
+}
+    }
+    @@media (min-width: 320px) and (max-width:570px) {
+        #addMoreModal .modal-dialog {
+            width: 96%;
+            max-width: 570px;
+            margin: 11px auto;
+        }
+    }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"> </script>
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                       
+                        @{
+                            var arr = new [,]{ 
+                            {"Temp_Tax_Data",Model.Temp_Tax_Data},
+                            {"Temp_Day_Data",Model.Temp_Day_Data.ToString()},
+                            {"Temp_AdminID_Data",Model.Temp_AdminID_Data.ToString()},
+                            {"Temp_SDate_Data",Model.Temp_SDate_Data},
+                            {"Temp_EndDate_Data",Model.Temp_EndDate_Data}
+                            };
+                            var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                        }
+                        @Html.ActionLink("Go Back", "BarBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
+
+                        <h4 class="card-title">Edit Customer Billing Details</h4>
+                        <div class="form p-t-20">
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Invoice No.</label>
+                                    <input type="text" id="invoice" readonly value="@Model.Bill_Number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Customer Name</label>
+                                    <input type="text" id="CustName" readonly value="@Model.Customer_Name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Phone No.</label>
+                                    <input type="text" id="phone" readonly value="@Model.Phone" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Date :</label>
+                                    <input type="text" id="paymentDate" readonly value="@Model.PaymentDate" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Total Price :</label>
+                                    <input type="text" id="price" readonly value="@Model.PriceWithoutTax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">GST :</label>
+                                    <input type="text" id="csgst" readonly value="@Model.GST" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Payment Mode :</label>
+                                    <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
+                                </div>
+                            </div>
+                             <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
+                                <input type="button" value="Add More" data-toggle="modal" data-target="#addMoreModal" class="btn btn-primary" />
+                            </div>
+                            @if (Model.MenusBillingDetailsWithBillNo.Count != 0)
+                            {
+                                <div class="table-responsive m-t-40 billing_details">
+                                    <table id="itemList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="button" value="Delete" class="btn btn-danger" onclick="DeleteQty();" /></th>
+                                                <th>ItemName</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <script>
+                                                var obj = [];
+                                            </script>
+                                            @foreach (var a in Model.MenusBillingDetailsWithBillNo)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" value="@a.ID"/></td>
+                                                    <td>@a.FoodName</td>
+                                                    <td>@a.Price</td>
+                                                    <td>
+                                                        <input type="text" id="@a.ID" class="form-control quantity" value="@a.Quantity"/></td>
+                                                    <td>
+                                                        <input type="button" value="Update" class="btn btn-primary" onclick="UpdateQty(@a.ID);"/>                                                       
+                                                    </td>
+                                                </tr>
+                                                <script>
+                                                    var data = {
+                                                        'FoodName': '@a.FoodName',
+                                                        'Price': '@a.Price',
+                                                        'Quantity': '@a.Quantity',
+                                                        'Total': '@Math.Round((double)(a.Price * a.Quantity), 2)'
+                                                    };
+                                                    obj.push(data);
+                                                </script>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            }
+                            <div class="col-md-12 col-sm-12 form-profile-in">
+                                <input type="button" value="Print (A4)" onclick="PrintFoodBill();" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div id="addMoreModal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add More Item(s)</h5>
+            </div>
+            <div class="modal-body">
+                <div class="create_order_border">
+                    <div class="row">
+                        <div class="form-group col-md-5 col-sm-4 col-xs-4">
+                            <label>Item Name</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-cutlery" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" class="form-control" id="item_name" />
+                            </div>
+                            @*<div id="showDivForLeftQty" style="display: none;">
+                                <label style="font-size: 14px;">Qty Left(in Stock) :  <span id="leftQty"></span></label>
+                            </div>*@
+                        </div>
+                         <div class="form-group col-md-3 col-sm-3 col-xs-3">
+                            <label>Price</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" readonly class="form-control" id="Cost" />
+                            </div>
+                            @*<div id="showDivForLeftQty" style="display: none;">
+                                <label style="font-size: 14px;">Qty Left(in Stock) :  <span id="leftQty"></span></label>
+                            </div>*@
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3 col-xs-3">
+                            <label>Quantity</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-sort-numeric-asc" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" class="form-control" id="item_qty" />
+                            </div>
+                           @* <i>
+                                <div id="errMsg" style="color: red; font-size: 13px; font-weight: 400;"></div>
+                            </i>*@
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 col-xs-1 view_plus_icon">
+                            <div class="plus_icon"><a style="cursor: pointer;" title="Add More" onclick="AddMore();"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view_order_scroll">
+                    <table class="table view_order_created">
+                        <tbody id="selectedItemsInAddMore">
+                        </tbody>
+                    </table>
+
+                </div>
+                <i>
+                    <div id="error" style="color: red; font-size: 13px; font-weight: 400;"></div>
+                </i>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="close_Add_Modal();">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="SaveMoreItems();">Ok</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<input type="hidden" id="HiddenFoodName" value="0" />
+<script>
+    var selectedItems=[];
+    var foodList=[];
+
+    $(document).ready(function(){
+        $("input[type='text'].quantity,#item_qty").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    $('#itemList').on('click','input:checkbox', function(event) {
+        if($(this).is(':checked')){
+            selectedItems.push($(this).val());
+        }
+        else{
+            var indx = selectedItems.indexOf($(this).val());
+            if(indx!=-1)
+                selectedItems.splice(indx,1);
+        }
+    });
+
+    $("#item_name").autocomplete({        
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Wine/GetBarItemNames",
+                data: JSON.stringify({ prefix: $('#item_name').val() }),
+                dataType: "Json",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.Value,
+                            Value:item.ID
+                        }
+                    }))
+                },
+                error: function (response) {
+
+                }
+            });
+        },
+        change: function (e, i) {
+            if(i.item!=null && i.item!=""){
+                $("#HiddenFoodName").val(i.item.Value);
+                FoodNameChange();
+            }
+            else{
+                $("#HiddenFoodName").val('0');
+                //$("#showDivForLeftQty").css("display","none");
+                //$("#errMsg").empty();
+                //$("#qty").removeAttr("disabled");
+                $("#Cost").val('');
+                //$('#leftQty').html('');
+            }
+        }
+    });
+
+    function reset() {
+        $("#item_name").val('');
+        $("#Cost").val('');
+        $("#item_qty").val('');
+        $("#error").empty();
+    }  
+    function close_Add_Modal() {
+        reset();
+        foodList=[];
+        $("#addMoreModal").modal('hide');
+    }  
+
+    var indexDelete=0;
+    function AddMore() {
+        
+        var txt_Food=$("#item_name").val().trim();
+        var txt_Price=$("#Cost").val();
+        var txt_Quantity=$("#item_qty").val();
+        var quantity=0;
+        var price=0;
+        if(txt_Food!="" && txt_Price!="" && txt_Quantity!=""){
+            
+            var tbl="";
+            tbl+="<tr><td>"+txt_Food+"</td>";
+            tbl+="<td>"+txt_Price+"</td>";
+            tbl+="<td>"+txt_Quantity+"</td>";
+            tbl+="<td><a title='Delete' onclick='DeleteFoodItemFromArray("+indexDelete+");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+            $("#selectedItemsInAddMore").append(tbl);
+            
+            var d={
+                'FoodName':txt_Food,
+                'Price':txt_Price,
+                'Quantity':txt_Quantity,
+                'ItemNameID':$("#HiddenFoodName").val()
+            };
+            foodList.push(d);
+            //calculateTotalAmount();
+            reset();
+            indexDelete=indexDelete+1;
+        }
+    }
+
+    function DeleteFoodItemFromArray(foodName) {
+        for(var i=0;i<foodList.length;i++){
+            if(i==foodName){
+                foodList.splice(i,1);
+                indexDelete=indexDelete-1;
+            }
+        }
+        $("#selectedItemsInAddMore").empty();
+        var tbl="";
+        for(var i=0;i<foodList.length;i++){
+            
+            tbl+="<tr><td>"+foodList[i].FoodName+"</td>";
+            tbl+="<td>"+foodList[i].Price+"</td>";
+            tbl+="<td>"+foodList[i].Quantity+"</td>";
+            tbl+="<td><a title='Delete' onclick='DeleteFoodItemFromArray("+i+");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+            
+        }
+        $("#selectedItemsInAddMore").append(tbl);
+    }
+
+    function FoodNameChange() {
+        if($("#item_name").val().trim()==""){
+            $("#HiddenFoodName").val('0');
+            //$("#showDivForLeftQty").css("display","none");
+            //$("#errMsg").empty();
+            //$("#item_qty").removeAttr("disabled");
+            $("#Cost").val('');
+        }
+        else{
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Wine/getFoodPrice",
+                data: JSON.stringify({ itemID: $("#HiddenFoodName").val() }),
+                dataType: "json",
+                success: function (response) {
+                    $("#Cost").val(response.Price);                  
+                    //$("#leftQty").html(Number.isInteger(response.LeftQuantity)?response.LeftQuantity:response.LeftQuantity.toFixed(2));
+                    $("#item_qty").val("");
+                    //if(response.LeftQuantity==-1)
+                    //{
+                    //    $("#showDivForLeftQty").css("display","none");
+                    //    $("#errMsg").empty();
+                    //    $("#item_qty").removeAttr("disabled");                        
+                    //}
+                    //else{
+                        //$("#showDivForLeftQty").css("display","block");
+                        //if(response.LeftQuantity.toFixed(2)==0){
+                        //    $("#qty").attr("disabled",true);
+                        //    $("#errMsg").empty();
+                        //    $("#errMsg").append("Stock is empty.");
+                        //}
+                        //else{
+                            //if(foodList.length>0){
+                            //    var qtyLeft=$("#leftQty").html();
+                            //    var tempVarForLeftQty=0;
+                            //    for(var i=0;i<foodList.length;i++)
+                            //    {
+                            //        if(foodList[i].ItemNameID==$("#HiddenFoodName").val()){
+                            //            tempVarForLeftQty=(parseFloat(tempVarForLeftQty)+parseFloat(foodList[i].Quantity)).toFixed(2);
+                            //        }
+                            //    }
+                            //    qtyLeft=parseFloat(qtyLeft)-parseFloat(tempVarForLeftQty);
+                            //    $("#leftQty").html(qtyLeft.toFixed(2));
+                            //    if(qtyLeft<=0)
+                            //    {
+                            //        $("#qty").attr("disabled",true);
+                            //        $("#errMsg").empty();
+                            //        $("#errMsg").append("Stock is empty.");
+                            //    }
+                            //    else{
+                            //        $("#errMsg").empty();
+                            //        $("#qty").removeAttr("disabled");
+                                    
+                            //    }
+                            //}
+                            //else{
+                            //    $("#errMsg").empty();
+                            //    $("#qty").removeAttr("disabled");
+                                
+                            //}
+                        //}
+                    //}
+                }
+            });
+        }
+    }
+
+    function SaveMoreItems() {
+        var txt_Food=$("#item_name").val().trim();
+        var txt_Price=$("#Cost").val();
+        var txt_Quantity=$("#item_qty").val();
+        if(foodList.length==0){
+            if(txt_Food!="" && txt_Price!="" && txt_Quantity!=""){
+                var d={
+                    'FoodName':txt_Food,
+                    'Price':txt_Price,
+                    'Quantity':txt_Quantity,
+                    'ItemNameID':$("#HiddenFoodName").val()
+                };
+                foodList.push(d);
+            }
+            else {
+                $("#error").empty();
+                $("#error").append("Either Item Name or Price or Quantity field is empty.");
+                return false;
+            }
+        }
+        else {
+            if (txt_Food!="" && txt_Price!="" && txt_Quantity!="") {
+                var d={
+                    'FoodName':txt_Food,
+                    'Price':txt_Price,
+                    'Quantity':txt_Quantity,
+                    'ItemNameID':$("#HiddenFoodName").val()
+                };
+                foodList.push(d);
+            }
+        }
+        var model = {
+            Bill_Number:'@Model.Bill_Number',
+            MenusBillingDetailsWithBillNo:foodList,
+         };
+        $.ajax({
+            type: "post",
+            data: JSON.stringify({ model }),
+            url: "/Wine/SaveNewItemsInBills",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                //$(".preloader").css("display", "none");
+                //bootbox.confirm("Saved.", function (result) {
+                    window.location.reload();
+                //});
+                //$(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            },
+            error:function(){
+                alert('Some error occured.Try again after refresh.');
+            }
+        });
+    }
+
+    function UpdateQty(idOfBillingDetOrBillNo) {
+        var qty=$('#'+idOfBillingDetOrBillNo).val();
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/Wine/UpdateQuantityOfItem",
+            data: JSON.stringify({ idOfBillingDetOrBillNo: idOfBillingDetOrBillNo,quantity:qty,invoiceNo:'@Model.Bill_Number' }),
+            dataType: "json",
+            success: function (response) {
+                bootbox.confirm(response, function (result) {
+                    window.location.href = "";
+                });
+                $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+            }
+        });
+    }
+
+    function DeleteQty() {
+        if(selectedItems.length!=0){
+            bootbox.confirm("Are you sure to delete Item(s)?", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "post",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Wine/DeleteQuantityOfItem",
+                        data: JSON.stringify({ selectedItems:selectedItems,invoiceNo:'@Model.Bill_Number' }),
+                        dataType: "json",
+                        success: function (response) {
+                            bootbox.confirm(response, function (result) {
+                                window.location.href = "";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    });
+                }
+                else {
+                    bootbox.alert({
+                        message: "Not Deleted.",
+                        size: "small"
+                    });
+                }
+            });
+        }
+    }
+
+    function PrintFoodBill() {
+        $(".preloader").css("display", "block");
+        var gst = "@Model.GST";
+        var scgst = (parseFloat(gst) / 2).toFixed(2);
+        //var scgst = Math.floor(parseFloat(gst) / 2) / 100;
+        var pwt = '@Model.PriceWithoutTax';
+        var tP = parseFloat(pwt) + parseFloat(gst);
+
+        var tbl = '';
+        tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+        tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+        tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+   '<tbody  style="text-align: left;" >' +
+   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+   '<td style="padding: 5px 0;">Customer Name : ' + '@Model.Customer_Name' + '</td>' +
+   '<td style="padding: 5px 0;">Bill No. : ' + '@Model.Bill_Number' + '</td>' +
+   '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+   '</tr>' +
+   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+   '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+   '<td style="padding: 5px 0;">Total Price : ₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+   '<td style="padding: 5px 0;">GST : ₹ ' + '@Model.GST' + '</td>' +
+   '</tr>' +
+   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+   '<td style="padding: 5px 0;">Billing Date : ' + '@Model.PaymentDate' + '</td>' +
+   '<td style="padding: 5px 0;">Payment Mode : ' + '@Model.Mode_Of_Payment' + '</td>' +
+   '<td style="padding: 5px 0;"></td>' +
+   '</tr>' +
+   '</tbody></table><br>';
+
+        tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
+  '<thead  style="text-align: left;" >' +
+  '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+  '<th style="padding: 5px 5px;">Item Name </th>' +
+
+  '<th style="padding: 5px 5px;">Price</th>' +
+  '<th style="padding: 5px 5px;">Quantity</th>' +
+  '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+  '</tr>' +
+  '</thead>' +
+  '<tbody>';
+        if (typeof obj != 'undefined' && obj.length != 0) {
+
+            for (var i = 0; i < obj.length; i++) {
+
+                var FoodName = obj[i].FoodName;
+                var Price = obj[i].Price;
+                var Quantity = obj[i].Quantity;
+                var Total = obj[i].Price * obj[i].Quantity;
+                tbl += '<tr style="font-size: 12px;text-align: left;">' +
+    '<td style="padding: 8px 5px;">' + FoodName + '</td>' +
+
+    '<td style="padding: 8px 5px;"><label>' + Price + '</label></td>' +
+    '<td style="padding: 8px 5px;"><label>' + Quantity + '</label></td>' +
+    '<td style="padding: 8px 5px;text-align: right;"><label>₹ ' + (Total).toFixed(2) + '</label></td>' +
+
+    '</tr>';
+            }
+            tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                 '<td colspan="2" class="border-left"></td>' +
+                           '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+                         '</tr>' +
+
+                         '<tr style="font-size: 12px;">' +
+                          '<td colspan="2" class="border-left"></td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                          '<td colspan="2" class="border-left"></td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                          '<td colspan="2" class="border-left"></td>' +
+                           '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tP.toFixed(2) + '</td>' +
+                         '</tr>';
+        }
+        else {
+            tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+        '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
+        '</tr>';
+        }
+        tbl += "</tbody></table>";
+
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                   'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                                'border-collapse:collapse;}' +
+
+                '#tabel-heading th {' +
+                    'border:1px solid black;' +
+                '}' +
+                '#tabel-heading td {' +
+                    'border-right:1px solid black;' +
+                    'border-left:1px solid black;}' +
+
+                '#tabel-heading .border-bottom {' +
+                   'border-bottom:1px solid black;}' +
+                '#tabel-heading .border-top {' +
+                   'border-top:1px solid black;}' +
+                '#tabel-heading .border-left {' +
+                    'border-left:none;}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+    }
+</script>

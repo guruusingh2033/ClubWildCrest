@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MenuItems>
+
+<style>
+    .hide {
+        visibility: hidden;
+    }
+</style>
+
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            <ul class="list-inline list-unstyled voucher_buttons">
+                <li>@Html.ActionLink("Create New Item", "AddNewBarItem", "Wine", null, new { @class = "btn btn-primary" })
+                @if (Request.Cookies["UserType"].Value == "1")
+                {
+                    <li>
+                        @Html.ActionLink("Approve New Items", "NewItemApprovalBySuperAdmin", "Wine", new { @class = "btn btn-primary" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Delete Items(Request from Staff)", "DeleteItemBySuperAdminApproval", "Wine", new { @class = "btn btn-primary" })
+                    </li>
+                }
+
+                <li>@Html.ActionLink("Consumables", "ConsumablesItem", "Wine", null, new { @class = "btn btn-primary" })</li>
+            </ul>
+        </div>
+        <div class="table-responsive m-t-40">
+            <table id="foodItemList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="hide">Id</th>
+                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Added By</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td class="hide">@i.ID</td>
+                            <td style="width: 20%;">
+                                <a title="Detail" href="@Url.Action("ItemEditByID", "Wine", new { id = i.ID, editDetail = "Details" }, null)">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                                <a title="Edit" href="@Url.Action("ItemEditByID", "Wine", new { id = i.ID }, null)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                <a title="Delete" onclick="DeleteItemById(@i.ID);" href="#">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td style="width: 20%;">@i.Food_Item_Name</td>
+                            <td style="width: 30%;">@i.Details</td>
+                            <td>₹ @i.Price</td>
+                            <td>@i.FoodType</td>
+                            <td>@i.AddedBy</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#foodItemList").dataTable({ "order": [[0, "desc"]] });
+    });
+    function DeleteItemById(id) {
+        bootbox.confirm("Are you sure to delete this Item?", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Wine/DeleteItemById",
+                    data: JSON.stringify({ id: id }),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == 1) {
+                            bootbox.confirm("Item Deleted.", function (result) {
+                                window.location.href = "/Wine/MenuItems";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                        else {
+                            bootbox.confirm("Item Deleted only after SuperAdmin Approval.", function (result) {
+                                window.location.href = "/Wine/MenuItems";
+                            });
+                            $(".modal-dialog .modal-content .modal-footer .btn-default").hide();
+                        }
+                    }
+                });
+            }
+            else {
+                bootbox.alert({
+                    message: "Not Deleted.",
+                    size: "small"
+                });
+            }
+        });
+    }
+</script>

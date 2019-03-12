@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ClubWildCrestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ClubWildCrestModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="ClubWildCrestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_BarBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_BarBillingSection" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_BarInventory" EntityType="ClubWildCrestModel.Store.tbl_BarInventory" store:Type="Tables" Schema="dbo" />
@@ -9,6 +10,7 @@
     <EntitySet Name="tbl_BillingDetails" EntityType="ClubWildCrestModel.Store.tbl_BillingDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_BookingTable" EntityType="ClubWildCrestModel.Store.tbl_BookingTable" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.Store.tbl_Consumable_BarItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Consumable_WineItems" EntityType="ClubWildCrestModel.Store.tbl_Consumable_WineItems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_ConsumableItems" EntityType="ClubWildCrestModel.Store.tbl_ConsumableItems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_Events" EntityType="ClubWildCrestModel.Store.tbl_Events" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_EventsImgVideo" EntityType="ClubWildCrestModel.Store.tbl_EventsImgVideo" store:Type="Tables" Schema="dbo" />
@@ -28,6 +30,8 @@
     <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_WineBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_WineBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_WineBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_WineBillingSection" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_Profile" EntityType="ClubWildCrestModel.Store.tbl_Profile" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_Roles" EntityType="ClubWildCrestModel.Store.tbl_Roles" store:Type="Tables" Schema="dbo" />
@@ -44,6 +48,11 @@
     <EntitySet Name="tbl_Vendors" EntityType="ClubWildCrestModel.Store.tbl_Vendors" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_Voucher" EntityType="ClubWildCrestModel.Store.tbl_Voucher" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tbl_VoucherUsedByUser" EntityType="ClubWildCrestModel.Store.tbl_VoucherUsedByUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_WineBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineBillingSection" EntityType="ClubWildCrestModel.Store.tbl_WineBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineInventory" EntityType="ClubWildCrestModel.Store.tbl_WineInventory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineInventoryUsage" EntityType="ClubWildCrestModel.Store.tbl_WineInventoryUsage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineMenu" EntityType="ClubWildCrestModel.Store.tbl_WineMenu" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_BarInventory_tbl_Vendors">
       <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
       <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
@@ -108,7 +117,21 @@
       <End Role="tbl_Voucher" EntitySet="tbl_Voucher" />
       <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
     </AssociationSet>
+    <AssociationSet Name="FK_tbl_WineInventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_WineInventory_tbl_Vendors">
+      <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+      <End Role="tbl_WineInventory" EntitySet="tbl_WineInventory" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="tbl_BarBillingDetailsWithBillNo">
     <Key>
       <PropertyRef Name="ID" />
@@ -207,6 +230,16 @@
     <Property Name="UserID" Type="int" />
   </EntityType>
   <EntityType Name="tbl_Consumable_BarItems">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BarMenuItem_ID" Type="int" />
+    <Property Name="Inventory_ID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="MeasurementUnit" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Consumable_WineItems">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
@@ -451,6 +484,32 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
   </EntityType>
+  <EntityType Name="tbl_NonGST_WineBillDetWithBillNo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NonGst_BillNo" Type="int" />
+    <Property Name="FoodName" Type="varchar(max)" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="OldQuantity" Type="float" />
+    <Property Name="QtyUpdatedDate" Type="varchar(max)" />
+    <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_NonGST_WineBillingSection">
+    <Key>
+      <PropertyRef Name="NonGstBillNo" />
+    </Key>
+    <Property Name="NonGstBillNo" Type="int" Nullable="false" />
+    <Property Name="Customer_Name" Type="varchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="PriceWithoutTax" Type="float" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="PaymentDate" Type="varchar(max)" />
+    <Property Name="Mode_Of_Payment" Type="varchar(max)" />
+    <Property Name="Billed_By" Type="int" />
+  </EntityType>
   <EntityType Name="tbl_PermissionsToStaff">
     <Key>
       <PropertyRef Name="ID" />
@@ -666,6 +725,80 @@
     <Property Name="UserID" Type="int" />
     <Property Name="VoucherID" Type="int" />
   </EntityType>
+  <EntityType Name="tbl_WineBillingDetailsWithBillNo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BillNo" Type="int" />
+    <Property Name="ItemName" Type="varchar(max)" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="OldQuantity" Type="float" />
+    <Property Name="QtyUpdatedDate" Type="varchar(max)" />
+    <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_WineBillingSection">
+    <Key>
+      <PropertyRef Name="Bill_Number" />
+    </Key>
+    <Property Name="Bill_Number" Type="int" Nullable="false" />
+    <Property Name="Customer_Name" Type="varchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Price" Type="float" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="PaymentDate" Type="varchar(max)" />
+    <Property Name="GST" Type="float" />
+    <Property Name="PriceWithoutTax" Type="float" />
+    <Property Name="TableID" Type="int" />
+    <Property Name="Table_Status" Type="varchar(max)" />
+    <Property Name="Order_Time" Type="time" />
+    <Property Name="OrderTakenBy" Type="varchar(max)" />
+    <Property Name="Mode_Of_Payment" Type="varchar(max)" />
+    <Property Name="Billed_By" Type="int" />
+    <Property Name="Discount" Type="float" />
+  </EntityType>
+  <EntityType Name="tbl_WineInventory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Item_Name" Type="varchar(max)" />
+    <Property Name="Type" Type="varchar(max)" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="Price" Type="int" />
+    <Property Name="VendorID" Type="int" />
+    <Property Name="Added_Date" Type="varchar" MaxLength="150" />
+    <Property Name="Measurement" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="tbl_WineInventoryUsage">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="WineInventoryID" Type="int" />
+    <Property Name="Used_Qty" Type="float" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Used_Date" Type="varchar" MaxLength="150" />
+    <Property Name="Wine_MenusBillingDetailsID" Type="int" />
+    <Property Name="Wine_BillNo" Type="int" />
+    <Property Name="GST_NonGST_Bill" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_WineMenu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Item_Name" Type="varchar(max)" />
+    <Property Name="Details" Type="varchar(max)" />
+    <Property Name="Price" Type="float" />
+    <Property Name="NewItemApprvFrmSuperAdm" Type="bit" />
+    <Property Name="DelItemApprvFromSuperAdm" Type="bit" />
+    <Property Name="FoodType" Type="varchar(max)" />
+    <Property Name="AddedBy" Type="varchar" MaxLength="300" />
+    <Property Name="DeletedBy" Type="varchar" MaxLength="300" />
+    <Property Name="InventoryID" Type="int" />
+  </EntityType>
   <Association Name="FK_tbl_BarInventory_tbl_Vendors">
     <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
     <End Role="tbl_BarInventory" Type="ClubWildCrestModel.Store.tbl_BarInventory" Multiplicity="*" />
@@ -855,6 +988,18 @@
       </Principal>
       <Dependent Role="tbl_VoucherUsedByUser">
         <PropertyRef Name="VoucherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_WineInventory_tbl_Vendors">
+    <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
+    <End Role="tbl_WineInventory" Type="ClubWildCrestModel.Store.tbl_WineInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Vendors">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_WineInventory">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

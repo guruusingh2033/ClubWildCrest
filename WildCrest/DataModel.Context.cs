@@ -68,5 +68,14 @@ namespace WildCrest
         public DbSet<tbl_TablesForBooking> tbl_TablesForBooking { get; set; }
         public DbSet<tbl_NonGST_BarBillDetWithBillNo> tbl_NonGST_BarBillDetWithBillNo { get; set; }
         public DbSet<tbl_NonGST_BarBillingSection> tbl_NonGST_BarBillingSection { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<tbl_WineBillingDetailsWithBillNo> tbl_WineBillingDetailsWithBillNo { get; set; }
+        public DbSet<tbl_WineBillingSection> tbl_WineBillingSection { get; set; }
+        public DbSet<tbl_WineInventory> tbl_WineInventory { get; set; }
+        public DbSet<tbl_WineInventoryUsage> tbl_WineInventoryUsage { get; set; }
+        public DbSet<tbl_WineMenu> tbl_WineMenu { get; set; }
+        public DbSet<tbl_Consumable_WineItems> tbl_Consumable_WineItems { get; set; }
+        public DbSet<tbl_NonGST_WineBillDetWithBillNo> tbl_NonGST_WineBillDetWithBillNo { get; set; }
+        public DbSet<tbl_NonGST_WineBillingSection> tbl_NonGST_WineBillingSection { get; set; }
     }
 }

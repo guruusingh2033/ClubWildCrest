@@ -1,0 +1,224 @@
+﻿@model WildCrest.Models.WildCrestModels.NonGST_MenusBillingSection
+
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                        
+                        @{
+                            var arr = new [,]{ 
+                            {"Temp_Tax_Data",Model.Temp_Tax_Data},
+                            {"Temp_Day_Data",Model.Temp_Day_Data.ToString()},
+                            {"Temp_AdminID_Data",Model.Temp_AdminID_Data.ToString()},
+                            {"Temp_SDate_Data",Model.Temp_SDate_Data},
+                            {"Temp_EndDate_Data",Model.Temp_EndDate_Data}
+                            };
+                            var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                        }
+                        @Html.ActionLink("Go Back", "BarBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
+
+                        <h4 class="card-title">Customer Billing Details</h4>
+                        <div class="form p-t-20">
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Invoice No.</label>
+                                    <input type="text" id="invoice" readonly value="@Model.NonGstBillNo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Customer Name</label>
+                                    <input type="text" id="CustName" readonly value="@Model.Customer_Name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Phone No.</label>
+                                    <input type="text" id="phone" readonly value="@Model.Phone" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Date :</label>
+                                    <input type="text" id="paymentDate" readonly value="@Model.PaymentDate" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Total Price :</label>
+                                    <input type="text" id="totalPrice" readonly value="@Model.PriceWithoutTax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Payment Mode :</label>
+                                    <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
+                                </div>
+                            </div>
+                            @if (Model.NonGST_MenusBillDetWithBillNo.Count != 0)
+                            {
+                                
+                                <div class="table-responsive m-t-40 billing_details">
+                                    <table id="foodList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ItemName</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <script>
+                                                var obj = [];
+                                            </script>
+                                            @foreach (var a in Model.NonGST_MenusBillDetWithBillNo)
+                                            {
+                                                <tr>
+                                                    <td>@a.FoodName</td>
+                                                    <td>@a.Price</td>
+                                                    <td>@a.Quantity</td>
+                                                    <td>@Math.Round((double)(a.Price * a.Quantity), 2)</td>
+                                                </tr>
+                                                <script>
+                                                    var data = {
+                                                        'FoodName': '@a.FoodName',
+                                                        'Price': '@a.Price',
+                                                        'Quantity': '@a.Quantity',
+                                                        'Total': '@Math.Round((double)(a.Price * a.Quantity), 2)'
+                                                    };
+                                                    obj.push(data);
+                                                </script>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            }
+
+                            <div class="col-md-12 form-profile-in">
+                                @if (Request.Cookies["UserType"].Value == "1")
+                                {
+                                    @Html.ActionLink("Edit", "NonGstEditBillByBillNo", "Wine", new { id = Model.NonGstBillNo }, new { @class = "btn btn-primary" })
+                                }
+                                else if (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null)
+                                {
+                                    if (Request.Cookies["PageSetting"]["FoodBillingEditPermission"] != "None")
+                                    {
+                                    @Html.ActionLink("Edit", "NonGstEditBillByBillNo", "Wine", new { id = Model.NonGstBillNo }, new { @class = "btn btn-primary" })
+                                    }
+                                }
+                                <input type="button" value="Print (A4)" onclick="PrintFoodBill();" class="btn btn-primary" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+
+    function PrintFoodBill() {
+        $(".preloader").css("display", "block");
+        var tbl = '';
+        tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+        tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+        tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+   '<tbody  style="text-align: left;" >' +
+   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+   '<td style="padding: 5px 0;">Customer Name : ' + '@Model.Customer_Name' + '</td>' +
+   '<td style="padding: 5px 0;">Bill No. : ' + '@Model.NonGstBillNo' + '</td>' +
+   '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+   '</tr>' +
+   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+   '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+   '<td style="padding: 5px 0;">Billing Date : ' + '@Model.PaymentDate' + '</td>' +
+   '<td style="padding: 5px 0;">Total Price : ₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+   '</tr>' +
+   '</tbody></table><br>';
+
+        tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+  '<thead  style="text-align: left;" >' +
+  '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+  '<th style="padding: 5px 5px;">Item Name </th>' +
+
+  '<th style="padding: 5px 5px;">Price</th>' +
+  '<th style="padding: 5px 5px;">Quantity</th>' +
+  '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+  '</tr>' +
+  '</thead>' +
+  '<tbody>';
+        if (typeof obj != 'undefined' && obj.length != 0) {
+
+            for (var i = 0; i < obj.length; i++) {
+
+                var FoodName = obj[i].FoodName;
+                var Price = obj[i].Price;
+                var Quantity = obj[i].Quantity;
+                var Total = obj[i].Price * obj[i].Quantity;
+                tbl += '<tr style="font-size: 12px;text-align: left;">' +
+    '<td style="padding: 8px 5px;">' + FoodName + '</td>' +
+
+    '<td style="padding: 8px 5px;"><label>' + Price + '</label></td>' +
+    '<td style="padding: 8px 5px;"><label>' + Quantity + '</label></td>' +
+    '<td style="padding: 8px 5px;text-align: right;"><label>₹ ' + (Total).toFixed(2) + '</label></td>' +
+
+    '</tr>';
+            }
+            tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                '<td colspan="2" class="border-left"></td>' +
+                          '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Net Amount : </th>' +
+                          '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+                         '</tr>';
+
+        }
+        else {
+            tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+        '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
+        '</tr>';
+        }
+        tbl += "</tbody></table>";
+
+        var htmlToPrint = '' +
+                   '<style type="text/css">' +
+                   'body{font-family: arial;}' +
+                   'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                                'border-collapse:collapse;}' +
+
+                '#tabel-heading th {' +
+                    'border:1px solid black;' +
+                '}' +
+                '#tabel-heading td {' +
+                    'border-right:1px solid black;' +
+                    'border-left:1px solid black;}' +
+
+                '#tabel-heading .border-bottom {' +
+                   'border-bottom:1px solid black;}' +
+                '#tabel-heading .border-top {' +
+                   'border-top:1px solid black;}' +
+                '#tabel-heading .border-left {' +
+                    'border-left:none;}' +
+                   '</style>';
+        htmlToPrint += tbl;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+        $(".preloader").css("display", "none");
+    }
+</script>
