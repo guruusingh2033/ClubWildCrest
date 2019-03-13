@@ -900,7 +900,7 @@ namespace WildCrest.Controllers.SuperAdmin
             menus.Phone = model.Phone;
             menus.Price = model.Price;
             menus.UserID = model.UserID;
-            menus.GST = gst;
+            menus.GST = 0.0;//gst;
             menus.PriceWithoutTax = amtWithoutTax;
             menus.Order_Time = time;
             menus.Mode_Of_Payment = model.Mode_Of_Payment;
@@ -1091,7 +1091,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 }
                 totalVal = Math.Round((Double)totalVal, 2);
                 ViewBag.TotalAmount = totalVal;
-                return PartialView("~/Views/Wine/_NonGstBarBillsAccToDay.cshtml", menusBill);
+                return PartialView("~/Views/Wine/_NonGstWineBillsAccToDay.cshtml", menusBill);
             }
         }
 

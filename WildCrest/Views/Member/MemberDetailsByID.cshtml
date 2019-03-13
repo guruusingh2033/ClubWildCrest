@@ -4,6 +4,9 @@
     td {
         padding: 5px;
     }
+  #ui-datepicker-div {
+    z-index: 9999!important;
+}
 </style>
 <body class="fix-header card-no-border">
 
@@ -181,6 +184,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 form-profile-in">
+                                     @if (Request.Cookies["UserType"].Value == "1")
+                                                    {
+                                     <button type="button" class="btn btn-primary btn-margin"  data-toggle="modal" data-target="#Renewal_Member">Renewal Membership</button>
+                                     }
                                     @if (Request.Cookies["PageSetting"] != null)
                                     {
                                         if (Request.Cookies["PageSetting"]["MemberPermission"] != "View")
@@ -326,9 +333,121 @@
         </div>
         }
     }
+    <div id="Renewal_Member" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#0698ef;">
+                <h1 class="modal-title" style="color:white;">Renewal Membership</h1>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label>New MemberID (Required)</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-user" aria-hidden="true" style="font-size: initial"></i></div>
+                        <input type="text" class="form-control" id="CustomMember_ID" placeholder="@Model.CustomMemberID"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>New MembershipJoiningDate(Required)</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="font-size: initial"></i></div>
+                        <input type="text" readonly class="form-control clsDatePicker" id="MembershipJoining_Date" onchange="enableDatesAccToStartDate();"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>New MembershipExpiryDate(Required)</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="font-size: initial"></i></div>
+                        <input type="text" readonly class="form-control clsDatePicker" id="MembershipExpiry_Date"/>
+                    </div>
+                </div>
+
+              
+                <i>
+                    <div id="error" style="color: red; font-size: 13px; font-weight: 400;"></div>
+                </i>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="close_create_order_Modal();">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="Renewal();">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 </body>
 <script>
+    function close_create_order_Modal() {
+        $("#CustomMember_ID").val('');
+        $("#MembershipJoining_Date").val('');
+        $('#error').html('');
+        $("#MembershipExpiry_Date").val('');
+        $("#Renewal_Member").modal('hide');
+    }
+    function Renewal() {
+        if($("#CustomMember_ID").val()!=""){
+        if($("#MembershipJoining_Date").val()< $("#MembershipExpiry_Date").val()){
+            
+           
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Member/RenewalMemberDetailsByID",
+                    //data: JSON.stringify({ prf }),
+                    data:JSON.stringify({
+                        UserID: @Model.ID,
+                        CustomMemberID: $("#CustomMember_ID").val().trim(),
+                        MembershipJoiningDate: $("#MembershipJoining_Date").val(),
+                        MembershipExpiryDate: $("#MembershipExpiry_Date").val()
+                    }),
+                    dataType: "json",
+          
+                    success: function (response) {
+                        if(response=="Updated"){
+                            bootbox.confirm("Member Updated Successfully.", function (result) {
+                                close_create_order_Modal();
+                                window.location.reload();
+                            });
+                        }else{
+                            bootbox.confirm("Member Updated UnSuccessfull.", function (result) {
+                                close_create_order_Modal();
+                                window.location.reload();
+                            });
+                        }
+                    }
+    
+                });
+        }else{
+            $("#error").html('');
+            $("#error").html("enter valid date format");
+            }
+        }else{
+            $("#error").html('');
+            $("#error").html("enter new memberid");
+        }
+    }
+    function enableDatesAccToStartDate() {
+        $('#MembershipExpiry_Date').val("");
+        var startDate = $('#MembershipJoining_Date').val();
+        $('#MembershipExpiry_Date').removeAttr('disabled');
+        $('#MembershipExpiry_Date').datepicker("option", "minDate", startDate);
+    }
     $(document).ready(function () {
+
+        $('#MembershipJoining_Date,#MembershipExpiry_Date').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'mm/dd/yy',
+            yearRange: "-116:+0",
+         
+        });
+        $('#MembershipExpiry_Date').attr("disabled", "true");
+        
+        //-------------
         var jsonString = '@Model.billingDetailsInJson';
         if (jsonString != "") {
             var data = jsonString.replace(/&quot;/g, "\"");

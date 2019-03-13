@@ -500,7 +500,33 @@ namespace WildCrest.Controllers.SuperAdmin
             
 
         }
+        [HttpPost]
+        public JsonResult RenewalMemberDetailsByID(RenewalMemberById model)
+        {
+            var UserMembership = context.tbl_UserMembership.SingleOrDefault(a => a.UserID == model.UserID);
+            if (UserMembership != null)
+            {
+                var profile = context.tbl_Profile.SingleOrDefault(a => a.ID == model.UserID);
+                if (profile != null)
+                {
+                    profile.CustomMemberID = model.CustomMemberID;
+                    context.Entry(profile).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+               
+                UserMembership.MembershipJoiningDate = model.MembershipJoiningDate;
+                UserMembership.MembershipExpiryDate = model.MembershipExpiryDate;
+                context.Entry(UserMembership).State = EntityState.Modified;
+                context.SaveChanges();
+                return Json("Updated");
+            }
+            else
+            {
+                return Json("Not Updated");
+            }
 
+            
+        }
         [Authorize(Roles = "1,2")]
         public ActionResult NewDelMemberDetailsByID(int id, string editDetail)
         {

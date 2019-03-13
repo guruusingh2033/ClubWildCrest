@@ -42,6 +42,16 @@ namespace WildCrest.Models.WildCrestModels
         public decimal NonGst_BarGST { get; set; }
         public decimal NonGst_BarTotal { get; set; }
 
+        public decimal Wine_Sale { get; set; }
+        public decimal Wine_GST { get; set; }
+        public decimal Wine_Discount { get; set; }
+        public decimal Wine_Total { get; set; }
+
+        public decimal NonGst_WineSale { get; set; }
+        public decimal NonGst_WineDiscount { get; set; }
+        public decimal NonGst_WineGST { get; set; }
+        public decimal NonGst_WineTotal { get; set; }
+
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
@@ -92,5 +102,20 @@ namespace WildCrest.Models.WildCrestModels
         public decimal NonGst_BarDiscount { get; set; }
         public decimal NonGst_BarGST { get; set; }
         public decimal NonGst_BarTotal { get; set; }
+    }
+    public class WineReports
+    {
+        public decimal Wine_Sale { get; set; }
+        public decimal Wine_GST { get; set; }
+        public decimal Wine_Discount { get; set; }
+        public decimal Wine_Total { get; set; }
+    }
+
+    public class NonMenusWineReports
+    {
+        public decimal NonGst_WineSale { get; set; }
+        public decimal NonGst_WineDiscount { get; set; }
+        public decimal NonGst_WineGST { get; set; }
+        public decimal NonGst_WineTotal { get; set; }
     }
 }

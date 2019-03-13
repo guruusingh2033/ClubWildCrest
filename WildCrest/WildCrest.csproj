@@ -188,6 +188,7 @@
     <Compile Include="Models\WildCrestModels\MembersWhileStayingWithUser.cs" />
     <Compile Include="Models\WildCrestModels\MenuItems.cs" />
     <Compile Include="Models\WildCrestModels\MenusBillingSection.cs" />
+    <Compile Include="Models\WildCrestModels\RenewalMemberById.cs" />
     <Compile Include="Models\WildCrestModels\Reports.cs" />
     <Compile Include="Models\WildCrestModels\NonGST_MenusBillingSection.cs" />
     <Compile Include="Models\WildCrestModels\PermissionsToStaff.cs" />
