@@ -14,5 +14,6 @@ namespace WildCrest.Models.WildCrestModels
         public string Measurement { get; set; }
 
         public string Inventory_ItemName { get; set; }
+        public string Price { get; set; }
     }
 }

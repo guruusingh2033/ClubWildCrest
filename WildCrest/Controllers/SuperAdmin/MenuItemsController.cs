@@ -433,13 +433,13 @@ namespace WildCrest.Controllers.SuperAdmin
                 //}
                 //else
                 //{
-                    tbl_ConsumableItems consumable = new tbl_ConsumableItems();
-                    consumable.Inventory_ID = i.Inventory_ID;
-                    consumable.MenuItem_ID = i.MenuItem_ID;
-                    consumable.MeasurementUnit = i.Measurement;
-                    consumable.Quantity = i.Quantity;
-                    context.tbl_ConsumableItems.Add(consumable);
-                    context.SaveChanges();
+                tbl_ConsumableItems consumable = new tbl_ConsumableItems();
+                consumable.Inventory_ID = i.Inventory_ID;
+                consumable.MenuItem_ID = i.MenuItem_ID;
+                consumable.MeasurementUnit = i.Measurement;
+                consumable.Quantity = i.Quantity;
+                context.tbl_ConsumableItems.Add(consumable);
+                context.SaveChanges();
                 //}
             }
             return Json("Saved");
@@ -460,35 +460,45 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult DetailsOfConsumableItemByMenuId(int menuId)
         {
-            var menuItemConsumable = context.tbl_ConsumableItems.Where(a => a.MenuItem_ID == menuId).ToList();
-            List<ConsumableItems> items = new List<ConsumableItems>();
-            foreach (var i in menuItemConsumable)
+            try
             {
-                var invName = context.tbl_Inventory.SingleOrDefault(s => s.ID == i.Inventory_ID);
-                //items.Add(new ConsumableItems()
-                //{
-                //    Inventory_ItemName = (invName != null) ? invName.Item_Name : "",
-                //    Quantity = i.Quantity,
-                //    Measurement = i.MeasurementUnit
-                //});
-                bool alreadyExists = items.Any(x => x.MenuItem_ID == i.MenuItem_ID && x.Inventory_ID == i.Inventory_ID);
-                if (!alreadyExists)
+                var menuItemConsumable = context.tbl_ConsumableItems.Where(a => a.MenuItem_ID == menuId).ToList();
+                List<ConsumableItems> items = new List<ConsumableItems>();
+                foreach (var i in menuItemConsumable)
                 {
-                    items.Add(new ConsumableItems()
+                    var invName = context.tbl_Inventory.SingleOrDefault(s => s.ID == i.Inventory_ID);
+                    //items.Add(new ConsumableItems()
+                    //{
+                    //    Inventory_ItemName = (invName != null) ? invName.Item_Name : "",
+                    //    Quantity = i.Quantity,
+                    //    Measurement = i.MeasurementUnit
+                    //});
+                    bool alreadyExists = items.Any(x => x.MenuItem_ID == i.MenuItem_ID && x.Inventory_ID == i.Inventory_ID);
+                    if (!alreadyExists)
                     {
-                        Inventory_ItemName = (invName != null) ? invName.Item_Name : "",
-                        Quantity = i.Quantity,
-                        Measurement = i.MeasurementUnit,
-                        Inventory_ID = i.Inventory_ID,
-                        MenuItem_ID = i.MenuItem_ID
-                    });
+                        items.Add(new ConsumableItems()
+                        {
+                            Inventory_ItemName = (invName != null) ? invName.Item_Name : "",
+                            Quantity = i.Quantity,
+                            Measurement = i.MeasurementUnit,
+                            Inventory_ID = i.Inventory_ID,
+                            MenuItem_ID = i.MenuItem_ID,
+                            Price = (context.tbl_Inventory.FirstOrDefault(a => a.ID == i.Inventory_ID).Price * i.Quantity).ToString()
+                        });
+
+                    }
+                    else
+                    {
+                        items.Find(p => p.MenuItem_ID == i.MenuItem_ID && p.Inventory_ID == i.Inventory_ID).Quantity += i.Quantity;
+                    }
                 }
-                else
-                {
-                    items.Find(p => p.MenuItem_ID == i.MenuItem_ID && p.Inventory_ID == i.Inventory_ID).Quantity += i.Quantity;
-                }
+                return Json(items);
             }
-            return Json(items);
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+            return Json("");
         }
 
         public ActionResult ConsumableFoodItemEditByID(int menuId)

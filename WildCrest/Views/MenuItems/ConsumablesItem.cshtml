@@ -111,23 +111,33 @@ opacity: .8;
         $.ajax({
             type: "post",
             contentType: "application/json; charset=utf-8",
-            url: "/MenuItems/DetailsOfConsumableItemByMenuId",
+            url: "/MenuItems/DetailsOfConsumableItemByMenuId", 
             data: JSON.stringify({ menuId: menuId }),
             dataType: "json",
-            success: function (response) {
-                if (response.length > 0) {
-                    var tbl = '';
-                    tbl += "<table class='display table table-hover table-striped table-bordered'><tr><th>Item Name</th><th>Quantity</th><th>Measurement Unit</th></tr>";
-                    for (var i = 0; i < response.length; i++) {
-                        tbl += "<tr><td>" + response[i].Inventory_ItemName + "</td>";
-                        tbl += "<td>" + response[i].Quantity + "</td>";
-                        tbl += "<td>" + response[i].Measurement + "</td></tr>";
-                    }
+            success: function (response)
+            {
+               
+                    if (response.length > 0) {
+                        var totalprice = 0;
+                        var tbl = '';
+                        tbl += "<table class='display table table-hover table-striped table-bordered'><tr><th>Item Name</th><th>Quantity</th><th>Measurement Unit</th><th>Price</th></tr>";
+                        for (var i = 0; i < response.length; i++) {
+                            tbl += "<tr><td>" + response[i].Inventory_ItemName + "</td>";
+                            tbl += "<td>" + response[i].Quantity + "</td>";
+                            tbl += "<td>" + response[i].Measurement + "</td>";
+                            tbl += "<td>" + response[i].Price + "</td></tr>";
+                            totalprice += parseFloat(response[i].Price);
+                        }
 
-                    tbl += "</table>";
-                }
-                bootbox.alert(tbl);
-                $(".loader_gif").css("display", "none");
+                        tbl += "<tr><td>Total Price:</td>";
+                        tbl += "<td></td>";
+                        tbl += "<td></td>";
+                        tbl += "<td>" + totalprice.toFixed(2) + "</td></tr>";
+                        tbl += "</table>";
+                    }
+                    bootbox.alert(tbl);
+                    $(".loader_gif").css("display", "none");
+               
             },
             error: function (err) {
                 $(".loader_gif").css("display", "none");
