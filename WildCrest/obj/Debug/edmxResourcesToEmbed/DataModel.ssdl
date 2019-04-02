@@ -1,125 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ClubWildCrestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="ClubWildCrestModelStoreContainer">
-    <EntitySet Name="sysdiagrams" EntityType="ClubWildCrestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_BarBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_BarBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BarInventory" EntityType="ClubWildCrestModel.Store.tbl_BarInventory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BarInventoryUsage" EntityType="ClubWildCrestModel.Store.tbl_BarInventoryUsage" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BarMenu" EntityType="ClubWildCrestModel.Store.tbl_BarMenu" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BillingDetails" EntityType="ClubWildCrestModel.Store.tbl_BillingDetails" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_BookingTable" EntityType="ClubWildCrestModel.Store.tbl_BookingTable" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Consumable_BarItems" EntityType="ClubWildCrestModel.Store.tbl_Consumable_BarItems" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Consumable_WineItems" EntityType="ClubWildCrestModel.Store.tbl_Consumable_WineItems" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_ConsumableItems" EntityType="ClubWildCrestModel.Store.tbl_ConsumableItems" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Events" EntityType="ClubWildCrestModel.Store.tbl_Events" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_EventsImgVideo" EntityType="ClubWildCrestModel.Store.tbl_EventsImgVideo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_FoodType" EntityType="ClubWildCrestModel.Store.tbl_FoodType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Groups" EntityType="ClubWildCrestModel.Store.tbl_Groups" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Inventory" EntityType="ClubWildCrestModel.Store.tbl_Inventory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_InventoryUsage" EntityType="ClubWildCrestModel.Store.tbl_InventoryUsage" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MembersBillingDetails" EntityType="ClubWildCrestModel.Store.tbl_MembersBillingDetails" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MembersDocs" EntityType="ClubWildCrestModel.Store.tbl_MembersDocs" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MembershipPlans" EntityType="ClubWildCrestModel.Store.tbl_MembershipPlans" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MembersPhoto" EntityType="ClubWildCrestModel.Store.tbl_MembersPhoto" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="ClubWildCrestModel.Store.tbl_MembersWhileStayingWithUser" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Menu" EntityType="ClubWildCrestModel.Store.tbl_Menu" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_MenusBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_WineBillDetWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_NonGST_WineBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_NonGST_WineBillingSection" EntityType="ClubWildCrestModel.Store.tbl_NonGST_WineBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_PermissionsToStaff" EntityType="ClubWildCrestModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Profile" EntityType="ClubWildCrestModel.Store.tbl_Profile" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Roles" EntityType="ClubWildCrestModel.Store.tbl_Roles" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_RoomBilling" EntityType="ClubWildCrestModel.Store.tbl_RoomBilling" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_RoomBooking" EntityType="ClubWildCrestModel.Store.tbl_RoomBooking" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_RoomBooking_Details" EntityType="ClubWildCrestModel.Store.tbl_RoomBooking_Details" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Rooms" EntityType="ClubWildCrestModel.Store.tbl_Rooms" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_TablesForBooking" EntityType="ClubWildCrestModel.Store.tbl_TablesForBooking" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_UserGroup" EntityType="ClubWildCrestModel.Store.tbl_UserGroup" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_UserMembership" EntityType="ClubWildCrestModel.Store.tbl_UserMembership" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_UsersOrder" EntityType="ClubWildCrestModel.Store.tbl_UsersOrder" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_UsersStay" EntityType="ClubWildCrestModel.Store.tbl_UsersStay" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_VendorOrders" EntityType="ClubWildCrestModel.Store.tbl_VendorOrders" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Vendors" EntityType="ClubWildCrestModel.Store.tbl_Vendors" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_Voucher" EntityType="ClubWildCrestModel.Store.tbl_Voucher" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_VoucherUsedByUser" EntityType="ClubWildCrestModel.Store.tbl_VoucherUsedByUser" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_WineBillingDetailsWithBillNo" EntityType="ClubWildCrestModel.Store.tbl_WineBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_WineBillingSection" EntityType="ClubWildCrestModel.Store.tbl_WineBillingSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_WineInventory" EntityType="ClubWildCrestModel.Store.tbl_WineInventory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_WineInventoryUsage" EntityType="ClubWildCrestModel.Store.tbl_WineInventoryUsage" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tbl_WineMenu" EntityType="ClubWildCrestModel.Store.tbl_WineMenu" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_BarInventory_tbl_Vendors">
+<Schema Namespace="virkcorp_adminModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="virkcorp_adminModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="virkcorp_adminModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_BarBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BarBillingSection" EntityType="virkcorp_adminModel.Store.tbl_BarBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BarInventory" EntityType="virkcorp_adminModel.Store.tbl_BarInventory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BarInventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_BarInventoryUsage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BarMenu" EntityType="virkcorp_adminModel.Store.tbl_BarMenu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BillingDetails" EntityType="virkcorp_adminModel.Store.tbl_BillingDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_BookingTable" EntityType="virkcorp_adminModel.Store.tbl_BookingTable" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Buffet_ConsumableItems" EntityType="virkcorp_adminModel.Store.tbl_Buffet_ConsumableItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Buffet_Menu" EntityType="virkcorp_adminModel.Store.tbl_Buffet_Menu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Consumable_BarItems" EntityType="virkcorp_adminModel.Store.tbl_Consumable_BarItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Consumable_WineItems" EntityType="virkcorp_adminModel.Store.tbl_Consumable_WineItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_ConsumableItems" EntityType="virkcorp_adminModel.Store.tbl_ConsumableItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Events" EntityType="virkcorp_adminModel.Store.tbl_Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_EventsImgVideo" EntityType="virkcorp_adminModel.Store.tbl_EventsImgVideo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_FoodType" EntityType="virkcorp_adminModel.Store.tbl_FoodType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Groups" EntityType="virkcorp_adminModel.Store.tbl_Groups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Inventory" EntityType="virkcorp_adminModel.Store.tbl_Inventory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_InventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_InventoryUsage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MembersBillingDetails" EntityType="virkcorp_adminModel.Store.tbl_MembersBillingDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MembersDocs" EntityType="virkcorp_adminModel.Store.tbl_MembersDocs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MembershipPlans" EntityType="virkcorp_adminModel.Store.tbl_MembershipPlans" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MembersPhoto" EntityType="virkcorp_adminModel.Store.tbl_MembersPhoto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="virkcorp_adminModel.Store.tbl_MembersWhileStayingWithUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Menu" EntityType="virkcorp_adminModel.Store.tbl_Menu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_MenusBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.Store.tbl_MenusBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_BarBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_WineBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_WineBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_NonGST_WineBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_WineBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Party" EntityType="virkcorp_adminModel.Store.tbl_Party" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Party_FoodMenu" EntityType="virkcorp_adminModel.Store.tbl_Party_FoodMenu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_PartyBilling" EntityType="virkcorp_adminModel.Store.tbl_PartyBilling" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_PermissionsToStaff" EntityType="virkcorp_adminModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Profile" EntityType="virkcorp_adminModel.Store.tbl_Profile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Roles" EntityType="virkcorp_adminModel.Store.tbl_Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_RoomBilling" EntityType="virkcorp_adminModel.Store.tbl_RoomBilling" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_RoomBooking" EntityType="virkcorp_adminModel.Store.tbl_RoomBooking" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_RoomBooking_Details" EntityType="virkcorp_adminModel.Store.tbl_RoomBooking_Details" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Rooms" EntityType="virkcorp_adminModel.Store.tbl_Rooms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_TablesForBooking" EntityType="virkcorp_adminModel.Store.tbl_TablesForBooking" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_UserGroup" EntityType="virkcorp_adminModel.Store.tbl_UserGroup" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_UserMembership" EntityType="virkcorp_adminModel.Store.tbl_UserMembership" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_UsersOrder" EntityType="virkcorp_adminModel.Store.tbl_UsersOrder" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_UsersStay" EntityType="virkcorp_adminModel.Store.tbl_UsersStay" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_VendorOrders" EntityType="virkcorp_adminModel.Store.tbl_VendorOrders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Vendors" EntityType="virkcorp_adminModel.Store.tbl_Vendors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_Voucher" EntityType="virkcorp_adminModel.Store.tbl_Voucher" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_VoucherUsedByUser" EntityType="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_WineBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineBillingSection" EntityType="virkcorp_adminModel.Store.tbl_WineBillingSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineInventory" EntityType="virkcorp_adminModel.Store.tbl_WineInventory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineInventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_WineInventoryUsage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tbl_WineMenu" EntityType="virkcorp_adminModel.Store.tbl_WineMenu" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="virkcorp_adminModel.Store.FK_tbl_BarInventory_tbl_Vendors">
       <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
       <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="ClubWildCrestModel.Store.FK_tbl_BillingDetails_tbl_UsersStay">
+    <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_BillingDetails_tbl_UsersStay">
       <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
       <End Role="tbl_BillingDetails" EntitySet="tbl_BillingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_EventsImgVideo_tbl_Events" Association="ClubWildCrestModel.Store.FK_tbl_EventsImgVideo_tbl_Events">
+    <AssociationSet Name="FK_tbl_EventsImgVideo_tbl_Events" Association="virkcorp_adminModel.Store.FK_tbl_EventsImgVideo_tbl_Events">
       <End Role="tbl_Events" EntitySet="tbl_Events" />
       <End Role="tbl_EventsImgVideo" EntitySet="tbl_EventsImgVideo" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_Inventory_tbl_Vendors">
+    <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="virkcorp_adminModel.Store.FK_tbl_Inventory_tbl_Vendors">
       <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
       <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" Association="ClubWildCrestModel.Store.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
+    <AssociationSet Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
       <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
       <End Role="tbl_MembersWhileStayingWithUser" EntitySet="tbl_MembersWhileStayingWithUser" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_PermissionsToStaff_tbl_Profile" Association="ClubWildCrestModel.Store.FK_tbl_PermissionsToStaff_tbl_Profile">
+    <AssociationSet Name="FK_tbl_PermissionsToStaff_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_PermissionsToStaff_tbl_Profile">
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
       <End Role="tbl_PermissionsToStaff" EntitySet="tbl_PermissionsToStaff" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_Profile_tbl_Roles" Association="ClubWildCrestModel.Store.FK_tbl_Profile_tbl_Roles">
+    <AssociationSet Name="FK_tbl_Profile_tbl_Roles" Association="virkcorp_adminModel.Store.FK_tbl_Profile_tbl_Roles">
       <End Role="tbl_Roles" EntitySet="tbl_Roles" />
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UserGroup_tbl_Groups" Association="ClubWildCrestModel.Store.FK_tbl_UserGroup_tbl_Groups">
+    <AssociationSet Name="FK_tbl_UserGroup_tbl_Groups" Association="virkcorp_adminModel.Store.FK_tbl_UserGroup_tbl_Groups">
       <End Role="tbl_Groups" EntitySet="tbl_Groups" />
       <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UserGroup_tbl_Profile" Association="ClubWildCrestModel.Store.FK_tbl_UserGroup_tbl_Profile">
+    <AssociationSet Name="FK_tbl_UserGroup_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UserGroup_tbl_Profile">
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
       <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UserMembership_tbl_MembershipPlans" Association="ClubWildCrestModel.Store.FK_tbl_UserMembership_tbl_MembershipPlans">
+    <AssociationSet Name="FK_tbl_UserMembership_tbl_MembershipPlans" Association="virkcorp_adminModel.Store.FK_tbl_UserMembership_tbl_MembershipPlans">
       <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
       <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UserMembership_tbl_Profile" Association="ClubWildCrestModel.Store.FK_tbl_UserMembership_tbl_Profile">
+    <AssociationSet Name="FK_tbl_UserMembership_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UserMembership_tbl_Profile">
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
       <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UsersOrder_tbl_UsersStay" Association="ClubWildCrestModel.Store.FK_tbl_UsersOrder_tbl_UsersStay">
+    <AssociationSet Name="FK_tbl_UsersOrder_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_UsersOrder_tbl_UsersStay">
       <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
       <End Role="tbl_UsersOrder" EntitySet="tbl_UsersOrder" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UsersStay_tbl_MembershipPlans" Association="ClubWildCrestModel.Store.FK_tbl_UsersStay_tbl_MembershipPlans">
+    <AssociationSet Name="FK_tbl_UsersStay_tbl_MembershipPlans" Association="virkcorp_adminModel.Store.FK_tbl_UsersStay_tbl_MembershipPlans">
       <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
       <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_UsersStay_tbl_Profile" Association="ClubWildCrestModel.Store.FK_tbl_UsersStay_tbl_Profile">
+    <AssociationSet Name="FK_tbl_UsersStay_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UsersStay_tbl_Profile">
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
       <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Profile" Association="ClubWildCrestModel.Store.FK_tbl_VoucherUsedByUser_tbl_Profile">
+    <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_VoucherUsedByUser_tbl_Profile">
       <End Role="tbl_Profile" EntitySet="tbl_Profile" />
       <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Voucher" Association="ClubWildCrestModel.Store.FK_tbl_VoucherUsedByUser_tbl_Voucher">
+    <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Voucher" Association="virkcorp_adminModel.Store.FK_tbl_VoucherUsedByUser_tbl_Voucher">
       <End Role="tbl_Voucher" EntitySet="tbl_Voucher" />
       <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tbl_WineInventory_tbl_Vendors" Association="ClubWildCrestModel.Store.FK_tbl_WineInventory_tbl_Vendors">
-      <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
-      <End Role="tbl_WineInventory" EntitySet="tbl_WineInventory" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="sysdiagrams">
@@ -229,6 +230,31 @@
     <Property Name="BookingEndTime" Type="varchar(max)" />
     <Property Name="UserID" Type="int" />
   </EntityType>
+  <EntityType Name="tbl_Buffet_ConsumableItems">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BuffetItem_ID" Type="int" />
+    <Property Name="Inventory_ID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="MeasurementUnit" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Buffet_Menu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Buffet_Item_Name" Type="varchar(max)" />
+    <Property Name="Details" Type="varchar(max)" />
+    <Property Name="NewItemApprvFrmSuperAdm" Type="bit" />
+    <Property Name="DelItemApprvFromSuperAdm" Type="bit" />
+    <Property Name="FoodType" Type="varchar(max)" />
+    <Property Name="AddedBy" Type="varchar" MaxLength="300" />
+    <Property Name="DeletedBy" Type="varchar" MaxLength="300" />
+    <Property Name="Consumption_Cost" Type="float" />
+    <Property Name="InventoryID" Type="int" />
+  </EntityType>
   <EntityType Name="tbl_Consumable_BarItems">
     <Key>
       <PropertyRef Name="ID" />
@@ -324,6 +350,7 @@
     <Property Name="MenusBillingDetailsID" Type="int" />
     <Property Name="BillNo" Type="int" />
     <Property Name="GST_NonGST_Bill" Type="varchar" MaxLength="50" />
+    <Property Name="IsBuffetFood" Type="bit" />
   </EntityType>
   <EntityType Name="tbl_MembersBillingDetails">
     <Key>
@@ -510,6 +537,46 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
   </EntityType>
+  <EntityType Name="tbl_Party">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Party_Name" Type="varchar" MaxLength="500" />
+    <Property Name="Party_Owner" Type="varchar" MaxLength="300" />
+    <Property Name="Phone_No" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Total_Member" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="varchar" MaxLength="500" />
+    <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
+    <Property Name="Party_Date" Type="varchar" MaxLength="500" />
+    <Property Name="Gst" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="tbl_Party_FoodMenu">
+    <Key>
+      <PropertyRef Name="Food_menu_Id" />
+    </Key>
+    <Property Name="Food_menu_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Party_ID" Type="int" />
+    <Property Name="Buffet_Menu_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_PartyBilling">
+    <Key>
+      <PropertyRef Name="Bill_ID" />
+    </Key>
+    <Property Name="Bill_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Price_Without_Gst" Type="varchar" MaxLength="500" />
+    <Property Name="Gst_Amount" Type="varchar" MaxLength="500" />
+    <Property Name="Price_With_Gst" Type="varchar" MaxLength="500" />
+    <Property Name="Qty" Type="varchar" MaxLength="500" />
+    <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
+    <Property Name="Amount_Paid" Type="varchar" MaxLength="500" />
+    <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="500" />
+    <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
+    <Property Name="Billed_By" Type="int" />
+    <Property Name="Party_ID" Type="int" />
+    <Property Name="IsAdvance_Payment" Type="bit" />
+  </EntityType>
   <EntityType Name="tbl_PermissionsToStaff">
     <Key>
       <PropertyRef Name="ID" />
@@ -570,7 +637,7 @@
     <Property Name="CustomerName" Type="varchar(max)" />
     <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
     <Property Name="RoomID" Type="varchar(max)" />
-    <Property Name="CheckInDate" Type="varchar(max)" />
+    <Property Name="CheckInDate " Type="varchar(max)" />
     <Property Name="Amount" Type="float" />
     <Property Name="SGST" Type="float" />
     <Property Name="CGST" Type="float" />
@@ -630,6 +697,7 @@
     <Property Name="TableNo" Type="varchar(max)" />
     <Property Name="Table_Status" Type="varchar(max)" />
     <Property Name="Bar_Status" Type="varchar(max)" />
+    <Property Name="Wine_Status" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="tbl_UserGroup">
     <Key>
@@ -800,8 +868,8 @@
     <Property Name="InventoryID" Type="int" />
   </EntityType>
   <Association Name="FK_tbl_BarInventory_tbl_Vendors">
-    <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
-    <End Role="tbl_BarInventory" Type="ClubWildCrestModel.Store.tbl_BarInventory" Multiplicity="*" />
+    <End Role="tbl_Vendors" Type="virkcorp_adminModel.Store.tbl_Vendors" Multiplicity="0..1" />
+    <End Role="tbl_BarInventory" Type="virkcorp_adminModel.Store.tbl_BarInventory" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Vendors">
         <PropertyRef Name="ID" />
@@ -812,8 +880,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_BillingDetails_tbl_UsersStay">
-    <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-    <End Role="tbl_BillingDetails" Type="ClubWildCrestModel.Store.tbl_BillingDetails" Multiplicity="*" />
+    <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
+    <End Role="tbl_BillingDetails" Type="virkcorp_adminModel.Store.tbl_BillingDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_UsersStay">
         <PropertyRef Name="ID" />
@@ -824,8 +892,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_EventsImgVideo_tbl_Events">
-    <End Role="tbl_Events" Type="ClubWildCrestModel.Store.tbl_Events" Multiplicity="0..1" />
-    <End Role="tbl_EventsImgVideo" Type="ClubWildCrestModel.Store.tbl_EventsImgVideo" Multiplicity="*" />
+    <End Role="tbl_Events" Type="virkcorp_adminModel.Store.tbl_Events" Multiplicity="0..1" />
+    <End Role="tbl_EventsImgVideo" Type="virkcorp_adminModel.Store.tbl_EventsImgVideo" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Events">
         <PropertyRef Name="ID" />
@@ -836,8 +904,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_Inventory_tbl_Vendors">
-    <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
-    <End Role="tbl_Inventory" Type="ClubWildCrestModel.Store.tbl_Inventory" Multiplicity="*" />
+    <End Role="tbl_Vendors" Type="virkcorp_adminModel.Store.tbl_Vendors" Multiplicity="0..1" />
+    <End Role="tbl_Inventory" Type="virkcorp_adminModel.Store.tbl_Inventory" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Vendors">
         <PropertyRef Name="ID" />
@@ -848,8 +916,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
-    <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-    <End Role="tbl_MembersWhileStayingWithUser" Type="ClubWildCrestModel.Store.tbl_MembersWhileStayingWithUser" Multiplicity="*" />
+    <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
+    <End Role="tbl_MembersWhileStayingWithUser" Type="virkcorp_adminModel.Store.tbl_MembersWhileStayingWithUser" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_UsersStay">
         <PropertyRef Name="ID" />
@@ -860,8 +928,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_PermissionsToStaff_tbl_Profile">
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="0..1" />
-    <End Role="tbl_PermissionsToStaff" Type="ClubWildCrestModel.Store.tbl_PermissionsToStaff" Multiplicity="*" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
+    <End Role="tbl_PermissionsToStaff" Type="virkcorp_adminModel.Store.tbl_PermissionsToStaff" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Profile">
         <PropertyRef Name="ID" />
@@ -872,8 +940,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_Profile_tbl_Roles">
-    <End Role="tbl_Roles" Type="ClubWildCrestModel.Store.tbl_Roles" Multiplicity="0..1" />
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="*" />
+    <End Role="tbl_Roles" Type="virkcorp_adminModel.Store.tbl_Roles" Multiplicity="0..1" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Roles">
         <PropertyRef Name="ID" />
@@ -884,8 +952,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UserGroup_tbl_Groups">
-    <End Role="tbl_Groups" Type="ClubWildCrestModel.Store.tbl_Groups" Multiplicity="0..1" />
-    <End Role="tbl_UserGroup" Type="ClubWildCrestModel.Store.tbl_UserGroup" Multiplicity="*" />
+    <End Role="tbl_Groups" Type="virkcorp_adminModel.Store.tbl_Groups" Multiplicity="0..1" />
+    <End Role="tbl_UserGroup" Type="virkcorp_adminModel.Store.tbl_UserGroup" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Groups">
         <PropertyRef Name="ID" />
@@ -896,8 +964,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UserGroup_tbl_Profile">
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="0..1" />
-    <End Role="tbl_UserGroup" Type="ClubWildCrestModel.Store.tbl_UserGroup" Multiplicity="*" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
+    <End Role="tbl_UserGroup" Type="virkcorp_adminModel.Store.tbl_UserGroup" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Profile">
         <PropertyRef Name="ID" />
@@ -908,8 +976,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UserMembership_tbl_MembershipPlans">
-    <End Role="tbl_MembershipPlans" Type="ClubWildCrestModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
-    <End Role="tbl_UserMembership" Type="ClubWildCrestModel.Store.tbl_UserMembership" Multiplicity="*" />
+    <End Role="tbl_MembershipPlans" Type="virkcorp_adminModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
+    <End Role="tbl_UserMembership" Type="virkcorp_adminModel.Store.tbl_UserMembership" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_MembershipPlans">
         <PropertyRef Name="ID" />
@@ -920,8 +988,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UserMembership_tbl_Profile">
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="0..1" />
-    <End Role="tbl_UserMembership" Type="ClubWildCrestModel.Store.tbl_UserMembership" Multiplicity="*" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
+    <End Role="tbl_UserMembership" Type="virkcorp_adminModel.Store.tbl_UserMembership" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Profile">
         <PropertyRef Name="ID" />
@@ -932,8 +1000,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UsersOrder_tbl_UsersStay">
-    <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-    <End Role="tbl_UsersOrder" Type="ClubWildCrestModel.Store.tbl_UsersOrder" Multiplicity="*" />
+    <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
+    <End Role="tbl_UsersOrder" Type="virkcorp_adminModel.Store.tbl_UsersOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_UsersStay">
         <PropertyRef Name="ID" />
@@ -944,8 +1012,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UsersStay_tbl_MembershipPlans">
-    <End Role="tbl_MembershipPlans" Type="ClubWildCrestModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
-    <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="*" />
+    <End Role="tbl_MembershipPlans" Type="virkcorp_adminModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
+    <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_MembershipPlans">
         <PropertyRef Name="ID" />
@@ -956,8 +1024,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_UsersStay_tbl_Profile">
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="0..1" />
-    <End Role="tbl_UsersStay" Type="ClubWildCrestModel.Store.tbl_UsersStay" Multiplicity="*" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
+    <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Profile">
         <PropertyRef Name="ID" />
@@ -968,8 +1036,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_VoucherUsedByUser_tbl_Profile">
-    <End Role="tbl_Profile" Type="ClubWildCrestModel.Store.tbl_Profile" Multiplicity="0..1" />
-    <End Role="tbl_VoucherUsedByUser" Type="ClubWildCrestModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
+    <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
+    <End Role="tbl_VoucherUsedByUser" Type="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Profile">
         <PropertyRef Name="ID" />
@@ -980,8 +1048,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tbl_VoucherUsedByUser_tbl_Voucher">
-    <End Role="tbl_Voucher" Type="ClubWildCrestModel.Store.tbl_Voucher" Multiplicity="0..1" />
-    <End Role="tbl_VoucherUsedByUser" Type="ClubWildCrestModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
+    <End Role="tbl_Voucher" Type="virkcorp_adminModel.Store.tbl_Voucher" Multiplicity="0..1" />
+    <End Role="tbl_VoucherUsedByUser" Type="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Voucher">
         <PropertyRef Name="ID" />
@@ -991,16 +1059,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tbl_WineInventory_tbl_Vendors">
-    <End Role="tbl_Vendors" Type="ClubWildCrestModel.Store.tbl_Vendors" Multiplicity="0..1" />
-    <End Role="tbl_WineInventory" Type="ClubWildCrestModel.Store.tbl_WineInventory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_Vendors">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="tbl_WineInventory">
-        <PropertyRef Name="VendorID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <Function Name="checkAvailabilityOfRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="checkin" Type="varchar" Mode="In" />
+    <Parameter Name="checkout" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Members_Checked_Out_Rooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="checkin" Type="varchar" Mode="In" />
+    <Parameter Name="checkout" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="staysAccToYearlyMembership" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userID" Type="int" Mode="In" />
+    <Parameter Name="membershipID" Type="int" Mode="In" />
+  </Function>
 </Schema>

@@ -1118,7 +1118,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 menusDetails.GST = data.GST;
                 menusDetails.PriceWithoutTax = data.PriceWithoutTax;
-
+                menusDetails.Discount = data.Discount;
                 menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
                 menusDetails.Customer_Name = data.Customer_Name;
                 menusDetails.Phone = data.Phone;
@@ -1164,7 +1164,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
-
+                menusDetails.Discount = data.Discount;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -1209,14 +1209,14 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             //csgst = pricewithoutTax * (9f / 100f);
             //csgst = (csgst * 2);
-            csgst = pricewithoutTax * ((double)gstPercentFromConfig / (double)100);
-            total = csgst + pricewithoutTax;
+            //csgst = pricewithoutTax * ((double)gstPercentFromConfig / (double)100);
+            //total = csgst + pricewithoutTax;
             var d = context.tbl_BarBillingSection.SingleOrDefault(a => a.Bill_Number == billNo);
             if (d != null)
             {
-                d.Price = Math.Round((Double)total, 2);
-                d.GST = Math.Round((Double)csgst, 2);
-                d.PriceWithoutTax = Math.Round((Double)pricewithoutTax, 2);
+                d.Price = pricewithoutTax;// Math.Round((Double)total, 2);
+                //d.GST = Math.Round((Double)csgst, 2);
+                d.PriceWithoutTax = pricewithoutTax;// Math.Round((Double)pricewithoutTax, 2);
                 context.Entry(d).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -1625,6 +1625,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 }
                 //gst = amtWithoutTax * (9f / 100f);
                 //gst = (gst * 2);
+
                 gst = amtWithoutTax * ((double)gstPercentFromConfig / (double)100);
                 gst = Math.Round((double)gst, 2);
                 amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
@@ -1877,8 +1878,8 @@ namespace WildCrest.Controllers.SuperAdmin
                 amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
 
                 tbl_BarBillingSection menus = new tbl_BarBillingSection();
-                billDet.Price = Math.Round((double)(gst + amtWithoutTax), 2);
-                billDet.GST = gst;
+                billDet.Price = amtWithoutTax;// Math.Round((double)(gst + amtWithoutTax), 2);
+                billDet.GST = 0.0;// gst;
                 billDet.PriceWithoutTax = amtWithoutTax;
                 context.Entry(billDet).State = EntityState.Modified;
                 context.SaveChanges();

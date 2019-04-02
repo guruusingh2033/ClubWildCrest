@@ -163,8 +163,12 @@ opacity: .8;
                                 tbl += "<td><a target='_blank' href='/Billing/NonGstBillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
                             }
                             else if(response[i].GST_NonGST_Bill=="GST"){
-                                tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
-                            }
+                                if(response[i].IsBuffetFood==true){
+                                    tbl += "<td><a target='_blank' href='/BuffetMenu/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                                }else{
+                                    tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                                }
+                                }
                         }
                         else{
                             tbl += "<td>" + response[i].Description + "</td>";
@@ -274,6 +278,7 @@ opacity: .8;
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

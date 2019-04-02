@@ -15,12 +15,12 @@ namespace WildCrest
     public partial class tbl_WineInventoryUsage
     {
         public int ID { get; set; }
+        public Nullable<int> WineInventoryID { get; set; }
         public Nullable<double> Used_Qty { get; set; }
         public string Description { get; set; }
         public string Used_Date { get; set; }
-        public string GST_NonGST_Bill { get; set; }
-        public Nullable<int> WineInventoryID { get; set; }
         public Nullable<int> Wine_MenusBillingDetailsID { get; set; }
         public Nullable<int> Wine_BillNo { get; set; }
+        public string GST_NonGST_Bill { get; set; }
     }
 }

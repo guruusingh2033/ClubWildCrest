@@ -213,13 +213,23 @@
                             <li>
                                 <a class="has-arrow" href="/MembershipPlans/Index" aria-expanded="false"><i class="fa fa-handshake-o" aria-hidden="true"></i><span class="hide-menu">Membership Plans</span></a>
                             </li>
+                            
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
+                                <ul aria-expanded="false" class="collapse">                                    
+                                    <li><a href="/BuffetMenu/Index">Buffet-MenuItems</a></li>
+                                    <li><a href="/BuffetMenu/PartyClander">Buffet-PartyClander</a></li>
+                                    <li><a href="/BuffetMenu/PartyBillsIndex">Buffet-Billing</a></li>
+                                   
+                                </ul>
+                            </li>
                              <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Wine</span></a>
                                 <ul aria-expanded="false" class="collapse">                                    
                                     <li><a href="/Wine/MenuItems">Wine-MenuItems</a></li>
                                     <li><a href="/Wine/Inventory">Wine-Inventory</a></li>
                                     <li><a href="/Wine/BarOrders">Wine-Orders</a></li>
-                                    <li><a href="/Wine/BarBillingSection">Wine-Billing</a></li>
+                                    <li><a href="/Wine/BarBillsIndex">Wine-Billing</a></li>
                                 </ul>
                             </li>
                               <li>
@@ -228,7 +238,7 @@
                                     <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
                                     <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
                                     <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
-                                    <li><a href="/Bar/BarBillingSection">Bar-Billing</a></li>
+                                    <li><a href="/Bar/BarBillsIndex">Bar-Billing</a></li>
                                 </ul>
                             </li>
                            
@@ -242,7 +252,7 @@
                                 <a class="has-arrow" href="/Inventory/Index" aria-expanded="false"><i class="fa fa-archive" aria-hidden="true"></i><span class="hide-menu">Inventory</span></a>
                             </li>
                             <li>
-                                <a class="has-arrow" href="/Billing/FoodBillingSection" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
+                                <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
                             </li>
                             @*<li>
                                 <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing Reports</span></a>
@@ -352,13 +362,17 @@
                                     <a class="has-arrow" href="/MembershipPlans/Index" aria-expanded="false"><i class="fa fa-handshake-o" aria-hidden="true"></i><span class="hide-menu">Membership Plans</span></a>
                                 </li>
                             }
+
+                             <li>
+                                <a class="has-arrow" href="/BuffetMenu/Index" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
+                            </li>
                              <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Wine</span></a>
                                 <ul aria-expanded="false" class="collapse">                                    
                                     <li><a href="/Wine/MenuItems">Wine-MenuItems</a></li>
                                     <li><a href="/Wine/Inventory">Wine-Inventory</a></li>
                                     <li><a href="/Wine/BarOrders">Wine-Orders</a></li>
-                                    <li><a href="/Wine/BarBillingSection">Wine-Billing</a></li>
+                                    <li><a href="/Wine/BarBillsIndex">Wine-Billing</a></li>
                                 </ul>
                             </li>
                              <li>
@@ -367,7 +381,7 @@
                                     <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
                                     <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
                                     <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
-                                    <li><a href="/Bar/BarBillingSection">Bar-Billing</a></li>
+                                    <li><a href="/Bar/BarBillsIndex">Bar-Billing</a></li>
                                 </ul>
                             </li>
                             @if (Request.Cookies["PageSetting"] != null)
@@ -405,7 +419,7 @@
                                 <a class="has-arrow" href="/Inventory/Index" aria-expanded="false"><i class="fa fa-archive" aria-hidden="true"></i><span class="hide-menu">Inventory</span></a>
                             </li>
                             <li>
-                                <a class="has-arrow" href="/Billing/FoodBillingSection" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
+                                <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
                             </li>
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-bed" aria-hidden="true"></i><span class="hide-menu">Room Booking & Billing</span></a>

@@ -14,6 +14,10 @@
                 <th>Sale (without GST)</th>
                 <th>Discount</th>
                 <th>GST</th>
+                 <th>Cash</th>
+                 <th>Paytm</th>
+                 <th>Card</th>
+                <th>Cheque</th>
                 <th>Total</th>
             </tr>
         </thead>
@@ -36,6 +40,10 @@
                 <td>@Model.Menus_Sale</td>
                 <td>@Model.Menus_Discount</td>
                 <td>@Model.Menus_GST</td>
+                 <td>@Model.Food_CashPay</td>
+                 <td>@Model.Food_PaytmPay</td>
+                 <td>@Model.Food_CardPay</td>
+                <td>@Model.Food_ChequePay</td>
                 <td>@Model.Menus_Total</td>
             </tr>
             <tr>
@@ -56,6 +64,10 @@
                 <td>@Model.NonMenusGst_Sale</td>
                 <td>@Model.NonMenusGst_Discount</td>
                 <td>@Model.NonMenusGst_GST</td>
+                <td>@Model.NonGst_Food_CashPay</td>
+                <td>@Model.NonGst_Food_PaytmPay</td>
+                <td>@Model.NonGst_Food_CardPay</td>
+                 <td>@Model.NonGst_Food_ChequePay</td>
                 <td>@Model.NonMenusGst_Total</td>
             </tr>
             <tr>
@@ -67,6 +79,10 @@
                 <td>@Model.Room_Sale</td>
                 <td>@Model.Room_Discount</td>
                 <td>@Model.Room_GST</td>
+                 <td>@Model.Room_CashPay</td>
+                 <td>@Model.Room_PaytmPay</td>
+                 <td>@Model.Room_CardPay</td>
+                  <td>@Model.Room_ChequePay</td>
                 <td>@Model.Room_Total</td>
             </tr>
             <tr>
@@ -78,6 +94,10 @@
                 <td>@Model.MemBill_Sale</td>
                 <td>@Model.MemBill_Discount</td>
                 <td>@Model.MemBill_GST</td>
+                <td>@Model.MemBill_CashPay</td>
+                 <td>@Model.MemBill_PaytmPay</td>
+                 <td>@Model.MemBill_CardPay</td>
+                  <td>@Model.MemBill_ChequePay</td>
                 <td>@Model.MemBill_Total</td>
             </tr>
             <tr>
@@ -94,13 +114,18 @@
                         var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
                         @Html.ActionLink("Bar Billing", "BarBillsIndex", "Bar", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
                     else
-                    {<span>Bar Billing</span>}</td>
+                    {
+                        <span>Bar Billing</span>}</td>
                 <td>@Model.Bar_Sale</td>
                 <td>@Model.Bar_Discount</td>
                 <td>@Model.Bar_GST</td>
+                 <td>@Model.Bar_CashPay</td>
+                 <td>@Model.Bar_PaytmPay</td>
+                 <td>@Model.Bar_CardPay</td>
+                <td>@Model.Bar_ChequePay</td>
                 <td>@Model.Bar_Total</td>
             </tr>
-            <tr>
+            @*<tr>
                 <td class="hide">6</td>
                 <td>@if (Model.NonGst_BarTotal != 0)
                     {
@@ -120,10 +145,10 @@
                 <td>@Model.NonGst_BarDiscount</td>
                 <td>@Model.NonGst_BarGST</td>
                 <td>@Model.NonGst_BarTotal</td>
-            </tr>
+            </tr>*@
            <tr>
-                <td class="hide">7</td>
-                <td>@if (Model.Bar_Total != 0)
+                <td class="hide">6</td>
+                <td>@if (Model.Wine_Total != 0)
                     {
                         var arr = new[,]{ 
                             {"Temp_Tax_Data","gst"},
@@ -139,9 +164,14 @@
                 <td>@Model.Wine_Sale</td>
                 <td>@Model.Wine_Discount</td>
                 <td>@Model.Wine_GST</td>
+                 <td>@Model.Wine_CashPay</td>
+               <td>@Model.Wine_PaytmPay</td>
+               <td>@Model.Wine_CardPay</td>
+                <td>@Model.Wine_ChequePay</td>
                 <td>@Model.Wine_Total</td>
+
             </tr>
-             <tr>
+             @*<tr>
                 <td class="hide">8</td>
                 <td>@if (Model.NonGst_WineTotal != 0)
                     {
@@ -161,13 +191,17 @@
                 <td>@Model.NonGst_WineDiscount</td>
                 <td>@Model.NonGst_WineGST</td>
                 <td>@Model.NonGst_WineTotal</td>
-            </tr>
+            </tr>*@
             <tr>
-                <td class="hide">9</td>
+                <td class="hide">7</td>
                 <td>Total</td>
                 <td>@Model.Total_Sale</td>
                 <td>@Model.Total_Discount</td>
                 <td>@Model.Total_GST</td>
+                <td>@Model.Total_Cash</td>
+                <td>@Model.Total_Paytm</td>
+                <td>@Model.Total_Card</td>
+                  <td>@Model.Total_ChequePay</td>
                 <td>@Model.Total_Amount</td>
             </tr>
         </tbody>

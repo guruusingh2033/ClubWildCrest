@@ -32,7 +32,7 @@ opacity: .8;
         }
         else
         {
-            <a href="/Wine/BarBillingSection" class="btn btn-primary">Go Back</a>
+            <a href="/Wine/BarBillingSection" class="btn btn-primary">Add New Bill</a>
         }        
         <ul class="list-inline list-unstyled billing_list">
             @if (Request.Cookies["UserType"].Value == "1" || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
@@ -53,12 +53,12 @@ opacity: .8;
                 </li>   
             }
             <li>
-                <div class="dropdowncls">
+                @*<div class="dropdowncls">
                     <select id="dataAccToGst" onchange="dataAccTo_Day_Gst();" class="form-control">
                         <option value="gst">GST Bill(s)</option>
                         <option value="nonGst">Non-GST Bill(s)</option>
                     </select>
-                </div>
+                </div>*@
             </li>
             <li>
                 <div class="dropdowncls">

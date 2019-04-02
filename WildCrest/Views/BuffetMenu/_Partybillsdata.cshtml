@@ -1,0 +1,409 @@
+﻿@model WildCrest.Models.WildCrestModels.partyModel
+<style>
+    .loader_gif {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+        opacity: .8;
+    }
+</style>
+@if (Model.ID != 0)
+{
+    <div id="ReportsDataAccToDate">
+        <div class="loader_gif" style="display: none;"></div>
+        <center><label style="color:red;"><b></b></label></center>
+    </div>
+@*<table class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Food Menu</th>
+                <th>Consumption Cost</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FoodMenus)
+            {
+                <tr>
+                    <td>@item.Buffet_Item_Name</td>
+                    <td>@item.Consumption_Cost</td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+    <h4 class="card-title"><span><b style="font-weight: 600">@Model.Party_Name</b> Party Billing</span></h4>
+    <div class="form p-t-20">
+        @if (ViewBag.Paid == "amtpaid")
+        {
+            <div>
+                <label id="showBillNo" style="font-size: large; font-weight: 500;">Bill Number : <span id="Bill_Number">@Model.BillNo</span> <span id="amtPaidOrNot" style="color: red; font-style: italic;"></span></label>
+            </div>
+        }
+        <div style="margin-top: 5px;">
+
+            <div class="form-group">
+                <label style="font-size: large;">Price Without Gst</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Pwithoutgst" class="form-control requiredFields" placeholder="" readonly />
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label style="font-size: large;">Gst Amount</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Gstamt" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label style="font-size: large;">Price With Gst</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Pwithgst" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="font-size: large; margin-top: 2px;">Total Members</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Tmember" class="form-control" />
+                </div>
+            </div>
+            <div>
+                <label style="font-size: large;"><b>Amount :  ₹ <span id="tamt"></span></b></label>
+            </div>
+            <div class="form-group">
+                <label style="font-size: large;">Advance Payment</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Advanceamt" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div>
+                <label style="font-size: large;"><b>Amount to be Paid :  ₹ <span id="Givenamt"></span></b></label>
+            </div>
+            @* <div class="form-group">
+                <label style="font-size: large;">Amount to be Paid:</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="Givenamt" class="form-control" />
+                </div>
+            </div>*@
+
+            @* <div class="form-group">
+                <label style="font-size: large;">Total Amount</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <input type="text" id="tamt" class="form-control" readonly />
+                </div>
+            </div>*@
+            <div class="form-group">
+                <label style="font-size: large;">Mode of Payment :</label>
+                <div class="input-group" style="margin-top: 5px;">
+                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                    <select onchange="" class="form-control" id="Paymode">
+                        <option value="Cash">Cash</option>
+                        <option value="Paytm">Paytm</option>
+                        <option value="Card">Card</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+             @if (ViewBag.Paid == "amtpaid"){
+            <input type="button" value="Print" onclick="PrintOnly(@Model.BillNo)" class="btn btn-primary" />
+             }
+             else
+             { <input type="button" value="Save" onclick="SaveOnly()" class="btn btn-primary" />
+             }
+            <input id="partyid" type="hidden" value="@Model.ID" />
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-block">
+            <ul class="list-inline list-unstyled billing_list">
+                <li style="color: red; font-size: 17px;">No Party Exist For Selected Date</li>
+                <li><a href="/BuffetMenu/PartyClander" class="btn btn-primary" style="margin-left: 5px;">Add New Party</a></li>
+            </ul>
+        </div>
+    </div>
+   
+}
+
+
+<script>
+    function PrintOnly(id) {
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/BuffetMenu/PrintPartyBill",
+            data: JSON.stringify({ billl_id: id }),
+            dataType: "json",
+            success: function (response) {
+
+                $(".loader_gif").css("display", "none");
+                debugger;
+                if (response == "") {
+                    bootbox.confirm("No Record Found", function (result) {
+
+                        window.location.reload();
+                    });
+                } else {
+                    $(".preloader").css("display", "block");
+                    newWin = window.open("");
+                    var balaneamt = 0.0;
+                    balaneamt = parseFloat(response.partyBill.Total_Amount) - parseFloat(response.partyBill.Amount_Paid);
+                    var d = new Date();
+                    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                    var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                    var tbl = '';
+                    tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+                    tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                    //tbl+="<br>8765438976</p></center><hr>";
+                    tbl += "<p style='font-size:10px;'>GSTIN : 09AAECV4514H1ZA";
+                    tbl += "<br>Bill No. : " + response.partyBill.Bill_ID;
+                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : " + time;
+                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date : " + strDate;
+                    tbl += "<br>Customer : " + response.Party_Owner;
+                    tbl += "<br>Customer PhoneNo : " + response.Phone_No
+                        + "</p>";
+
+
+                    tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+            '<thead  style="text-align: center;" >' +
+            '<tr style="font-size: 9px;font-weight:400; text-align: center;">' +
+            '<td style="padding: 5px 0;">Party Name </td>' +
+
+            '<td style="padding: 5px 0;">Party Date</td>' +
+
+
+            '<td style="padding: 5px 0;">No. Of Members</td>' +
+            '<td style="padding: 5px 0;">Price</td>' +
+            '<td style="padding: 5px 0;text-align: right;">Amount</td>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';
+
+
+                    tbl += '<tr style="font-size: 9px;text-align: center;">' +
+        '<td style="padding: 8px 0;">' + response.Party_Name + '</td>' +
+
+        '<td style="padding: 8px 0;"><label>' + response.Party_Date + '</label></td>' +
+
+        '<td style="padding: 8px 0;"><label>' + response.partyBill.Qty + '</label></td>' +
+        '<td style="padding: 8px 0;"><label>' + response.partyBill.Price_With_Gst + '</label></td>' +
+        '<td style="padding: 8px 0;text-align: right;"><label>₹ ' + response.partyBill.Total_Amount + '</label></td>' +
+
+        '</tr>';
+
+
+                    tbl += '<tr style="font-size: 9px;">' +
+            '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Total : </th>' +
+            '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + response.partyBill.Total_Amount + '</label></td>' +
+            '</tr>';
+
+                    tbl += '<tr style="font-size: 9px;">' +
+                   '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Advance Amount : </th>' +
+                   '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + balaneamt.toFixed(2) + '</label></td>' +
+                   '</tr>';
+                    tbl += '<tr style="font-size: 9px;">' +
+           '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Paid Amount: </th>' +
+           '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' +response.partyBill.Amount_Paid  + '</label></td>' +
+           '</tr>' +
+
+
+            '</tbody>' +
+
+            '</table><p style="font-size: 9px;">GOOD SERVICE DESERVES A TIP!!</p>';
+
+                    var htmlToPrint = '' +
+                        '<style type="text/css">' +
+                        //'table, th, td {' +
+                        //'border-collapse: collapse;' +
+                        //'}' +
+                        'body{font-family: arial;}' +
+                        '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                        '</style>';
+                    htmlToPrint += tbl;
+
+                    newWin.document.write(htmlToPrint);
+                    newWin.print();
+                    newWin.close();
+
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                $(".loader_gif").css("display", "none");
+            }
+        });
+    }
+
+    function SaveOnly() {
+
+
+        var d = {
+            'Price_Without_Gst': $("#Pwithoutgst").val(),
+            'Gst_Amount': $("#Gstamt").val(),
+            'Price_With_Gst': $("#Pwithgst").val(),
+            'Qty': $("#Tmember").val(),
+            'Total_Amount': $("#tamt").html(),
+
+            'Amount_Paid': $("#Givenamt").html(),
+            'Bill_ID':'@Model.BillNo',
+            'Mode_Of_Payment': $("#Paymode option:selected").val(),
+            'IsAdvance_Payment': 'false',
+            //$("#defaultCheck").is(":checked"),
+            'Party_ID': $("#partyid").val(),
+        };
+        $('#ReportsDataAccToDate center label').html('');
+        $(".loader_gif").css("display", "block");
+        $.ajax({
+            type: "post",
+            contentType: "application/json; charset=utf-8",
+            url: "/BuffetMenu/SavePartyBill",
+            data: JSON.stringify({ billModel: d }),
+            dataType: "json",
+            success: function (response) {
+               
+                $("#ReportsDataAccToDate").empty();
+                $(".loader_gif").css("display", "none");
+                if (response == "Enter Correct Amount") {
+                    bootbox.confirm(response, function (result) {
+
+                        window.location.reload();
+                    });
+                } else {
+                    $(".preloader").css("display", "block");
+                    newWin = window.open("");
+                    var d = new Date();
+                    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                    var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                    var balaneamt = 0.0;
+                    balaneamt = parseFloat(response.partyBill.Total_Amount) - parseFloat(response.partyBill.Amount_Paid);
+                    var tbl = '';
+                    tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+                    tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                    //tbl+="<br>8765438976</p></center><hr>";
+                    tbl += "<p style='font-size:10px;'>GSTIN : 09AAECV4514H1ZA";
+                    tbl += "<br>Bill No. : " + response.partyBill.Bill_ID;
+                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : " + time;
+                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date : " + strDate;
+                    tbl += "<br>Customer : " + response.Party_Owner;
+                    tbl += "<br>Customer PhoneNo : " + response.Phone_No
+                        + "</p>";
+
+
+                    tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+            '<thead  style="text-align: center;" >' +
+            '<tr style="font-size: 9px;font-weight:400; text-align: center;">' +
+            '<td style="padding: 5px 0;">Party Name </td>' +
+
+            '<td style="padding: 5px 0;">Party Date</td>' +
+
+
+            '<td style="padding: 5px 0;">No. Of Members</td>' +
+            '<td style="padding: 5px 0;">Price</td>' +
+            '<td style="padding: 5px 0;text-align: right;">Amount</td>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';
+
+
+                    tbl += '<tr style="font-size: 9px;text-align: center;">' +
+        '<td style="padding: 8px 0;">' + response.Party_Name + '</td>' +
+
+        '<td style="padding: 8px 0;"><label>' + response.Party_Date + '</label></td>' +
+
+        '<td style="padding: 8px 0;"><label>' + response.partyBill.Qty + '</label></td>' +
+        '<td style="padding: 8px 0;"><label>' + response.partyBill.Price_With_Gst + '</label></td>' +
+        '<td style="padding: 8px 0;text-align: right;"><label>₹ ' + response.partyBill.Total_Amount + '</label></td>' +
+
+        '</tr>';
+
+
+                    tbl += '<tr style="font-size: 9px;">' +
+            '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Total : </th>' +
+            '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + response.partyBill.Total_Amount + '</label></td>' +
+            '</tr>';
+                    tbl += '<tr style="font-size: 9px;">' +
+                 '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Advance Amount : </th>' +
+                 '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' +balaneamt.toFixed(2) + '</label></td>' +
+                 '</tr>';
+                    tbl += '<tr style="font-size: 9px;">' +
+           '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Paid Amount: </th>' +
+           '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' +response.partyBill.Amount_Paid  + '</label></td>' +
+           '</tr>' +
+
+      
+            '</tbody>' +
+
+            '</table><p style="font-size: 9px;">GOOD SERVICE DESERVES A TIP!!</p>';
+
+                    var htmlToPrint = '' +
+                        '<style type="text/css">' +
+                        //'table, th, td {' +
+                        //'border-collapse: collapse;' +
+                        //'}' +
+                        'body{font-family: arial;}' +
+                        '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                        '</style>';
+                    htmlToPrint += tbl;
+
+                    newWin.document.write(htmlToPrint);
+                    newWin.print();
+                    newWin.close();
+
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                $(".loader_gif").css("display", "none");
+            }
+        });
+
+
+    }
+
+    $(document).ready(function () {
+
+        $("#Tmember").keyup(function () {
+
+            var total = 0;
+            var currentpaid = 0;
+            total = parseFloat($("#Tmember").val()) * parseFloat($("#Pwithgst").val());
+            $("#tamt").html(total);
+            currentpaid = (parseFloat(total) - parseFloat($("#Advanceamt").val()));
+            $("#Givenamt").html(currentpaid);
+
+        });
+        var total = parseFloat(@Model.Price) - parseFloat(@Model.Gst);
+        $("#Pwithoutgst").val(total.toFixed(2));
+        $("#Gstamt").val('@Model.Gst');
+        $("#Pwithgst").val('@Model.Price');
+        $("#Tmember").val('@Model.Total_Member');
+        $("#tamt").html('@Model.Total_Amount');
+        $("#Advanceamt").val('@Model.AdvancePay');
+        $("#Givenamt").html('@Model.amount_tobepay');
+        
+        $("#amtPaidOrNot").html(" (Amt Paid)");
+        $("#Paymode").val("@Model.ModeOfPayment");
+    });
+
+</script>

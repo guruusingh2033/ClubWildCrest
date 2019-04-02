@@ -46,6 +46,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -131,6 +134,7 @@
     <Compile Include="Controllers\SuperAdmin\AdvancedBookingFromMemberController.cs" />
     <Compile Include="Controllers\SuperAdmin\BarController.cs" />
     <Compile Include="Controllers\SuperAdmin\BillingController.cs" />
+    <Compile Include="Controllers\SuperAdmin\BuffetMenuController.cs" />
     <Compile Include="Controllers\SuperAdmin\EventsController.cs" />
     <Compile Include="Controllers\SuperAdmin\InventoryController.cs" />
     <Compile Include="Controllers\SuperAdmin\MemberController.cs" />
@@ -172,8 +176,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Members_Checked_Out_Rooms_Result.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WildCrestModels\AdvancedInfoOfRoomBooking.cs" />
     <Compile Include="Models\WildCrestModels\BillingDetails.cs" />
+    <Compile Include="Models\WildCrestModels\Buffet_ConsumableItems.cs" />
     <Compile Include="Models\WildCrestModels\ConsumableItems.cs" />
     <Compile Include="Models\WildCrestModels\EditMember.cs" />
     <Compile Include="Models\WildCrestModels\Event.cs" />
@@ -188,6 +196,8 @@
     <Compile Include="Models\WildCrestModels\MembersWhileStayingWithUser.cs" />
     <Compile Include="Models\WildCrestModels\MenuItems.cs" />
     <Compile Include="Models\WildCrestModels\MenusBillingSection.cs" />
+    <Compile Include="Models\WildCrestModels\PartyBillModel.cs" />
+    <Compile Include="Models\WildCrestModels\partyModel.cs" />
     <Compile Include="Models\WildCrestModels\RenewalMemberById.cs" />
     <Compile Include="Models\WildCrestModels\Reports.cs" />
     <Compile Include="Models\WildCrestModels\NonGST_MenusBillingSection.cs" />
@@ -203,6 +213,9 @@
     <Compile Include="Models\WildCrestModels\Voucher.cs" />
     <Compile Include="Models\WildCrestModels\VoucherUsedByUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="staysAccToYearlyMembership_Result.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -225,6 +238,12 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_BookingTable.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Buffet_ConsumableItems.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Buffet_Menu.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_ConsumableItems.cs">
@@ -294,6 +313,15 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_NonGST_WineBillingSection.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Party.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_PartyBilling.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Party_FoodMenu.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_PermissionsToStaff.cs">
@@ -1104,6 +1132,26 @@
     <Content Include="Views\Wine\NonGstBillDetailsByBillNo.cshtml" />
     <Content Include="Views\Wine\NonGstEditBillByBillNo.cshtml" />
     <Content Include="Views\Wine\NewDelItemEditByID.cshtml" />
+    <Content Include="Views\BuffetMenu\Index.cshtml" />
+    <Content Include="Views\BuffetMenu\NewFoodItemApprovalBySuperAdmin.cshtml" />
+    <Content Include="Views\BuffetMenu\DeleteFoodItemBySuperAdminApproval.cshtml" />
+    <Content Include="Views\BuffetMenu\AddNewFoodItem.cshtml" />
+    <Content Include="Views\BuffetMenu\FoodItemEditByID.cshtml" />
+    <Content Include="Views\BuffetMenu\MenuItemDetailsByID.cshtml" />
+    <Content Include="Views\BuffetMenu\ConsumablesItem.cshtml" />
+    <Content Include="Views\BuffetMenu\AddNewConsumableItem.cshtml" />
+    <Content Include="Views\BuffetMenu\NewDelFoodItemEditByID.cshtml" />
+    <Content Include="Views\BuffetMenu\ConsumableFoodItemEditByID.cshtml" />
+    <Content Include="Views\BuffetMenu\PartyClander.cshtml" />
+    <Content Include="Views\BuffetMenu\Booked_Party.cshtml" />
+    <Content Include="Views\BuffetMenu\Billing.cshtml" />
+    <Content Include="Views\BuffetMenu\_Partybillsdata.cshtml" />
+    <Content Include="Views\BuffetMenu\PartyDetailsByID.cshtml" />
+    <Content Include="Views\BuffetMenu\AdvanceBillingByID.cshtml" />
+    <Content Include="Views\BuffetMenu\PartyBillsIndex.cshtml" />
+    <Content Include="Views\BuffetMenu\BillDetailsByBillNo.cshtml" />
+    <Content Include="Views\BuffetMenu\AddNewParty.cshtml" />
+    <Content Include="Views\Billing\LoadIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

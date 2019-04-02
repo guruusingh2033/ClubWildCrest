@@ -94,6 +94,7 @@ E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\Antlr3.Runtime.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\EntityFramework.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\Microsoft.Web.Infrastructure.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\Newtonsoft.Json.dll
+E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Linq.Dynamic.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Net.Http.Formatting.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.Http.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.Http.WebHost.dll
@@ -115,6 +116,5 @@ E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.Razor.xml
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.WebPages.xml
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.WebPages.Deployment.xml
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.WebPages.Razor.xml
-E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.csprojResolveAssemblyReference.cache
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.pdb

@@ -1,0 +1,58 @@
+﻿<div class="card">
+    <div class="card-block">
+
+        <table id="myTable" class="display table table-hover table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th style="width: 12%;">Actions</th>
+                    <th>Invoice Number</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Order Taken By</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Mode</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+</div>
+@* Load datatable css *@
+<link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@* Load DataTable js here *@
+<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myTable").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+
+            "ajax": {
+                "url": "/Billing/LoadData",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                {
+                    "data": function (o) {
+                        return "<div >" +
+                        "<a style='padding:5px;' href='/Billing/BillDetailsByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-info-circle'></i></a>" +
+                        "<a style='padding:5px;margin-left:5px;' href='/Billing/EditBillByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-pencil'></i></a>"; +"</div>";
+                    }, "name": "Bill_Number"
+                },
+                    { "data": "Bill_Number", "name": "Bill_Number", "autoWidth": true },
+                    { "data": "Customer_Name", "name": "Customer_Name", "autoWidth": true },
+                    { "data": "Phone", "name": "Phone", "autoWidth": true },
+                    { "data": "OrderTakenBy", "name": "OrderTakenBy", "autoWidth": true },
+                    { "data": "Price", "name": "Price", "autoWidth": true },
+                    { "data": "Mode_Of_Payment", "name": "Mode_Of_Payment", "autoWidth": true },
+                    { "data": "PaymentDate", "name": "PaymentDate", "autoWidth": true }
+            ]
+        });
+    });
+</script>
+

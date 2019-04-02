@@ -38,7 +38,7 @@ namespace WildCrest
         public virtual ICollection<tbl_BillingDetails> tbl_BillingDetails { get; set; }
         public virtual tbl_MembershipPlans tbl_MembershipPlans { get; set; }
         public virtual ICollection<tbl_MembersWhileStayingWithUser> tbl_MembersWhileStayingWithUser { get; set; }
-        public virtual ICollection<tbl_UsersOrder> tbl_UsersOrder { get; set; }
         public virtual tbl_Profile tbl_Profile { get; set; }
+        public virtual ICollection<tbl_UsersOrder> tbl_UsersOrder { get; set; }
     }
 }

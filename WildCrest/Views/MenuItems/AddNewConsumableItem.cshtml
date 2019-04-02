@@ -92,12 +92,18 @@
     var foodList = [];
 
     $(document).ready(function () {
+       
         $(".floatNo").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
             }
         });
+       
+        var url = (window.location).href;
+        var id = url.substring(url.lastIndexOf('=') + 1);
+        $("#menuItems option[value='" + id + "']").attr("selected", "selected");
+       
     });
 
     var indexDelete = 0;

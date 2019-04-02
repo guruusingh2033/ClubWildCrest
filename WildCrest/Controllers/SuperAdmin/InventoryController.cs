@@ -360,7 +360,8 @@ namespace WildCrest.Controllers.SuperAdmin
                     TotalQuantity = data.Quantity,
                     Used_Date = q.Used_Date,
                     BillNo = q.BillNo,
-                    GST_NonGST_Bill = q.GST_NonGST_Bill
+                    GST_NonGST_Bill = q.GST_NonGST_Bill,
+                    IsBuffetFood=q.IsBuffetFood??false
                 });
             }
            

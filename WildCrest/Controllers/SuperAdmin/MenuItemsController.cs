@@ -433,6 +433,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 //}
                 //else
                 //{
+
                 tbl_ConsumableItems consumable = new tbl_ConsumableItems();
                 consumable.Inventory_ID = i.Inventory_ID;
                 consumable.MenuItem_ID = i.MenuItem_ID;

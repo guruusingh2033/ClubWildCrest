@@ -1118,7 +1118,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 menusDetails.GST = data.GST;
                 menusDetails.PriceWithoutTax = data.PriceWithoutTax;
-
+                menusDetails.Discount = data.Discount;
                 menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
                 menusDetails.Customer_Name = data.Customer_Name;
                 menusDetails.Phone = data.Phone;
@@ -1164,7 +1164,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
-
+                menusDetails.Discount = data.Discount;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -1209,14 +1209,14 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             //csgst = pricewithoutTax * (9f / 100f);
             //csgst = (csgst * 2);
-            csgst = pricewithoutTax * ((double)gstPercentFromConfig / (double)100);
-            total = csgst + pricewithoutTax;
+           // csgst = pricewithoutTax * ((double)gstPercentFromConfig / (double)100);
+            //total = csgst + pricewithoutTax;
             var d = context.tbl_WineBillingSection.SingleOrDefault(a => a.Bill_Number == billNo);
             if (d != null)
             {
-                d.Price = Math.Round((Double)total, 2);
-                d.GST = Math.Round((Double)csgst, 2);
-                d.PriceWithoutTax = Math.Round((Double)pricewithoutTax, 2);
+                d.Price = pricewithoutTax;// Math.Round((Double)total, 2);
+                //d.GST = Math.Round((Double)csgst, 2);
+                d.PriceWithoutTax = pricewithoutTax;// Math.Round((Double)pricewithoutTax, 2);
                 context.Entry(d).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -1524,13 +1524,14 @@ namespace WildCrest.Controllers.SuperAdmin
             List<TablesForBooking> tblList = new List<TablesForBooking>();
             foreach (var i in data)
             {
-                var OrderReceived = context.tbl_WineBillingSection.SingleOrDefault(s => s.TableID == i.ID && s.Table_Status == i.Bar_Status);
+                var OrderReceived = context.tbl_WineBillingSection.SingleOrDefault(s => s.TableID == i.ID && s.Table_Status == i.Wine_Status);
                 tblList.Add(new TablesForBooking()
                 {
                     ID = i.ID,
                     TableNo = i.TableNo,
                     Table_Status = i.Table_Status,
                     Bar_Status = i.Bar_Status,
+                    Wine_Status=i.Wine_Status,
                     OrderReceivedBy = (OrderReceived != null) ? OrderReceived.OrderTakenBy : ""
                 });
             }
@@ -1547,7 +1548,7 @@ namespace WildCrest.Controllers.SuperAdmin
             string DateFormat = date.ToString(@"MM\/dd\/yyyy");
 
             TimeSpan time = DateTime.Now.TimeOfDay;
-            var tableDetails = context.tbl_TablesForBooking.SingleOrDefault(v => v.ID == model.TableID && v.Bar_Status == "closed");
+            var tableDetails = context.tbl_TablesForBooking.SingleOrDefault(v => v.ID == model.TableID && v.Wine_Status == "closed");
             if (tableDetails != null)
             {
                 if (model.UserID == 0 && model.Customer_Name != "" && model.Customer_Name != null)
@@ -1649,7 +1650,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 var tblOrder = context.tbl_TablesForBooking.SingleOrDefault(d => d.ID == model.TableID);
                 if (tblOrder != null)
                 {
-                    tblOrder.Bar_Status = "opened";
+                    tblOrder.Wine_Status = "opened";
                     context.Entry(tblOrder).State = EntityState.Modified;
                     context.SaveChanges();
                 }
@@ -1753,7 +1754,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var tableData = context.tbl_TablesForBooking.SingleOrDefault(w => w.ID == menusData.TableID);
             menusData.Table_Status = "billed";
             context.Entry(menusData).State = EntityState.Modified;
-            tableData.Bar_Status = "billed";
+            tableData.Wine_Status = "billed";
             context.Entry(tableData).State = EntityState.Modified;
             context.SaveChanges();
 
@@ -1794,7 +1795,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusData.Discount = Convert.ToDouble(discount);
                 menusData.Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
                 context.Entry(menusData).State = EntityState.Modified;
-                tableData.Bar_Status = "closed";
+                tableData.Wine_Status = "closed";
                 context.Entry(tableData).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -1877,8 +1878,8 @@ namespace WildCrest.Controllers.SuperAdmin
                 amtWithoutTax = Math.Round((double)amtWithoutTax, 2);
 
                 tbl_WineBillingSection menus = new tbl_WineBillingSection();
-                billDet.Price = Math.Round((double)(gst + amtWithoutTax), 2);
-                billDet.GST = gst;
+                billDet.Price = amtWithoutTax;// Math.Round((double)(gst + amtWithoutTax), 2);
+                billDet.GST = 0.0;//gst;
                 billDet.PriceWithoutTax = amtWithoutTax;
                 context.Entry(billDet).State = EntityState.Modified;
                 context.SaveChanges();

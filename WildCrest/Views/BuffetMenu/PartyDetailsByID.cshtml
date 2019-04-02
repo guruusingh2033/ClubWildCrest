@@ -1,0 +1,137 @@
+﻿
+@{
+    var Data = ViewBag.foodmenus as List<WildCrest.tbl_Buffet_Menu>;
+    var Show = ViewBag.partydetailsbyid as WildCrest.tbl_Party;
+}
+<style>
+   .loader_gif {
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+opacity: .8;
+}
+</style>
+<div class="loader_gif" style="display:none;"></div>
+<div class="card">
+    <div class="card-block">
+        @if(Show!=null){
+                        <a href="/BuffetMenu/Booked_Party?PartyDate=@Show.Party_Date" style="margin-bottom: 20px;" class="btn btn-primary">Go Back</a>
+                        <h4 class="card-title">Party Details</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size: large;">Party Name :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Party_Name"  class="form-control" placeholder="Party Name" />
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label style="font-size: large;">Party Owner :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Party_Owner"  class="form-control" placeholder="Party Owner" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Phone No :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Phone_No"  class="form-control" placeholder="Phone No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Description :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea  readonly class="form-control" placeholder="Description">@Show.Description</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Price :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-inr" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Price" id="Cost" class="form-control floatNo" placeholder="Price" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Total Member :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Total_Member"  class="form-control" />
+                                </div>
+
+                            </div>
+                             <div class="form-group">
+                                <label style="font-size: large;">Total Amount :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@Show.Total_Amount"  class="form-control" />
+                                </div>
+
+                            </div>
+                             <div class="form-group">
+                                <label style="font-size: large;">Advance Amount :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@ViewBag.advancePay"  class="form-control" />
+                                </div>
+
+                            </div>
+                             <div class="form-group">
+                                <label style="font-size: large;">Balance Amount :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" readonly value="@ViewBag.balanceAmt"  class="form-control" />
+                                </div>
+
+                            </div>
+                            <input type="button" value="Food Menu" onclick="SaveOnly();" class="btn btn-primary" />
+                            <a href="/BuffetMenu/Billing?partyid=@Show.ID" class="btn btn-primary">Billing</a>
+          
+                        </div>
+        }else{
+            
+         <ul class="list-inline list-unstyled billing_list">
+            <li style="color:red;font-size:17px;">No Party Exist For Selected Date</li>
+          <li><a href="/BuffetMenu/PartyClander" class="btn btn-primary" style="margin-left: 5px;">Add New Party</a></li>
+       </ul>
+   
+        }
+
+                    </div>
+    </div>
+
+<script>
+
+    function SaveOnly() {
+        debugger;
+        $(".loader_gif").css("display", "block");
+        
+        if ('@Data'!=null) {
+         var   price = 0.0;
+            var tbl = '';
+            tbl += "<table class='display table table-hover table-striped table-bordered'><tr><th>Item Name</th><th>Price</th></tr>";
+            @foreach (var item in Data)
+            {
+                  <Text>
+            price += parseFloat('@item.Consumption_Cost');
+            tbl += "<tr><td>" + '@item.Buffet_Item_Name' + "</td>";
+            tbl += "<td>" + '@item.Consumption_Cost' + "</td></tr>";</Text>
+                }
+            tbl += "<tr style='color:green;font-size:17px;'><td>Approx Consumption Cost</td>";
+            tbl += "<td>" + price.toFixed(2) + "</tr>";
+            tbl += "</table>";
+            
+            bootbox.alert(tbl);
+        }
+            $(".loader_gif").css("display", "none");
+
+    }
+</script>

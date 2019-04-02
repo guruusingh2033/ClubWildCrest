@@ -4,77 +4,81 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e1d586efe7f24d9d878519bb509e46a8" Name="Diagram1">
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BillingDetails" Width="1.5" PointX="10.5" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BookingTable" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Events" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_EventsImgVideo" Width="1.5" PointX="15" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Groups" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersWhileStayingWithUser" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Roles" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UserGroup" Width="1.5" PointX="3.875" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UsersOrder" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_VendorOrders" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Vendors" Width="1.5" PointX="8.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Voucher" Width="1.5" PointX="6.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_VoucherUsedByUser" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_EventsImgVideo_tbl_Events" ManuallyRouted="false" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserGroup_tbl_Groups" ManuallyRouted="false" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_VoucherUsedByUser_tbl_Voucher" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_FoodType" Width="1.5" PointX="13.875" PointY="17.75" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Menu" Width="1.5" PointX="11.125" PointY="18" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Rooms" Width="1.5" PointX="7.3286431521776327" PointY="1.0495831822276036" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UserMembership" Width="1.5" PointX="10.875" PointY="4.875" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembershipPlans" Width="1.5" PointX="1.094498802486108" PointY="14.008934906688022" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserMembership_tbl_MembershipPlans" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersBillingDetails" Width="1.5" PointX="8.483447015510615" PointY="31.098118230280523" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersPhoto" Width="1.5" PointX="1.7563264620287" PointY="14.491159579945338" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MembersDocs" Width="1.5" PointX="1.3477263121622272" PointY="16.654702268845728" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MenusBillingDetailsWithBillNo" Width="1.5" PointX="9.9529358772341787" PointY="17.357577987647417" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_UsersStay" Width="1.5" PointX="11.814255818638138" PointY="26.060532626724118" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_BillingDetails_tbl_UsersStay" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersStay_tbl_MembershipPlans" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersOrder_tbl_UsersStay" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBilling" Width="1.5" PointX="8.4962411972210941" PointY="21.952686573356711" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillDetWithBillNo" Width="1.5" PointX="3.2152391389083297" PointY="11.670015385220767" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBooking_Details" Width="1.5" PointX="5.5" PointY="5.625" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_MenusBillingSection" Width="1.5" PointX="3.4380849653100993" PointY="15.13362849463412" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_PermissionsToStaff" Width="1.5" PointX="2.564801625239105" PointY="31.515031710041235" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Profile" Width="1.5" PointX="8.7428880579503669" PointY="12.211278190934694" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_PermissionsToStaff_tbl_Profile" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_Profile_tbl_Roles" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserGroup_tbl_Profile" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UserMembership_tbl_Profile" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_UsersStay_tbl_Profile" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_VoucherUsedByUser_tbl_Profile" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_ConsumableItems" Width="1.5" PointX="2.9429439673865883" PointY="7.6348309999494024" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_RoomBooking" Width="1.5" PointX="5.8743453164931134" PointY="26.439124387893418" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_InventoryUsage" Width="1.5" PointX="7.3885238205029271" PointY="30.305205761597122" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_MenusBillingSection" Width="1.5" PointX="3.1243818565850994" PointY="2.8096051229208729" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Inventory" Width="1.5" PointX="8.0603854116333586" PointY="22.988081316923761" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_Inventory_tbl_Vendors" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarInventory" Width="1.5" PointX="0.49034476116781345" PointY="12.827244332445433" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarInventoryUsage" Width="1.5" PointX="1.5996945079414613" PointY="21.077682802955472" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_BarInventory_tbl_Vendors" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarBillingDetailsWithBillNo" Width="1.5" PointX="0.12384194327697248" PointY="22.447211693249276" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarBillingSection" Width="1.5" PointX="4.4087574595626249" PointY="16.405286736975093" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_BarMenu" Width="1.5" PointX="5.804193190207795" PointY="20.18275489852892" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Consumable_BarItems" Width="1.5" PointX="6.3821289569056265" PointY="28.839980287868521" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_TablesForBooking" Width="1.5" PointX="1.3027616596327918" PointY="25.221221980276155" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillDetWithBillNo" Width="1.5" PointX="7.5521412079930972" PointY="29.33964870746231" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_BarBillingSection" Width="1.5" PointX="1.7472683180809339" PointY="7.7452908790415576" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.sysdiagram" Width="1.5" PointX="7.4879357011466912" PointY="31.08012668745598" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineBillingDetailsWithBillNo" Width="1.5" PointX="7.9917022529950836" PointY="8.7189857702325035" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineBillingSection" Width="1.5" PointX="10.061291622957816" PointY="25.025649007887417" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineInventory" Width="1.5" PointX="2.1077281917015691" PointY="25.1838056562393" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineInventoryUsage" Width="1.5" PointX="3.4533572455185269" PointY="25.399089050199411" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_WineMenu" Width="1.5" PointX="2.9023396311804373" PointY="10.360230122860628" />
-        <AssociationConnector Association="ClubWildCrestModel.FK_tbl_WineInventory_tbl_Vendors" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_Consumable_WineItems" Width="1.5" PointX="1.2541741585611246" PointY="29.459362669596153" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_WineBillDetWithBillNo" Width="1.5" PointX="7.6732856648384065" PointY="7.3847349767502095" />
-        <EntityTypeShape EntityType="ClubWildCrestModel.tbl_NonGST_WineBillingSection" Width="1.5" PointX="5.5591799065280609" PointY="4.4847505709551045" />
-        </Diagram>
+      <Diagram DiagramId="65a26bd1f44145279a4409f223026546" Name="Diagram1">
+        <EntityTypeShape EntityType="virkcorp_adminModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingDetailsWithBillNo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingSection" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarInventory" Width="1.5" PointX="13" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarInventoryUsage" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarMenu" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BillingDetails" Width="1.5" PointX="10.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BookingTable" Width="1.5" PointX="15.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Buffet_ConsumableItems" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Buffet_Menu" Width="1.5" PointX="2.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Consumable_BarItems" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Consumable_WineItems" Width="1.5" PointX="14.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_ConsumableItems" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Events" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EventsImgVideo" Width="1.5" PointX="15" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_FoodType" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Groups" Width="1.5" PointX="6" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Inventory" Width="1.5" PointX="13" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_InventoryUsage" Width="1.5" PointX="17.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembersBillingDetails" Width="1.5" PointX="17.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembersDocs" Width="1.5" PointX="4.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembershipPlans" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembersPhoto" Width="1.5" PointX="18.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembersWhileStayingWithUser" Width="1.5" PointX="10.5" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Menu" Width="1.5" PointX="18.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingDetailsWithBillNo" Width="1.5" PointX="16.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingSection" Width="1.5" PointX="18.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_BarBillDetWithBillNo" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_BarBillingSection" Width="1.5" PointX="19.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_MenusBillDetWithBillNo" Width="1.5" PointX="6.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_MenusBillingSection" Width="1.5" PointX="12.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_WineBillDetWithBillNo" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_WineBillingSection" Width="1.5" PointX="20.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Party" Width="1.5" PointX="20.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Party_FoodMenu" Width="1.5" PointX="20.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_PartyBilling" Width="1.5" PointX="20.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_PermissionsToStaff" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Profile" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Roles" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_RoomBilling" Width="1.5" PointX="21.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_RoomBooking" Width="1.5" PointX="2.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_RoomBooking_Details" Width="1.5" PointX="8.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Rooms" Width="1.5" PointX="21.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_TablesForBooking" Width="1.5" PointX="22.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_UserGroup" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_UserMembership" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_UsersOrder" Width="1.5" PointX="10.5" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_UsersStay" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_VendorOrders" Width="1.5" PointX="22.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Vendors" Width="1.5" PointX="10.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Voucher" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_VoucherUsedByUser" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_WineBillingDetailsWithBillNo" Width="1.5" PointX="22.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_WineBillingSection" Width="1.5" PointX="14.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_WineInventory" Width="1.5" PointX="22.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_WineInventoryUsage" Width="1.5" PointX="22.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_WineMenu" Width="1.5" PointX="23.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_BarInventory_tbl_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_BillingDetails_tbl_UsersStay" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_EventsImgVideo_tbl_Events" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UserGroup_tbl_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_Inventory_tbl_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UserMembership_tbl_MembershipPlans" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UsersStay_tbl_MembershipPlans" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_PermissionsToStaff_tbl_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_Profile_tbl_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UserGroup_tbl_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UserMembership_tbl_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UsersStay_tbl_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_VoucherUsedByUser_tbl_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UsersOrder_tbl_UsersStay" ManuallyRouted="false" />
+        <AssociationConnector Association="virkcorp_adminModel.FK_tbl_VoucherUsedByUser_tbl_Voucher" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

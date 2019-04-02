@@ -1,0 +1,163 @@
+﻿
+<style>
+    #ui-datepicker-div {
+    z-index: 9999!important;
+}
+    .loader_gif {
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+opacity: .8;
+}
+</style>
+<div class="card">
+    <div class="card-block">
+        <a href="/BuffetMenu/PartyBillsIndex" class="btn btn-primary">Go Back</a>
+        <ul class="list-inline list-unstyled billing_list">
+          
+           @* <li><b> Party Date</b></li>*@
+            <li>
+                <input type="text" readonly id="partyDate" class="form-control" placeholder="Select Party Date" />
+            </li>
+             <li><b style="font-weight:600">OR </b></li>
+           @* <li  style="margin-left:5px;"><b>Party Name </b></li>*@
+            <li>
+                                      <select id="partName" class="form-control" onchange=" partyData()">
+                                                <option value="-1">Select Party Name</option>
+                                                @if (ViewBag.PartyDtl != null)
+                                                {
+                                                    foreach (var i in ViewBag.PartyDtl)
+                                                    {
+                                                    <option value="@i.ID">@i.Party_Name</option>
+                                                    }
+                                                }
+                                            </select>
+            </li>
+             <li><b style="font-weight:600">OR </b></li>
+           @* <li style="margin-left:5px;"><b>Event Owner </b></li>*@
+            <li>
+                <select id="partOwner" class="form-control" onchange="partyDataByOwner()">
+                                                <option value="-1">Select Owner</option>
+                                                @if (ViewBag.PartyDtl != null)
+                                                {
+                                                    foreach (var i in ViewBag.PartyDtl)
+                                                    {
+                                                    <option value="@i.ID">@i.Party_Owner</option>
+                                                    }
+                                                }
+                                            </select>
+            </li>
+        </ul>
+         
+            <div class="loader_gif" style="display:none;"></div>
+            <center><label style="color:red;"><b></b></label></center>
+       
+        <div id="PartyBillsData">
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        var url = (window.location).href;
+        var id = url.substring(url.lastIndexOf('=') + 1);
+        if (id > 0) {
+            $("#partName").val(id);
+            partyData();
+        }
+
+        $('#partyDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'mm/dd/yy',
+            yearRange: "2019:+5",
+            onSelect: function (date) {
+                CheckPartyByDate(date);
+                
+            },
+        });
+       
+        
+
+    });
+   
+    function partyData() {
+       
+        if ($("#partName option:selected").val() != "-1") {
+            $(".loader_gif").css("display", "block");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/BuffetMenu/ShowBillingByID",
+                data: JSON.stringify({ id: $("#partName option:selected").val() }),
+                dataType: "html",
+                success: function (response) {
+                    $("#PartyBillsData").empty();
+                    $("#PartyBillsData").append(response);
+                    $(".loader_gif").css("display", "none");
+                    $("#partOwner").val($("#partOwner option:first").val());
+                    $('#partyDate').datepicker('setDate', null);
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+        } else {
+            $("#PartyBillsData").empty();
+        }
+        }
+    function partyDataByOwner() {
+       
+        if($("#partOwner option:selected").val()!="-1"){
+            $(".loader_gif").css("display", "block");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/BuffetMenu/ShowBillingByID",
+                data: JSON.stringify({ id: $("#partOwner option:selected").val() }),
+                dataType: "html",
+                success: function (response) {
+                    $("#PartyBillsData").empty();
+                    $("#PartyBillsData").append(response);
+                    $(".loader_gif").css("display", "none");
+                    $("#partName").val($("#partName option:first").val());
+                    $('#partyDate').datepicker('setDate', null);
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+        } else {
+            $("#PartyBillsData").empty();
+        }
+    }
+    function CheckPartyByDate(date) {
+      
+        var partyDate = date;
+        
+            $(".loader_gif").css("display", "block");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/BuffetMenu/ShowBillingByDate",
+                data: JSON.stringify({ partydate: partyDate}),
+                dataType: "html",
+                success: function (response) {
+                    $("#PartyBillsData").empty();
+                    $("#PartyBillsData").append(response);
+                    $(".loader_gif").css("display", "none");
+                    $("#partName").val($("#partName option:first").val());
+                    $("#partOwner").val($("#partOwner option:first").val());
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+        
+    }
+</script>

@@ -22,5 +22,6 @@ namespace WildCrest
         public Nullable<int> MenusBillingDetailsID { get; set; }
         public Nullable<int> BillNo { get; set; }
         public string GST_NonGST_Bill { get; set; }
+        public Nullable<bool> IsBuffetFood { get; set; }
     }
 }

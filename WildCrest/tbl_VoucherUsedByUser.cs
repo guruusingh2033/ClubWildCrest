@@ -18,7 +18,7 @@ namespace WildCrest
         public Nullable<int> UserID { get; set; }
         public Nullable<int> VoucherID { get; set; }
     
-        public virtual tbl_Voucher tbl_Voucher { get; set; }
         public virtual tbl_Profile tbl_Profile { get; set; }
+        public virtual tbl_Voucher tbl_Voucher { get; set; }
     }
 }

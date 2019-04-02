@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+//using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
 using WildCrest.Models.WildCrestModels;
@@ -519,6 +520,44 @@ namespace WildCrest.Controllers.SuperAdmin
             }
         }
 
+      /* public ActionResult LoadIndex()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LoadData()
+        {
+          
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            //Find Order Column
+            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+           
+                // dc.Configuration.LazyLoadingEnabled = false; // if your table is relational, contain foreign key
+           
+            var v = (from a in context.tbl_MenusBillingSection select a);
+
+                //SORT
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+                {
+                    v =v.OrderBy(sortColumn + " " + sortColumnDir);
+                    
+                }
+
+                recordsTotal = v.Count();
+                var data = v.Skip(skip).Take(pageSize).ToList();
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data }, JsonRequestBehavior.AllowGet);
+            
+        }
+        */
+ 
         [Authorize(Roles = "1,2")]
         public ActionResult BillDetailsByBillNo(int id)
         {          
@@ -570,7 +609,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
-
+                menusDetails.Discount = data.Discount != null ? data.Discount : 0;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -631,7 +670,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
-
+                menusDetails.Discount = data.Discount != null ? data.Discount : 0;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;

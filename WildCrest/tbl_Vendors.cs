@@ -16,9 +16,8 @@ namespace WildCrest
     {
         public tbl_Vendors()
         {
-            this.tbl_Inventory = new HashSet<tbl_Inventory>();
             this.tbl_BarInventory = new HashSet<tbl_BarInventory>();
-            this.tbl_WineInventory = new HashSet<tbl_WineInventory>();
+            this.tbl_Inventory = new HashSet<tbl_Inventory>();
         }
     
         public int ID { get; set; }
@@ -34,8 +33,7 @@ namespace WildCrest
         public string AddedBy { get; set; }
         public string DeletedBy { get; set; }
     
-        public virtual ICollection<tbl_Inventory> tbl_Inventory { get; set; }
         public virtual ICollection<tbl_BarInventory> tbl_BarInventory { get; set; }
-        public virtual ICollection<tbl_WineInventory> tbl_WineInventory { get; set; }
+        public virtual ICollection<tbl_Inventory> tbl_Inventory { get; set; }
     }
 }

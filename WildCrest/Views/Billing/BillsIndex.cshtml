@@ -32,7 +32,7 @@ opacity: .8;
         }
         else
         {
-            <a href="/Billing/FoodBillingSection" class="btn btn-primary">Go Back</a>
+            <a href="/Billing/FoodBillingSection" class="btn btn-primary">Add New Bill</a>
         }        
         <ul class="list-inline list-unstyled billing_list">
             @if (Request.Cookies["UserType"].Value == "1" || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
@@ -87,6 +87,7 @@ opacity: .8;
 <script>
     $(document).ready(function () {
         $(".preloader").css("display", "none");
+        $("#dataAccToDay").val('4');
         var adm_id = '@ViewBag.AdminID';
         var tax_data = '@ViewBag.Tax';
         var day_data = '@ViewBag.Day';
@@ -121,6 +122,7 @@ opacity: .8;
     }
 
     function dataAccTo_Day_Gst() {
+       
         var day = $("#dataAccToDay").val();
         var tax = $("#dataAccToGst").val();
         var adminId = $("#dataAccToAdmin").val();

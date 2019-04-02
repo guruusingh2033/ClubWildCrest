@@ -1,0 +1,277 @@
+﻿
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+   
+            <div class="row">
+                <div class="col-md-12">
+                    <div  class="card">
+                       
+                        <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
+                        
+                        <div class="card-block">
+                             <a class="btn btn-primary" href="/BuffetMenu/Booked_Party?PartyDate=@ViewBag.partyDate" style="margin-bottom:20px;">Go Back</a>
+                            <h4 class="card-title">Party Booking</h4>
+                            <div class="form p-t-20">
+                                
+                                
+                                <div  style="margin-top: 5px;">
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Party Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                           <input type="text" id="Pname" class="form-control requiredFields" placeholder="" />
+                                              
+                                        </div>
+                                       
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Event Owner<span class="complusoryFields">*</span></label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="Eowner" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Phone Number</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="Pnumber" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Description</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="Desc" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-11">
+                                        <label style="font-size: large;">Food Menu :<span class="complusoryFields">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="consumableItem" class="form-control" onchange="">
+                                                <option value="-1">Select Food Item</option>
+                                                @if (ViewBag.partyFoodMenu != null)
+                                                {
+                                                    foreach (var i in ViewBag.partyFoodMenu)
+                                                    {
+                                                    <option value="@i.Consumption_Cost">@i.Buffet_Item_Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-md-1" style="padding-top: 35px;">
+                                        <a title="Add More Items" style="cursor: pointer;" onclick="AddMore();">
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                    <div class="col-md-10 col-sm-10">
+                                        <table style="width: 100%;" class="table">
+                                            <tbody id="selectedItems"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-2"></div>
+
+                                </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;margin-top:2px;">Total Members<span class="complusoryFields">*</span></label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="Tmember" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;">GST</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="Gst" class="form-control">
+                                                <option value="5">5%</option>
+                                                <option value="12">12%</option>
+                                                <option value="18">18%</option>
+                                                  
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label style="font-size: large;">Price<span class="complusoryFields">*</span></label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="price" class="form-control" />
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label style="font-size: large;">Total Amount</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="tamt" class="form-control" readonly/>
+                                        </div>
+                                    </div>
+
+                                    <input type="button" value="Save" onclick="SaveOnly();" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+ 
+    </div>
+</body>
+
+<script>
+   
+    var foodList = [];
+    var indexDelete = 0;
+    var price = 0.0;
+    var pdate = "";
+
+    function AddMore() {
+        if ($("#consumableItem  option:selected").val() != "-1") {
+            price += parseFloat($("#consumableItem  option:selected").val());
+            var tbl = "";
+            $('#selectedItems tr:last').remove();
+
+            tbl += "<tr><td>" + $("#consumableItem  option:selected").text() + "</td>";
+            tbl += "<td>" + $("#consumableItem  option:selected").val() + "</td>";
+            tbl += "<td><a title='Delete' onclick='DeleteFoodItemFromArray(" + indexDelete + ");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+            tbl += "<tr style='color:green;font-size:17px;'><td>Approx Consumption Cost</td>";
+            tbl += "<td>" + price.toFixed(2) + "</tr>";
+            $("#selectedItems").append(tbl);
+
+
+
+
+
+            var d = {
+                'Buffet_Item_Name': $("#consumableItem  option:selected").text(),
+                'Consumption_Cost': $("#consumableItem  option:selected").val(),
+            };
+            foodList.push(d);
+
+            indexDelete = indexDelete + 1;
+            $("#consumableItem").val($("#consumableItem option:first").val());
+            for (var i = 0; i < foodList.length; i++) {
+                $("#consumableItem option[value='" + foodList[i].Consumption_Cost + "']").remove();
+            }
+        }
+
+    }
+    function DeleteFoodItemFromArray(foodName) {
+        for (var i = 0; i < foodList.length; i++) {
+            if (i == foodName) {
+                $('#consumableItem').append('<option value="' + foodList[i].Consumption_Cost + '">' + foodList[i].Buffet_Item_Name + '</option>');
+                foodList.splice(i, 1);
+                indexDelete = indexDelete - 1;
+
+            }
+        }
+        $("#selectedItems").empty();
+        var tbl = "";
+        price = 0.0;
+        for (var i = 0; i < foodList.length; i++) {
+            price += parseFloat(foodList[i].Consumption_Cost);
+            tbl += "<tr><td>" + foodList[i].Buffet_Item_Name + "</td>";
+            tbl += "<td>" + foodList[i].Consumption_Cost + "</td>";
+
+            tbl += "<td><a title='Delete' onclick='DeleteFoodItemFromArray(" + i + ");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
+
+        }
+        tbl += "<tr style='color:green;font-size:17px;'><td>Approx Consumption Cost</td>";
+        tbl += "<td>" + price.toFixed(2) + "</tr>";
+        $("#selectedItems").append(tbl);
+
+
+    }
+
+    function resetSelectedTable() {
+        $("#selectedItems").empty();
+        foodList = [];
+        $("#consumableItem").val(-1);
+
+    }
+
+    function SaveOnly() {
+        $(".loader_gif").css("display", "block");
+        if (foodList.length != 0 && $("#Pname").val() != "" && $("#Eowner").val() != "" && $("#Tmember").val() != "" && $("#price").val() != "") {
+            var d = {
+
+                'Party_Name': $("#Pname").val(),
+                'Party_Owner': $("#Eowner").val(),
+                'Phone_No': $("#Pnumber").val(),
+                'Description': $("#Desc").val(),
+                'Total_Member': $("#Tmember").val(),
+                'Party_Date':'@ViewBag.partyDate',//$("#startDate").val(),
+                'Gst': $("#Gst option:selected").val(),
+
+                'Price': $("#price").val(),
+            };
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/BuffetMenu/AddParty",
+                data: JSON.stringify({ PartyModel: d, PartyFoods: foodList }),
+                dataType: "json",
+                success: function (response) {
+                    resetSelectedTable();
+                   
+                    bootbox.confirm("Saved.", function (result) {
+                        window.location = "/BuffetMenu/Booked_Party?PartyDate=" + '@ViewBag.partyDate';
+                    });
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+    
+        } else {
+            $(".loader_gif").css("display", "none");
+            bootbox.confirm("Fields with *(Asterik Sign) are complusory.", function (result) {
+
+            });
+        }
+    }
+
+
+  
+
+
+
+
+    $(document).ready(function () {
+       
+        $("#price").keyup(function () {
+            var total = 0.0;
+            total = parseFloat($("#Tmember").val()) * parseFloat($("#price").val());
+            $("#tamt").val(total);
+
+        });
+        $("#Tmember").keyup(function () {
+            var total = 0.0;
+            if ($("#price").val() != "") {
+                total = parseFloat($("#Tmember").val()) * parseFloat($("#price").val());
+                $("#tamt").val(total);
+            }
+        });
+       
+       
+       
+
+    });
+
+
+
+
+</script>

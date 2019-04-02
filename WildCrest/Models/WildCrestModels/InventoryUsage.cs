@@ -12,7 +12,7 @@ namespace WildCrest.Models.WildCrestModels
         public Nullable<double> Used_Qty { get; set; }
         public string Description { get; set; }
         public double? TotalQuantity { get; set; }
-
+        public bool IsBuffetFood { get; set; }
         public string Used_Date { get; set; }
 
         public int Left_Stock { get; set; }

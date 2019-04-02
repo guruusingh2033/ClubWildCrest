@@ -18,7 +18,7 @@ namespace WildCrest
         public string CustomerName { get; set; }
         public string PhoneNo { get; set; }
         public string RoomID { get; set; }
-        public string CheckInDate { get; set; }
+        public string CheckInDate_ { get; set; }
         public Nullable<double> Amount { get; set; }
         public Nullable<double> SGST { get; set; }
         public Nullable<double> CGST { get; set; }

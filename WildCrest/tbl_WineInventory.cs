@@ -22,7 +22,5 @@ namespace WildCrest
         public Nullable<int> VendorID { get; set; }
         public string Added_Date { get; set; }
         public string Measurement { get; set; }
-    
-        public virtual tbl_Vendors tbl_Vendors { get; set; }
     }
 }
