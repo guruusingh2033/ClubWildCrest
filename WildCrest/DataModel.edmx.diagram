@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Buffet_ConsumableItems" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Buffet_Menu" Width="1.5" PointX="2.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Consumable_BarItems" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Consumable_WineItems" Width="1.5" PointX="14.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Consumable_WineItems" Width="1.5" PointX="15" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_ConsumableItems" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Events" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EventsImgVideo" Width="1.5" PointX="15" PointY="9.875" IsExpanded="true" />
@@ -78,6 +78,10 @@
         <AssociationConnector Association="virkcorp_adminModel.FK_tbl_VoucherUsedByUser_tbl_Profile" ManuallyRouted="false" />
         <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UsersOrder_tbl_UsersStay" ManuallyRouted="false" />
         <AssociationConnector Association="virkcorp_adminModel.FK_tbl_VoucherUsedByUser_tbl_Voucher" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMembers" Width="1.5" PointX="5.375" PointY="23.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" Width="1.5" PointX="11.375" PointY="23.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BillingMode" Width="1.5" PointX="24.375" PointY="4.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingMode" Width="1.5" PointX="17.375" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

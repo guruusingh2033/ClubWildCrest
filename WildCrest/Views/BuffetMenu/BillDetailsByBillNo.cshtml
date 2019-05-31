@@ -152,7 +152,7 @@ else
             dataType: "json",
             success: function (response) {
                 $(".loader_gif").css("display", "none");
-                debugger;
+               
                 if(response.length>0){
                     var   price = 0.0;
                     var tbl = '';
@@ -169,6 +169,8 @@ else
                     tbl += "</table>";
             
                     bootbox.alert(tbl);
+                } else {
+                    bootbox.alert("no record found.");
                 }
             },
             error: function (err) {

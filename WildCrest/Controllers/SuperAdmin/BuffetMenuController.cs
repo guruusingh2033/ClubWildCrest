@@ -709,7 +709,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
         #endregion
         #region Buffet Party Clander
-        [Authorize(Roles = "1,2")]
+       
         [Authorize(Roles = "1,2")]
         public ActionResult PartyClander()
         {
@@ -770,11 +770,14 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 foreach (var d in menulist)
                 {
-                    menus.Add(new tbl_Buffet_Menu()
+                    if (context.tbl_Buffet_Menu.Where(x => x.ID == d.Buffet_Menu_Id).Any())
                     {
-                        Buffet_Item_Name = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Buffet_Item_Name,
-                        Consumption_Cost = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Consumption_Cost
-                    });
+                        menus.Add(new tbl_Buffet_Menu()
+                        {
+                            Buffet_Item_Name = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Buffet_Item_Name,
+                            Consumption_Cost = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Consumption_Cost
+                        });
+                    }
                 }
             }
            
@@ -858,13 +861,19 @@ namespace WildCrest.Controllers.SuperAdmin
             var menulist = context.tbl_Party_FoodMenu.Where(x => x.Party_ID == partyID).ToList();
             if (menulist != null)
             {
+
                 foreach (var d in menulist)
                 {
-                    menus.Add(new tbl_Buffet_Menu()
+                    if (context.tbl_Buffet_Menu.Where(x => x.ID == d.Buffet_Menu_Id).Any())
                     {
-                        Buffet_Item_Name = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Buffet_Item_Name,
-                        Consumption_Cost = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Consumption_Cost
-                    });
+                        menus.Add(new tbl_Buffet_Menu()
+                        {
+
+
+                            Buffet_Item_Name = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Buffet_Item_Name,
+                            Consumption_Cost = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Consumption_Cost
+                        });
+                    }
                 }
                 return Json(menus);
             }
@@ -1196,7 +1205,7 @@ namespace WildCrest.Controllers.SuperAdmin
                  Party_Name=context.tbl_Party.SingleOrDefault(x=>x.ID==d.Party_ID).Party_Name,
               Party_Owner = context.tbl_Party.SingleOrDefault(x => x.ID == d.Party_ID).Party_Owner,
               Phone_No = context.tbl_Party.SingleOrDefault(x => x.ID == d.Party_ID).Phone_No,
-              DateofBilling=d.Date_Of_Billing,
+              DateofBilling= d.Date_Of_Billing != null && d.Date_Of_Billing != string.Empty ? Convert.ToDateTime(d.Date_Of_Billing).ToString("dd/MM/yyyy") : d.Date_Of_Billing,
              Total_Member=d.Qty,
              AmountPaid=d.Amount_Paid
 

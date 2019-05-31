@@ -157,8 +157,8 @@
     <EntitySetMapping Name="tbl_Consumable_WineItems">
       <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_Consumable_WineItems">
         <MappingFragment StoreEntitySet="tbl_Consumable_WineItems">
+          <ScalarProperty Name="WineMenuItem_ID" ColumnName="WineMenuItem_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="BarMenuItem_ID" ColumnName="BarMenuItem_ID" />
           <ScalarProperty Name="Inventory_ID" ColumnName="Inventory_ID" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
@@ -826,5 +826,54 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tbl_EntryMembers">
+      <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMembers">
+        <MappingFragment StoreEntitySet="tbl_EntryMembers">
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="EntryFee" ColumnName="EntryFee" />
+          <ScalarProperty Name="qty" ColumnName="qty" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_EntryMember_Billing">
+      <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMember_Billing">
+        <MappingFragment StoreEntitySet="tbl_EntryMember_Billing">
+          <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
+          <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+          <ScalarProperty Name="Date_Of_Billing" ColumnName="Date_Of_Billing" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="Amount_Paid" ColumnName="Amount_Paid" />
+          <ScalarProperty Name="Total_Amount" ColumnName="Total_Amount" />
+          <ScalarProperty Name="Members" ColumnName="Members" />
+          <ScalarProperty Name="Price_With_Gst" ColumnName="Price_With_Gst" />
+          <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
+          <ScalarProperty Name="Price_Without_Gst" ColumnName="Price_Without_Gst" />
+          <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_BillingMode">
+      <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BillingMode">
+        <MappingFragment StoreEntitySet="tbl_BillingMode">
+          <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="tbl_Bill_ID" ColumnName="tbl_Bill_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_BarBillingMode">
+      <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BarBillingMode">
+        <MappingFragment StoreEntitySet="tbl_BarBillingMode">
+          <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Bar_Bill_Number" ColumnName="Bar_Bill_Number" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -47,7 +47,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
                         <b>
-                           Club Wild Crest
+                            Club Wild Crest
                         </b>
                     </a>
                 </div>
@@ -56,7 +56,7 @@
 
                     <ul class="navbar-nav mr-auto mt-md-0 nav-bar-layo">
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>                       
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
                     </ul>
 
                     <ul class="navbar-nav my-lg-0 profile">
@@ -74,15 +74,15 @@
                                                     @Request.Cookies["UserName"].Value
                                                     @if (Request.Cookies["UserType"].Value == "1")
                                                     {
-                                                    <a href="/SuperAdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/SuperAdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                     else if (Request.Cookies["UserType"].Value == "2")
                                                     {
-                                                    <a href="/AdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/AdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                     else
                                                     {
-                                                    <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                 </div>
 
@@ -100,27 +100,27 @@
                 </div>
             </nav>
         </header>
-        
+
         @* -----------MOBILE SCREEN HEADER --------------- *@
         <header class="mob_screen_header topbar">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <b>
-                           Club Wild Crest
-                        </b>
-                    </a>
+                        <a class="navbar-brand" href="#">
+                            <b>
+                                Club Wild Crest
+                            </b>
+                        </a>
+                    </div>
                 </div>
-            </div>
-                 <div class="col-sm-6 col text-left">
-                        <ul class="navbar-nav mr-auto mt-md-0 nav-bar-layo">
+                <div class="col-sm-6 col text-left">
+                    <ul class="navbar-nav mr-auto mt-md-0 nav-bar-layo">
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>                       
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
                     </ul>
-                 </div>
+                </div>
                 <div class="col-sm-6 col text-right">
-                     <ul class="navbar-nav my-lg-0 profile">
+                    <ul class="navbar-nav my-lg-0 profile">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="~/assets/images/Users/^539FBDDC25A1AEDC2C0DF6A1C996BC1F005320BFDE7727C1FE^pimgpsh_fullsize_distr.png" />
@@ -135,15 +135,15 @@
                                                     @Request.Cookies["UserName"].Value
                                                     @if (Request.Cookies["UserType"].Value == "1")
                                                     {
-                                                    <a href="/SuperAdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/SuperAdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                     else if (Request.Cookies["UserType"].Value == "2")
                                                     {
-                                                    <a href="/AdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/AdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                     else
                                                     {
-                                                    <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
+                                                        <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="btn btn-rounded btn-danger btn-sm btn-profil">View Profile</a>
                                                     }
                                                 </div>
 
@@ -161,9 +161,9 @@
             </div>
         </header>
         @* ----------------------------------------------- *@
-       
+
         @if (Request.Cookies["UserType"].Value == "1")
-            {
+        {
             <aside class="left-sidebar">
                 <!-- Sidebar scroll-->
                 <div class="scroll-sidebar" style="margin-top: 75px;">
@@ -213,35 +213,35 @@
                             <li>
                                 <a class="has-arrow" href="/MembershipPlans/Index" aria-expanded="false"><i class="fa fa-handshake-o" aria-hidden="true"></i><span class="hide-menu">Membership Plans</span></a>
                             </li>
-                            
+
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
-                                <ul aria-expanded="false" class="collapse">                                    
+                                <ul aria-expanded="false" class="collapse">
                                     <li><a href="/BuffetMenu/Index">Buffet-MenuItems</a></li>
                                     <li><a href="/BuffetMenu/PartyClander">Buffet-PartyClander</a></li>
                                     <li><a href="/BuffetMenu/PartyBillsIndex">Buffet-Billing</a></li>
-                                   
+
                                 </ul>
                             </li>
-                             <li>
+                            <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Wine</span></a>
-                                <ul aria-expanded="false" class="collapse">                                    
+                                <ul aria-expanded="false" class="collapse">
                                     <li><a href="/Wine/MenuItems">Wine-MenuItems</a></li>
                                     <li><a href="/Wine/Inventory">Wine-Inventory</a></li>
-                                    <li><a href="/Wine/BarOrders">Wine-Orders</a></li>
-                                    <li><a href="/Wine/BarBillsIndex">Wine-Billing</a></li>
+                                    <li><a href="/Wine/WineOrders">Wine-Orders</a></li>
+                                    <li><a href="/Wine/WineBillsIndex">Wine-Billing</a></li>
                                 </ul>
                             </li>
-                              <li>
+                            <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-beer" aria-hidden="true"></i><span class="hide-menu">Bar</span></a>
-                                <ul aria-expanded="false" class="collapse">                                    
+                                <ul aria-expanded="false" class="collapse">
                                     <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
                                     <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
                                     <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
                                     <li><a href="/Bar/BarBillsIndex">Bar-Billing</a></li>
                                 </ul>
                             </li>
-                           
+
                             <li>
                                 <a class="has-arrow" href="/MenuItems/Index" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Menu Item</span></a>
                             </li>
@@ -255,9 +255,9 @@
                                 <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
                             </li>
                             @*<li>
-                                <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing Reports</span></a>
-                            </li>*@
-                             <li>
+                                    <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing Reports</span></a>
+                                </li>*@
+                            <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-bed" aria-hidden="true"></i><span class="hide-menu">Room Booking & Billing</span></a>
                                 <ul aria-expanded="false" class="collapse">
                                     <li><a href="/RoomBookingBySa/RoomBooking">Room Booking</a></li>
@@ -266,6 +266,9 @@
                             </li>
                             <li>
                                 <a class="has-arrow" href="/AdvancedBookingFromMember/Index" aria-expanded="false"><i class="fa fa-list-alt" aria-hidden="true"></i><span class="hide-menu">Advanced Booking From Member</span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="/Entry/EntryBillsIndex" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
                             </li>
                             <li class="nav-devider"></li>
                         </ul>
@@ -296,10 +299,11 @@
                             <li>
                                 <a class="has-arrow" href="/Restaurant/Index" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Restaurant</span></a>
                             </li>
-                            @if(Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"){
-                             <li>
-                                <a class="has-arrow" href="/Report/Index" aria-expanded="false"><i class="fa fa-file" aria-hidden="true"></i><span class="hide-menu">Report</span></a>
-                            </li>
+                            @if (Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All")
+                            {
+                                <li>
+                                    <a class="has-arrow" href="/Report/Index" aria-expanded="false"><i class="fa fa-file" aria-hidden="true"></i><span class="hide-menu">Report</span></a>
+                                </li>
                             }
                             <li>
                                 <a class="has-arrow" href="/AdminProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i><span class="hide-menu">Profile </span></a>
@@ -320,7 +324,7 @@
                                     <a class="has-arrow" href="/Member/Index" aria-expanded="false"><i class="fa fa-user-o" aria-hidden="true"></i><span class="hide-menu">Members</span></a>
                                 </li>
                             }
-                             <li>
+                            <li>
                                 <a class="has-arrow" href="/Staff/Index" aria-expanded="false"><i class="fa fa-lock" aria-hidden="true"></i><span class="hide-menu">Staff</span></a>
                             </li>
                             <li>
@@ -363,21 +367,21 @@
                                 </li>
                             }
 
-                             <li>
+                            <li>
                                 <a class="has-arrow" href="/BuffetMenu/Index" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
                             </li>
-                             <li>
+                            <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Wine</span></a>
-                                <ul aria-expanded="false" class="collapse">                                    
+                                <ul aria-expanded="false" class="collapse">
                                     <li><a href="/Wine/MenuItems">Wine-MenuItems</a></li>
                                     <li><a href="/Wine/Inventory">Wine-Inventory</a></li>
-                                    <li><a href="/Wine/BarOrders">Wine-Orders</a></li>
-                                    <li><a href="/Wine/BarBillsIndex">Wine-Billing</a></li>
+                                    <li><a href="/Wine/WineOrders">Wine-Orders</a></li>
+                                    <li><a href="/Wine/WineBillsIndex">Wine-Billing</a></li>
                                 </ul>
                             </li>
-                             <li>
+                            <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-beer" aria-hidden="true"></i><span class="hide-menu">Bar</span></a>
-                                <ul aria-expanded="false" class="collapse">                                    
+                                <ul aria-expanded="false" class="collapse">
                                     <li><a href="/Bar/MenuItems">Bar-MenuItems</a></li>
                                     <li><a href="/Bar/Inventory">Bar-Inventory</a></li>
                                     <li><a href="/Bar/BarOrders">Bar-Orders</a></li>
@@ -399,7 +403,7 @@
                                     <a class="has-arrow" href="/MenuItems/Index" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Menu Item</span></a>
                                 </li>
                             }
-                            
+
                             @if (Request.Cookies["PageSetting"] != null)
                             {
                                 if (Request.Cookies["PageSetting"]["VendorsPermission"] != "None")
@@ -431,6 +435,9 @@
                             <li>
                                 <a class="has-arrow" href="/AdvancedBookingFromMember/Index" aria-expanded="false"><i class="fa fa-list-alt" aria-hidden="true"></i><span class="hide-menu">Advanced Booking From Member</span></a>
                             </li>
+                            <li>
+                                <a class="has-arrow" href="/Entry/EntryBillsIndex" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
+                            </li>
                             <li class="nav-devider"></li>
                         </ul>
                     </nav>
@@ -440,7 +447,7 @@
                 </div>
             </aside>
         }
-        else
+        else if (Request.Cookies["UserType"].Value == "5")
         {
             <aside class="left-sidebar">
                 <div class="scroll-sidebar" style="margin-top:75px;">
@@ -458,61 +465,89 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="has-arrow" href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">View Profile </span></a>
+                                <a class="has-arrow" href="/Entry/AddNewEntry" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
                             </li>
-                            <li>
-                                <a class="has-arrow " href="/Stays/index" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Stays</span></a>
-                            </li>
-                            <li>
-                                <a class="has-arrow " href="/MembershipDetails/Index" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Membership Plans</span></a>
-                            </li>
-                            <li>
-                                <a class="has-arrow" href="/EventsToUsers/Index" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Events</span></a>
-                            </li>
-                            <li>
-                                <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Advanced Order Booking</span></a>
-                                <ul aria-expanded="false" class="collapse">
-                                    <li><a href="/RoomBooking/Index">Room Booking</a></li>
-                                    <li><a href="/TableBooking/Index">Table Booking</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-devider"></li>
-                        </ul>
-                    </nav>
+                            </ul>
+                            </nav>
+                   </div>
+                </aside>
+                            }
+                            else
+                            {
+                            <aside class="left-sidebar">
+                                <div class="scroll-sidebar" style="margin-top:75px;">
+                                    <nav class="sidebar-nav">
+                                        <ul id="sidebarnav">
+                                            <li>
+                                                <div class="user-profile">
+                                                    <div class="profile-text">
+                                                        <a href="#" class="dropdown-toggle link u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="~/assets/images/Users/^539FBDDC25A1AEDC2C0DF6A1C996BC1F005320BFDE7727C1FE^pimgpsh_fullsize_distr.png" /> <span class="caret"></span></a>
+                                                        <div class="dropdown-menu animated flipInY">
+                                                            <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                                                            <div class="dropdown-divider"></div> <a href="/Login/LogOut" class="dropdown-item iLogout"><i class="fa fa-power-off"></i> Logout</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow" href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">View Profile </span></a>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow " href="/Stays/index" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Stays</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow " href="/MembershipDetails/Index" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Membership Plans</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow" href="/EventsToUsers/Index" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Events</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow" href="/Entry/EntryBillsIndex" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Advanced Order Booking</span></a>
+                                                <ul aria-expanded="false" class="collapse">
+                                                    <li><a href="/RoomBooking/Index">Room Booking</a></li>
+                                                    <li><a href="/TableBooking/Index">Table Booking</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-devider"></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="sidebar-footer">
+                                    <a href="/Login/LogOut" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                                </div>
+                            </aside>
+                            }
+                            <div class="page-wrapper">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12">
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </div>
                 </div>
-                <div class="sidebar-footer">
-                    <a href="/Login/LogOut" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
-                </div>
-            </aside>
-        }
-        <div class="page-wrapper">
-            <div class="container-fluid">
-                    <div class="col-lg-12">
-                        @RenderBody()
-                    </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="~/Scripts/bootbox.min.js"></script>
-    <script src="~/bxSlider/jquery.bxslider.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+                <script src="~/Scripts/bootbox.min.js"></script>
+                <script src="~/bxSlider/jquery.bxslider.min.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
 
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="~/assets/plugins/bootstrap/js/tether.min.js"></script>
-    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+                <script src="~/assets/plugins/bootstrap/js/tether.min.js"></script>
+                <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
-    <script src="~/js/jquery.slimscroll.js"></script>
+                <script src="~/js/jquery.slimscroll.js"></script>
 
-    <script src="~/js/waves.js"></script>
+                <script src="~/js/waves.js"></script>
 
-    <script src="~/js/sidebarmenu.js"></script>
+                <script src="~/js/sidebarmenu.js"></script>
 
-    <script src="~/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+                <script src="~/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
 
-    <script src="~/js/custom.min.js"></script>
+                <script src="~/js/custom.min.js"></script>
 
-    <script src="~/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+                <script src="~/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
 </body>
 </html>

@@ -191,9 +191,14 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult GetItemNames(string prefix)
         {
-            var result = ((from u in context.tbl_BarInventory.Where(x => x.Item_Name.Contains(prefix))
-                           select u.Item_Name)).Distinct().ToList();
-            return Json(result);
+           
+                var result = ((from u in context.tbl_BarInventory.Where(x => x.Item_Name.Contains(prefix))
+                               select u.Item_Name)).Distinct().ToList();
+                return Json(result);
+           
+                
+
+            
         }
 
         [HttpPost]
@@ -768,9 +773,18 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult GetBarItemNames(string prefix)
         {
-            var result = ((from u in context.tbl_BarMenu.Where(x => x.Item_Name.Contains(prefix))
-                           select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
-            return Json(result);
+            if (prefix != null && prefix != string.Empty)
+            {
+                var result = ((from u in context.tbl_BarMenu.Where(x => x.Item_Name.Contains(prefix))
+                               select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+                return Json(result);
+            }
+            else
+            {
+                var result = ((from u in context.tbl_BarMenu
+                               select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+                return Json(result);
+            }
         }
 
         public JsonResult getFoodPrice(int itemID)
@@ -1519,22 +1533,25 @@ namespace WildCrest.Controllers.SuperAdmin
         {
             var date = DateTime.Today;
             string currentDate = date.ToString(@"MM\/dd\/yyyy");
-            var data = context.tbl_TablesForBooking.ToList();
+            var getdata = context.Database.SqlQuery<TablesForBooking>("sp_BarOrderTable").ToList();
+
+
+            //var data = context.tbl_TablesForBooking.ToList();
             
-            List<TablesForBooking> tblList = new List<TablesForBooking>();
-            foreach (var i in data)
-            {
-                var OrderReceived = context.tbl_BarBillingSection.SingleOrDefault(s => s.TableID == i.ID && s.Table_Status == i.Bar_Status);
-                tblList.Add(new TablesForBooking()
-                {
-                    ID = i.ID,
-                    TableNo = i.TableNo,
-                    Table_Status = i.Table_Status,
-                    Bar_Status = i.Bar_Status,
-                    OrderReceivedBy = (OrderReceived != null) ? OrderReceived.OrderTakenBy : ""
-                });
-            }
-            return View(tblList);
+            //List<TablesForBooking> tblList = new List<TablesForBooking>();
+            //foreach (var i in data)
+            //{
+            //    var OrderReceived = context.tbl_BarBillingSection.SingleOrDefault(s => s.TableID == i.ID && s.Table_Status == i.Bar_Status);
+            //    tblList.Add(new TablesForBooking()
+            //    {
+            //        ID = i.ID,
+            //        TableNo = i.TableNo,
+            //        Table_Status = i.Table_Status,
+            //        Bar_Status = i.Bar_Status,
+            //        OrderReceivedBy = (OrderReceived != null) ? OrderReceived.OrderTakenBy : ""
+            //    });
+            //}
+            return View(getdata);
         }
 
         [HttpPost]
@@ -1799,6 +1816,8 @@ namespace WildCrest.Controllers.SuperAdmin
                 context.Entry(tableData).State = EntityState.Modified;
                 context.SaveChanges();
             }
+            
+            
             return Json("closed");
         }
 

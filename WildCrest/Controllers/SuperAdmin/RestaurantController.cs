@@ -19,9 +19,10 @@ namespace WildCrest.Controllers.SuperAdmin
         {
             var date = DateTime.Today;
             string currentDate = date.ToString(@"MM\/dd\/yyyy");
+            var getdata = context.Database.SqlQuery<TablesForBooking>("sp_FoodOrderTable").ToList();
 
             // Last Query Executed --> var query = "SELECT t1.ID,t1.TableNo,t2.Table_Status as status FROM tbl_MenusBillingSection t2 right OUTER JOIN tbl_TablesForBooking t1 ON t2.TableID = t1.ID and Cast(t2.PaymentDate as date)=Cast('" + currentDate + "' as date)";
-            var data = context.tbl_TablesForBooking.ToList();
+
             //var a = (from t2 in context.tbl_MenusBillingSection
             //         join t1 in context.tbl_TablesForBooking on t2.TableID equals t1.ID
             //         where t2.PaymentDate == currentDate
@@ -30,7 +31,7 @@ namespace WildCrest.Controllers.SuperAdmin
             //             TableID = t2.TableID,
             //             Table_Status = t2.Table_Status
             //         }).ToList();
-
+           /* var data = context.tbl_TablesForBooking.ToList();
             List<TablesForBooking> tblList = new List<TablesForBooking>();
             foreach (var i in data)
             {
@@ -42,8 +43,9 @@ namespace WildCrest.Controllers.SuperAdmin
                           Table_Status = i.Table_Status,
                           OrderReceivedBy = (OrderReceived != null) ? OrderReceived.OrderTakenBy : ""
                       });
-            }
-            return View(tblList);
+            }*/
+
+            return View(getdata);
         }
 
         [HttpPost]
@@ -292,6 +294,8 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult CloseOrder(int tableID, string paymentMode, string discount)
         {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
+            double? gst = 0;
             var date = DateTime.Today;
             string DateFormat = date.ToString(@"MM\/dd\/yyyy");
             var menusData = context.tbl_MenusBillingSection.SingleOrDefault(p => p.TableID == tableID && p.Table_Status == "billed");
@@ -302,10 +306,21 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusData.Mode_Of_Payment = paymentMode;
                 menusData.Discount = Convert.ToDouble(discount);
                 menusData.Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
+               
                 context.Entry(menusData).State = EntityState.Modified;
                 tableData.Table_Status = "closed";
                 context.Entry(tableData).State = EntityState.Modified;
                 context.SaveChanges();
+                if (menusData.Discount > 0)
+                {
+                    var FinalAmt = menusData.Price - menusData.Discount;
+
+                    gst = FinalAmt * ((double)gstPercentFromConfig / (double)100);
+                    gst = Math.Round((double)gst, 2);
+                    menusData.GST = gst;
+                    context.Entry(menusData).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
             }
             return Json("closed");
         }

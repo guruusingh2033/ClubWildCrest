@@ -581,5 +581,35 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             return Json(unit);
         }
+
+
+
+        public JsonResult getMenuItems(List<int> menuitemID)
+        {
+
+            List<tbl_Menu> menus = new List<tbl_Menu>();
+
+            foreach(int id in menuitemID)
+            {
+                var item = context.tbl_Menu.SingleOrDefault(s => s.ID == id);
+                menus.Add(new tbl_Menu() { ID = item.ID, Food_Item_Name = item.Food_Item_Name, Price = item.Price });
+            }
+           
+            return Json(menus);
+        }
+        public JsonResult UpdateMenuPriceByID(int id,double price)
+        {
+            var data = context.tbl_Menu.Find(id);
+            if (data != null)
+            {
+                
+                data.Price = price;
+               
+                context.Entry(data).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            return Json("Updated.");
+        }
+
     }
 }

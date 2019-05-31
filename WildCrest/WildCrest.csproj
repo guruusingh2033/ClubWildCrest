@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -129,6 +130,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\AdminProfileController.cs" />
     <Compile Include="Controllers\Admin\UserStaysToAdminController.cs" />
+    <Compile Include="Controllers\EntryMembers\EntryController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\SuperAdmin\AdminController.cs" />
     <Compile Include="Controllers\SuperAdmin\AdvancedBookingFromMemberController.cs" />
@@ -183,7 +185,9 @@
     <Compile Include="Models\WildCrestModels\BillingDetails.cs" />
     <Compile Include="Models\WildCrestModels\Buffet_ConsumableItems.cs" />
     <Compile Include="Models\WildCrestModels\ConsumableItems.cs" />
+    <Compile Include="Models\WildCrestModels\CustomerList.cs" />
     <Compile Include="Models\WildCrestModels\EditMember.cs" />
+    <Compile Include="Models\WildCrestModels\EntryMemberModel.cs" />
     <Compile Include="Models\WildCrestModels\Event.cs" />
     <Compile Include="Models\WildCrestModels\EventsImgVideo.cs" />
     <Compile Include="Models\WildCrestModels\FoodItemType.cs" />
@@ -222,6 +226,9 @@
     <Compile Include="tbl_BarBillingDetailsWithBillNo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_BarBillingMode.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_BarBillingSection.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -235,6 +242,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_BillingDetails.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BillingMode.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_BookingTable.cs">
@@ -253,6 +263,12 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Consumable_WineItems.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_EntryMembers.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_EntryMember_Billing.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Events.cs">
@@ -1109,7 +1125,7 @@
     <Content Include="Views\Bar\NonGstBillDetailsByBillNo.cshtml" />
     <Content Include="Views\Bar\NonGstEditBillByBillNo.cshtml" />
     <Content Include="Views\Wine\MenuItems.cshtml" />
-    <Content Include="Views\Wine\AddNewBarItem.cshtml" />
+    <Content Include="Views\Wine\AddNewWineItem.cshtml" />
     <Content Include="Views\Wine\MenuItemDetailsByID.cshtml" />
     <Content Include="Views\Wine\MenuItemEditByID.cshtml" />
     <Content Include="Views\Wine\NewItemApprovalBySuperAdmin.cshtml" />
@@ -1121,14 +1137,14 @@
     <Content Include="Views\Wine\AddNewItem.cshtml" />
     <Content Include="Views\Wine\InventoryUsage.cshtml" />
     <Content Include="Views\Wine\ConsumableItemEditByID.cshtml" />
-    <Content Include="Views\Wine\BarOrders.cshtml" />
+    <Content Include="Views\Wine\WineOrders.cshtml" />
     <Content Include="Views\Wine\CreateTableBill.cshtml" />
-    <Content Include="Views\Wine\BarBillingSection.cshtml" />
-    <Content Include="Views\Wine\BarBillsIndex.cshtml" />
+    <Content Include="Views\Wine\WineBillingSection.cshtml" />
+    <Content Include="Views\Wine\WineBillsIndex.cshtml" />
     <Content Include="Views\Wine\_NonGstWineBillsAccToDay.cshtml" />
-    <Content Include="Views\Wine\Bar_EditBillByBillNo.cshtml" />
+    <Content Include="Views\Wine\Wine_EditBillByBillNo.cshtml" />
     <Content Include="Views\Wine\_WineBillsDataAccToDay.cshtml" />
-    <Content Include="Views\Wine\Bar_BillDetailsByBillNo.cshtml" />
+    <Content Include="Views\Wine\Wine_BillDetailsByBillNo.cshtml" />
     <Content Include="Views\Wine\NonGstBillDetailsByBillNo.cshtml" />
     <Content Include="Views\Wine\NonGstEditBillByBillNo.cshtml" />
     <Content Include="Views\Wine\NewDelItemEditByID.cshtml" />
@@ -1152,6 +1168,9 @@
     <Content Include="Views\BuffetMenu\BillDetailsByBillNo.cshtml" />
     <Content Include="Views\BuffetMenu\AddNewParty.cshtml" />
     <Content Include="Views\Billing\LoadIndex.cshtml" />
+    <Content Include="Views\Entry\AddNewEntry.cshtml" />
+    <Content Include="Views\Entry\EntryBillsIndex.cshtml" />
+    <Content Include="Views\Entry\BillDetailsByBillNo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

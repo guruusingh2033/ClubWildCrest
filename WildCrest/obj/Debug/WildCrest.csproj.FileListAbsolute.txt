@@ -88,6 +88,7 @@ E:\Neha\2012_WildCrest\WildCrest\WildCrest\bin\System.Web.WebPages.Razor.xml
 E:\Neha\2012_WildCrest\WildCrest\WildCrest\obj\Debug\WildCrest.csprojResolveAssemblyReference.cache
 E:\Neha\2012_WildCrest\WildCrest\WildCrest\obj\Debug\WildCrest.dll
 E:\Neha\2012_WildCrest\WildCrest\WildCrest\obj\Debug\WildCrest.pdb
+E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\WildCrest.dll.config
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\WildCrest.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\WildCrest.pdb
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\Antlr3.Runtime.dll
@@ -118,3 +119,4 @@ E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.WebPages.Deplo
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\bin\System.Web.WebPages.Razor.xml
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.dll
 E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.pdb
+E:\Neha\2012_WildCrest\ClubWildCrest-Git\WildCrest\obj\Debug\WildCrest.csprojResolveAssemblyReference.cache

@@ -70,7 +70,7 @@
                 <td style="@stylecolor;">@i.OrderTakenBy</td>
                 <td style="@stylecolor;">@i.Price</td>
                 <td style="@stylecolor;">@i.Mode_Of_Payment</td>
-                <td style="@stylecolor;">@i.PaymentDate</td>
+                <td style="@stylecolor;">@(i.PaymentDate != null && i.PaymentDate != string.Empty ? Convert.ToDateTime(i.PaymentDate).ToString("dd/MM/yyyy") : i.PaymentDate)</td>
             </tr>
             <script>
                 tbl += '<tr><td>@i.Bill_Number</td><td>@i.Customer_Name</td>' +

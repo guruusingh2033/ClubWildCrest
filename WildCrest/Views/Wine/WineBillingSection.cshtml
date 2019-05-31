@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-block">
                         <div><span class="complusoryFields">*(Compulsory Fields)</span></div>
-                        <a href="/Wine/BarBillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
+                        <a href="/Wine/WineBillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
                         <h4 class="card-title">Bill</h4>
                         <div class="form p-t-20">
                             <div class="bill_number">
@@ -168,7 +168,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    url: "/Wine/GetBarItemNames",
+                    url: "/Wine/GetWineItemNames",
                     data: JSON.stringify({ prefix: $('#FName').val() }),
                     dataType: "Json",
                     success: function (data) {

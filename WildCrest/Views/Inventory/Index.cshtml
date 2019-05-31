@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<WildCrest.Models.WildCrestModels.Inventory>
 
 <style>
+    .borderClass{
+  border-color: #f70404;
+  border-width:1px;
+  border-style: solid;
+  
+}
     .modal-body1 {
         margin-left: 25px;
     }
@@ -9,7 +15,7 @@
         font-size: 19px;
         color: #272c33;
     }
-
+  
     /*.modal-body {
         overflow-y: scroll;
         height: 400px;
@@ -52,7 +58,9 @@ opacity: .8;
                 <tbody>
                     @foreach (var i in Model)
                     {
-                        <tr>
+                        var stylecolor = (i.InStock <0)? "background-color:#ff3333;color:white" : "background-color:#ffffff;color:black";
+
+                        <tr style="@stylecolor">
 
                             <td>
                                 <a title="Detail" href="@Url.Action("InventoryDetailsByID", "Inventory", new { id = i.ID }, null)">
@@ -74,9 +82,9 @@ opacity: .8;
                             <td>@(String.Format("{0:0.##}", i.InStock)) (@i.Measurement)</td>
                             <td>₹ @i.Price</td>
                             <td>@i.VendorName</td>
-                            <td>@i.AddedDate1.ToString("MM/dd/yyyy")</td>
+                            <td>@i.AddedDate1.ToString("dd/MM/yyyy")</td>
                             <td>
-                                <input type="button" class="btn-link" onclick="stockInfo(@i.ID);" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
+                                <input type="button" class="btn-link" onclick="stockInfo(@i.ID,'@i.Item_Name');" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
 
                         </tr>
                     }
@@ -89,6 +97,7 @@ opacity: .8;
 <input type="hidden" id="Inventory_ID" value="" />
 
 <script>
+    var itemprice = '';
     $(document).ready(function () {
         $("#inventoryList").dataTable({ 'aoColumnDefs': [{
             'bSortable': false,
@@ -135,9 +144,26 @@ opacity: .8;
             }
         });
     }
+    $.date = function(dateObject) {
+       
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
 
-    function stockInfo(inventoryID) {
-        
+        return date;
+    };
+    function stockInfo(inventoryID,itemName) {
+
+
+
         $(".modal-body").empty();
         $(".loader_gif").css("display", "block");
         $.ajax({
@@ -148,13 +174,16 @@ opacity: .8;
             dataType: "json",
             success: function (response) {
                 //console.log(response);
-                
+
                 if (response.length > 0) {
+
+                    $('#stcktitle').html('Stock Info '+'('+itemName+')');
                     var tbl = '';
                     var totalQuantity = 0;
                     var used = 0;
                     var left = 0;
-                    tbl += "<table class='display table table-hover table-striped table-bordered'><tr><th>Used Quantity</th><th>Description</th><th>Used_Date</th></tr>";
+                    tbl += "<table id='dt_tbl' class='display table table-hover table-striped table-bordered'> <thead><tr><th>Used Quantity</th><th>Description</th><th>Used_Date</th></tr></thead>";
+                    tbl+="<tbody>";
                     for (var i = 0; i < response.length; i++) {
                         var stylecolor=(response[i].Used_Qty==0)?"background-color:#fdd2d2;":"";
                         tbl += "<tr style='" + stylecolor + "'><td>" + response[i].Used_Qty + "</td>";
@@ -173,7 +202,8 @@ opacity: .8;
                         else{
                             tbl += "<td>" + response[i].Description + "</td>";
                         }
-                        tbl += "<td>" + response[i].Used_Date + "</td></tr>";
+
+                        tbl += "<td>" + $.date(response[i].Used_Date) + "</td></tr>";
                         totalQuantity = response[i].TotalQuantity;
                         used = used + response[i].Used_Qty;
                     }
@@ -181,19 +211,52 @@ opacity: .8;
                     left = (totalQuantity - qtyTemp);
                     left=Number.isInteger(left)?left:left.toFixed(2);
                     used=Number.isInteger(used)?used:qtyTemp;
+                    tbl+="</tbody>";
                     tbl += "</table>";
                     tbl += "<br><b>Total Quantity = " + totalQuantity + "</b>" +
                         "<br><b>Used Quantity = " + used + "</b>" +
                         "<br><b>Left Quantity = " + left + "</b>";
-                    
                     $(".modal-body").append(tbl);
-                    
+                    var table = $('.modal-body table').DataTable({
+                        "paging":   false,
+                        "ordering": false,
+                        "info":     false,
+                        "bFilter": false,
+                        "drawCallback": function ( settings ) {
+
+                            var api = this.api();
+                            var rows = api.rows( {page:'current'} ).nodes();
+                            var last='';
+                            var last_sub='';
+                            var group_sub='';
+                            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+                              
+                                last_sub=last;
+                                group_sub=group;
+
+                                
+                                if (last_sub.substring(3, 5) !== group_sub.substring(3, 5)) {
+
+                                    $(rows).eq( i ).before(
+                                        '<tr class="group"><td colspan="3" style="background-color:#001f3f;color:white;margin-top:5px;">'+months[parseInt(group_sub.substring(3, 5)) - 1]+'-'+group_sub.substring(6, 10)+'</td></tr>'
+                                    );
+
+                                    last = group;
+                                }
+                            } );
+                        }
+                    });
+
+
                 }
                 else {
                     //$(".modal-body").empty();
                     $(".modal-body").append("Stock not used yet.");
                 }
                 $('#myModal').modal('show');
+               
+                $('#myModal .modal-body').css({'overflow-y':'initial !important','height': '400px','overflow-y':'auto'});
                 $(".loader_gif").css("display", "none");
             },
             error: function () {
@@ -207,10 +270,12 @@ opacity: .8;
         var InventoryID = $(e.relatedTarget).data('inventoryid');
         var Item_Name = $(e.relatedTarget).data('itemname');
         var price = $(e.relatedTarget).data('price');
+      
         var vendorID = $(e.relatedTarget).data('vendorid');
         $("#Inventory_ID").val(InventoryID);
         $("#Item_Name").html(Item_Name);
         $("#price").val(price);
+        itemprice = $("#price").val();
         $("#vendorID").val(vendorID);
     });
 
@@ -221,10 +286,14 @@ opacity: .8;
         $("#price").val("");
         $("#vendorID").val(0);
         $("#errorMsg").empty();
+       
         $("#qtyModal").modal('hide');
+      
+
     }
 
     function addQuantity() {
+
         var invID=$("#Inventory_ID").val();
         var qty=$("#qty").val();
         var price=$("#price").val();
@@ -237,21 +306,99 @@ opacity: .8;
                 Quantity: qty,
                 VendorID: vendorID,
             };
+           
+            if (itemprice != price) {
+                bootbox.confirm("do you want to update price of related menuitem.", function (result) {
+                    if (result) {
 
-            $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                url: "/Inventory/addQuantity",
-                data: JSON.stringify({ newItem }),
-                dataType: "Json",
-                success: function (data) {
-                    //closeModal();
-                    location.reload();
-                },
-                error: function (err) {
-                    bootbox.alert(err.statusText);
-                }
-            });
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Inventory/addQuantity",
+                            data: JSON.stringify({ newItem }),
+                            dataType: "Json",
+                            success: function (data) {
+                              
+                                if (data.length > 0) {
+                                    var id = [];
+                                    for (var i = 0; i < data.length; i++) {
+                                        id.push(data[i].ID);
+                                    }
+                                    $.ajax({
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        url: "/MenuItems/getMenuItems",
+                                        data: JSON.stringify({ menuitemID: id }),
+                                        dataType: "Json",
+                                        success: function (data) {
+                                            var tbl = '';
+                                            tbl += "<table id='tbl_Menus' class='display table table-hover table-striped table-bordered'> <thead><tr><th>Item Name</th><th>Old Price</th><th>New Price</th><th>Action</th></tr></thead>";
+                                            tbl += "<tbody>";
+                                            for (let j = 0; j < data.length; j++) {
+                                                tbl += "<tr id='" + data[j].ID + "' ><td>" + data[j].Food_Item_Name + "</td>";
+                                                tbl += "<td>" + data[j].Price + "</td>";
+                                                tbl += "<td><input type='number' class='form-control' required/></td>";
+                                                tbl += "<td><input type='button' value='Update' class='btn btn-primary' onclick='updatePrice(" + data[j].ID + ")'/></td></tr>";
+                                                
+                                                
+                                            }
+
+                                            tbl += "</tbody>";
+                                            tbl += "</table>";
+                                           
+                                            bootbox.alert(tbl);
+                                            $('.bootbox .modal-dialog .modal-content').css({'overflow-y':'initial !important','height': '400px','overflow-y':'auto','width': 640});
+                                        },
+                                        error: function (err) {
+                                            bootbox.alert(err.statusText);
+                                        }
+                                    });
+                                }
+                                else{
+                                    bootbox.alert("no menuitem used yet for this inventory.");
+                                    location.reload();
+                                }
+                            },
+                            error: function (err) {
+                                bootbox.alert(err.statusText);
+                            }
+                        });
+                       
+
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Inventory/addQuantity",
+                            data: JSON.stringify({ newItem }),
+                            dataType: "Json",
+                            success: function (data) {
+                                //closeModal();
+                                location.reload();
+                            },
+                            error: function (err) {
+                                bootbox.alert(err.statusText);
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Inventory/addQuantity",
+                    data: JSON.stringify({ newItem }),
+                    dataType: "Json",
+                    success: function (data) {
+                        //closeModal();
+                        location.reload();
+                    },
+                    error: function (err) {
+                        bootbox.alert(err.statusText);
+                    }
+                });
+            }
         }
         else{
             $("#errorMsg").empty();
@@ -265,6 +412,31 @@ opacity: .8;
                 $("#errorMsg").append("Couldn't found Inventory.");
         }
     }
+    function updatePrice(menuId) {
+        
+        var newPrice = jQuery('#' + menuId).find("td:eq(2) input").val();
+        if (newPrice == undefined || newPrice == '') {
+            jQuery('#' + menuId).find("td:eq(2) input").addClass('borderClass');
+        } else {
+            jQuery('#' + menuId).find("td:eq(2) input").removeClass('borderClass');
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/MenuItems/UpdateMenuPriceByID",
+                data: JSON.stringify({ id: menuId, price: newPrice }),
+                dataType: "Json",
+                success: function (data) {
+                    bootbox.alert("Updated");
+                    jQuery('#' + menuId).find("td:eq(1)").text(newPrice);
+                    jQuery('#' + menuId).find("td:eq(2) input").val('');
+
+                },
+                error: function (err) {
+                    bootbox.alert(err.statusText);
+                }
+            });
+        }
+    }
 </script>
 
 <div id="myModal" class="modal fade stock_info_modal_popup" role="dialog" data-keyboard="false" data-backdrop="static">
@@ -274,7 +446,7 @@ opacity: .8;
         <div class="modal-content" style="width:130%;">
             <div class="modal-header">
 
-                <h4 class="modal-title">Stock Info</h4>
+                <h4 class="modal-title" id="stcktitle">Stock Info</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -340,3 +512,4 @@ opacity: .8;
 
     </div>
 </div>
+

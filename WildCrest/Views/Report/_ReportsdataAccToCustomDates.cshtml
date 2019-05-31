@@ -46,7 +46,7 @@
                 <td>@Model.Food_ChequePay</td>
                 <td>@Model.Menus_Total</td>
             </tr>
-            <tr>
+            @*<tr>
                 <td class="hide">2</td>
                 <td>@if (Model.NonMenusGst_Total != 0)
                     {
@@ -69,7 +69,7 @@
                 <td>@Model.NonGst_Food_CardPay</td>
                  <td>@Model.NonGst_Food_ChequePay</td>
                 <td>@Model.NonMenusGst_Total</td>
-            </tr>
+            </tr>*@
             <tr>
                 <td class="hide">3</td>
                 <td>@if (Model.Room_Total != 0)
@@ -158,7 +158,7 @@
                             {"Temp_EndDate_Data",Model.EndDate}
                             };
                         var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("Wine Billing", "BarBillsIndex", "Wine", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+                        @Html.ActionLink("Wine Billing", "WineBillsIndex", "Wine", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
                     else
                     {<span>Wine Billing</span>}</td>
                 <td>@Model.Wine_Sale</td>
@@ -229,28 +229,36 @@
   '<th style="padding: 5px 5px;">Discount</th>' +
 
   '<th style="padding: 5px 5px;">GST</th>' +
+   '<th style="padding: 5px 5px;">Cash</th>' +
+    '<th style="padding: 5px 5px;">Paytm</th>' +
+     '<th style="padding: 5px 5px;">Card</th>' +
+      '<th style="padding: 5px 5px;">Cheque</th>' +
   '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
   '</tr>' +
   '</thead>' +
   '<tbody>';
-        
+
                 tbl += '<tr style="font-size: 12px;text-align: center;">' +
     '<td style="padding: 8px 5px;">Food Billing</td>' +
 
     '<td style="padding: 8px 5px;"><label>@Model.Menus_Sale</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Menus_Discount</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Menus_GST</label></td>' +
+     '<td style="padding: 8px 5px;"><label>@Model.Food_CashPay </label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Food_PaytmPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Food_CardPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.Food_ChequePay </label></td>' +
     '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Menus_Total</label></td>' +
     '</tr>';
-           
-                tbl += '<tr style="font-size: 12px;text-align: center;">' +
+
+                @*tbl += '<tr style="font-size: 12px;text-align: center;">' +
             '<td style="padding: 8px 5px;">NonGST Food Billing</td>' +
 
             '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_Sale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_Discount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonMenusGst_GST</label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.NonMenusGst_Total</label></td>' +
-            '</tr>';
+            '</tr>';*@
 
         tbl += '<tr style="font-size: 12px;text-align: center;">' +
             '<td style="padding: 8px 5px;">Room Billing</td>' +
@@ -258,6 +266,10 @@
             '<td style="padding: 8px 5px;"><label>@Model.Room_Sale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.Room_Discount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.Room_GST</label></td>' +
+     '<td style="padding: 8px 5px;"><label>@Model.Room_CashPay </label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Room_PaytmPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Room_CardPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.Room_ChequePay </label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Room_Total</label></td>' +
             '</tr>';
 
@@ -267,6 +279,10 @@
            '<td style="padding: 8px 5px;"><label>@Model.MemBill_Sale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.MemBill_Discount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.MemBill_GST</label></td>' +
+     '<td style="padding: 8px 5px;"><label>@Model.MemBill_CashPay </label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.MemBill_PaytmPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.MemBill_CardPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.MemBill_ChequePay </label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.MemBill_Total</label></td>' +
             '</tr>';
 
@@ -276,33 +292,41 @@
  '<td style="padding: 8px 5px;"><label>@Model.Bar_Sale</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Bar_Discount</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Bar_GST</label></td>' +
+    '<td style="padding: 8px 5px;"><label>@Model.Bar_CashPay </label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Bar_PaytmPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Bar_CardPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.Bar_ChequePay </label></td>' +
     '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Bar_Total</label></td>' +
     '</tr>';
 
-        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+        @*tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
             '<td style="padding: 8px 5px;">NonGST Bar Billing</td>' +
 
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarSale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarDiscount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_BarGST</label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.NonGst_BarTotal</label></td>' +
-            '</tr>';
+            '</tr>';*@
         tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
            '<td style="padding: 8px 5px;">Wine Billing</td>' +
 
            '<td style="padding: 8px 5px;"><label>@Model.Wine_Sale</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Wine_Discount</label></td>' +
     '<td style="padding: 8px 5px;"><label>@Model.Wine_GST</label></td>' +
+    '<td style="padding: 8px 5px;"><label>@Model.Wine_CashPay </label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Wine_PaytmPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Wine_CardPay</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.Wine_ChequePay </label></td>' +
     '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Wine_Total</label></td>' +
     '</tr>';
-        tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
+        @*tbl += '<tr style="font-size: 12px;text-align: center;" class="border-bottom">' +
             '<td style="padding: 8px 5px;">NonGST Wine Billing</td>' +
 
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_WineSale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_WineDiscount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.NonGst_WineGST</label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.NonGst_WineTotal</label></td>' +
-            '</tr>';
+            '</tr>';*@
 
 
 
@@ -313,10 +337,14 @@
             '<td style="padding: 8px 5px;"><label>@Model.Total_Sale</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.Total_Discount</label></td>' +
             '<td style="padding: 8px 5px;"><label>@Model.Total_GST</label></td>' +
+     '<td style="padding: 8px 5px;"><label>@Model.Total_Cash</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Total_Paytm</label></td>' +
+ '<td style="padding: 8px 5px;"><label> @Model.Total_Card</label></td>' +
+ '<td style="padding: 8px 5px;"><label>@Model.Total_ChequePay </label></td>' +
             '<td style="padding: 8px 5px;text-align: right;"><label>@Model.Total_Amount</label></td>' +
             '</tr>';
-            
-       
+
+
         tbl += "</tbody></table>";
 
         var htmlToPrint = '' +

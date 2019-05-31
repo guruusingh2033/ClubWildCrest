@@ -15,9 +15,9 @@ namespace WildCrest
     public partial class tbl_Consumable_WineItems
     {
         public int ID { get; set; }
-        public Nullable<int> BarMenuItem_ID { get; set; }
         public Nullable<int> Inventory_ID { get; set; }
         public Nullable<double> Quantity { get; set; }
         public string MeasurementUnit { get; set; }
+        public Nullable<int> WineMenuItem_ID { get; set; }
     }
 }

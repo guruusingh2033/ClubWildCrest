@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <input type="button" value="Add" onclick="AddNewBarItem();" class="btn btn-primary" />
-                                <a href="/Bar/MenuItems" class="btn btn-primary">Cancel</a>
+                                <a href="/Wine/MenuItems" class="btn btn-primary">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
             $.ajax({
                 type: "post",
                 contentType: "application/json; charset=utf-8",
-                url: "/Wine/BarInventoryDetailsByID",
+                url: "/Wine/WineInventoryDetailsByID",
                 data: JSON.stringify({ id:invValue }),
                 dataType: "json",
                 success: function (response) {
@@ -197,7 +197,7 @@
             $.ajax({
                 type: "post",
                 contentType: "application/json; charset=utf-8",
-                url: "/Wine/AddNewBarItem",
+                url: "/Wine/AddNewWineItem",
                 data: JSON.stringify({ menu }),
                 dataType: "json",
                 success: function (response) {

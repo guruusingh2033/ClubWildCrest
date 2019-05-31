@@ -27,7 +27,7 @@
                     {
                         <tr>
                            <td>@item.Party_Name</td>
-        <td>@item.Party_Date</td>
+        <td>@(item.Party_Date != null&& item.Party_Date!= string.Empty?Convert.ToDateTime(item.Party_Date).ToString("dd/MM/yyyy") : item.Party_Date)</td>
         <td>@item.Party_Owner</td>
 <td> @Html.ActionLink("Details", "PartyDetailsByID", "BuffetMenu", new { id = item.ID}, new { @class = "btn btn-primary" })</td>
                                    <td> @Html.ActionLink("Advance Payment", "AdvanceBillingByID", "BuffetMenu", new { id = item.ID}, new { @class = "btn btn-primary" })</td>

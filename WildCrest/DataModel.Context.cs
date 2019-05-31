@@ -85,6 +85,10 @@ namespace WildCrest
         public DbSet<tbl_WineInventory> tbl_WineInventory { get; set; }
         public DbSet<tbl_WineInventoryUsage> tbl_WineInventoryUsage { get; set; }
         public DbSet<tbl_WineMenu> tbl_WineMenu { get; set; }
+        public DbSet<tbl_EntryMembers> tbl_EntryMembers { get; set; }
+        public DbSet<tbl_EntryMember_Billing> tbl_EntryMember_Billing { get; set; }
+        public DbSet<tbl_BillingMode> tbl_BillingMode { get; set; }
+        public DbSet<tbl_BarBillingMode> tbl_BarBillingMode { get; set; }
     
         public virtual int checkAvailabilityOfRooms(string checkin, string checkout)
         {

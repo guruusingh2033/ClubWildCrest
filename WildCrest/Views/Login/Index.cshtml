@@ -106,6 +106,9 @@
                     else if (response.userType == 3) {
                         //window.location.href = "/UserProfile/EditProfilebyID?id=" + response.userid;
                         window.location.href = "/Restaurant/Index";
+                    } else if (response.userType == 5) {
+                        //window.location.href = "/UserProfile/EditProfilebyID?id=" + response.userid;
+                        window.location.href = "/Restaurant/Index";
                     }
                     else if (response.userType == -1) {
                         $('#errorMsg').empty();

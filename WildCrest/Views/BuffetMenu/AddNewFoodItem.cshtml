@@ -157,6 +157,7 @@
     }
 
     function AddNewFoodItem() {
+        
         $(".preloader").css("display", "block");
         var FName = $("#FName").val().trim();
         var details = $("#details").val().trim();
@@ -202,6 +203,7 @@
                 data: JSON.stringify({ menu }),
                 dataType: "json",
                 success: function (response) {
+                  
                     $(".preloader").css("display", "none");
                     if (response == 2) {
                         bootbox.confirm("New Food Item created only after SuperAdmin Approval.", function (result) {
@@ -249,7 +251,7 @@
                                 value: response[i].FoodItemTypeName,
                                 text: response[i].FoodItemTypeName
                             }));
-                        }
+                        }  
                         $("#typeName").val('');
                         $("#errorMsg").empty();
                         $('#myModal').modal('hide');

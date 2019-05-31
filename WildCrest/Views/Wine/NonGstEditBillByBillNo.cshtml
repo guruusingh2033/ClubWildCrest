@@ -62,7 +62,7 @@
                             };
                             var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
                         }
-                        @Html.ActionLink("Go Back", "BarBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
+                        @Html.ActionLink("Go Back", "WineBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
                         <h4 class="card-title">Edit Customer Billing Details</h4>
                         <div class="form p-t-20">
                             <div class="col-md-6 form-profile-in">
@@ -396,7 +396,7 @@
             $.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                url: "/Wine/GetBarItemNames",
+                url: "/Wine/GetWineItemNames",
                 data: JSON.stringify({ prefix: $('#item_name').val() }),
                 dataType: "Json",
                 success: function (data) {

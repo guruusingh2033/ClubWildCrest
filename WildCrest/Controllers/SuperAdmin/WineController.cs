@@ -364,7 +364,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
         [HttpGet]
         [Authorize(Roles = "1,2")]
-        public ActionResult AddNewBarItem()
+        public ActionResult AddNewWineItem()
         {
             List<FoodItemType> typeList = new List<FoodItemType>();
             var data = context.tbl_FoodType.OrderBy(d => d.FoodItemTypeName).ToList();
@@ -393,7 +393,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult AddNewBarItem(MenuItems menu)
+        public JsonResult AddNewWineItem(MenuItems menu)
         {
             int currentUserTypeLoggedin = Convert.ToInt32(Request.Cookies["UserType"].Value);
             tbl_WineMenu item = new tbl_WineMenu();
@@ -557,7 +557,7 @@ namespace WildCrest.Controllers.SuperAdmin
             return Json(list);
         }
 
-        public JsonResult BarInventoryDetailsByID(int id)
+        public JsonResult WineInventoryDetailsByID(int id)
         {
             var data = context.tbl_WineInventory.Find(id);
             Inventory inv = new Inventory();
@@ -577,7 +577,7 @@ namespace WildCrest.Controllers.SuperAdmin
         public ActionResult ConsumablesItem()
         {
             var consumableItemsList = (from menu in context.tbl_WineMenu
-                                       join consumable in context.tbl_Consumable_WineItems on menu.ID equals consumable.BarMenuItem_ID
+                                       join consumable in context.tbl_Consumable_WineItems on menu.ID equals consumable.WineMenuItem_ID
                                        select new MenuItems
                                        {
                                            ID = menu.ID,
@@ -596,7 +596,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var menuItems_Data = context.tbl_WineMenu.Where(m => m.InventoryID == 0).ToList();
             var inventoryItems = context.tbl_WineInventory.ToList();
             var menuItems = (from m in menuItems_Data
-                             where !context.tbl_Consumable_WineItems.Any(i => i.BarMenuItem_ID == m.ID)
+                             where !context.tbl_Consumable_WineItems.Any(i => i.WineMenuItem_ID == m.ID)
                              select m).ToList();
             List<MenuItems> menusList = new List<MenuItems>();
             foreach (var v in menuItems)
@@ -619,7 +619,7 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 tbl_Consumable_WineItems consumable = new tbl_Consumable_WineItems();
                 consumable.Inventory_ID = i.Inventory_ID;
-                consumable.BarMenuItem_ID = i.MenuItem_ID;
+                consumable.WineMenuItem_ID = i.MenuItem_ID;
                 consumable.MeasurementUnit = i.Measurement;
                 consumable.Quantity = i.Quantity;
                 context.tbl_Consumable_WineItems.Add(consumable);
@@ -631,7 +631,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult DeleteConsumableItemByMenuId(int menuId)
         {
-            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.BarMenuItem_ID == menuId).ToList();
+            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.WineMenuItem_ID == menuId).ToList();
             foreach (var i in menuItemConsumable)
             {
                 context.Entry(i).State = EntityState.Deleted;
@@ -643,12 +643,12 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult DetailsOfConsumableItemByMenuId(int menuId)
         {
-            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.BarMenuItem_ID == menuId).ToList();
+            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.WineMenuItem_ID == menuId).ToList();
             List<ConsumableItems> items = new List<ConsumableItems>();
             foreach (var i in menuItemConsumable)
             {
                 var invName = context.tbl_WineInventory.SingleOrDefault(s => s.ID == i.Inventory_ID);
-                bool alreadyExists = items.Any(x => x.MenuItem_ID == i.BarMenuItem_ID && x.Inventory_ID == i.Inventory_ID);
+                bool alreadyExists = items.Any(x => x.MenuItem_ID == i.WineMenuItem_ID && x.Inventory_ID == i.Inventory_ID);
                 if (!alreadyExists)
                 {
                     items.Add(new ConsumableItems()
@@ -657,12 +657,12 @@ namespace WildCrest.Controllers.SuperAdmin
                         Quantity = i.Quantity,
                         Measurement = i.MeasurementUnit,
                         Inventory_ID = i.Inventory_ID,
-                        MenuItem_ID = i.BarMenuItem_ID
+                        MenuItem_ID = i.WineMenuItem_ID
                     });
                 }
                 else
                 {
-                    items.Find(p => p.MenuItem_ID == i.BarMenuItem_ID && p.Inventory_ID == i.Inventory_ID).Quantity += i.Quantity;
+                    items.Find(p => p.MenuItem_ID == i.WineMenuItem_ID && p.Inventory_ID == i.Inventory_ID).Quantity += i.Quantity;
                 }
             }
             return Json(items);
@@ -670,20 +670,20 @@ namespace WildCrest.Controllers.SuperAdmin
 
         public ActionResult ConsumableItemEditByID(int menuId)
         {
-            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.BarMenuItem_ID == menuId).ToList();
+            var menuItemConsumable = context.tbl_Consumable_WineItems.Where(a => a.WineMenuItem_ID == menuId).ToList();
             List<ConsumableItems> items = new List<ConsumableItems>();
             string mName = "";
             foreach (var i in menuItemConsumable)
             {
                 var invName = context.tbl_WineInventory.SingleOrDefault(s => s.ID == i.Inventory_ID);
-                var menuName = context.tbl_WineMenu.SingleOrDefault(s => s.ID == i.BarMenuItem_ID);
+                var menuName = context.tbl_WineMenu.SingleOrDefault(s => s.ID == i.WineMenuItem_ID);
                 items.Add(new ConsumableItems()
                 {
                     Inventory_ItemName = (invName != null) ? invName.Item_Name : "",
                     Quantity = i.Quantity,
                     Measurement = i.MeasurementUnit,
                     ID = i.ID,
-                    MenuItem_ID = i.BarMenuItem_ID,
+                    MenuItem_ID = i.WineMenuItem_ID,
                 });
                 mName = (menuName != null) ? menuName.Item_Name : "";
             }
@@ -692,7 +692,7 @@ namespace WildCrest.Controllers.SuperAdmin
             //------------------------------------------------------------------------------
             var inventoryItems = context.tbl_WineInventory.ToList();
             var invItems = (from m in inventoryItems
-                            where !context.tbl_Consumable_WineItems.Any(i => i.BarMenuItem_ID == menuId && i.Inventory_ID == m.ID)
+                            where !context.tbl_Consumable_WineItems.Any(i => i.WineMenuItem_ID == menuId && i.Inventory_ID == m.ID)
                             select m).ToList();
             List<MenuItems> invList = new List<MenuItems>();
             foreach (var v in invItems)
@@ -751,7 +751,7 @@ namespace WildCrest.Controllers.SuperAdmin
         //  -------------------------------------------------  BAR BILLING ----------------------
 
         [Authorize(Roles = "1,2")]
-        public ActionResult BarBillingSection()
+        public ActionResult WineBillingSection()
         {
             var data = context.tbl_WineBillingSection.ToList().LastOrDefault();
             if (data != null)
@@ -766,11 +766,21 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult GetBarItemNames(string prefix)
+        public JsonResult GetWineItemNames(string prefix)
         {
-            var result = ((from u in context.tbl_WineMenu.Where(x => x.Item_Name.Contains(prefix))
-                           select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
-            return Json(result);
+            if (prefix != null && prefix != string.Empty)
+            {
+                var result = ((from u in context.tbl_WineMenu.Where(x => x.Item_Name.Contains(prefix))
+                               select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+                return Json(result);
+            }
+            else
+            {
+                var result = ((from u in context.tbl_WineMenu
+                               select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+                return Json(result);
+
+            }
         }
 
         public JsonResult getFoodPrice(int itemID)
@@ -850,7 +860,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 amtWithoutTax += (f.Price * f.Quantity);
 
-                var data = context.tbl_BarMenu.SingleOrDefault(a => a.ID == f.ItemNameID);    // && a.Price==model.Price);
+                var data = context.tbl_WineMenu.SingleOrDefault(a => a.ID == f.ItemNameID);    // && a.Price==model.Price);
                 if (data != null)
                 {
                     if (data.InventoryID != 0)
@@ -869,7 +879,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     }
                 }
 
-                var consumeItem = context.tbl_Consumable_BarItems.Where(s => s.BarMenuItem_ID == f.ItemNameID).ToList();
+                var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.WineMenuItem_ID == f.ItemNameID).ToList();
                 if (consumeItem.Count > 0)
                 {
                     foreach (var m in consumeItem)
@@ -912,7 +922,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [Authorize(Roles = "1,2")]
-        public ActionResult BarBillsIndex(string filter = "", string filterFromReport = "")
+        public ActionResult WineBillsIndex(string filter = "", string filterFromReport = "")
         {
             var AdminList = context.tbl_Profile.OrderBy(a => a.F_Name).Where(s => s.UserType == 2).ToList();
             Profile prf = new Profile();
@@ -1040,7 +1050,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         Bill_Number = i.Bill_Number,
                         Customer_Name = i.Customer_Name,
                         Phone = i.Phone,
-                        PaymentDate = i.PaymentDate,
+                        PaymentDate = i.PaymentDate!=null&&i.PaymentDate!=string.Empty?Convert.ToDateTime(i.PaymentDate).ToString("dd/MM/yyyy") :i.PaymentDate,
                         Price = Math.Round((Double)(i.Price - i.Discount), 2),
                         Mode_Of_Payment = i.Mode_Of_Payment,
                         OrderTakenBy = i.OrderTakenBy,
@@ -1083,7 +1093,8 @@ namespace WildCrest.Controllers.SuperAdmin
                         NonGstBillNo = i.NonGstBillNo,
                         Customer_Name = i.Customer_Name,
                         Phone = i.Phone,
-                        PaymentDate = i.PaymentDate,
+                        PaymentDate = i.PaymentDate != null && i.PaymentDate != string.Empty ? Convert.ToDateTime(i.PaymentDate).ToString("dd/MM/yyyy") : i.PaymentDate,
+
                         PriceWithoutTax = i.PriceWithoutTax,
                         Mode_Of_Payment = i.Mode_Of_Payment
                     });
@@ -1096,7 +1107,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [Authorize(Roles = "1,2")]
-        public ActionResult Bar_BillDetailsByBillNo(int id)
+        public ActionResult Wine_BillDetailsByBillNo(int id)
         {
             var data = context.tbl_WineBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
@@ -1136,7 +1147,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [Authorize(Roles = "1,2")]
-        public ActionResult Bar_EditBillByBillNo(int id)
+        public ActionResult Wine_EditBillByBillNo(int id)
         {
             var data = context.tbl_WineBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
@@ -1317,7 +1328,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 context.tbl_NonGST_WineBillDetWithBillNo.Add(menusdetails);
                 context.SaveChanges();
 
-                var data = context.tbl_BarMenu.SingleOrDefault(a => a.ID == f.ItemNameID);    // && a.Price==model.Price);
+                var data = context.tbl_WineMenu.SingleOrDefault(a => a.ID == f.ItemNameID);    // && a.Price==model.Price);
                 if (data != null)
                 {
                     if (data.InventoryID != 0)
@@ -1335,7 +1346,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         context.SaveChanges();
                     }
                 }
-                var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.BarMenuItem_ID == f.ItemNameID).ToList();
+                var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.WineMenuItem_ID == f.ItemNameID).ToList();
                 if (consumeItem.Count > 0)
                 {
                     foreach (var m in consumeItem)
@@ -1361,7 +1372,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1,2")]
         public ActionResult NonGstBillDetailsByBillNo(int id)
         {
-            var data = context.tbl_NonGST_BarBillingSection.SingleOrDefault(s => s.NonGstBillNo == id);
+            var data = context.tbl_NonGST_WineBillingSection.SingleOrDefault(s => s.NonGstBillNo == id);
             NonGST_MenusBillingSection menusDetails = new NonGST_MenusBillingSection();
             List<NonGST_MenusBillDetWithBillNo> details = new List<NonGST_MenusBillDetWithBillNo>();
             if (data != null)
@@ -1515,12 +1526,14 @@ namespace WildCrest.Controllers.SuperAdmin
         //  ---------------------------------------- ORDERS -----------------------------------
 
         [Authorize(Roles = "1,2")]
-        public ActionResult BarOrders()
+        public ActionResult WineOrders()
         {
             var date = DateTime.Today;
             string currentDate = date.ToString(@"MM\/dd\/yyyy");
-            var data = context.tbl_TablesForBooking.ToList();
+            
+            var getdata = context.Database.SqlQuery<TablesForBooking>("sp_WineOrderTable").ToList();
 
+           /* var data = context.tbl_TablesForBooking.ToList();
             List<TablesForBooking> tblList = new List<TablesForBooking>();
             foreach (var i in data)
             {
@@ -1534,8 +1547,8 @@ namespace WildCrest.Controllers.SuperAdmin
                     Wine_Status=i.Wine_Status,
                     OrderReceivedBy = (OrderReceived != null) ? OrderReceived.OrderTakenBy : ""
                 });
-            }
-            return View(tblList);
+            }*/
+            return View(getdata);
         }
 
         [HttpPost]
@@ -1605,7 +1618,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         }
                     }
 
-                    var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.BarMenuItem_ID == f.ItemNameID).ToList();
+                    var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.WineMenuItem_ID == f.ItemNameID).ToList();
                     if (consumeItem.Count > 0)
                     {
                         foreach (var m in consumeItem)
@@ -1848,7 +1861,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         }
                     }
 
-                    var consumeItem = context.tbl_Consumable_BarItems.Where(s => s.BarMenuItem_ID == f.ItemNameID).ToList();
+                    var consumeItem = context.tbl_Consumable_WineItems.Where(s => s.WineMenuItem_ID == f.ItemNameID).ToList();
                     if (consumeItem.Count > 0)
                     {
                         foreach (var m in consumeItem)

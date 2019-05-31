@@ -69,7 +69,7 @@ opacity: .8;
                             <td>@(String.Format("{0:0.##}", i.InStock)) (@i.Measurement)</td>
                             <td>₹ @i.Price</td>
                             <td>@i.VendorName</td>
-                            <td>@i.AddedDate1.ToString("MM/dd/yyyy")</td>
+                            <td>@i.AddedDate1.ToString("dd/MM/yyyy")</td>
                             <td>
                                 <input type="button" class="btn-link" onclick="stockInfo(@i.ID);" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
 
@@ -155,10 +155,10 @@ opacity: .8;
                         tbl += "<tr style='" + stylecolor + "'><td>" + response[i].Used_Qty + "</td>";
                         if(response[i].GST_NonGST_Bill!="" && response[i].GST_NonGST_Bill!=null){
                             if(response[i].GST_NonGST_Bill=="NonGST"){
-                                tbl += "<td><a target='_blank' href='/Bar/Bar_BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                                tbl += "<td><a target='_blank' href='/Wine/Wine_BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
                             }
                             else if(response[i].GST_NonGST_Bill=="GST"){
-                                tbl += "<td><a target='_blank' href='/Bar/Bar_BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                                tbl += "<td><a target='_blank' href='/Wine/Wine_BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
                             }
                         }
                         else{

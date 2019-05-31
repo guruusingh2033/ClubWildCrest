@@ -69,7 +69,7 @@ opacity: .8;
                             <td>@(String.Format("{0:0.##}", i.InStock)) (@i.Measurement)</td>
                             <td>₹ @i.Price</td>
                             <td>@i.VendorName</td>
-                            <td>@i.AddedDate1.ToString("MM/dd/yyyy")</td>
+                            <td>@i.AddedDate1.ToString("dd/MM/yyyy")</td>
                             <td>
                                 <input type="button" class="btn-link" onclick="stockInfo(@i.ID);" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
 

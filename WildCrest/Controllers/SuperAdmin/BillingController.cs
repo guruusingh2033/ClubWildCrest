@@ -44,19 +44,74 @@ namespace WildCrest.Controllers.SuperAdmin
         [HttpPost]
         public JsonResult GetItemNames(string prefix)
         {
-            var result = ((from u in context.tbl_Menu.Where(x => x.Food_Item_Name.Contains(prefix))
-                           select new { ID = u.ID, Value = u.Food_Item_Name })).Distinct().ToList();
-            return Json(result);
+            if (prefix != null && prefix != string.Empty)
+            {
+                var result = ((from u in context.tbl_Menu.Where(x => x.Food_Item_Name.Contains(prefix))
+                               select new { ID = u.ID, Value = u.Food_Item_Name })).Distinct().ToList();
+                return Json(result);
+            }
+            else
+            {
+                var result = ((from u in context.tbl_Menu
+                               select new { ID = u.ID, Value = u.Food_Item_Name })).Distinct().ToList();
+                return Json(result);
+
+            }
         }
 
         [HttpPost]
         public JsonResult GetCustomerNames(string prefix)
-        {
-            var result = ((from u in context.tbl_Profile.Where(x => x.F_Name.Contains(prefix))
-                           select new { ID = u.ID, Value = u.F_Name + " " + ((u.L_Name == null || u.L_Name == "") ? "" : u.L_Name) })).Distinct().ToList();
+        {         
+            //if (prefix != null && prefix != string.Empty)
+        //    {
+        //        var result = ((from u in context.tbl_Profile.Where(x => x.F_Name.Contains(prefix))
+        //                       select new { ID = u.ID, Value = u.F_Name + " " + ((u.L_Name == null || u.L_Name == "") ? "" : u.L_Name) })).Distinct().ToList();
+        //        return Json(result);
+        //    }
+        //    else
+        //    {
+                var customers = context.Database.SqlQuery<CustomerList>("sp_CustomerNameList").ToList();
+            var foodItems = ((from u in context.tbl_Menu
+                               select new { ID = u.ID, Value = u.Food_Item_Name })).Distinct().ToList();
+
+                var result = new
+                {
+                    customer = customers,
+                  foodItem=foodItems
+                };
+                return Json(result);
+            //}
+        }
+        [HttpPost]
+        public JsonResult GetCustomerNamesForWine(string prefix) {
+
+            //var customers = ((from u in context.tbl_Profile
+            //                  select new { ID = u.ID, Value = u.F_Name + " " + ((u.L_Name == null || u.L_Name == "") ? "" : u.L_Name), Phone = u.PhoneNo })).Distinct();
+            var customers = context.Database.SqlQuery<CustomerList>("sp_CustomerNameList").ToList();
+            var foodItems = ((from u in context.tbl_WineMenu
+                              select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+
+            var result = new
+            {
+                customer = customers.ToList(),
+                foodItem = foodItems
+            };
             return Json(result);
         }
+        public JsonResult GetCustomerNamesForBar(string prefix)
+        {
 
+            var customers = context.Database.SqlQuery<CustomerList>("sp_CustomerNameList").ToList();
+            var foodItems = ((from u in context.tbl_BarMenu
+                              select new { ID = u.ID, Value = u.Item_Name })).Distinct().ToList();
+
+            var result = new
+            {
+                customer = customers,
+                foodItem = foodItems
+            };
+            return Json(result);
+        }
         public JsonResult getCustomerPhone(int id)
         {
             if (id > 0)
@@ -457,7 +512,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         OrderTakenBy = i.OrderTakenBy,
                         Discount = i.Discount
                     });
-                    finaltotalVal += i.PriceWithoutTax;
+                    finaltotalVal += i.Price-i.Discount;
                     finalcsgst += i.GST;
                     finalDiscount += i.Discount;
                     //var d = context.tbl_MenusBillingDetailsWithBillNo.Where(a => a.BillNo == i.Bill_Number).ToList();
@@ -473,7 +528,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 finaltotalVal = Math.Round((Double)finaltotalVal, 2);
 
-                ViewBag.TotalAmount = finaltotalVal;
+                ViewBag.TotalAmount = finaltotalVal+ finalDiscount- finalcsgst;
                 ViewBag.CSGST = Math.Round((Double)finalcsgst, 2);
                 ViewBag.Discount = Math.Round((Double)finalDiscount, 2);
                 return PartialView("~/Views/Billing/_BillsDataAccToDay.cshtml", menusBill);
@@ -637,6 +692,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         FoodName = data.FoodItemName,
                         Price = data.Price,
                         Quantity = data.Quantity,
+                       
                         //ID = data.Bill_Number
                     });
                     menusDetails.PriceWithoutTax = data.Price;
@@ -664,6 +720,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     menusDetails.GST = data.GST;
                     menusDetails.PriceWithoutTax = data.PriceWithoutTax;
                 }
+
                 menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
                 menusDetails.Customer_Name = data.Customer_Name;
                 menusDetails.Phone = data.Phone;
@@ -1010,6 +1067,8 @@ namespace WildCrest.Controllers.SuperAdmin
                 menuDet.Quantity = i.Quantity;
                 context.tbl_MenusBillingDetailsWithBillNo.Add(menuDet);
                 context.SaveChanges();
+
+                
             }
             calculateAmount(model.Bill_Number);
             return Json("");

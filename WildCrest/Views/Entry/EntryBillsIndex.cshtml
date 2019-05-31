@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.EntryMemberModel> 
+<style>
+    td {
+        width: 20%;
+    }
+
+    .loader_gif {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+        opacity: .8;
+    }
+</style>
+<div class="loader_gif" style="display:none;"></div>
+<div class="card">
+    <div class="card-block">
+        <a href="/Entry/AddNewEntry" class="btn btn-primary" style="margin-bottom:20px;">Add New Entry</a>
+        <table id="billingList" class="display table table-hover table-striped table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Actions</th>
+                    <th>
+                        @Html.DisplayName("Invoice Number")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Member Name")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("PhoneNo")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("Total Member")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("Amount Paid")
+                    </th>
+
+                    @*<th>
+                            @Html.DisplayName("IsAdvancePayment")
+                        </th>*@
+
+                    <th>
+                        @Html.DisplayName("Payment Mode")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Date")
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        var stylecolor = (item.ModeOfPayment != "Paytm") ? ((item.ModeOfPayment == "Card") ? "background-color:#f5c8c8" : "background-color:#f7f9fd") : "background-color:#b4e0fb";
+
+                        <tr>
+                            <td style="width: 10%;@stylecolor;">
+                                <a title="Details" href="@Url.Action("BillDetailsByBillNo", "Entry", new { id = item.BillNo }, null)">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+
+                            </td>
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.BillNo)
+                            </td>
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+
+                           
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.Phone_No)
+                            </td>
+
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.Total_Member)
+                            </td>
+
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.AmountPaid)
+                            </td>
+
+                            @* <td style="@stylecolor;">
+
+                                    <label>@item.IsAdvance_Payment</label>
+                                </td>*@
+
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.ModeOfPayment)
+                            </td>
+                            <td style="@stylecolor;">
+                                @Html.DisplayFor(modelItem => item.DateofBilling)
+                            </td>
+
+                        </tr>
+                    }
+                }
+                
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#billingList").dataTable({ "order": [[1, "desc"]] });
+    });
+</script>

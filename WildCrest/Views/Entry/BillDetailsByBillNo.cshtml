@@ -1,0 +1,220 @@
+﻿@model WildCrest.Models.WildCrestModels.EntryMemberModel 
+<style>
+    .bootbox .modal-header {
+flex-direction: row-reverse;
+}
+</style>
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                        <a class="btn btn-primary" style="margin-bottom:20px; display:none;" href="/Vendors/Index">Go Back</a>
+                        <h4 class="card-title">Add New Entry</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size:large;">Name <span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="FName" class="form-control requiredFields" placeholder="Enter Name" value="@Model.Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">No Of Member <span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="nMembers" class="form-control requiredFields" placeholder="Enter No Of Member" value="@Model.Total_Member"/>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label style="font-size:large;">Contact No. <span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="phone" class="form-control requiredFields" placeholder="Phone No" value="@Model.Phone_No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Mode of Payment :</label>
+                                <div class="input-group" style="margin-top: 5px;">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <select onchange="" class="form-control" id="Paymode">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Paytm">Paytm</option>
+                                        <option value="Card">Card</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">Entery  Fee:<span style="color:green;font-size: 16px;font-weight:400">(300) </span></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">Total Amount: <span id="totalAmt" style="color:green;font-size: 16px;font-weight:400"> </span></label>
+
+                            </div>
+
+                            
+                            <input id="billing" type="button" value="Create Bill" onclick="SaveBill()" class="btn btn-primary"/>
+                            @*<a href="/Vendors/Index" class="btn btn-primary">Cancel</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#Paymode option:selected").val('@Model.ModeOfPayment');
+        $("#totalAmt").html('@Model.AmountPaid');
+    });
+    function SaveBill() {
+        bootbox.prompt({
+            title: "Enter password!",
+            inputType: 'password',
+          
+            callback: function (result) {
+                if (result == '@Request.Cookies["RememberPassword"].Value') {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Entry/SaveBill",
+                        data: JSON.stringify({ PayMode: $("#Paymode option:selected").val(), ID: '@Model.BillNo' }),
+                        dataType: "Json",
+                        success: function (response) {
+
+
+                            if (response != 'not Found') {
+                                $(".preloader").css("display", "block");
+
+                                var d = new Date();
+                                var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                                var tbl = '';
+                                tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+                                tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+                                tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+                           '<tbody  style="text-align: left;" >' +
+                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                           '<td style="padding: 5px 0;">Customer Name : ' + response.Name + '</td>' +
+                           '<td style="padding: 5px 0;">Bill No. : ' + response.BillNo + '</td>' +
+                           '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+                           '</tr>' +
+                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                           '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+                           '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
+                           '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
+                           '</tr>' +
+                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                           '<td style="padding: 5px 0;">Billing Date : ' + response.DateofBilling + '</td>' +
+                           '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
+                           '<td style="padding: 5px 0;"></td>' +
+                           '</tr>' +
+                           '</tbody></table><br>';
+
+                                tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
+                          '<thead  style="text-align: left;" >' +
+                          '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                          '<th style="padding: 5px 5px;">Name </th>' +
+
+                          '<th style="padding: 5px 5px;">Price</th>' +
+                          '<th style="padding: 5px 5px;">Total Member</th>' +
+                          '<th style="padding: 5px 5px;text-align: right;">Total Amount(w/o GST)</th>' +
+                           '<th style="padding: 5px 5px;">GST(18%)</th>' +
+                           '<th style="padding: 5px 5px;">Total Amount</th>' +
+                          '</tr>' +
+                          '</thead>' +
+                          '<tbody>';
+
+                                tbl += '<tr style="font-size: 12px;text-align: left;">' +
+                              '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
+
+                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
+                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
+                    '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' +parseFloat(246)*parseFloat( response.Total_Member) + '</label></td>' +
+                     '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.GstAmount + '</label></td>' +
+                      '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.AmountPaid + '</label></td>' +
+                    '</tr>';
+
+                                //tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                                //     '<td colspan="2" class="border-left"></td>' +
+                                //               '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
+                                //               '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + response.Price_Without_Gst + '</td>' +
+                                //             '</tr>' +
+
+                                //             '<tr style="font-size: 12px;">' +
+                                //              '<td colspan="2" class="border-left"></td>' +
+                                //               '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">GST (18%) : </td>' +
+                                //               '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.GstAmount + '</td>' +
+                                //             '</tr>' +
+
+                                //             '<tr style="font-size: 12px;">' +
+                                //              '<td colspan="2" class="border-left"></td>' +
+                                //               '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                                //               '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + 300 + '</td>' +
+                                //             '</tr>';
+                            }
+                            else {
+                                tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+                            '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
+                            '</tr>';
+                            }
+                            tbl += "</tbody></table>";
+
+                            var htmlToPrint = '' +
+                                       '<style type="text/css">' +
+                                       'body{font-family: arial;}' +
+                                       'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                                                    'border-collapse:collapse;}' +
+
+                                    '#tabel-heading th {' +
+                                        'border:1px solid black;' +
+                                    '}' +
+                                    '#tabel-heading td {' +
+                                        'border-right:1px solid black;' +
+                                        'border-left:1px solid black;}' +
+
+                                    '#tabel-heading .border-bottom {' +
+                                       'border-bottom:1px solid black;}' +
+                                    '#tabel-heading .border-top {' +
+                                       'border-top:1px solid black;}' +
+                                    '#tabel-heading .border-left {' +
+                                        'border-left:none;}' +
+                                       '</style>';
+                            htmlToPrint += tbl;
+                            newWin = window.open("");
+                            newWin.document.write(htmlToPrint);
+                            newWin.print();
+                            newWin.close();
+                            $(".preloader").css("display", "none");
+
+
+
+                        },
+                        error: function (err) {
+                            bootbox.alert(err.statusText);
+                        }
+                    });
+                   
+                } else {
+
+                    bootbox.alert('enter correct password.');
+                }
+            }
+        });
+       
+    }
+
+</script>

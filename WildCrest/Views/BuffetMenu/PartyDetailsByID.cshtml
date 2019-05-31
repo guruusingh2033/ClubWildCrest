@@ -111,7 +111,7 @@ opacity: .8;
 <script>
 
     function SaveOnly() {
-        debugger;
+        
         $(".loader_gif").css("display", "block");
         
         if ('@Data'!=null) {
@@ -130,6 +130,8 @@ opacity: .8;
             tbl += "</table>";
             
             bootbox.alert(tbl);
+        } else {
+            bootbox.alert("no record found");
         }
             $(".loader_gif").css("display", "none");
 

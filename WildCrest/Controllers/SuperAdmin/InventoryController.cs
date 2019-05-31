@@ -172,9 +172,18 @@ namespace WildCrest.Controllers.SuperAdmin
                 context.tbl_InventoryUsage.Add(usg);
                 context.SaveChanges();
             }
-            return Json("Modified");
+                var lst = (from x in context.tbl_ConsumableItems.Where(x => x.Inventory_ID == newItem.ID) select new { ID = x.MenuItem_ID }).ToList();
+                return Json(lst);
+            
         }
+        
+            public JsonResult getMenuItemID(int id)
+        {
+            
+            var lst = (from x in context.tbl_ConsumableItems.Where(x => x.Inventory_ID == id) select new { ID=x.MenuItem_ID }).ToList();
+            return Json(lst);
 
+        }
         //[HttpPost]
         //public JsonResult addNewItem(Inventory newItem)
         //{

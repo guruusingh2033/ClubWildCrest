@@ -1,6 +1,23 @@
 ﻿@model IEnumerable<WildCrest.Models.WildCrestModels.TablesForBooking>
 
 <style>
+    .d-align-center label {
+    padding-top: 8px;
+}
+.pay_meth label span {
+    padding-left: 15px;
+}
+
+     .loader_gif {
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+opacity: .8;
+}
     .card-block-new .icons_main_div {
         overflow: hidden;
     }
@@ -668,7 +685,7 @@
                 <h1 class="modal-title">Create an Order</h1>
             </div>
             <div class="modal-body">
-
+                <div class="loader_gif" style="display:none;"></div>
                 <div class="form-group">
                     <label>Customer Name (optional)</label>
                     <div class="input-group">
@@ -865,13 +882,58 @@
                         <input type="text" class="form-control" id="discount" value="0"/>
                     </div>
                 </div>
+                @*<div class="form-group pay_meth">
+                    <label>Payment Method</label>
+                    <div class="row">
+                        <div class="col-md-3 d-align-center d-flex">
+                            <label><input type="checkbox"> <span>Cash</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" class="form-control" id="customer_Amt_Cash" />
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="form-group pay_meth">
+                    <div class="row">
+                        <div class="col-md-3 d-align-center d-flex">
+                            <label><input type="checkbox"> <span>Paytm</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" class="form-control" id="customer_Amt_Paytm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group pay_meth">
+                    <div class="row">
+                        <div class="col-md-3 d-align-center d-flex">
+                            <label><input type="checkbox"> <span>Card</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="font-size: initial"></i></div>
+                                <input type="text" class="form-control" id="customer_Amt_Card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
                 <div class="form-group">
                     <label>Amount given by Customer</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-inr" aria-hidden="true" style="font-size: initial"></i></div>
                         <input type="text" class="form-control" id="customer_Amt" />
                     </div>
-                </div>                
+                </div>
+                     
                  <div class="form-group">
                     <label>Mode Of Payment</label>
                     <div class="input-group">
@@ -904,8 +966,84 @@
 </div>
 
 <script>
+
+  
     var foodList = [];
+   
     $(document).ready(function () {
+        //getUsers();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            cache: true,
+            url: "/Billing/GetCustomerNames",
+            data: JSON.stringify({ prefix: '' }),
+            dataType: "Json",
+            success: function (data) {
+                var array = $.map(data.customer, function (item) {
+                    return {
+                        label: item.Value,
+                        value: item.Value,
+                        customPhone: item.Phone,
+                        customid:item.ID
+                    }
+                });
+                var foodArray = $.map(data.foodItem, function (item) {
+                    return {
+                        label: item.Value,
+                        value: item.Value,
+                        customfoodid: item.ID
+                    }
+                });
+                $("#customer_name").autocomplete({
+                    source: function (request, response) {
+                        
+                        if (array) {
+                            response($.ui.autocomplete.filter(array, request.term));
+                        } else {
+                            $("#HiddenCustomerID").val('0');
+                            $('#Phone_num').val('');
+                        }
+                    }, change: function (e, i) {
+
+                        if (i.item != null && i.item != "") {
+                            
+                            $("#HiddenCustomerID").val(i.item.customid);
+                            $('#Phone_num').val(i.item.customPhone);
+                            //CustomerNameChange();
+                        }
+                        else {
+                            $('#Phone_num').val('');
+                            $("#HiddenCustomerID").val('0');
+                        }
+                    }
+
+                });
+                $("#item_name").autocomplete({
+
+                    source: function (request, response) {
+                      
+                        if (foodArray) {
+                            response($.ui.autocomplete.filter(foodArray, request.term));
+                        }
+                    },
+                    change: function (e, i) {
+                        if (i.item != null && i.item != "") {
+                            $("#HiddenFoodName").val(i.item.customfoodid);
+                            FoodNameChange();
+                        }
+                        else {
+                            $("#HiddenFoodName").val('0');
+                            $("#showDivForLeftQty").css("display", "none");
+                            $("#errMsg").empty();
+                            $("#item_qty").removeAttr("disabled");
+                            $("#Cost").val('');
+                            $('#leftQty').html('');
+                        }
+                    }
+                });
+            }
+        });
         $("#Phone_num,#item_qty,#item_qty_in_view").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^\d].+/, ""));
             if ((event.which < 48 || event.which > 57)) {
@@ -919,82 +1057,68 @@
                 event.preventDefault();
             }
         });
+        //$("#customer_name").autocomplete({
+        //    source: function (request, response) {
+        //        if (userList.length > 0) {
+                    
+        //            var array = $.map(userList, function (item) {
+                        
+        //                return {
+        //                    label: item.Value,
+        //                    Value: item.ID,
+        //                   customPhone:item.Phone
+        //                }
+        //            });
+                  
+        //            response($.ui.autocomplete.filter(array, request.term));
+        //        } else {
+        //            $("#HiddenCustomerID").val('0');
+        //            $('#Phone_num').val('');
+        //        }
+        //    }, change: function (e, i) {
+              
+        //        if (i.item != null && i.item != "") {
+        //            $("#HiddenCustomerID").val(i.item.Value);
+        //            $('#Phone_num').val(i.item.customPhone);
+        //            //CustomerNameChange();
+        //        }
+        //        else {
+        //            $('#Phone_num').val('');
+        //            $("#HiddenCustomerID").val('0');
+        //        }
+        //    }
+           
+        //});
+        
 
-        $("#customer_name").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: "/Billing/GetCustomerNames",
-                    data: JSON.stringify({ prefix: $('#customer_name').val() }),
-                    dataType: "Json",
-                    success: function (data) {
-                        if (data.length > 0) {
-                            response($.map(data, function (item) {
-                                return {
-                                    label: item.Value.trim(),
-                                    Value: item.ID
-                                }
-                            }))
-                        }
-                        else {
-                            $("#HiddenCustomerID").val('0');
-                            $('#Phone_num').val('');
-                        }
-                    },
-                    error: function (response) {
-
-                    }
-                });
-            },
-            change: function (e, i) {
-                if (i.item != null && i.item != "") {
-                    $("#HiddenCustomerID").val(i.item.Value);
-                    CustomerNameChange();
-                }
-                else {
-                    $('#Phone_num').val('');
-                    $("#HiddenCustomerID").val('0');
-                }
-            }
-        });
-
-        $("#item_name").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: "/Billing/GetItemNames",
-                    data: JSON.stringify({ prefix: $('#item_name').val() }),
-                    dataType: "Json",
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return {
-                                label: item.Value,
-                                Value: item.ID
-                            }
-                        }))
-                    },
-                    error: function (response) {
-
-                    }
-                });
-            },
-            change: function (e, i) {
-                if (i.item != null && i.item != "") {
-                    $("#HiddenFoodName").val(i.item.Value);
-                    FoodNameChange();
-                }
-                else {
-                    $("#HiddenFoodName").val('0');
-                    $("#showDivForLeftQty").css("display", "none");
-                    $("#errMsg").empty();
-                    $("#item_qty").removeAttr("disabled");
-                    $("#Cost").val('');
-                    $('#leftQty').html('');
-                }
-            }
-        });
+        //$("#item_name").autocomplete({
+           
+        //    source: function (request, response) {
+              
+        //        var foodArray= $.map(foodListData, function (item) {
+        //            return {
+        //                label: item.Value,
+        //                Value: item.ID
+        //            }
+        //        });
+        //        response($.ui.autocomplete.filter(foodArray, request.term));
+                    
+        //    },
+        //    change: function (e, i) {
+        //        if (i.item != null && i.item != "") {
+        //            $("#HiddenFoodName").val(i.item.Value);
+        //            FoodNameChange();
+        //        }
+        //        else {
+        //            $("#HiddenFoodName").val('0');
+        //            $("#showDivForLeftQty").css("display", "none");
+        //            $("#errMsg").empty();
+        //            $("#item_qty").removeAttr("disabled");
+        //            $("#Cost").val('');
+        //            $('#leftQty').html('');
+        //        }
+        //    }
+        //});
 
         $("#item_name_in_view").autocomplete({
             source: function (request, response) {
@@ -1034,9 +1158,12 @@
         });
     });
 
+ 
+
     $('#create_order').on('show.bs.modal', function (e) {
         var TableID = $(e.relatedTarget).data('tableid');
         $("#TableID").val(TableID);
+        //$(".loader_gif").css("display", "block");
     });
 
     function CustomerNameChange() {
@@ -1626,35 +1753,50 @@
         });
     }
 
+   
+    $("#discount").focusout(function () {
+        //var amtCash = $("#customer_Amt_Cash").val().trim();
+        //var amtPaytm = $("#customer_Amt_Paytm").val().trim();
+        //var amtCard = $("#customer_Amt_Card").val().trim();
+        //var discount = $("#discount").val().trim();
+        //discount = (discount != "") ? discount : "0";
+        //var billing_Amt = $("#billing_Amt").val();
+        //var finalBalance = (parseFloat(billing_Amt) - parseFloat(discount)).toFixed(2);
+        //if (amtCash != "") {
+        //    var balance = (parseFloat(amtCash) + parseFloat(amtPaytm) + parseFloat(amtCard) - finalBalance).toFixed(2);
+        //}
+        //if (balance > 0) {
+        //    $("#balance").val(balance);
+        //} else {
+           
+        // $("#balance").val('');
+            
+        //}
+        var customer_Amt = $("#customer_Amt").val().trim();
+        var discount = $("#discount").val().trim();
+        if(customer_Amt!=""){
+            var billing_Amt = $("#billing_Amt").val();
+            var balance=(parseFloat(customer_Amt)-(parseFloat(billing_Amt)-parseFloat(discount))).toFixed(2);
+            $("#balance").val(balance);
+        }
+        else{
+            $("#balance").val('');
+        }
+    });
     $("#customer_Amt").focusout(function () {
         var customer_Amt = $("#customer_Amt").val().trim();
         var discount = $("#discount").val().trim();
-        discount = (discount!="")?discount:"0";
-        if(customer_Amt!=""){
+        discount = (discount != "") ? discount : "0";
+        if (customer_Amt != "") {
             var billing_Amt = $("#billing_Amt").val();
             //var balance=(parseFloat(customer_Amt)-parseFloat(billing_Amt)).toFixed(2);
-            var balance=(parseFloat(customer_Amt)-(parseFloat(billing_Amt)-parseFloat(discount))).toFixed(2);
+            var balance = (parseFloat(customer_Amt) - (parseFloat(billing_Amt) - parseFloat(discount))).toFixed(2);
             $("#balance").val(balance);
         }
-        else{
+        else {
             $("#balance").val('');
         }
     });
-
-    $("#discount").focusout(function () {
-        var customer_Amt = $("#customer_Amt").val().trim();
-        var discount = $("#discount").val().trim();
-        discount = (discount!="")?discount:"0";
-        if(customer_Amt!=""){
-            var billing_Amt = $("#billing_Amt").val();
-            var balance=(parseFloat(customer_Amt)-(parseFloat(billing_Amt)-parseFloat(discount))).toFixed(2);
-            $("#balance").val(balance);
-        }
-        else{
-            $("#balance").val('');
-        }
-    });
-
     function Save_PrintBill() {
         var txt_Food = $("#item_name_in_view").val().trim();
         var txt_Price = $("#Cost").val();

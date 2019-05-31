@@ -23,7 +23,7 @@
                             };
                             var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
                         }
-                        @Html.ActionLink("Go Back", "BarBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
+                        @Html.ActionLink("Go Back", "WineBillsIndex", "Wine", new { filter = filter }, new { @class = "btn btn-primary",@style="margin-bottom:5px;" })
                         <h4 class="card-title">Customer Billing Details</h4>
                         <div class="form p-t-20">
                             <div class="col-md-4 col-sm-6 form-profile-in">
@@ -113,13 +113,13 @@
                             <div class="col-md-12 col-sm-12 form-profile-in">
                                 @if (Request.Cookies["UserType"].Value == "1")
                                 {
-                                    @Html.ActionLink("Edit", "Bar_EditBillByBillNo", "Wine", new { id = Model.Bill_Number }, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Edit", "Wine_EditBillByBillNo", "Wine", new { id = Model.Bill_Number }, new { @class = "btn btn-primary" })
                                 }
                                 else if (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null)
                                 {
                                     if (Request.Cookies["PageSetting"]["FoodBillingEditPermission"] != "None")
                                     {
-                                    @Html.ActionLink("Edit", "Bar_EditBillByBillNo", "Wine", new { id = Model.Bill_Number }, new { @class = "btn btn-primary" }) 
+                                    @Html.ActionLink("Edit", "Wine_EditBillByBillNo", "Wine", new { id = Model.Bill_Number }, new { @class = "btn btn-primary" }) 
                                     }
                                 }
                                 <input type="button" value="Print (A4)" onclick="PrintFoodBill();" class="btn btn-primary" />

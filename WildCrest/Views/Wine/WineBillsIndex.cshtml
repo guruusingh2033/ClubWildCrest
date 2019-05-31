@@ -32,7 +32,7 @@ opacity: .8;
         }
         else
         {
-            <a href="/Wine/BarBillingSection" class="btn btn-primary">Add New Bill</a>
+            <a href="/Wine/WineBillingSection" class="btn btn-primary">Add New Bill</a>
         }        
         <ul class="list-inline list-unstyled billing_list">
             @if (Request.Cookies["UserType"].Value == "1" || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))

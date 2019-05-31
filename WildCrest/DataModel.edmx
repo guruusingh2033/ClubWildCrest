@@ -4,137 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="virkcorp_adminModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="virkcorp_adminModelStoreContainer">
-          <EntitySet Name="sysdiagrams" EntityType="virkcorp_adminModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_BarBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BarBillingSection" EntityType="virkcorp_adminModel.Store.tbl_BarBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BarInventory" EntityType="virkcorp_adminModel.Store.tbl_BarInventory" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BarInventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_BarInventoryUsage" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BarMenu" EntityType="virkcorp_adminModel.Store.tbl_BarMenu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BillingDetails" EntityType="virkcorp_adminModel.Store.tbl_BillingDetails" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_BookingTable" EntityType="virkcorp_adminModel.Store.tbl_BookingTable" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Buffet_ConsumableItems" EntityType="virkcorp_adminModel.Store.tbl_Buffet_ConsumableItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Buffet_Menu" EntityType="virkcorp_adminModel.Store.tbl_Buffet_Menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Consumable_BarItems" EntityType="virkcorp_adminModel.Store.tbl_Consumable_BarItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Consumable_WineItems" EntityType="virkcorp_adminModel.Store.tbl_Consumable_WineItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_ConsumableItems" EntityType="virkcorp_adminModel.Store.tbl_ConsumableItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Events" EntityType="virkcorp_adminModel.Store.tbl_Events" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_EventsImgVideo" EntityType="virkcorp_adminModel.Store.tbl_EventsImgVideo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_FoodType" EntityType="virkcorp_adminModel.Store.tbl_FoodType" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Groups" EntityType="virkcorp_adminModel.Store.tbl_Groups" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Inventory" EntityType="virkcorp_adminModel.Store.tbl_Inventory" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_InventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_InventoryUsage" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MembersBillingDetails" EntityType="virkcorp_adminModel.Store.tbl_MembersBillingDetails" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MembersDocs" EntityType="virkcorp_adminModel.Store.tbl_MembersDocs" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MembershipPlans" EntityType="virkcorp_adminModel.Store.tbl_MembershipPlans" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MembersPhoto" EntityType="virkcorp_adminModel.Store.tbl_MembersPhoto" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="virkcorp_adminModel.Store.tbl_MembersWhileStayingWithUser" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Menu" EntityType="virkcorp_adminModel.Store.tbl_Menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_MenusBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.Store.tbl_MenusBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_BarBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_BarBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_MenusBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_MenusBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_WineBillDetWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_NonGST_WineBillDetWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_NonGST_WineBillingSection" EntityType="virkcorp_adminModel.Store.tbl_NonGST_WineBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Party" EntityType="virkcorp_adminModel.Store.tbl_Party" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Party_FoodMenu" EntityType="virkcorp_adminModel.Store.tbl_Party_FoodMenu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_PartyBilling" EntityType="virkcorp_adminModel.Store.tbl_PartyBilling" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_PermissionsToStaff" EntityType="virkcorp_adminModel.Store.tbl_PermissionsToStaff" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Profile" EntityType="virkcorp_adminModel.Store.tbl_Profile" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Roles" EntityType="virkcorp_adminModel.Store.tbl_Roles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_RoomBilling" EntityType="virkcorp_adminModel.Store.tbl_RoomBilling" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_RoomBooking" EntityType="virkcorp_adminModel.Store.tbl_RoomBooking" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_RoomBooking_Details" EntityType="virkcorp_adminModel.Store.tbl_RoomBooking_Details" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Rooms" EntityType="virkcorp_adminModel.Store.tbl_Rooms" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_TablesForBooking" EntityType="virkcorp_adminModel.Store.tbl_TablesForBooking" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_UserGroup" EntityType="virkcorp_adminModel.Store.tbl_UserGroup" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_UserMembership" EntityType="virkcorp_adminModel.Store.tbl_UserMembership" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_UsersOrder" EntityType="virkcorp_adminModel.Store.tbl_UsersOrder" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_UsersStay" EntityType="virkcorp_adminModel.Store.tbl_UsersStay" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_VendorOrders" EntityType="virkcorp_adminModel.Store.tbl_VendorOrders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Vendors" EntityType="virkcorp_adminModel.Store.tbl_Vendors" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Voucher" EntityType="virkcorp_adminModel.Store.tbl_Voucher" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_VoucherUsedByUser" EntityType="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_WineBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.Store.tbl_WineBillingDetailsWithBillNo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_WineBillingSection" EntityType="virkcorp_adminModel.Store.tbl_WineBillingSection" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_WineInventory" EntityType="virkcorp_adminModel.Store.tbl_WineInventory" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_WineInventoryUsage" EntityType="virkcorp_adminModel.Store.tbl_WineInventoryUsage" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_WineMenu" EntityType="virkcorp_adminModel.Store.tbl_WineMenu" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="virkcorp_adminModel.Store.FK_tbl_BarInventory_tbl_Vendors">
-            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
-            <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_BillingDetails_tbl_UsersStay">
-            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
-            <End Role="tbl_BillingDetails" EntitySet="tbl_BillingDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_EventsImgVideo_tbl_Events" Association="virkcorp_adminModel.Store.FK_tbl_EventsImgVideo_tbl_Events">
-            <End Role="tbl_Events" EntitySet="tbl_Events" />
-            <End Role="tbl_EventsImgVideo" EntitySet="tbl_EventsImgVideo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="virkcorp_adminModel.Store.FK_tbl_Inventory_tbl_Vendors">
-            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
-            <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
-            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
-            <End Role="tbl_MembersWhileStayingWithUser" EntitySet="tbl_MembersWhileStayingWithUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_PermissionsToStaff_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_PermissionsToStaff_tbl_Profile">
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-            <End Role="tbl_PermissionsToStaff" EntitySet="tbl_PermissionsToStaff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Profile_tbl_Roles" Association="virkcorp_adminModel.Store.FK_tbl_Profile_tbl_Roles">
-            <End Role="tbl_Roles" EntitySet="tbl_Roles" />
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UserGroup_tbl_Groups" Association="virkcorp_adminModel.Store.FK_tbl_UserGroup_tbl_Groups">
-            <End Role="tbl_Groups" EntitySet="tbl_Groups" />
-            <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UserGroup_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UserGroup_tbl_Profile">
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-            <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UserMembership_tbl_MembershipPlans" Association="virkcorp_adminModel.Store.FK_tbl_UserMembership_tbl_MembershipPlans">
-            <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
-            <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UserMembership_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UserMembership_tbl_Profile">
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-            <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UsersOrder_tbl_UsersStay" Association="virkcorp_adminModel.Store.FK_tbl_UsersOrder_tbl_UsersStay">
-            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
-            <End Role="tbl_UsersOrder" EntitySet="tbl_UsersOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UsersStay_tbl_MembershipPlans" Association="virkcorp_adminModel.Store.FK_tbl_UsersStay_tbl_MembershipPlans">
-            <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
-            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_UsersStay_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_UsersStay_tbl_Profile">
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Profile" Association="virkcorp_adminModel.Store.FK_tbl_VoucherUsedByUser_tbl_Profile">
-            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
-            <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Voucher" Association="virkcorp_adminModel.Store.FK_tbl_VoucherUsedByUser_tbl_Voucher">
-            <End Role="tbl_Voucher" EntitySet="tbl_Voucher" />
-            <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="virkcorp_adminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
@@ -142,7 +19,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BillNo" Type="int" />
           <Property Name="ItemName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -150,6 +27,15 @@
           <Property Name="OldQuantity" Type="float" />
           <Property Name="QtyUpdatedDate" Type="varchar(max)" />
           <Property Name="QtyUpdatedBy" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_BarBillingMode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bar_Bill_Number" Type="int" />
+          <Property Name="Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbl_BarBillingSection">
           <Key>
@@ -175,7 +61,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Item_Name" Type="varchar(max)" />
           <Property Name="Type" Type="varchar(max)" />
           <Property Name="Quantity" Type="float" />
@@ -188,7 +74,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BarInventoryID" Type="int" />
           <Property Name="Used_Qty" Type="float" />
           <Property Name="Description" Type="varchar(max)" />
@@ -201,7 +87,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Item_Name" Type="varchar(max)" />
           <Property Name="Details" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -216,7 +102,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Amount_Paid" Type="float" />
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Cheque_No" Type="varchar(max)" />
@@ -224,11 +110,20 @@
           <Property Name="UserStay_ID" Type="int" />
           <Property Name="UserID" Type="int" />
         </EntityType>
+        <EntityType Name="tbl_BillingMode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tbl_Bill_ID" Type="int" />
+          <Property Name="Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="tbl_BookingTable">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TableID" Type="int" />
           <Property Name="BookingDate" Type="varchar(max)" />
           <Property Name="BookingStartTime" Type="varchar(max)" />
@@ -239,7 +134,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BuffetItem_ID" Type="int" />
           <Property Name="Inventory_ID" Type="int" />
           <Property Name="Quantity" Type="float" />
@@ -249,7 +144,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Buffet_Item_Name" Type="varchar(max)" />
           <Property Name="Details" Type="varchar(max)" />
           <Property Name="NewItemApprvFrmSuperAdm" Type="bit" />
@@ -264,7 +159,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BarMenuItem_ID" Type="int" />
           <Property Name="Inventory_ID" Type="int" />
           <Property Name="Quantity" Type="float" />
@@ -274,8 +169,8 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="BarMenuItem_ID" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WineMenuItem_ID" Type="int" />
           <Property Name="Inventory_ID" Type="int" />
           <Property Name="Quantity" Type="float" />
           <Property Name="MeasurementUnit" Type="varchar(max)" />
@@ -284,17 +179,44 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MenuItem_ID" Type="int" />
           <Property Name="Inventory_ID" Type="int" />
           <Property Name="Quantity" Type="float" />
           <Property Name="MeasurementUnit" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_EntryMember_Billing">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price_Without_Gst" Type="varchar" MaxLength="500" />
+          <Property Name="Gst_Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Price_With_Gst" Type="varchar" MaxLength="500" />
+          <Property Name="Members" Type="varchar" MaxLength="500" />
+          <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
+          <Property Name="Amount_Paid" Type="varchar" MaxLength="500" />
+          <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="500" />
+          <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
+          <Property Name="Billed_By" Type="int" />
+          <Property Name="Member_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_EntryMembers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
+          <Property Name="qty" Type="varchar" MaxLength="50" />
+          <Property Name="EntryFee" Type="varchar" MaxLength="50" />
+          <Property Name="TotalAmount" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="tbl_Events">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventName" Type="varchar(max)" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="OrganisedBy" Type="varchar" MaxLength="150" />
@@ -311,7 +233,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" />
           <Property Name="Img_Video_Path" Type="varchar(max)" />
         </EntityType>
@@ -319,14 +241,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FoodItemTypeName" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tbl_Groups">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GroupName" Type="varchar" MaxLength="200" />
           <Property Name="GroupDetail" Type="varchar(max)" />
         </EntityType>
@@ -334,7 +256,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Item_Name" Type="varchar(max)" />
           <Property Name="Type" Type="varchar(max)" />
           <Property Name="Quantity" Type="float" />
@@ -347,7 +269,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="InventoryID" Type="int" />
           <Property Name="Used_Qty" Type="float" />
           <Property Name="Description" Type="varchar(max)" />
@@ -361,7 +283,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TotalAmount" Type="float" />
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Cheque_No" Type="varchar(max)" />
@@ -373,7 +295,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="MemberDocsPath" Type="varchar(max)" />
         </EntityType>
@@ -381,7 +303,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlanName" Type="varchar" MaxLength="200" />
           <Property Name="PlanDetails" Type="nvarchar(max)" />
           <Property Name="NoOfStays" Type="int" />
@@ -396,7 +318,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="MemberImagePath" Type="varchar(max)" />
         </EntityType>
@@ -404,7 +326,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar(max)" />
           <Property Name="Age" Type="int" />
           <Property Name="Gender" Type="varchar" MaxLength="50" />
@@ -415,7 +337,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Food_Item_Name" Type="varchar(max)" />
           <Property Name="Details" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -430,7 +352,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BillNo" Type="int" />
           <Property Name="FoodName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -468,7 +390,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NonGst_BillNo" Type="int" />
           <Property Name="FoodName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -494,7 +416,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NonGst_BillNo" Type="int" />
           <Property Name="FoodName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -520,7 +442,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NonGst_BillNo" Type="int" />
           <Property Name="FoodName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -546,7 +468,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Party_Name" Type="varchar" MaxLength="500" />
           <Property Name="Party_Owner" Type="varchar" MaxLength="300" />
           <Property Name="Phone_No" Type="varchar" MaxLength="30" />
@@ -561,7 +483,7 @@
           <Key>
             <PropertyRef Name="Food_menu_Id" />
           </Key>
-          <Property Name="Food_menu_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Food_menu_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Party_ID" Type="int" />
           <Property Name="Buffet_Menu_Id" Type="int" />
         </EntityType>
@@ -569,7 +491,7 @@
           <Key>
             <PropertyRef Name="Bill_ID" />
           </Key>
-          <Property Name="Bill_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Price_Without_Gst" Type="varchar" MaxLength="500" />
           <Property Name="Gst_Amount" Type="varchar" MaxLength="500" />
           <Property Name="Price_With_Gst" Type="varchar" MaxLength="500" />
@@ -586,7 +508,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="MemberPermission" Type="varchar(max)" />
           <Property Name="MembershipPlanPermission" Type="varchar(max)" />
@@ -599,7 +521,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="F_Name" Type="varchar" MaxLength="200" />
           <Property Name="L_Name" Type="varchar" MaxLength="200" />
           <Property Name="Address" Type="varchar(max)" />
@@ -631,7 +553,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserType" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbl_RoomBilling">
@@ -656,7 +578,7 @@
           <Key>
             <PropertyRef Name="Booking_ID" />
           </Key>
-          <Property Name="Booking_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Booking_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AdvancedPayment" Type="float" />
           <Property Name="Check_In" Type="varchar" MaxLength="200" />
           <Property Name="Check_Out" Type="varchar" MaxLength="200" />
@@ -677,7 +599,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Booking_ID" Type="int" />
           <Property Name="RoomID" Type="int" />
           <Property Name="NoOfPerson" Type="int" />
@@ -689,7 +611,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Room_Type" Type="varchar(max)" />
           <Property Name="RoomCost" Type="int" />
           <Property Name="RoomNo" Type="varchar(max)" />
@@ -698,7 +620,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TableNo" Type="varchar(max)" />
           <Property Name="Table_Status" Type="varchar(max)" />
           <Property Name="Bar_Status" Type="varchar(max)" />
@@ -708,7 +630,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="GroupID" Type="int" />
         </EntityType>
@@ -716,7 +638,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="MembershipID" Type="int" />
           <Property Name="MembershipJoiningDate" Type="varchar" MaxLength="200" />
@@ -726,7 +648,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FoodItemName" Type="varchar(max)" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="UserStay_ID" Type="int" />
@@ -737,7 +659,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="CheckInDate" Type="varchar" MaxLength="200" />
           <Property Name="CheckoutDate" Type="varchar" MaxLength="200" />
@@ -755,7 +677,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VendorID" Type="int" />
           <Property Name="Product_Name" Type="varchar(max)" />
           <Property Name="Quantity" Type="int" />
@@ -765,7 +687,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Vendor_First_Name" Type="varchar(max)" />
           <Property Name="Vendor_Last_Name" Type="varchar(max)" />
           <Property Name="Contact_No" Type="varchar" MaxLength="20" />
@@ -782,7 +704,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VoucherName" Type="varchar" MaxLength="200" />
           <Property Name="VoucherDetails" Type="varchar" MaxLength="200" />
           <Property Name="AddedBy" Type="varchar" MaxLength="200" />
@@ -794,7 +716,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="VoucherID" Type="int" />
         </EntityType>
@@ -802,7 +724,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BillNo" Type="int" />
           <Property Name="ItemName" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -825,7 +747,7 @@
           <Property Name="PriceWithoutTax" Type="float" />
           <Property Name="TableID" Type="int" />
           <Property Name="Table_Status" Type="varchar(max)" />
-          <Property Name="Order_Time" Type="time" />
+          <Property Name="Order_Time" Type="time" Precision="7" />
           <Property Name="OrderTakenBy" Type="varchar(max)" />
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Billed_By" Type="int" />
@@ -835,7 +757,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Item_Name" Type="varchar(max)" />
           <Property Name="Type" Type="varchar(max)" />
           <Property Name="Quantity" Type="float" />
@@ -848,7 +770,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WineInventoryID" Type="int" />
           <Property Name="Used_Qty" Type="float" />
           <Property Name="Description" Type="varchar(max)" />
@@ -861,7 +783,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Item_Name" Type="varchar(max)" />
           <Property Name="Details" Type="varchar(max)" />
           <Property Name="Price" Type="float" />
@@ -873,8 +795,8 @@
           <Property Name="InventoryID" Type="int" />
         </EntityType>
         <Association Name="FK_tbl_BarInventory_tbl_Vendors">
-          <End Role="tbl_Vendors" Type="virkcorp_adminModel.Store.tbl_Vendors" Multiplicity="0..1" />
-          <End Role="tbl_BarInventory" Type="virkcorp_adminModel.Store.tbl_BarInventory" Multiplicity="*" />
+          <End Role="tbl_Vendors" Type="Self.tbl_Vendors" Multiplicity="0..1" />
+          <End Role="tbl_BarInventory" Type="Self.tbl_BarInventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Vendors">
               <PropertyRef Name="ID" />
@@ -885,8 +807,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_BillingDetails_tbl_UsersStay">
-          <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-          <End Role="tbl_BillingDetails" Type="virkcorp_adminModel.Store.tbl_BillingDetails" Multiplicity="*" />
+          <End Role="tbl_UsersStay" Type="Self.tbl_UsersStay" Multiplicity="0..1" />
+          <End Role="tbl_BillingDetails" Type="Self.tbl_BillingDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_UsersStay">
               <PropertyRef Name="ID" />
@@ -897,8 +819,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_EventsImgVideo_tbl_Events">
-          <End Role="tbl_Events" Type="virkcorp_adminModel.Store.tbl_Events" Multiplicity="0..1" />
-          <End Role="tbl_EventsImgVideo" Type="virkcorp_adminModel.Store.tbl_EventsImgVideo" Multiplicity="*" />
+          <End Role="tbl_Events" Type="Self.tbl_Events" Multiplicity="0..1" />
+          <End Role="tbl_EventsImgVideo" Type="Self.tbl_EventsImgVideo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Events">
               <PropertyRef Name="ID" />
@@ -909,8 +831,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Inventory_tbl_Vendors">
-          <End Role="tbl_Vendors" Type="virkcorp_adminModel.Store.tbl_Vendors" Multiplicity="0..1" />
-          <End Role="tbl_Inventory" Type="virkcorp_adminModel.Store.tbl_Inventory" Multiplicity="*" />
+          <End Role="tbl_Vendors" Type="Self.tbl_Vendors" Multiplicity="0..1" />
+          <End Role="tbl_Inventory" Type="Self.tbl_Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Vendors">
               <PropertyRef Name="ID" />
@@ -921,8 +843,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
-          <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-          <End Role="tbl_MembersWhileStayingWithUser" Type="virkcorp_adminModel.Store.tbl_MembersWhileStayingWithUser" Multiplicity="*" />
+          <End Role="tbl_UsersStay" Type="Self.tbl_UsersStay" Multiplicity="0..1" />
+          <End Role="tbl_MembersWhileStayingWithUser" Type="Self.tbl_MembersWhileStayingWithUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_UsersStay">
               <PropertyRef Name="ID" />
@@ -933,8 +855,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_PermissionsToStaff_tbl_Profile">
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
-          <End Role="tbl_PermissionsToStaff" Type="virkcorp_adminModel.Store.tbl_PermissionsToStaff" Multiplicity="*" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="0..1" />
+          <End Role="tbl_PermissionsToStaff" Type="Self.tbl_PermissionsToStaff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Profile">
               <PropertyRef Name="ID" />
@@ -945,8 +867,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Profile_tbl_Roles">
-          <End Role="tbl_Roles" Type="virkcorp_adminModel.Store.tbl_Roles" Multiplicity="0..1" />
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="*" />
+          <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="0..1" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Roles">
               <PropertyRef Name="ID" />
@@ -957,8 +879,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UserGroup_tbl_Groups">
-          <End Role="tbl_Groups" Type="virkcorp_adminModel.Store.tbl_Groups" Multiplicity="0..1" />
-          <End Role="tbl_UserGroup" Type="virkcorp_adminModel.Store.tbl_UserGroup" Multiplicity="*" />
+          <End Role="tbl_Groups" Type="Self.tbl_Groups" Multiplicity="0..1" />
+          <End Role="tbl_UserGroup" Type="Self.tbl_UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Groups">
               <PropertyRef Name="ID" />
@@ -969,8 +891,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UserGroup_tbl_Profile">
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
-          <End Role="tbl_UserGroup" Type="virkcorp_adminModel.Store.tbl_UserGroup" Multiplicity="*" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="0..1" />
+          <End Role="tbl_UserGroup" Type="Self.tbl_UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Profile">
               <PropertyRef Name="ID" />
@@ -981,8 +903,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UserMembership_tbl_MembershipPlans">
-          <End Role="tbl_MembershipPlans" Type="virkcorp_adminModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
-          <End Role="tbl_UserMembership" Type="virkcorp_adminModel.Store.tbl_UserMembership" Multiplicity="*" />
+          <End Role="tbl_MembershipPlans" Type="Self.tbl_MembershipPlans" Multiplicity="0..1" />
+          <End Role="tbl_UserMembership" Type="Self.tbl_UserMembership" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_MembershipPlans">
               <PropertyRef Name="ID" />
@@ -993,8 +915,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UserMembership_tbl_Profile">
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
-          <End Role="tbl_UserMembership" Type="virkcorp_adminModel.Store.tbl_UserMembership" Multiplicity="*" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="0..1" />
+          <End Role="tbl_UserMembership" Type="Self.tbl_UserMembership" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Profile">
               <PropertyRef Name="ID" />
@@ -1005,8 +927,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UsersOrder_tbl_UsersStay">
-          <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="0..1" />
-          <End Role="tbl_UsersOrder" Type="virkcorp_adminModel.Store.tbl_UsersOrder" Multiplicity="*" />
+          <End Role="tbl_UsersStay" Type="Self.tbl_UsersStay" Multiplicity="0..1" />
+          <End Role="tbl_UsersOrder" Type="Self.tbl_UsersOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_UsersStay">
               <PropertyRef Name="ID" />
@@ -1017,8 +939,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UsersStay_tbl_MembershipPlans">
-          <End Role="tbl_MembershipPlans" Type="virkcorp_adminModel.Store.tbl_MembershipPlans" Multiplicity="0..1" />
-          <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="*" />
+          <End Role="tbl_MembershipPlans" Type="Self.tbl_MembershipPlans" Multiplicity="0..1" />
+          <End Role="tbl_UsersStay" Type="Self.tbl_UsersStay" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_MembershipPlans">
               <PropertyRef Name="ID" />
@@ -1029,8 +951,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_UsersStay_tbl_Profile">
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
-          <End Role="tbl_UsersStay" Type="virkcorp_adminModel.Store.tbl_UsersStay" Multiplicity="*" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="0..1" />
+          <End Role="tbl_UsersStay" Type="Self.tbl_UsersStay" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Profile">
               <PropertyRef Name="ID" />
@@ -1041,8 +963,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_VoucherUsedByUser_tbl_Profile">
-          <End Role="tbl_Profile" Type="virkcorp_adminModel.Store.tbl_Profile" Multiplicity="0..1" />
-          <End Role="tbl_VoucherUsedByUser" Type="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
+          <End Role="tbl_Profile" Type="Self.tbl_Profile" Multiplicity="0..1" />
+          <End Role="tbl_VoucherUsedByUser" Type="Self.tbl_VoucherUsedByUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Profile">
               <PropertyRef Name="ID" />
@@ -1053,8 +975,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_VoucherUsedByUser_tbl_Voucher">
-          <End Role="tbl_Voucher" Type="virkcorp_adminModel.Store.tbl_Voucher" Multiplicity="0..1" />
-          <End Role="tbl_VoucherUsedByUser" Type="virkcorp_adminModel.Store.tbl_VoucherUsedByUser" Multiplicity="*" />
+          <End Role="tbl_Voucher" Type="Self.tbl_Voucher" Multiplicity="0..1" />
+          <End Role="tbl_VoucherUsedByUser" Type="Self.tbl_VoucherUsedByUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Voucher">
               <PropertyRef Name="ID" />
@@ -1076,8 +998,134 @@
           <Parameter Name="userID" Type="int" Mode="In" />
           <Parameter Name="membershipID" Type="int" Mode="In" />
         </Function>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityContainer Name="virkcorp_adminModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="Self.tbl_BarBillingDetailsWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarBillingMode" EntityType="Self.tbl_BarBillingMode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarBillingSection" EntityType="Self.tbl_BarBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarInventory" EntityType="Self.tbl_BarInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarInventoryUsage" EntityType="Self.tbl_BarInventoryUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BarMenu" EntityType="Self.tbl_BarMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BillingDetails" EntityType="Self.tbl_BillingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BillingMode" EntityType="Self.tbl_BillingMode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BookingTable" EntityType="Self.tbl_BookingTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Buffet_ConsumableItems" EntityType="Self.tbl_Buffet_ConsumableItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Buffet_Menu" EntityType="Self.tbl_Buffet_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Consumable_BarItems" EntityType="Self.tbl_Consumable_BarItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Consumable_WineItems" EntityType="Self.tbl_Consumable_WineItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ConsumableItems" EntityType="Self.tbl_ConsumableItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EntryMember_Billing" EntityType="Self.tbl_EntryMember_Billing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EntryMembers" EntityType="Self.tbl_EntryMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Events" EntityType="Self.tbl_Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EventsImgVideo" EntityType="Self.tbl_EventsImgVideo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_FoodType" EntityType="Self.tbl_FoodType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Groups" EntityType="Self.tbl_Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Inventory" EntityType="Self.tbl_Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_InventoryUsage" EntityType="Self.tbl_InventoryUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MembersBillingDetails" EntityType="Self.tbl_MembersBillingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MembersDocs" EntityType="Self.tbl_MembersDocs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MembershipPlans" EntityType="Self.tbl_MembershipPlans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MembersPhoto" EntityType="Self.tbl_MembersPhoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="Self.tbl_MembersWhileStayingWithUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Menu" EntityType="Self.tbl_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="Self.tbl_MenusBillingDetailsWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MenusBillingSection" EntityType="Self.tbl_MenusBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="Self.tbl_NonGST_BarBillDetWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="Self.tbl_NonGST_BarBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="Self.tbl_NonGST_MenusBillDetWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_MenusBillingSection" EntityType="Self.tbl_NonGST_MenusBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_WineBillDetWithBillNo" EntityType="Self.tbl_NonGST_WineBillDetWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NonGST_WineBillingSection" EntityType="Self.tbl_NonGST_WineBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Party" EntityType="Self.tbl_Party" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Party_FoodMenu" EntityType="Self.tbl_Party_FoodMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PartyBilling" EntityType="Self.tbl_PartyBilling" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PermissionsToStaff" EntityType="Self.tbl_PermissionsToStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Profile" EntityType="Self.tbl_Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Roles" EntityType="Self.tbl_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RoomBilling" EntityType="Self.tbl_RoomBilling" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RoomBooking" EntityType="Self.tbl_RoomBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RoomBooking_Details" EntityType="Self.tbl_RoomBooking_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Rooms" EntityType="Self.tbl_Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_TablesForBooking" EntityType="Self.tbl_TablesForBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_UserGroup" EntityType="Self.tbl_UserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_UserMembership" EntityType="Self.tbl_UserMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_UsersOrder" EntityType="Self.tbl_UsersOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_UsersStay" EntityType="Self.tbl_UsersStay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_VendorOrders" EntityType="Self.tbl_VendorOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Vendors" EntityType="Self.tbl_Vendors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Voucher" EntityType="Self.tbl_Voucher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_VoucherUsedByUser" EntityType="Self.tbl_VoucherUsedByUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_WineBillingDetailsWithBillNo" EntityType="Self.tbl_WineBillingDetailsWithBillNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_WineBillingSection" EntityType="Self.tbl_WineBillingSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_WineInventory" EntityType="Self.tbl_WineInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_WineInventoryUsage" EntityType="Self.tbl_WineInventoryUsage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_WineMenu" EntityType="Self.tbl_WineMenu" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_BarInventory_tbl_Vendors" Association="Self.FK_tbl_BarInventory_tbl_Vendors">
+            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+            <End Role="tbl_BarInventory" EntitySet="tbl_BarInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_BillingDetails_tbl_UsersStay" Association="Self.FK_tbl_BillingDetails_tbl_UsersStay">
+            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
+            <End Role="tbl_BillingDetails" EntitySet="tbl_BillingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_EventsImgVideo_tbl_Events" Association="Self.FK_tbl_EventsImgVideo_tbl_Events">
+            <End Role="tbl_Events" EntitySet="tbl_Events" />
+            <End Role="tbl_EventsImgVideo" EntitySet="tbl_EventsImgVideo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Inventory_tbl_Vendors" Association="Self.FK_tbl_Inventory_tbl_Vendors">
+            <End Role="tbl_Vendors" EntitySet="tbl_Vendors" />
+            <End Role="tbl_Inventory" EntitySet="tbl_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay" Association="Self.FK_tbl_MembersWhileStayingWithUser_tbl_UsersStay">
+            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
+            <End Role="tbl_MembersWhileStayingWithUser" EntitySet="tbl_MembersWhileStayingWithUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PermissionsToStaff_tbl_Profile" Association="Self.FK_tbl_PermissionsToStaff_tbl_Profile">
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+            <End Role="tbl_PermissionsToStaff" EntitySet="tbl_PermissionsToStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Profile_tbl_Roles" Association="Self.FK_tbl_Profile_tbl_Roles">
+            <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UserGroup_tbl_Groups" Association="Self.FK_tbl_UserGroup_tbl_Groups">
+            <End Role="tbl_Groups" EntitySet="tbl_Groups" />
+            <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UserGroup_tbl_Profile" Association="Self.FK_tbl_UserGroup_tbl_Profile">
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+            <End Role="tbl_UserGroup" EntitySet="tbl_UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UserMembership_tbl_MembershipPlans" Association="Self.FK_tbl_UserMembership_tbl_MembershipPlans">
+            <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
+            <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UserMembership_tbl_Profile" Association="Self.FK_tbl_UserMembership_tbl_Profile">
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+            <End Role="tbl_UserMembership" EntitySet="tbl_UserMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UsersOrder_tbl_UsersStay" Association="Self.FK_tbl_UsersOrder_tbl_UsersStay">
+            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
+            <End Role="tbl_UsersOrder" EntitySet="tbl_UsersOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UsersStay_tbl_MembershipPlans" Association="Self.FK_tbl_UsersStay_tbl_MembershipPlans">
+            <End Role="tbl_MembershipPlans" EntitySet="tbl_MembershipPlans" />
+            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_UsersStay_tbl_Profile" Association="Self.FK_tbl_UsersStay_tbl_Profile">
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+            <End Role="tbl_UsersStay" EntitySet="tbl_UsersStay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Profile" Association="Self.FK_tbl_VoucherUsedByUser_tbl_Profile">
+            <End Role="tbl_Profile" EntitySet="tbl_Profile" />
+            <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_VoucherUsedByUser_tbl_Voucher" Association="Self.FK_tbl_VoucherUsedByUser_tbl_Voucher">
+            <End Role="tbl_Voucher" EntitySet="tbl_Voucher" />
+            <End Role="tbl_VoucherUsedByUser" EntitySet="tbl_VoucherUsedByUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="virkcorp_adminModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1215,6 +1263,10 @@
             <Parameter Name="userID" Mode="In" Type="Int32" />
             <Parameter Name="membershipID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tbl_EntryMembers" EntityType="virkcorp_adminModel.tbl_EntryMembers" />
+          <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
+          <EntitySet Name="tbl_BillingMode" EntityType="virkcorp_adminModel.tbl_BillingMode" />
+          <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
         </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1365,10 +1417,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="BarMenuItem_ID" Type="Int32" />
           <Property Name="Inventory_ID" Type="Int32" />
           <Property Name="Quantity" Type="Double" />
           <Property Name="MeasurementUnit" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="WineMenuItem_ID" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_ConsumableItems">
           <Key>
@@ -2199,6 +2251,51 @@
           <Property Type="Int32" Name="ComplementaryStays" Nullable="true" />
           <Property Type="Double" Name="TAmtPerRoom" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tbl_EntryMembers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EntryFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_EntryMember_Billing">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price_Without_Gst" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Price_With_Gst" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Members" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Total_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Amount_Paid" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Payment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Of_Billing" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Billed_By" Type="Int32" />
+          <Property Name="Member_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_BillingMode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tbl_Bill_ID" Type="Int32" />
+          <Property Name="Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_BarBillingMode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bar_Bill_Number" Type="Int32" />
+          <Property Name="Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2361,8 +2458,8 @@
           <EntitySetMapping Name="tbl_Consumable_WineItems">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_Consumable_WineItems">
               <MappingFragment StoreEntitySet="tbl_Consumable_WineItems">
+                <ScalarProperty Name="WineMenuItem_ID" ColumnName="WineMenuItem_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="BarMenuItem_ID" ColumnName="BarMenuItem_ID" />
                 <ScalarProperty Name="Inventory_ID" ColumnName="Inventory_ID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
@@ -3030,6 +3127,55 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_EntryMembers">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMembers">
+              <MappingFragment StoreEntitySet="tbl_EntryMembers">
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="EntryFee" ColumnName="EntryFee" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_EntryMember_Billing">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMember_Billing">
+              <MappingFragment StoreEntitySet="tbl_EntryMember_Billing">
+                <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
+                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+                <ScalarProperty Name="Date_Of_Billing" ColumnName="Date_Of_Billing" />
+                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+                <ScalarProperty Name="Amount_Paid" ColumnName="Amount_Paid" />
+                <ScalarProperty Name="Total_Amount" ColumnName="Total_Amount" />
+                <ScalarProperty Name="Members" ColumnName="Members" />
+                <ScalarProperty Name="Price_With_Gst" ColumnName="Price_With_Gst" />
+                <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
+                <ScalarProperty Name="Price_Without_Gst" ColumnName="Price_Without_Gst" />
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BillingMode">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BillingMode">
+              <MappingFragment StoreEntitySet="tbl_BillingMode">
+                <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="tbl_Bill_ID" ColumnName="tbl_Bill_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarBillingMode">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BarBillingMode">
+              <MappingFragment StoreEntitySet="tbl_BarBillingMode">
+                <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Bar_Bill_Number" ColumnName="Bar_Bill_Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3047,6 +3193,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

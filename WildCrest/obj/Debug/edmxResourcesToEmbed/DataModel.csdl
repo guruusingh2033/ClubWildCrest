@@ -134,6 +134,10 @@
       <Parameter Name="userID" Mode="In" Type="Int32" />
       <Parameter Name="membershipID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="tbl_EntryMembers" EntityType="virkcorp_adminModel.tbl_EntryMembers" />
+    <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
+    <EntitySet Name="tbl_BillingMode" EntityType="virkcorp_adminModel.tbl_BillingMode" />
+    <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
   </EntityContainer>
   <EntityType Name="sysdiagram">
     <Key>
@@ -284,10 +288,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="BarMenuItem_ID" Type="Int32" />
     <Property Name="Inventory_ID" Type="Int32" />
     <Property Name="Quantity" Type="Double" />
     <Property Name="MeasurementUnit" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="WineMenuItem_ID" Type="Int32" />
   </EntityType>
   <EntityType Name="tbl_ConsumableItems">
     <Key>
@@ -1118,4 +1122,49 @@
     <Property Type="Int32" Name="ComplementaryStays" Nullable="true" />
     <Property Type="Double" Name="TAmtPerRoom" Nullable="true" />
   </ComplexType>
+  <EntityType Name="tbl_EntryMembers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="qty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EntryFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TotalAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_EntryMember_Billing">
+    <Key>
+      <PropertyRef Name="Bill_ID" />
+    </Key>
+    <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Price_Without_Gst" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Gst_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Price_With_Gst" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Members" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Total_Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Amount_Paid" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Payment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Date_Of_Billing" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Billed_By" Type="Int32" />
+    <Property Name="Member_ID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_BillingMode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tbl_Bill_ID" Type="Int32" />
+    <Property Name="Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_BarBillingMode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bar_Bill_Number" Type="Int32" />
+    <Property Name="Amount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>
