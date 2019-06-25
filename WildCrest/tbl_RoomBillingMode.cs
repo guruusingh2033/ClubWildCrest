@@ -12,11 +12,11 @@ namespace WildCrest
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_BillingMode
+    public partial class tbl_RoomBillingMode
     {
         public int ID { get; set; }
-        public Nullable<int> tbl_Bill_ID { get; set; }
-        public Nullable<double> Amount { get; set; }
+        public Nullable<int> Room_Bill_Number { get; set; }
+        public Nullable<double> Amout { get; set; }
         public string Mode_Of_Pay { get; set; }
     }
 }

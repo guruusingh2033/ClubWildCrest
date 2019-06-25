@@ -12,12 +12,11 @@ namespace WildCrest
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class tbl_MemberBillingMode
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> Mem_Bill_Number { get; set; }
+        public Nullable<double> Amout { get; set; }
+        public string Mode_Of_Pay { get; set; }
     }
 }
