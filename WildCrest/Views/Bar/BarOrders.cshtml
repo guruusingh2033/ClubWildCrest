@@ -957,6 +957,22 @@
 
 <script>
     var foodList = [];
+    $.date = function (dateObject) {
+
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
+
+        return date;
+    };
     $(document).ready(function () {
        
         //getUsers();
@@ -1564,7 +1580,7 @@
             success: function (response) {
                
                 if(response.Bill_Number!=0){
-                    $(".date_view_order label").html("Date : "+response.PaymentDate);
+                    $(".date_view_order label").html("Date : "+$.date(response.PaymentDate));
                     $(".time_view_order label").html("Order Time : "+response.Order_Time.Hours+":"+response.Order_Time.Minutes+":"+response.Order_Time.Seconds);
                     $(".table_view_order label").html("Table No. : "+response.TableID);
                     $(".bill_view_order label").html("Bill No. : "+response.Bill_Number);

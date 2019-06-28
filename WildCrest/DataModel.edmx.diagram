@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="65a26bd1f44145279a4409f223026546" Name="Diagram1">
-        <EntityTypeShape EntityType="virkcorp_adminModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingDetailsWithBillNo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingSection" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarInventory" Width="1.5" PointX="13" PointY="1.125" IsExpanded="true" />

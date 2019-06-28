@@ -91,7 +91,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1")]
         public ActionResult EditRoomBookingOfUser(int userStayID)
         {
-            string name = "";
+           
             var data = context.tbl_RoomBooking_Details.SingleOrDefault(s => s.ID == userStayID);
             RoomBooking_Details stayData = new RoomBooking_Details();
             if (data != null)

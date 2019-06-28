@@ -30,7 +30,22 @@
             $('nav a[href*="/' + location.pathname.split("/")[1] + '/"]').addClass('active');
         });
     </script>
-
+    <style>
+        @@media(min-width:1170px) {
+          .scroll-sidebar {
+           position: fixed;
+           left: 0px;
+           height: 100vh !important;
+           max-width: 240px;
+           max-height: 445px;
+}
+        }
+        @@media(max-width:1170px) {
+            .scroll-sidebar {
+                height: calc(100% - 66px) !important;
+            }
+        }
+    </style>
 </head>
 
 

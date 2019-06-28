@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WildCrest.Models.WildCrestModels.EntryMemberModel> 
+﻿
 <style>
     td {
         width: 20%;
@@ -18,102 +18,125 @@
 <div class="loader_gif" style="display:none;"></div>
 <div class="card">
     <div class="card-block">
+@if (ViewBag.FilterFromReport != "" && ViewBag.FilterFromReport == "Yes")
+{
+    @Html.ActionLink("Go Back", "Index", "Report", new { sDate = ViewBag.SDate, eDate = ViewBag.EDate }, new { @class = "btn btn-primary" })
+}
+else
+{
         <a href="/Entry/AddNewEntry" class="btn btn-primary" style="margin-bottom:20px;">Add New Entry</a>
-        <table id="billingList" class="display table table-hover table-striped table-bordered table-responsive" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Actions</th>
-                    <th>
-                        @Html.DisplayName("Invoice Number")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Member Name")
-                    </th>
+}
+        <ul class="list-inline list-unstyled billing_list">
+            <li>
+                <div class="dropdowncls">
+                    <select id="dataAccToDay" onchange="dataAccTo_Day_Gst();" class="form-control">
+                        <option value="1">All</option>
+                        <option value="2">Today</option>
+                        <option value="3">Yesterday</option>
+                        <option value="4">This Week</option>
+                        <option value="5">This Month</option>
+                        <option value="6">This Year</option>
+                        <option value="7">Custom</option>
+                    </select>
+                </div>
+            </li>
+            <li style="display: none;" id="CustomDates">
+                <input type="text" readonly id="startDate" class="form-control" placeholder="Start Date" onchange="enableDatesAccToStartDate();" />&nbsp;&nbsp;
+                <input type="text" readonly id="endDate" class="form-control" placeholder="End Date" onchange="dataAccToCustomDates();" />
+            </li>
+        </ul>
+        <div id="BillsDataAccToDay">
 
-                    <th>
-                        @Html.DisplayName("PhoneNo")
-                    </th>
-
-                    <th>
-                        @Html.DisplayName("Total Member")
-                    </th>
-
-                    <th>
-                        @Html.DisplayName("Amount Paid")
-                    </th>
-
-                    @*<th>
-                            @Html.DisplayName("IsAdvancePayment")
-                        </th>*@
-
-                    <th>
-                        @Html.DisplayName("Payment Mode")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Date")
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Count() > 0)
-                {
-                    foreach (var item in Model)
-                    {
-                        var stylecolor = (item.ModeOfPayment != "Paytm") ? ((item.ModeOfPayment == "Card") ? "background-color:#f5c8c8" : "background-color:#f7f9fd") : "background-color:#b4e0fb";
-
-                        <tr>
-                            <td style="width: 10%;@stylecolor;">
-                                <a title="Details" href="@Url.Action("BillDetailsByBillNo", "Entry", new { id = item.BillNo }, null)">
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                </a>
-
-                            </td>
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.BillNo)
-                            </td>
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-
-                           
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.Phone_No)
-                            </td>
-
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.Total_Member)
-                            </td>
-
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.AmountPaid)
-                            </td>
-
-                            @* <td style="@stylecolor;">
-
-                                    <label>@item.IsAdvance_Payment</label>
-                                </td>*@
-
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.ModeOfPayment)
-                            </td>
-                            <td style="@stylecolor;">
-                                @Html.DisplayFor(modelItem => item.DateofBilling)
-                            </td>
-
-                        </tr>
-                    }
-                }
-                
-
-            </tbody>
-
-        </table>
+        </div>
+        
+        
     </div>
 </div>
 <script>
     $(document).ready(function () {
 
         $("#billingList").dataTable({ "order": [[1, "desc"]] });
+       
+        //$("#dataAccToDay").val('4');
+       
+        var day_data = '@ViewBag.Day';
+        var s_data = '@ViewBag.SDate';
+        var e_data = '@ViewBag.EDate';
+
+        if (s_data != "" && day_data != "") {
+            
+            $("#dataAccToDay").val(day_data);
+            $("#startDate").val(s_data);
+            $("#endDate").val(e_data);
+        }
+
+        dataAccTo_Day_Gst();
+
+        $('#startDate,#endDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'mm/dd/yy',
+            yearRange: "-116:+0",
+        });
+        $('#endDate').attr("disabled", "true");
     });
+
+    function enableDatesAccToStartDate() {
+        $('#endDate').val("");
+        var startDate = $('#startDate').val();
+        $('#endDate').removeAttr('disabled');
+        $('#endDate').datepicker("option", "minDate", startDate);
+    }
+    function dataAccTo_Day_Gst() {
+
+        var day = $("#dataAccToDay").val();
+        if (day != 7) {
+            $("#CustomDates").css("display", "none");
+            $('#startDate,#endDate').val('');
+            $(".loader_gif").css("display", "block");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Entry/EntryBillsDataAccToDay",
+                data: JSON.stringify({ day: day}),
+                dataType: "html",
+                success: function (response) {
+                    $("#BillsDataAccToDay").empty();
+                    $("#BillsDataAccToDay").append(response);
+                    $(".loader_gif").css("display", "none");
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+        }
+        else {
+            $("#CustomDates").css("display", "inline-flex");
+            dataAccToCustomDates();
+        }
+    }
+
+    function dataAccToCustomDates() {
+        var day = $("#dataAccToDay").val();
+        var startDate = $("#startDate").val().trim();
+        var endDate = $("#endDate").val().trim();
+        if (startDate != "" && endDate != "") {
+            $(".loader_gif").css("display", "block");
+            $.ajax({
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                url: "/Entry/EntryBillsDataAccToDay",
+                data: JSON.stringify({ day: day, sDate: startDate, eDate: endDate }),
+                dataType: "html",
+                success: function (response) {
+                    $("#BillsDataAccToDay").empty();
+                    $("#BillsDataAccToDay").append(response);
+                    $(".loader_gif").css("display", "none");
+                },
+                error: function (err) {
+                    $(".loader_gif").css("display", "none");
+                }
+            });
+        }
+    }
 </script>

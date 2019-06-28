@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="virkcorp_adminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="tbl_BarBillingDetailsWithBillNo">
     <Key>
       <PropertyRef Name="ID" />
@@ -29,7 +19,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Bar_Bill_Number" Type="int" />
-    <Property Name="Amount" Type="varchar" MaxLength="500" />
+    <Property Name="Amount" Type="float" />
     <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="tbl_BarBillingSection">
@@ -111,7 +101,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="tbl_Bill_ID" Type="int" />
-    <Property Name="Amount" Type="varchar" MaxLength="500" />
+    <Property Name="Amount" Type="float" />
     <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="tbl_BookingTable">
@@ -185,12 +175,12 @@
       <PropertyRef Name="Bill_ID" />
     </Key>
     <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Price_Without_Gst" Type="varchar" MaxLength="500" />
-    <Property Name="Gst_Amount" Type="varchar" MaxLength="500" />
-    <Property Name="Price_With_Gst" Type="varchar" MaxLength="500" />
+    <Property Name="Price_Without_Gst" Type="float" />
+    <Property Name="Gst_Amount" Type="float" />
+    <Property Name="Price_With_Gst" Type="float" />
     <Property Name="Members" Type="varchar" MaxLength="500" />
-    <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
-    <Property Name="Amount_Paid" Type="varchar" MaxLength="500" />
+    <Property Name="Total_Amount" Type="float" />
+    <Property Name="Amount_Paid" Type="float" />
     <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="500" />
     <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
     <Property Name="Billed_By" Type="int" />
@@ -467,7 +457,7 @@
     <Property Name="Party_Name" Type="varchar" MaxLength="500" />
     <Property Name="Party_Owner" Type="varchar" MaxLength="300" />
     <Property Name="Phone_No" Type="varchar" MaxLength="30" />
-    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
     <Property Name="Total_Member" Type="varchar" MaxLength="50" />
     <Property Name="Price" Type="varchar" MaxLength="500" />
     <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
@@ -981,10 +971,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="checkAvailabilityOfRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="checkin" Type="varchar" Mode="In" />
-    <Parameter Name="checkout" Type="varchar" Mode="In" />
-  </Function>
   <Function Name="Members_Checked_Out_Rooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="checkin" Type="varchar" Mode="In" />
     <Parameter Name="checkout" Type="varchar" Mode="In" />
@@ -994,7 +980,6 @@
     <Parameter Name="membershipID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="virkcorp_adminModelStoreContainer">
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BarBillingDetailsWithBillNo" EntityType="Self.tbl_BarBillingDetailsWithBillNo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BarBillingMode" EntityType="Self.tbl_BarBillingMode" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BarBillingSection" EntityType="Self.tbl_BarBillingSection" Schema="dbo" store:Type="Tables" />

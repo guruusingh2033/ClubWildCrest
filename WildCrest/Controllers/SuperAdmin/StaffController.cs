@@ -741,7 +741,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 int? TotalStays = context.tbl_MembershipPlans.SingleOrDefault(t => t.ID == a.MembershipID).NoOfStays;
 
                 int? pStay = 0;
-                int? lStay = 0;
+                //int? lStay = 0;
                 foreach (var i in data)
                 {
                     var e = context.tbl_RoomBooking.SingleOrDefault(s => s.Booking_ID == i.Booking_ID);

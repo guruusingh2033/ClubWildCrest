@@ -28,7 +28,6 @@ namespace WildCrest
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<tbl_BarBillingDetailsWithBillNo> tbl_BarBillingDetailsWithBillNo { get; set; }
         public DbSet<tbl_BarBillingSection> tbl_BarBillingSection { get; set; }
         public DbSet<tbl_BarInventory> tbl_BarInventory { get; set; }

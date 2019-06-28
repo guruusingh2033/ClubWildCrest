@@ -220,9 +220,6 @@
     <Compile Include="staysAccToYearlyMembership_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="tbl_BarBillingDetailsWithBillNo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -1171,6 +1168,7 @@
     <Content Include="Views\Entry\AddNewEntry.cshtml" />
     <Content Include="Views\Entry\EntryBillsIndex.cshtml" />
     <Content Include="Views\Entry\BillDetailsByBillNo.cshtml" />
+    <Content Include="Views\Entry\_EntryBillsDataAccToDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

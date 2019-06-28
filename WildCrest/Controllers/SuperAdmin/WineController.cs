@@ -1136,7 +1136,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
-
+                menusDetails.Price = data.Price;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -1209,8 +1209,7 @@ namespace WildCrest.Controllers.SuperAdmin
         public void calculateAmount(int? billNo)
         {
             var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["BarGstPercent"]);
-            double? total = 0;
-            double? csgst = 0;
+            
             double? pricewithoutTax = 0;
 
             var data = context.tbl_WineBillingDetailsWithBillNo.Where(s => s.BillNo == billNo).ToList();

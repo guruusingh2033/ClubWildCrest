@@ -616,8 +616,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1,2")]
         public ActionResult BillDetailsByBillNo(int id)
         {          
-            double? totalPrice = 0;
-            double? csgst = 0;
+            
             var data = context.tbl_MenusBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
             List<MenusBillingDetailsWithBillNo> details = new List<MenusBillingDetailsWithBillNo>();
@@ -658,6 +657,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     menusDetails.GST = data.GST;
                     menusDetails.PriceWithoutTax = data.PriceWithoutTax;
                 }
+                menusDetails.Price = data.Price;
                 menusDetails.Mode_Of_Payment = data.Mode_Of_Payment;
                 menusDetails.Customer_Name = data.Customer_Name;
                 menusDetails.Phone = data.Phone;
@@ -677,8 +677,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1,2")]
         public ActionResult EditBillByBillNo(int id)
         {
-            double? totalPrice = 0;
-            double? csgst = 0;
+           
             var data = context.tbl_MenusBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
             List<MenusBillingDetailsWithBillNo> details = new List<MenusBillingDetailsWithBillNo>();

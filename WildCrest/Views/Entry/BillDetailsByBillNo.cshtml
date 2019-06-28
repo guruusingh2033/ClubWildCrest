@@ -12,8 +12,8 @@ flex-direction: row-reverse;
                 <div class="card">
                     <div class="card-block">
                         <div><span class="complusoryFields">*(Complusory Fields)</span></div>
-                        <a class="btn btn-primary" style="margin-bottom:20px; display:none;" href="/Vendors/Index">Go Back</a>
-                        <h4 class="card-title">Add New Entry</h4>
+                        <a href="/Entry/EntryBillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
+                        <h4 class="card-title">Entry Billing Detail</h4>
                         <div class="form p-t-20">
                             <div class="form-group">
                                 <label style="font-size:large;">Name <span class="complusoryFields"> *</span></label>
@@ -94,7 +94,7 @@ flex-direction: row-reverse;
                         dataType: "Json",
                         success: function (response) {
 
-
+                            
                             if (response != 'not Found') {
                                 $(".preloader").css("display", "block");
 

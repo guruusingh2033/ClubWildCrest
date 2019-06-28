@@ -133,15 +133,32 @@
     </div>
 </body>
 <script>
+    $.date = function (dateObject) {
 
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
+
+        return date;
+    };
     function PrintFoodBill() {
         $(".preloader").css("display", "block");
         var gst = "@Model.GST";
         var scgst = (parseFloat(gst) / 2).toFixed(2);
         //var scgst = Math.floor(parseFloat(gst) / 2) / 100;
         var pwt = '@Model.PriceWithoutTax';
-        var tP = parseFloat(pwt) + parseFloat(gst);
-
+        var dst = "@Model.Discount";
+        var price = "@Model.Price";
+        //var tP = parseFloat(pwt) + parseFloat(gst);
+        var tP = parseFloat(price) - parseFloat(dst);
         var tbl = '';
         tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
         tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
@@ -155,11 +172,11 @@
    '</tr>' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
    '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
-   '<td style="padding: 5px 0;">Total Price : ₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+   '<td style="padding: 5px 0;">Total Price : ₹ ' + '@Model.Price' + '</td>' +
    '<td style="padding: 5px 0;">GST : ₹ ' + '@Model.GST' + '</td>' +
    '</tr>' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-   '<td style="padding: 5px 0;">Billing Date : ' + '@Model.PaymentDate' + '</td>' +
+   '<td style="padding: 5px 0;">Billing Date : ' + $.date('@Model.PaymentDate') + '</td>' +
    '<td style="padding: 5px 0;">Payment Mode : ' + '@Model.Mode_Of_Payment' + '</td>' +
    '<td style="padding: 5px 0;"></td>' +
    '</tr>' +
@@ -196,9 +213,14 @@
             tbl += '<tr style="font-size: 12px;" class="border-top">' +
                  '<td colspan="2" class="border-left"></td>' +
                            '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
-                           '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + '@Model.Price' + '</td>' +
                          '</tr>' +
+                          '<tr style="font-size: 12px;">' +
+                          '<td colspan="2" class="border-left"></td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">Discount: </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + '@Model.Discount' + '</td>' +
 
+                         '</tr>' +
                          '<tr style="font-size: 12px;">' +
                           '<td colspan="2" class="border-left"></td>' +
                            '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
@@ -211,7 +233,7 @@
                          '</tr>' +
                          '<tr style="font-size: 12px;">' +
                           '<td colspan="2" class="border-left"></td>' +
-                           '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                           '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
                            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tP.toFixed(2) + '</td>' +
                          '</tr>';
         }

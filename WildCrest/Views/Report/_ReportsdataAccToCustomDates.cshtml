@@ -194,6 +194,32 @@
             </tr>*@
             <tr>
                 <td class="hide">7</td>
+                <td>
+                    @if (Model.Entry_Total != 0)
+                {
+                    var arr = new[,]{
+                          {"Temp_Day_Data","7"},
+                            {"Temp_SDate_Data",Model.StartDate},
+                            {"Temp_EndDate_Data",Model.EndDate}
+                            };
+                    var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                    @Html.ActionLink("Entry Billing", "EntryBillsIndex", "Entry", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                else
+                {<span>Entry Billing</span>}
+            </td>
+            <td>@Model.Entry_Sale</td>
+            <td>@Model.Entry_Discount</td>
+            <td>@Model.Entry_GST</td>
+            <td>@Model.Entry_CashPay</td>
+            <td>@Model.Entry_PaytmPay</td>
+            <td>@Model.Entry_CardPay</td>
+            <td>@Model.Entry_ChequePay</td>
+            <td>@Model.Entry_Total</td>
+
+        </tr>
+
+            <tr>
+                <td class="hide">8</td>
                 <td>Total</td>
                 <td>@Model.Total_Sale</td>
                 <td>@Model.Total_Discount</td>

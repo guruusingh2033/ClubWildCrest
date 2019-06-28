@@ -11,11 +11,19 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Menus_GST { get; set; }
         public decimal Menus_Discount { get; set; }
         public decimal Menus_Total { get; set; }
+        public decimal Entry_Sale { get; set; }
+        public decimal Entry_GST { get; set; }
+        public decimal Entry_Discount { get; set; }
+        public decimal Entry_Total { get; set; }
 
         public decimal Food_CardPay { get; set; }
         public decimal Food_CashPay { get; set; }
         public decimal Food_PaytmPay { get; set; }
         public decimal Food_ChequePay { get; set; }
+        public decimal Entry_CardPay { get; set; }
+        public decimal Entry_CashPay { get; set; }
+        public decimal Entry_PaytmPay { get; set; }
+        public decimal Entry_ChequePay { get; set; }
 
         public decimal NonMenusGst_Sale { get; set; }
         public decimal NonMenusGst_Discount { get; set; }
@@ -108,6 +116,13 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Menus_Discount { get; set; }
         public decimal Menus_Total { get; set; }        
     }
+    public class EntryReports
+    {
+        public decimal Entry_Sale { get; set; }
+        public decimal Entry_GST { get; set; }
+        public decimal Entry_Discount { get; set; }
+        public decimal Entry_Total { get; set; }
+    }
 
     public class NonMenusGstReports
     {
@@ -177,6 +192,13 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Food_CashPay { get; set; }
         public decimal Food_PaytmPay { get; set; }
         public decimal Food_ChequePay { get; set; }
+    }
+    public class EntryPayment
+    {
+        public decimal Entry_CardPay { get; set; }
+        public decimal Entry_CashPay { get; set; }
+        public decimal Entry_PaytmPay { get; set; }
+        public decimal Entry_ChequePay { get; set; }
     }
     public class NonGstFoodPayment
     {

@@ -15,12 +15,12 @@ namespace WildCrest
     public partial class tbl_EntryMember_Billing
     {
         public int Bill_ID { get; set; }
-        public string Price_Without_Gst { get; set; }
-        public string Gst_Amount { get; set; }
-        public string Price_With_Gst { get; set; }
+        public Nullable<double> Price_Without_Gst { get; set; }
+        public Nullable<double> Gst_Amount { get; set; }
+        public Nullable<double> Price_With_Gst { get; set; }
         public string Members { get; set; }
-        public string Total_Amount { get; set; }
-        public string Amount_Paid { get; set; }
+        public Nullable<double> Total_Amount { get; set; }
+        public Nullable<double> Amount_Paid { get; set; }
         public string Mode_Of_Payment { get; set; }
         public string Date_Of_Billing { get; set; }
         public Nullable<int> Billed_By { get; set; }

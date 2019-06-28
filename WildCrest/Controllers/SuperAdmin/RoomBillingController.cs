@@ -57,7 +57,7 @@ namespace WildCrest.Controllers.SuperAdmin
         public JsonResult getCustomerRoomDetails(int Booking_ID, string checkIn)
         {
             //int? discount = -1;
-            var bill_number = 0;
+          
             //var str = "";
             //double? TotalAmt = 0;
             var Rooms = "";
