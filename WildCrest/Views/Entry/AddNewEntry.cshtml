@@ -14,8 +14,10 @@ flex-direction: row-reverse;
                 <div class="card">
                     <div class="card-block">
                         <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                      @if (Request.Cookies["UserType"].Value != "5")
+                      {
                         <a href="/Entry/EntryBillsIndex" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
-                        <a class="btn btn-primary" style="margin-bottom:20px; display:none;" href="/Vendors/Index">Go Back</a>
+                      }
                         <h4 class="card-title">Add New Entry</h4>
                         <div class="form p-t-20">
                             <div class="form-group">
@@ -79,6 +81,22 @@ flex-direction: row-reverse;
 
 <script>
     var memberID = 0;
+    $.date = function (dateObject) {
+
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
+
+        return date;
+    };
     $(document).ready(function () {
     $("#nMembers").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));
@@ -127,140 +145,271 @@ flex-direction: row-reverse;
             bootbox.alert("all fields required.")
         }
     }
-     function SaveBill() {
-        bootbox.prompt({
-            title: "Enter password!",
-            inputType: 'password',
-            callback: function (result) {
-                if (result == '@Request.Cookies["RememberPassword"].Value') {
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        url: "/Entry/SaveBill",
-                        data: JSON.stringify({ PayMode: $("#Paymode option:selected").val(), ID: memberID }),
-                        dataType: "Json",
-                        success: function (response) {
-                           
+    function SaveBill() {
+       
+        if(@Request.Cookies["UserType"].Value != "5")
+        {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Entry/SaveBill",
+                data: JSON.stringify({ PayMode: $("#Paymode option:selected").val(), ID: memberID }),
+                dataType: "Json",
+                success: function (response) {
 
-                            if (response != 'not Found') {
-                                $(".preloader").css("display", "block");
 
-                                var d = new Date();
-                                var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-                                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-                                var tbl = '';
-                                tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
-                                tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                    if (response != 'not Found') {
+                        $(".preloader").css("display", "block");
+                        var scgst = (parseFloat(response.GstAmount) / 2).toFixed(2);
+                        var d = new Date();
+                        var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                        var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                        var tbl = '';
+                        tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+                        tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
 
-                                tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
-                           '<tbody  style="text-align: left;" >' +
-                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-                           '<td style="padding: 5px 0;">Customer Name : ' + response.Name + '</td>' +
-                           '<td style="padding: 5px 0;">Bill No. : ' + response.BillNo + '</td>' +
-                           '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
-                           '</tr>' +
-                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-                           '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
-                           '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
-                           '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
-                           '</tr>' +
-                           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-                           '<td style="padding: 5px 0;">Billing Date : ' + response.DateofBilling + '</td>' +
-                           '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
-                           '<td style="padding: 5px 0;"></td>' +
-                           '</tr>' +
-                           '</tbody></table><br>';
+                        tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+                   '<tbody  style="text-align: left;" >' +
+                   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                   '<td style="padding: 5px 0;">Customer Name : ' + response.Name + '</td>' +
+                   '<td style="padding: 5px 0;">Bill No. : ' + response.BillNo + '</td>' +
+                   '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+                   '</tr>' +
+                   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                   '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+                   '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
+                   '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
+                   '</tr>' +
+                   '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                   '<td style="padding: 5px 0;">Billing Date : ' + $.date(response.DateofBilling) + '</td>' +
+                   '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
+                   '<td style="padding: 5px 0;"></td>' +
+                   '</tr>' +
+                   '</tbody></table><br>';
 
-                              tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
-                          '<thead  style="text-align: left;" >' +
-                          '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-                          '<th style="padding: 5px 5px;">Name </th>' +
+                        tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
+                  '<thead  style="text-align: left;" >' +
+                  '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                  '<th style="padding: 5px 5px;">EntryName </th>' +
 
-                          '<th style="padding: 5px 5px;">Price</th>' +
-                          '<th style="padding: 5px 5px;">Total Member</th>' +
-                          '<th style="padding: 5px 5px;text-align: right;">Total Amount(w/o GST)</th>' +
-                           '<th style="padding: 5px 5px;">GST(18%)</th>' +
-                           '<th style="padding: 5px 5px;">Total Amount</th>' +
-                          '</tr>' +
-                          '</thead>' +
-                          '<tbody>';
+                  '<th style="padding: 5px 5px;">Price</th>' +
+                  '<th style="padding: 5px 5px;">Quantity</th>' +
+                  '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+                  '</tr>' +
+                  '</thead>' +
+                  '<tbody>';
 
-                                tbl += '<tr style="font-size: 12px;text-align: left;">' +
-                              '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
+                        tbl += '<tr style="font-size: 12px;text-align: left;">' +
+                      '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
 
-                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
-                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
-                    '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' +parseFloat(246)*parseFloat( response.Total_Member) + '</label></td>' +
-                     '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.GstAmount + '</label></td>' +
-                      '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.AmountPaid + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</label></td>' +
+
+            '</tr>';
+                        tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                                        '<td colspan="2" class="border-left"></td>' +
+                                                  '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</td>' +
+                                                '</tr>' +
+
+
+                                                '<tr style="font-size: 12px;">' +
+                                                 '<td colspan="2" class="border-left"></td>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                                                '</tr>' +
+                                                '<tr style="font-size: 12px;">' +
+                                                 '<td colspan="2" class="border-left"></td>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                                                '</tr>' +
+
+                                                '<tr style="font-size: 12px;">' +
+                                                 '<td colspan="2" class="border-left"></td>' +
+                                                  '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
+                                                  '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.AmountPaid + '</td>' +
+                                                '</tr>';
+                    }
+                    else {
+                        tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+                    '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
                     '</tr>';
+                    }
+                    tbl += "</tbody></table>";
 
-                                //tbl += '<tr style="font-size: 12px;" class="border-top">' +
-                                //     '<td colspan="2" class="border-left"></td>' +
-                                //               '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
-                                //               '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + response.Price_Without_Gst + '</td>' +
-                                //             '</tr>' +
+                    var htmlToPrint = '' +
+                               '<style type="text/css">' +
+                               'body{font-family: arial;}' +
+                               'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                                            'border-collapse:collapse;}' +
 
-                                //             '<tr style="font-size: 12px;">' +
-                                //              '<td colspan="2" class="border-left"></td>' +
-                                //               '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">GST (18%) : </td>' +
-                                //               '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.GstAmount + '</td>' +
-                                //             '</tr>' +
+                            '#tabel-heading th {' +
+                                'border:1px solid black;' +
+                            '}' +
+                            '#tabel-heading td {' +
+                                'border-right:1px solid black;' +
+                                'border-left:1px solid black;}' +
 
-                                //             '<tr style="font-size: 12px;">' +
-                                //              '<td colspan="2" class="border-left"></td>' +
-                                //               '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
-                                //               '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + 300 + '</td>' +
-                                //             '</tr>';
-                            }
-                            else {
-                                tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
-                            '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
-                            '</tr>';
-                            }
-                            tbl += "</tbody></table>";
-
-                            var htmlToPrint = '' +
-                                       '<style type="text/css">' +
-                                       'body{font-family: arial;}' +
-                                       'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
-                                                    'border-collapse:collapse;}' +
-
-                                    '#tabel-heading th {' +
-                                        'border:1px solid black;' +
-                                    '}' +
-                                    '#tabel-heading td {' +
-                                        'border-right:1px solid black;' +
-                                        'border-left:1px solid black;}' +
-
-                                    '#tabel-heading .border-bottom {' +
-                                       'border-bottom:1px solid black;}' +
-                                    '#tabel-heading .border-top {' +
-                                       'border-top:1px solid black;}' +
-                                    '#tabel-heading .border-left {' +
-                                        'border-left:none;}' +
-                                       '</style>';
-                            htmlToPrint += tbl;
-                            newWin = window.open("");
-                            newWin.document.write(htmlToPrint);
-                            newWin.print();
-                            newWin.close();
-                            $(".preloader").css("display", "none");
-                            if(@Request.Cookies["UserType"].Value == "5"){
-                                location.reload();
-                            }
+                            '#tabel-heading .border-bottom {' +
+                               'border-bottom:1px solid black;}' +
+                            '#tabel-heading .border-top {' +
+                               'border-top:1px solid black;}' +
+                            '#tabel-heading .border-left {' +
+                                'border-left:none;}' +
+                               '</style>';
+                    htmlToPrint += tbl;
+                    newWin = window.open("");
+                    newWin.document.write(htmlToPrint);
+                    newWin.print();
+                    newWin.close();
+                    $(".preloader").css("display", "none");
+                    if(@Request.Cookies["UserType"].Value == "5"){
+                        location.reload();
+                    }
 
 
-                        },
-                        error: function (err) {
-                            bootbox.alert(err.statusText);
-                        }
-                    });
-                } else {
-                    bootbox.alert('enter correct password.');
+                },
+                error: function (err) {
+                    bootbox.alert(err.statusText);
                 }
-            }
-        });
+            });
+        }else{
+            bootbox.prompt({
+                title: "Enter password!",
+                inputType: 'password',
+                callback: function (result) {
+                    if (result == '@Request.Cookies["RememberPassword"].Value') {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Entry/SaveBill",
+                            data: JSON.stringify({ PayMode: $("#Paymode option:selected").val(), ID: memberID }),
+                            dataType: "Json",
+                            success: function (response) {
 
+
+                                if (response != 'not Found') {
+                                    $(".preloader").css("display", "block");
+                                    var scgst = (parseFloat(response.GstAmount) / 2).toFixed(2);
+                                    var d = new Date();
+                                    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                                    var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+                                    var tbl = '';
+                                    tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
+                                    tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+                                    tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+                               '<tbody  style="text-align: left;" >' +
+                               '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                               '<td style="padding: 5px 0;">Customer Name : ' + response.Name + '</td>' +
+                               '<td style="padding: 5px 0;">Bill No. : ' + response.BillNo + '</td>' +
+                               '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+                               '</tr>' +
+                               '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                               '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+                               '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
+                               '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
+                               '</tr>' +
+                               '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                               '<td style="padding: 5px 0;">Billing Date : ' + $.date(response.DateofBilling) + '</td>' +
+                               '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
+                               '<td style="padding: 5px 0;"></td>' +
+                               '</tr>' +
+                               '</tbody></table><br>';
+
+                                    tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
+                              '<thead  style="text-align: left;" >' +
+                              '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                              '<th style="padding: 5px 5px;">EntryName </th>' +
+
+                              '<th style="padding: 5px 5px;">Price</th>' +
+                              '<th style="padding: 5px 5px;">Quantity</th>' +
+                              '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+                              '</tr>' +
+                              '</thead>' +
+                              '<tbody>';
+
+                                    tbl += '<tr style="font-size: 12px;text-align: left;">' +
+                                  '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
+
+                        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
+                        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
+                        '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</label></td>' +
+
+                        '</tr>';
+                                    tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                                                    '<td colspan="2" class="border-left"></td>' +
+                                                              '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</td>' +
+                                                            '</tr>' +
+
+
+                                                            '<tr style="font-size: 12px;">' +
+                                                             '<td colspan="2" class="border-left"></td>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                                                            '</tr>' +
+                                                            '<tr style="font-size: 12px;">' +
+                                                             '<td colspan="2" class="border-left"></td>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+                                                            '</tr>' +
+
+                                                            '<tr style="font-size: 12px;">' +
+                                                             '<td colspan="2" class="border-left"></td>' +
+                                                              '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
+                                                              '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.AmountPaid + '</td>' +
+                                                            '</tr>';
+                                }
+                                else {
+                                    tbl += '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+                                '<td colspan="4" style="padding: 8px 0;">No Data Available.</td>' +
+                                '</tr>';
+                                }
+                                tbl += "</tbody></table>";
+
+                                var htmlToPrint = '' +
+                                           '<style type="text/css">' +
+                                           'body{font-family: arial;}' +
+                                           'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+                                                        'border-collapse:collapse;}' +
+
+                                        '#tabel-heading th {' +
+                                            'border:1px solid black;' +
+                                        '}' +
+                                        '#tabel-heading td {' +
+                                            'border-right:1px solid black;' +
+                                            'border-left:1px solid black;}' +
+
+                                        '#tabel-heading .border-bottom {' +
+                                           'border-bottom:1px solid black;}' +
+                                        '#tabel-heading .border-top {' +
+                                           'border-top:1px solid black;}' +
+                                        '#tabel-heading .border-left {' +
+                                            'border-left:none;}' +
+                                           '</style>';
+                                htmlToPrint += tbl;
+                                newWin = window.open("");
+                                newWin.document.write(htmlToPrint);
+                                newWin.print();
+                                newWin.close();
+                                $(".preloader").css("display", "none");
+                                if(@Request.Cookies["UserType"].Value == "5"){
+                                    location.reload();
+                                }
+
+
+                            },
+                            error: function (err) {
+                                bootbox.alert(err.statusText);
+                            }
+                        });
+                    } else {
+                        bootbox.alert('enter correct password.');
+                    }
+                }
+            });
+        }
     }
 </script>

@@ -248,7 +248,22 @@
 <script>
     var selectedItems=[];
     var foodList=[];
+    $.date = function (dateObject) {
 
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
+
+        return date;
+    };
     $(document).ready(function(){
         $("input[type='text'].quantity,#item_qty").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^\d].+/, ""));
@@ -270,7 +285,7 @@
         //console.log(selectedItems);
     });
 
-    $("#item_name").autocomplete({        
+    $("#item_name").autocomplete({
         source: function (request, response) {
             $.ajax({
                 type: "POST",
@@ -312,30 +327,30 @@
         $("#Cost").val('');
         $("#item_qty").val('');
         $("#error").empty();
-    }  
+    }
     function close_Add_Modal() {
         reset();
         foodList=[];
         $("#addMoreModal").modal('hide');
-    }  
+    }
 
     var indexDelete=0;
     function AddMore() {
-        
+
         var txt_Food=$("#item_name").val().trim();
         var txt_Price=$("#Cost").val();
         var txt_Quantity=$("#item_qty").val();
         var quantity=0;
         var price=0;
         if(txt_Food!="" && txt_Price!="" && txt_Quantity!=""){
-            
+
             var tbl="";
             tbl+="<tr><td>"+txt_Food+"</td>";
             tbl+="<td>"+txt_Price+"</td>";
             tbl+="<td>"+txt_Quantity+"</td>";
             tbl+="<td><a title='Delete' onclick='DeleteFoodItemFromArray("+indexDelete+");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
             $("#selectedItemsInAddMore").append(tbl);
-            
+
             var d={
                 'FoodName':txt_Food,
                 'Price':txt_Price,
@@ -359,12 +374,12 @@
         $("#selectedItemsInAddMore").empty();
         var tbl="";
         for(var i=0;i<foodList.length;i++){
-            
+
             tbl+="<tr><td>"+foodList[i].FoodName+"</td>";
             tbl+="<td>"+foodList[i].Price+"</td>";
             tbl+="<td>"+foodList[i].Quantity+"</td>";
             tbl+="<td><a title='Delete' onclick='DeleteFoodItemFromArray("+i+");' style='cursor:pointer;'><i class='fa fa-trash' style='color: #f92b2b;' aria-hidden='true'></i></a></td></tr>";
-            
+
         }
         $("#selectedItemsInAddMore").append(tbl);
     }
@@ -385,14 +400,14 @@
                 data: JSON.stringify({ itemID: $("#HiddenFoodName").val() }),
                 dataType: "json",
                 success: function (response) {
-                    $("#Cost").val(response.Price);                  
+                    $("#Cost").val(response.Price);
                     //$("#leftQty").html(Number.isInteger(response.LeftQuantity)?response.LeftQuantity:response.LeftQuantity.toFixed(2));
                     $("#item_qty").val("");
                     //if(response.LeftQuantity==-1)
                     //{
                     //    $("#showDivForLeftQty").css("display","none");
                     //    $("#errMsg").empty();
-                    //    $("#item_qty").removeAttr("disabled");                        
+                    //    $("#item_qty").removeAttr("disabled");
                     //}
                     //else{
                         //$("#showDivForLeftQty").css("display","block");
@@ -422,13 +437,13 @@
                             //    else{
                             //        $("#errMsg").empty();
                             //        $("#qty").removeAttr("disabled");
-                                    
+
                             //    }
                             //}
                             //else{
                             //    $("#errMsg").empty();
                             //    $("#qty").removeAttr("disabled");
-                                
+
                             //}
                         //}
                     //}
@@ -542,8 +557,11 @@
         var scgst = (parseFloat(gst) / 2).toFixed(2);
         //var scgst = Math.floor(parseFloat(gst) / 2) / 100;
         var pwt = '@Model.PriceWithoutTax';
-        var tP = parseFloat(pwt) + parseFloat(gst);
 
+        //var tP = parseFloat(pwt) + parseFloat(gst);
+        var dst = "@Model.Discount";
+        var totalPrice = parseFloat(pwt) + parseFloat(gst);
+        var tP = parseFloat(pwt) + parseFloat(gst) - parseFloat(dst);
         var tbl = '';
         tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Club Wild Crest";
         tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
@@ -557,11 +575,11 @@
    '</tr>' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
    '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
-   '<td style="padding: 5px 0;">Total Price : ₹ ' + '@Model.PriceWithoutTax' + '</td>' +
+   '<td style="padding: 5px 0;">Total Price : ₹ ' + totalPrice + '</td>' +
    '<td style="padding: 5px 0;">GST : ₹ ' + '@Model.GST' + '</td>' +
    '</tr>' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-   '<td style="padding: 5px 0;">Billing Date : ' + '@Model.PaymentDate' + '</td>' +
+   '<td style="padding: 5px 0;">Billing Date : ' + $.date('@Model.PaymentDate') + '</td>' +
    '<td style="padding: 5px 0;">Payment Mode : ' + '@Model.Mode_Of_Payment' + '</td>' +
    '<td style="padding: 5px 0;"></td>' +
    '</tr>' +
@@ -611,9 +629,14 @@
                            '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (2.5%) : </td>' +
                            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
                          '</tr>' +
+                          '<tr style="font-size: 12px;">' +
+                          '<td colspan="2" class="border-left"></td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">Discount: </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + '@Model.Discount' + '</td>' +
+                           '</tr>' +
                          '<tr style="font-size: 12px;">' +
                           '<td colspan="2" class="border-left"></td>' +
-                           '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                           '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
                            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tP.toFixed(2) + '</td>' +
                          '</tr>';
         }

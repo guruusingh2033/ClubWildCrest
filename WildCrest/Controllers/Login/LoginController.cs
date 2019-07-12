@@ -41,6 +41,10 @@ namespace WildCrest.Controllers.Login
                     return RedirectToAction("Index", "Restaurant");
                     //return RedirectToAction("EditProfilebyID", "AdminProfile", new { id = Request.Cookies["UserID"].Value });
                 }
+                else if (Request.Cookies["UserType"].Value == "5")
+                {
+                    return RedirectToAction("AddNewEntry", "Entry");
+                }
                 else
                 {
                     return RedirectToAction("EditProfilebyID", "UserProfile", new { id = Request.Cookies["UserID"].Value });

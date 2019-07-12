@@ -311,16 +311,19 @@ namespace WildCrest.Controllers.SuperAdmin
                 tableData.Table_Status = "closed";
                 context.Entry(tableData).State = EntityState.Modified;
                 context.SaveChanges();
-                if (menusData.Discount > 0)
-                {
-                    var FinalAmt = menusData.Price - menusData.Discount;
+                //if (menusData.Discount > 0)
+                //{
+                //    var FinalAmt = menusData.Price - menusData.Discount;
+                //    if (FinalAmt > 1)
+                //    {
+                //        gst = FinalAmt * ((double)gstPercentFromConfig / (double)100);
+                //        gst = Math.Round((double)gst, 2);
 
-                    gst = FinalAmt * ((double)gstPercentFromConfig / (double)100);
-                    gst = Math.Round((double)gst, 2);
-                    menusData.GST = gst;
-                    context.Entry(menusData).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
+                //        menusData.GST = gst;
+                //        context.Entry(menusData).State = EntityState.Modified;
+                //        context.SaveChanges();
+                //    }
+                //}
             }
             return Json("closed");
         }

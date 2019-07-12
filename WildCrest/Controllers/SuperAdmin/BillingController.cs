@@ -615,8 +615,8 @@ namespace WildCrest.Controllers.SuperAdmin
  
         [Authorize(Roles = "1,2")]
         public ActionResult BillDetailsByBillNo(int id)
-        {          
-            
+        {
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             var data = context.tbl_MenusBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
             List<MenusBillingDetailsWithBillNo> details = new List<MenusBillingDetailsWithBillNo>();
@@ -654,7 +654,9 @@ namespace WildCrest.Controllers.SuperAdmin
                     //ViewBag.CSGST = Math.Round((Double)csgst, 2);
                     //totalPrice = Math.Round((Double)totalPrice, 2);
                     //menusDetails.Price = totalPrice;
-                    menusDetails.GST = data.GST;
+                   var gst = data.PriceWithoutTax * ((double)gstPercentFromConfig / (double)100);
+
+                    menusDetails.GST = Math.Round((double)gst, 2);
                     menusDetails.PriceWithoutTax = data.PriceWithoutTax;
                 }
                 menusDetails.Price = data.Price;
@@ -677,7 +679,7 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1,2")]
         public ActionResult EditBillByBillNo(int id)
         {
-           
+            var gstPercentFromConfig = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["FoodGstPercent"]);
             var data = context.tbl_MenusBillingSection.SingleOrDefault(s => s.Bill_Number == id);
             MenusBillingSection menusDetails = new MenusBillingSection();
             List<MenusBillingDetailsWithBillNo> details = new List<MenusBillingDetailsWithBillNo>();
@@ -716,7 +718,9 @@ namespace WildCrest.Controllers.SuperAdmin
                     //ViewBag.CSGST = Math.Round((Double)csgst, 2);
                     //totalPrice = Math.Round((Double)totalPrice, 2);
                     //menusDetails.Price = totalPrice;
-                    menusDetails.GST = data.GST;
+                    var gst = data.PriceWithoutTax * ((double)gstPercentFromConfig / (double)100);
+
+                    menusDetails.GST = Math.Round((double)gst, 2);
                     menusDetails.PriceWithoutTax = data.PriceWithoutTax;
                 }
 

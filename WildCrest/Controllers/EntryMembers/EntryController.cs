@@ -28,7 +28,7 @@ namespace WildCrest.Controllers.EntryMembers
             }
             return Json("not saved");
         }
-        [Authorize(Roles = "1,2,4,5")]
+        [Authorize(Roles = "1,2,4")]
         public ActionResult EntryBillsIndex(string filter = "", string filterFromReport = "")
         {
             //List<EntryMemberModel> li = new List<EntryMemberModel>();
@@ -128,6 +128,7 @@ namespace WildCrest.Controllers.EntryMembers
                 li.AmountPaid = data.Amount_Paid;
                 li.ModeOfPayment = data.Mode_Of_Payment;
                 li.DateofBilling = data.Date_Of_Billing;
+                li.ID =Convert.ToInt32(data.Member_ID);
             }
             return View(li);
         }
@@ -235,7 +236,7 @@ namespace WildCrest.Controllers.EntryMembers
                         Total_Member = i.Total_Member,
                         AmountPaid = i.AmountPaid,
                         ModeOfPayment = i.ModeOfPayment,
-                        DateofBilling = i.DateofBilling
+                        DateofBilling = Convert.ToDateTime(i.DateofBilling).ToString("dd/MM/yyyy")
                     });
                     finaltotalVal +=i.Total_Amount;
                     finalcsgst += i.GstAmount;
