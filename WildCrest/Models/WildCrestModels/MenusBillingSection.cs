@@ -39,6 +39,7 @@ namespace WildCrest.Models.WildCrestModels
         public int Temp_AdminID_Data { get; set; }
         public string Temp_SDate_Data { get; set; }
         public string Temp_EndDate_Data { get; set; }
+        public string Customer_GstNO { get; set; }
     }
 
     public class MenusBillingDetailsWithBillNo

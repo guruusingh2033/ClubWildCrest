@@ -31,6 +31,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         usedStock = usedStock + a.Used_Qty;
                     }
                 }
+                usedStock= Math.Round(Convert.ToDouble(usedStock), 2);
                 invList.Add(new Inventory()
                 {
                     ID = i.ID,
@@ -42,7 +43,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     VendorName = context.tbl_Vendors.SingleOrDefault(s => s.ID == i.VendorID).Vendor_First_Name + " " + context.tbl_Vendors.SingleOrDefault(s => s.ID == i.VendorID).Vendor_Last_Name,
                     //Added_Date = i.Added_Date,
                     AddedDate1 = Added_Date,
-                    InStock = i.Quantity - usedStock,
+                    InStock = Math.Round(Convert.ToDouble(i.Quantity - usedStock),2),
                     Measurement = i.Measurement
                 });
             }
@@ -177,6 +178,67 @@ namespace WildCrest.Controllers.SuperAdmin
             
         }
         
+        [HttpPost]
+        public JsonResult UpdateQuantity(int InventoryID,double Instock)
+        {
+            var date = DateTime.Today;
+            string DateFormat = date.ToString(@"MM\/dd\/yyyy");
+            var data = context.tbl_Inventory.SingleOrDefault(s => s.ID == InventoryID);
+            if (data != null)
+            {
+                var r = context.tbl_InventoryUsage.Where(a => a.InventoryID == data.ID).ToList();
+                double? usedStock = 0;
+                if (r.Count() > 0)
+                {
+                    foreach (var a in r)
+                    {
+                        usedStock = usedStock + a.Used_Qty;
+                    }
+                }
+                usedStock=Math.Round(Convert.ToDouble(usedStock), 2);
+                double OldStock =Convert.ToDouble(data.Quantity) - Convert.ToDouble(usedStock);
+                OldStock= Math.Round(OldStock, 2);
+                Instock= Math.Round(Instock, 2);
+                if (OldStock < Instock)
+                {
+                    double Quantity = Instock - OldStock;
+                    Quantity= Math.Round(Quantity, 2);
+                    data.Quantity =data.Quantity+ Quantity;
+                    data.Added_Date = DateFormat;
+                    context.Entry(data).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    tbl_InventoryUsage usg = new tbl_InventoryUsage();
+                    usg.InventoryID = data.ID;
+                    usg.Used_Qty = 0;
+                    usg.Description =Quantity + " " + data.Measurement + " added.";
+                    usg.Used_Date = DateFormat;
+                    context.tbl_InventoryUsage.Add(usg);
+                    context.SaveChanges();
+                    return Json("updated");
+                }
+                else if (OldStock > Instock)
+                {
+                    double Quantity =OldStock- Instock;
+                    Quantity = Math.Round(Quantity, 2);
+                    data.Quantity = data.Quantity - Quantity;
+                    data.Added_Date = DateFormat;
+                    context.Entry(data).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    tbl_InventoryUsage usg = new tbl_InventoryUsage();
+                    usg.InventoryID = data.ID;
+                    usg.Used_Qty = 0;
+                    usg.Description = Quantity + " " + data.Measurement + " removed.";
+                    usg.Used_Date = DateFormat;
+                    context.tbl_InventoryUsage.Add(usg);
+                    context.SaveChanges();
+                    return Json("updated");
+                }
+                return Json("both equal");
+            }
+                return Json("");
+        }
             public JsonResult getMenuItemID(int id)
         {
             

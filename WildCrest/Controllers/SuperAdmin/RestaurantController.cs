@@ -258,10 +258,13 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult CreateBill(int billNo)
+        public JsonResult CreateBill(int billNo,string gstno,string custname, string phoneno)
         {
             var menusData = context.tbl_MenusBillingSection.SingleOrDefault(p => p.Bill_Number == billNo);
             var tableData = context.tbl_TablesForBooking.SingleOrDefault(w => w.ID == menusData.TableID);
+            menusData.Customer_GstNO = gstno;
+            menusData.Phone = phoneno;
+            menusData.Customer_Name = custname;
             menusData.Table_Status = "billed";
             context.Entry(menusData).State = EntityState.Modified;
             tableData.Table_Status = "billed";

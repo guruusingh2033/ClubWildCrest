@@ -35,7 +35,14 @@
                                 <label style="font-size: large;">Customer Name </label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
-                                    <input type="text" id="CName" class="form-control" value="@Model.Customer_Name" readonly />
+                                    <input type="text" id="CName" class="form-control" value="@Model.Customer_Name"/>
+                                </div>
+                            </div>
+                            <div class="form-group" style="clear:both;">
+                                <label style="font-size: large;">Customer GST NO. </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <input type="text" id="cust_gstno" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -110,6 +117,45 @@
 
 
 <script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            cache: true,
+            url: "/Billing/GetCustomerNames",
+            data: JSON.stringify({ prefix: '' }),
+            dataType: "Json",
+            success: function (data) {
+                var array = $.map(data.customer, function (item) {
+                    return {
+                        label: item.Value,
+                        value: item.Value,
+                        customPhone: item.Phone,
+                        customid:item.ID
+                    }
+                });
+                $("#CName").autocomplete({
+                    source: function (request, response) {
+
+                        if (array) {
+                            response($.ui.autocomplete.filter(array, request.term));
+                        }
+                    }, change: function (e, i) {
+
+                        if (i.item != null && i.item != "") {
+                            $('#phone').val(i.item.customPhone);
+                            //CustomerNameChange();
+                        }
+                        else {
+                            $('#phone').val('');
+
+                        }
+                    }
+
+                });
+            }
+        });
+    });
     function PrintBill() {
         $(".preloader").css("display", "block");
         newWin = window.open("");
@@ -117,7 +163,7 @@
             type: "POST",
             contentType: "application/json; charset=utf-8",
             url: "/Restaurant/CreateBill",
-            data: JSON.stringify({ billNo: @Model.Bill_Number }),
+            data: JSON.stringify({ billNo: @Model.Bill_Number,gstno:$("#cust_gstno").val(),custname:$("#CName").val(),phoneno: $('#phone').val() }),
             dataType: "Json",
             success: function (response) {
                 var d = new Date();
@@ -130,9 +176,10 @@
                 tbl += "<br>Bill No. : " +'@Model.Bill_Number';
                 tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : " + time;
                 tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date : " + strDate;
-                tbl += "<br>Customer : " + '@Model.Customer_Name';
-        tbl += "<br>Customer PhoneNo : " + '@Model.Phone' + "</p>";
-                    
+                tbl += "<br>Customer : " + $("#CName").val();
+        tbl += "<br>Customer PhoneNo : " + $('#phone').val();
+        tbl += "<br>Customer GSTNO : " + $("#cust_gstno").val() + "</p>";
+
                 tbl += '<table id="tabel-heading" style="font-size: 9px;width:100%;margin:0; ">' +
         '<thead>'+
         '<tr style="font-weight:400;">'+
@@ -156,7 +203,7 @@
                    '<th colspan="3"   style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>'+
                    '<td  style="text-align: right;padding: 10px 2px 2px 2px;">' + $("#total").html() + '</td>' +
                  '</tr>'+
-      
+
                  //'<tr>'+
                  //  '<td colspan="3"   style="text-align: right;padding: 0px 11px; ">SGST (2.5%) : </td>'+
                  //  '<td  style="text-align: right;padding: 2px;">' + $("#sgst").html() + '</td>' +
@@ -172,14 +219,14 @@
                '</tbody>'+
 
              '</table><p style="font-size: 9px;">GOOD SERVICE DESERVES A TIP!!</p>';
-      
+
                 var htmlToPrint = '' +
                     '<style type="text/css">' +
                     'body{font-family: arial;}' +
                     '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
                     '</style>';
                 htmlToPrint += tbl;
-                   
+
                 newWin.document.write(htmlToPrint);
                 newWin.print();
                 newWin.close();
@@ -189,6 +236,6 @@
             error: function (response) {
                 $(".preloader").css("display", "none");
             }
-        });        
+        });
     }
 </script>

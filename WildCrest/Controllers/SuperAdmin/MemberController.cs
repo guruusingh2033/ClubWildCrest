@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using WildCrest.Models;
 using WildCrest.Models.WildCrestModels;
 
 namespace WildCrest.Controllers.SuperAdmin
@@ -484,7 +485,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     }
                     prf.MembershipWithYear = JsonConvert.SerializeObject(MembershipWithYear);
                     //------------------------------------------------------------------------------------------
-
+                  
                     ViewBag.MembersPhoto = memPhoto;
                     ViewBag.MembersDOcs = memDocs;
                 }
@@ -505,20 +506,49 @@ namespace WildCrest.Controllers.SuperAdmin
         {
             var UserMembership = context.tbl_UserMembership.SingleOrDefault(a => a.UserID == model.UserID);
             if (UserMembership != null)
-            {
-                var profile = context.tbl_Profile.SingleOrDefault(a => a.ID == model.UserID);
-                if (profile != null)
+            { string expDate = "";
+                //var profile = context.tbl_Profile.SingleOrDefault(a => a.ID == model.UserID);
+                //if (profile != null)
+                //{
+                //    profile.CustomMemberID = model.CustomMemberID;
+                //    context.Entry(profile).State = EntityState.Modified;
+                //    context.SaveChanges();
+                //}
+               var CurrentMemberShip= context.tbl_MembershipPlans.SingleOrDefault(x => x.ID == model.MembershipPlanID);
+                if (CurrentMemberShip != null)
                 {
-                    profile.CustomMemberID = model.CustomMemberID;
-                    context.Entry(profile).State = EntityState.Modified;
+                    context.Database.ExecuteSqlCommand("sp_savetbl_UserMembershipHistory @userid={0},@membershipid={1},@membershipjoindate={2},@membeshipexiprydate={3}", UserMembership.UserID, UserMembership.MembershipID, UserMembership.MembershipJoiningDate, UserMembership.MembershipExpiryDate);
+
+
+                    UserMembership.MembershipID = CurrentMemberShip.ID;
+                    UserMembership.MembershipJoiningDate = model.MembershipJoiningDate;
+                    string[] expiredate = model.MembershipJoiningDate.Split('/');
+                    var expireFullDate = new DateTime(Convert.ToInt32(expiredate[2]), Convert.ToInt32(expiredate[0]), Convert.ToInt32(expiredate[1]));
+                    int planYear = CurrentMemberShip.MembershipPlanForYear;
+                    UserMembership.MembershipExpiryDate= expireFullDate.AddYears(planYear).ToString(@"MM\/dd\/yyyy");
+                    expDate = UserMembership.MembershipExpiryDate;
+                    context.Entry(UserMembership).State = EntityState.Modified;
                     context.SaveChanges();
+                   
                 }
-               
-                UserMembership.MembershipJoiningDate = model.MembershipJoiningDate;
-                UserMembership.MembershipExpiryDate = model.MembershipExpiryDate;
-                context.Entry(UserMembership).State = EntityState.Modified;
-                context.SaveChanges();
-                return Json("Updated");
+                var CurrentBillDtl = context.tbl_MembersBillingDetails.SingleOrDefault(x => x.UserID == model.UserID);
+                if (CurrentBillDtl != null)
+                {
+                    CurrentBillDtl.Mode_Of_Payment = model.Mode_Of_Payment;
+                    CurrentBillDtl.TotalAmount = model.Amount_Paid;
+                    CurrentBillDtl.Cheque_No = model.Cheque_No;
+                    CurrentBillDtl.BankName = model.BankName;
+                    CurrentBillDtl.Payment_Date = DateTime.Today.ToString(@"MM\/dd\/yyyy");
+                    context.Entry(CurrentBillDtl).State = EntityState.Modified;
+                     context.SaveChanges();
+                }
+
+                var result = new
+                {
+                    ExpiryDate = expDate
+                };
+                return Json(result);
+
             }
             else
             {
@@ -619,6 +649,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var data = context.tbl_Profile.Find(prf.ID);
             if (data != null)
             {
+               
                 data.F_Name = prf.F_Name;
                 data.L_Name = prf.L_Name;
                 data.Address = prf.Address;
@@ -661,7 +692,7 @@ namespace WildCrest.Controllers.SuperAdmin
                         modifyUserPlan.MembershipJoiningDate = prf.MembershipJoiningDate;
                         modifyUserPlan.MembershipExpiryDate = expireFullDate.AddYears(getPlanYear.MembershipPlanForYear).ToString(@"MM\/dd\/yyyy");
                         //modifyUserPlan.MembershipPlanForYear = prf.PlanForYear;
-
+                       
                         context.Entry(modifyUserPlan).State = EntityState.Modified;
                         var delUserStay = context.tbl_UsersStay.Where(du => du.UserID == data.ID).ToList();
                         if (delUserStay != null)
@@ -751,8 +782,10 @@ namespace WildCrest.Controllers.SuperAdmin
                         context.SaveChanges();
                     }
                 }
+                
+                return Json("Updated");
             }
-            return Json("Updated.");
+            return Json("");
         }
 
         [HttpPost]
@@ -867,7 +900,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 tbl_MembersBillingDetails bill = new tbl_MembersBillingDetails();
 
                 var billingDetails = JsonConvert.DeserializeObject<BillingDetails>(newMember.billingDetailsInJson);
-
+            
 
                 bill.Mode_Of_Payment = billingDetails.Mode_Of_Payment;
                 bill.TotalAmount = billingDetails.Amount_Paid;
@@ -993,6 +1026,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
         public List<RoomBooking_Details> getMembershipDetailsByUserID(int userId)
         {
+           
             List<RoomBooking_Details> usr = new List<RoomBooking_Details>();
             var a = context.tbl_UserMembership.SingleOrDefault(u => u.UserID == userId);
             if (a != null)
@@ -1053,6 +1087,56 @@ namespace WildCrest.Controllers.SuperAdmin
             return usr;
         }
 
+        [HttpGet]
+        public ActionResult GetMembershipHistoryByUserID(int userId)
+        {
+            List<MembershipHistoryModel> HistoryList = new List<MembershipHistoryModel>();
+            var items = context.Database.SqlQuery<MembershipHistoryEntity>("sp_Gettbl_UserMembershipHistory @userid={0}", userId).ToList();
+            if (items != null && items.Count()>0)
+            {
+                foreach(var item in items)
+                {
+                    MembershipHistoryModel memhistory = new MembershipHistoryModel();
+                    memhistory.MembershipPlan = context.tbl_MembershipPlans.SingleOrDefault(x => x.ID == item.MembershipID).PlanName;
+                    memhistory.MembershipPlanDate = item.MembershipJoiningDate.ToString("dd MMM yyyy") + "  - " + item.MembershipExpiryDate.ToString("dd MMM yyyy");
+                    var data = context.Database.SqlQuery<RoomBooking_Details>("exec staysAccToYearlyMembershipHistory @userID={0},@membershipID={1},@HistoryID={2}", item.UserID, item.MembershipID,item.HistoryID).ToList<RoomBooking_Details>();
+                    int? Stay = 0;
+
+                    memhistory.RoomsDetails = new List<RoomBooking_Details>();
+                    foreach (var i in data)
+                    {
+                        
+                        var e = context.tbl_RoomBooking.SingleOrDefault(s => s.Booking_ID == i.Booking_ID);
+                       
+                        if (e != null)
+                        {
+                            Stay = Stay + i.ComplementaryStays;
+                            memhistory.RoomsDetails.Add( new RoomBooking_Details
+                            {
+                                Booking_ID = i.Booking_ID,
+                                Check_In = e.Check_In,
+                                Check_Out = e.Check_Out,
+                                NoOfPerson = i.NoOfPerson,
+                                ComplementaryStays = i.ComplementaryStays,
+                                RoomNo = context.tbl_Rooms.SingleOrDefault(r => r.ID == i.RoomID).RoomNo
+                            });
+                            
+                            
+
+
+
+
+                        }
+
+                    }
+                    memhistory.TotalStay = context.tbl_MembershipPlans.SingleOrDefault(t => t.ID == item.MembershipID).NoOfStays;
+                    memhistory.ComplementaryStay = Stay;
+                    HistoryList.Add(memhistory);
+                }
+            }
+
+            return PartialView("~/Views/Shared/Membership/_MembershipHistory.cshtml", HistoryList);
+        }
         [Authorize(Roles = "1,2")]
         public ActionResult AddMemberStay(int id)
         {

@@ -11,6 +11,10 @@ namespace WildCrest.Models.WildCrestModels
         public int UserID { get; set; }
         public string CustomMemberID { get; set; }
         public string MembershipJoiningDate { get; set; }
-        public string MembershipExpiryDate { get; set; }
+        public int MembershipPlanID { get; set; }
+        public string Mode_Of_Payment { get; set; }
+        public string Cheque_No { get; set; }
+        public string BankName { get; set; }
+        public double Amount_Paid { get; set; }
     }
 }

@@ -10,12 +10,19 @@
     .modal-body1 {
         margin-left: 25px;
     }
+     .modal-body2 {
+        margin-left: 25px;
+    }
 
     .fa-plus-square {
         font-size: 19px;
         color: #272c33;
     }
-  
+  .fa-edit:before{
+    
+    font-size: 19px;
+    color: #272c33;
+}
     /*.modal-body {
         overflow-y: scroll;
         height: 400px;
@@ -67,14 +74,18 @@ opacity: .8;
                                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                                 </a>
                                 @*<a title="Edit" href="@Url.Action("AdminDetailsByID", "Admin", new { id = i.ID, editDetail = "Edit" }, null)">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </a>*@
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </a>*@
 
                                 <a href="#" title="Delete" onclick="DeleteInventoryById(@i.ID);">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                                 @*<a class="plusItem" title="Add More Quantity" href="/Inventory/AddNewItem"><i class="fa fa-plus-square" aria-hidden="true"></i></a>*@
                                 <button type="button" title="Add More Quantity" class="btn btn-link" style="box-shadow:none;" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Price="@i.Price" data-toggle="modal" data-target="#qtyModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                @if (Request.Cookies["UserType"].Value == "1")
+                                {
+                                    <button type="button" title="Edit Quantity" class="btn btn-link" style="box-shadow:none;" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Qty="@(String.Format("{0:0.##}", i.Quantity))" data-InStock="@i.InStock" data-toggle="modal" data-target="#qtyupdateModal"><i class="fa fa-edit"></i></button>
+                                }
                             </td>
                             <td>@i.Item_Name</td>
                             <td>@i.Type</td>
@@ -213,10 +224,12 @@ opacity: .8;
                     used=Number.isInteger(used)?used:qtyTemp;
                     tbl+="</tbody>";
                     tbl += "</table>";
-                    tbl += "<br><b>Total Quantity = " + totalQuantity + "</b>" +
+                    var totalQty= "<br><b>Total Quantity = " + totalQuantity + "</b>" +
                         "<br><b>Used Quantity = " + used + "</b>" +
                         "<br><b>Left Quantity = " + left + "</b>";
-                    $(".modal-body").append(tbl);
+
+                    totalQty +=  tbl;
+                    $(".modal-body").append(totalQty);
                     var table = $('.modal-body table').DataTable({
                         "paging":   false,
                         "ordering": false,
@@ -278,7 +291,6 @@ opacity: .8;
         itemprice = $("#price").val();
         $("#vendorID").val(vendorID);
     });
-
     function closeModal() {
         $("#Inventory_ID").val("");
         $("#Item_Name").empty();
@@ -286,11 +298,33 @@ opacity: .8;
         $("#price").val("");
         $("#vendorID").val(0);
         $("#errorMsg").empty();
-       
+
         $("#qtyModal").modal('hide');
-      
+
 
     }
+    $(document).on('show.bs.modal', '#qtyupdateModal', function (e) {
+        var InventoryID = $(e.relatedTarget).data('inventoryid');
+        var Item_Name = $(e.relatedTarget).data('itemname');
+        var Qty = $(e.relatedTarget).data('qty');
+        var InStock = $(e.relatedTarget).data('instock');
+        var vendorID = $(e.relatedTarget).data('vendorid');
+        $("#Inventory_ID").val(InventoryID);
+        $("#ItemName").html(Item_Name);
+        $("#qtyupdate").val(Qty);
+        $("#instock").val(InStock);
+       
+    });
+    function closeupdateModal() {
+        $("#Inventory_ID").val("");
+        $("#ItemName").empty();
+        $("#qtyupdate").val("");
+        $("#instock").val("");
+        $("#instockcurrent").val("");
+        $("#errorupdateMsg").empty();
+        $("#qtyupdateModal").modal('hide');
+    }
+   
 
     function addQuantity() {
 
@@ -437,6 +471,38 @@ opacity: .8;
             });
         }
     }
+
+    function updateQuantity() {
+        if ($("#instock").val() == '') {
+            $("#errorupdateMsg").html("InStock is required.");
+            return;
+        }
+       
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/Inventory/UpdateQuantity",
+            data: JSON.stringify({ InventoryID: $("#Inventory_ID").val(), Instock: $("#instock").val() }),
+            dataType: "Json",
+            success: function (data) {
+                if (data == "updated") {
+                    closeupdateModal();
+                    location.reload();
+                } if (data == "both equal") {
+                    closeupdateModal();
+                } else {
+                    $("#errorupdateMsg").html("");
+                    $("#errorupdateMsg").html("something went wrong.");
+                }
+               
+            },
+            error: function (err) {
+                bootbox.alert(err.statusText);
+            }
+        });
+
+        
+}
 </script>
 
 <div id="myModal" class="modal fade stock_info_modal_popup" role="dialog" data-keyboard="false" data-backdrop="static">
@@ -513,3 +579,50 @@ opacity: .8;
     </div>
 </div>
 
+
+<div id="qtyupdateModal" class="modal fade stock_info_modal_popup" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit Quantity for <span id="ItemName"></span></h4>
+                <button type="button" class="close" onclick="closeupdateModal();">&times;</button>
+            </div>
+            <div class="modal-body2">
+                <table cellpadding="10">
+                    <tbody>
+                        <tr hidden="hidden">
+                            <td>Quantity</td>
+                            <td>
+                                <input type="text" id="qtyupdate" class="form-control" readonly/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>InStock</td>
+                            <td>
+                                <input type="text" id="instock" class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr  hidden="hidden">
+                            <td>Update Quantity</td>
+                            <td>
+                                <input type="text" id="instockcurrent" class="form-control" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <i>
+                <div id="errorupdateMsg" style="margin-left: 25px; color: red; font-size: 13px; font-weight: 400;"></div>
+            </i>
+            <div class="modal-footer">
+                <input type="button" value="Update" onclick="updateQuantity();" class="btn btn-primary" />
+
+                <button type="button" class="btn btn-default" onclick="closeupdateModal();">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

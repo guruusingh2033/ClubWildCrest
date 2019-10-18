@@ -62,6 +62,14 @@ namespace WildCrest.Controllers.EntryMembers
             ViewBag.FilterFromReport = filterFromReport;
             return View();
         }
+
+        int GetTokenNo(string Token)
+        {
+            var StartIndex = Token.LastIndexOf('_') + 3;
+            var StringLength = Token.Length - StartIndex;
+            var LastTokenCount = Token.Substring(StartIndex, StringLength);
+            return Convert.ToInt32(LastTokenCount);
+        }
         public JsonResult SaveBill(string PayMode,int ID)
         {
             if (ID > 0)
@@ -79,12 +87,36 @@ namespace WildCrest.Controllers.EntryMembers
                     li.ModeOfPayment = data.Mode_Of_Payment;
                     li.DateofBilling = data.Date_Of_Billing;
                     li.GstAmount = data.Gst_Amount;
+                    li.Total_Amount = data.Total_Amount;
                     li.Price_Without_Gst = data.Price_Without_Gst;
+                    li.TokenNo = data.TokenNo;
                     return Json(li);
                 }
                 else
                 {
                     tbl_EntryMember_Billing model = new tbl_EntryMember_Billing();
+                    var date = DateTime.Today;
+                    var DateForToken = date.ToString("ddMMyyyy");
+                    string Token = "";
+                    Token = DateForToken + "_001";
+                    var LastToken=context.tbl_EntryMember_Billing.ToList().LastOrDefault().TokenNo;
+                    if (LastToken != null)
+                    {
+                        if (LastToken.Contains(DateForToken))
+                        {
+                            int CurrentValue = GetTokenNo(LastToken) + 1;
+                            model.TokenNo = DateForToken + "_00" + CurrentValue;
+                        }
+                        else
+                        {
+                            model.TokenNo = Token;
+                        }
+                    }
+                    else
+                    {
+                        model.TokenNo = Token;
+                    }
+                    
                     model.Price_With_Gst =double.Parse(context.tbl_EntryMembers.SingleOrDefault(x => x.ID == ID).EntryFee);
                     model.Gst_Amount = Convert.ToDouble(model.Price_With_Gst) * (Convert.ToDouble(18) / (double)100);
                     model.Price_Without_Gst = Convert.ToDouble(model.Price_With_Gst) - Convert.ToDouble(model.Gst_Amount);
@@ -92,7 +124,7 @@ namespace WildCrest.Controllers.EntryMembers
                     model.Members = context.tbl_EntryMembers.SingleOrDefault(x => x.ID == ID).qty;
                     model.Gst_Amount =Convert.ToDouble(model.Gst_Amount) * Convert.ToDouble(model.Members);
                     model.Total_Amount =double.Parse(context.tbl_EntryMembers.SingleOrDefault(x => x.ID == ID).TotalAmount);
-                    model.Amount_Paid = model.Total_Amount;
+                    model.Amount_Paid = model.Total_Amount+model.Gst_Amount;
                     model.Mode_Of_Payment = PayMode;
                     model.Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
                     model.Member_ID = ID;
@@ -109,7 +141,8 @@ namespace WildCrest.Controllers.EntryMembers
                     li.DateofBilling = model.Date_Of_Billing;
                     li.GstAmount = model.Gst_Amount;
                     li.Price_Without_Gst = model.Price_Without_Gst;
-                 
+                    li.Total_Amount = model.Total_Amount;
+                    li.TokenNo = model.TokenNo;
                     return Json(li);
                 }
             }
@@ -128,6 +161,7 @@ namespace WildCrest.Controllers.EntryMembers
                 li.AmountPaid = data.Amount_Paid;
                 li.ModeOfPayment = data.Mode_Of_Payment;
                 li.DateofBilling = data.Date_Of_Billing;
+                li.TokenNo = data.TokenNo;
                 li.ID =Convert.ToInt32(data.Member_ID);
             }
             return View(li);
@@ -238,7 +272,7 @@ namespace WildCrest.Controllers.EntryMembers
                         ModeOfPayment = i.ModeOfPayment,
                         DateofBilling = Convert.ToDateTime(i.DateofBilling).ToString("dd/MM/yyyy")
                     });
-                    finaltotalVal +=i.Total_Amount;
+                    finaltotalVal +=i.AmountPaid;
                     finalcsgst += i.GstAmount;
 
                     //var d = context.tbl_MenusBillingDetailsWithBillNo.Where(a => a.BillNo == i.Bill_Number).ToList();

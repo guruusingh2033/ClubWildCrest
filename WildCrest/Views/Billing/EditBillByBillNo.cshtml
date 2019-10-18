@@ -117,8 +117,15 @@
                                     <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Customer GST NO :</label>
+                                    <input type="text" id="custGSTNO" value="@Model.Customer_GstNO" class="form-control">
+                                </div>
+                            </div>
                              <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
                                 <input type="button" value="Add More" data-toggle="modal" data-target="#addMoreModal" class="btn btn-primary" />
+                                 <input type="button" value="Update" onclick="updateGSTNO()" class="btn btn-primary" />
                             </div>
                             @if (Model.MenusBillingDetailsWithBillNo.Count != 0)
                             {
@@ -272,7 +279,26 @@
             }
         });
     });
-
+    function updateGSTNO() {
+       
+        $.ajax({
+            type: "post",
+            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',gstno:$("#custGSTNO").val() }),
+            url: "/Billing/UpdateBillByBillNo",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                if (response != "") {
+                    bootbox.alert("Update Successfully.");
+                } else {
+                    bootbox.alert("Not Updated.");
+                }
+            },
+            error: function () {
+                alert('Some error occured.Try again after refresh.');
+            }
+        });
+    }
     $('#itemList').on('click','input:checkbox', function(event) {
         if($(this).is(':checked')){
             selectedItems.push($(this).val());
@@ -570,18 +596,21 @@
    '<tbody  style="text-align: left;" >' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
    '<td style="padding: 5px 0;">Customer Name : ' + '@Model.Customer_Name' + '</td>' +
+   '<td style="padding: 5px 0;">Customer GST NO : ' + '@Model.Customer_GstNO' + '</td>' +
    '<td style="padding: 5px 0;">Bill No. : ' + '@Model.Bill_Number' + '</td>' +
-   '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+   '<td style="padding: 5px 0;"></td>' +
    '</tr>' +
+
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+    '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
    '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
    '<td style="padding: 5px 0;">Total Price : ₹ ' + totalPrice + '</td>' +
-   '<td style="padding: 5px 0;">GST : ₹ ' + '@Model.GST' + '</td>' +
+
    '</tr>' +
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
    '<td style="padding: 5px 0;">Billing Date : ' + $.date('@Model.PaymentDate') + '</td>' +
    '<td style="padding: 5px 0;">Payment Mode : ' + '@Model.Mode_Of_Payment' + '</td>' +
-   '<td style="padding: 5px 0;"></td>' +
+    '<td style="padding: 5px 0;">GST : ₹ ' + '@Model.GST' + '</td>' +
    '</tr>' +
    '</tbody></table><br>';
 

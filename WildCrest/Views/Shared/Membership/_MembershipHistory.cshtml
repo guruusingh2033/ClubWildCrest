@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WildCrest.Models.WildCrestModels.MembershipHistoryModel>
+
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        if (item.RoomsDetails.Count > 0)
+        {
+            <div class="col-md-6 col-sm-12 form-profile-in" style="display:flex">
+                <label class="control-label">Membership Plan:</label>@item.MembershipPlan
+            </div>
+            <div class="col-md-6 col-sm-12 form-profile-in" style="display:flex">
+                <label class="control-label">Plan Validity:</label>@item.MembershipPlanDate
+            </div>
+            <div class="col-md-6 col-sm-12 form-profile-in">
+                <div class="form-group">
+                    <label class="control-label">Total stays during this plan :</label>
+                    <input type="text" id="TotalStays" readonly value="@item.TotalStay" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 form-profile-in">
+                <div class="form-group">
+                    <label class="control-label">Complementary Stays Taken :</label>
+                    <input type="text" id="Complementary" readonly value="@item.ComplementaryStay" class="form-control">
+                </div>
+            </div>
+
+
+
+            <div class="table-responsive m-t-40">
+                <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>No. of Members</th>
+                            <th>Room(s)</th>
+                            <th>Complementary Stays Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var a in item.RoomsDetails)
+                        {
+                            <tr>
+                                <td>@a.Check_In</td>
+                                <td>@a.Check_Out</td>
+                                <td>
+                                    @a.NoOfPerson
+                                </td>
+                                <td>@a.RoomNo</td>
+                                <td>@a.ComplementaryStays</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div>
+
+            </div>
+        }
+    }
+}
+else
+{
+    <div>
+        <label>No record found</label>
+    </div>
+}

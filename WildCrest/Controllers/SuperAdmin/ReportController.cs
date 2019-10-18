@@ -59,7 +59,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var nonGstWineReport = "select Cast(IsNull(sum(mbs.PriceWithoutTax),0) as decimal(18,2)) NonGst_WineSale,Cast(0 as decimal) NonGst_WineDiscount,Cast(0 as decimal) NonGst_WineGST,Cast(IsNull(sum(mbs.PriceWithoutTax),0) as decimal(18,2)) NonGst_WineTotal from tbl_NonGST_WineBillingSection mbs where Cast(mbs.PaymentDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.PaymentDate as date)<=Cast('" + eDate + "' as date)";
             var nonGstWineData = context.Database.SqlQuery<NonMenusWineReports>(nonGstWineReport).FirstOrDefault();
 
-            var entryReport = "select  Cast(IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_GST,Cast((IsNull(Sum(mbs.Total_Amount),0))-IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_Sale,Cast(IsNull(Sum(mbs.Total_Amount),0) as decimal(18,2)) Entry_Total from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)";
+            var entryReport = "select  Cast(IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_GST,Cast((IsNull(Sum(mbs.Amount_Paid),0))-IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_Sale,Cast(IsNull(Sum(mbs.Amount_Paid),0) as decimal(18,2)) Entry_Total from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)";
             var entryData = context.Database.SqlQuery<EntryReports>(entryReport).FirstOrDefault();
 
 
@@ -199,13 +199,13 @@ namespace WildCrest.Controllers.SuperAdmin
 
 
             #region Entry
-            var Entry_Cash_Payment = "select Cast((IsNull(sum(mbs.Total_Amount),0)) as decimal(18,2)) Entry_CashPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cash'";
+            var Entry_Cash_Payment = "select Cast((IsNull(sum(mbs.Amount_Paid),0)) as decimal(18,2)) Entry_CashPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cash'";
             var EntryCashapay = context.Database.SqlQuery<EntryPayment>(Entry_Cash_Payment).FirstOrDefault();
-            var Entry_Paytm_Payment = "select Cast((IsNull(sum(mbs.Total_Amount),0)) as decimal(18,2)) Entry_PaytmPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Paytm'";
+            var Entry_Paytm_Payment = "select Cast((IsNull(sum(mbs.Amount_Paid),0)) as decimal(18,2)) Entry_PaytmPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Paytm'";
             var EntryPaytmapay = context.Database.SqlQuery<EntryPayment>(Entry_Paytm_Payment).FirstOrDefault();
-            var Entry_Card_Payment = "select Cast((IsNull(sum(mbs.Total_Amount),0)) as decimal(18,2)) Entry_CardPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Card'";
+            var Entry_Card_Payment = "select Cast((IsNull(sum(mbs.Amount_Paid),0)) as decimal(18,2)) Entry_CardPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Card'";
             var EntryCardapay = context.Database.SqlQuery<EntryPayment>(Entry_Card_Payment).FirstOrDefault();
-            var Entry_Cheque_Payment = "select Cast((IsNull(sum(mbs.Total_Amount),0)) as decimal(18,2)) Entry_ChequePay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cheque'";
+            var Entry_Cheque_Payment = "select Cast((IsNull(sum(mbs.Amount_Paid),0)) as decimal(18,2)) Entry_ChequePay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cheque'";
             var EntryChequepay = context.Database.SqlQuery<EntryPayment>(Entry_Cheque_Payment).FirstOrDefault();
 
             sale_Report.Entry_Sale = entryData.Entry_Sale;

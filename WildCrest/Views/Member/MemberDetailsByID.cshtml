@@ -1,12 +1,37 @@
 ﻿@model WildCrest.Models.WildCrestModels.Profile
-
+@{ 
+    bool renew =DateTime.ParseExact(Model.MembershipExpiryDate, "MM/dd/yyyy",null) > DateTime.Today ? true : false;
+}
 <style>
     td {
-        padding: 5px;
+            padding: 5px;
+            }
+#ui-datepicker-div {
+            z-index: 9999!important;
+        }
+    .memberhistory {
+        height: 480px;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
-  #ui-datepicker-div {
-    z-index: 9999!important;
-}
+    .renewpopup {
+        height: 370px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .historyBtn {
+        margin-left: auto;
+        background: #ffffff;
+        color: #009efb;
+    }
+    .historyBtn:hover {
+        margin-left: auto;
+        background: #ffffff;
+        color: #009efb;
+    }
+    #MemberHistory .modal-dialog {
+        max-width: 810px;
+    }
 </style>
 <body class="fix-header card-no-border">
 
@@ -20,7 +45,7 @@
                         <h4 class="card-title">Member Info</h4>
 
                         <div class="form p-t-20">
-                            @if (Model.ID != null && Model.ID != 0)
+                            @if (Model.ID != 0)
                             {
                                 <div class="col-md-6 col-sm-6 form-profile-in">
                                     <div class="form-group">
@@ -184,15 +209,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 form-profile-in">
-                                     @if (Request.Cookies["UserType"].Value == "1")
-                                                    {
-                                     <button type="button" class="btn btn-primary btn-margin"  data-toggle="modal" data-target="#Renewal_Member">Renewal Membership</button>
-                                     }
+                                    @if (Request.Cookies["UserType"].Value == "1")
+                                    {
+                                        <button type="button" disabled="@renew" class="btn btn-primary btn-margin" data-toggle="modal" data-target="#Renewal_Member">Renewal Membership</button>
+                                    }
                                     @if (Request.Cookies["PageSetting"] != null)
                                     {
                                         if (Request.Cookies["PageSetting"]["MemberPermission"] != "View")
                                         {
-                                        @Html.ActionLink("Edit", "MemberDetailsByID", "Member", new { id = Model.ID }, new { @class = "btn btn-primary btn-margin" })
+                                            @Html.ActionLink("Edit", "MemberDetailsByID", "Member", new { id = Model.ID }, new { @class = "btn btn-primary btn-margin" })
                                         }
                                     }
                                     else
@@ -204,7 +229,7 @@
                             }
                             else
                             {
-                                <label>No Record Found.</label>   
+                                <label>No Record Found.</label>
                             }
                         </div>
                     </div>
@@ -218,7 +243,8 @@
             <div class="col-md-12 info_common member_stay_details">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Member Stays Details</h4>
+                        <h4 class="card-title d-flex align-items-center">Member Stays Details  <button onclick="GetMemberHistory('@Model.ID')" class="btn btn-primary historyBtn">History</button></h4>
+
                         <div class="form p-t-20">
                             @if (ViewBag.UserStays.Count != 0)
                             {
@@ -236,12 +262,12 @@
                                     </div>
                                 </div>
 
-@*<div class="col-md-4 col-sm-12 form-profile-in">
-                                    <div class="form-group">
-                                        <label class="control-label">Total Night Stays :</label>
-                                        <input type="text" id="DOB" readonly value="@ViewBag.NightStays" class="form-control">
-                                    </div>
-                                </div>*@
+                                @*<div class="col-md-4 col-sm-12 form-profile-in">
+                                        <div class="form-group">
+                                            <label class="control-label">Total Night Stays :</label>
+                                            <input type="text" id="DOB" readonly value="@ViewBag.NightStays" class="form-control">
+                                        </div>
+                                    </div>*@
 
                                 <div class="table-responsive m-t-40">
                                     <table id="memberList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
@@ -260,18 +286,19 @@
                                                 <tr>
                                                     <td>@a.Check_In</td>
                                                     <td>@a.Check_Out</td>
-                                                    <td>@a.NoOfPerson
-                                                        @* @if (a.NoOfMembers != 0)
+                                                    <td>
+                                                        @a.NoOfPerson
+                                                    @* @if (a.NoOfMembers != 0)
                                                         {@a.NoOfMembers}
                                                         else
                                                         {
                                                             <center>  <label>1</label></center>
                                                         }*@
-                                                    </td>
-                                                    <td>@a.RoomNo</td>
-                                                    <td>@a.ComplementaryStays</td>
-                                                </tr>
-                                            }
+                                                </td>
+                                                <td>@a.RoomNo</td>
+                                                <td>@a.ComplementaryStays</td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
 
@@ -292,105 +319,255 @@
     {
         if (ViewBag.MembersPhoto.Count != 0 || ViewBag.MembersDOcs.Count != 0)
         {
-        <div class="row">
-            <div class="col-md-12 info_common member_stay_details">
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Member's Photo or Docs</h4>
-                        <div class="form p-t-20 membersImgDocs">
-                            @if (ViewBag.MembersPhoto.Count != 0)
-                            {
-                                <label><b>Member's Photo :</b></label>
-                                <div class="row">
-                                    @foreach (var img in ViewBag.MembersPhoto)
-                                    {
-                                        <div class="col-md-3 col-sm-6">
-                                            <a href="@img.MemberImagePath" target="_blank">
-                                                <img src="@img.MemberImagePath" class="img-responsive" /></a>
-                                        </div>  
-                                    }
-                                </div>
-                            }
+            <div class="row">
+                <div class="col-md-12 info_common member_stay_details">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Member's Photo or Docs</h4>
+                            <div class="form p-t-20 membersImgDocs">
+                                @if (ViewBag.MembersPhoto.Count != 0)
+                                {
+                                    <label><b>Member's Photo :</b></label>
+                                    <div class="row">
+                                        @foreach (var img in ViewBag.MembersPhoto)
+                                        {
+                                            <div class="col-md-3 col-sm-6">
+                                                <a href="@img.MemberImagePath" target="_blank">
+                                                    <img src="@img.MemberImagePath" class="img-responsive" />
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                }
 
-                            @if (ViewBag.MembersDOcs.Count != 0)
-                            {
-                                <label><b>Member's Docs :</b></label>
-                                <div class="row">
-                                    @foreach (var img in ViewBag.MembersDOcs)
-                                    {
-                                        <div class="col-md-3 col-sm-6">
-                                            <a href="@img.MemberDocsPath" target="_blank">
-                                                <img src="@img.MemberDocsPath" class="img-responsive" /></a>
-                                        </div>  
-                                    }
-                                </div>
-                            }
+                                @if (ViewBag.MembersDOcs.Count != 0)
+                                {
+                                    <label><b>Member's Docs :</b></label>
+                                    <div class="row">
+                                        @foreach (var img in ViewBag.MembersDOcs)
+                                        {
+                                            <div class="col-md-3 col-sm-6">
+                                                <a href="@img.MemberDocsPath" target="_blank">
+                                                    <img src="@img.MemberDocsPath" class="img-responsive" />
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                }
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     }
-    <div id="Renewal_Member" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background:#0698ef;">
-                <h1 class="modal-title" style="color:white;">Renewal Membership</h1>
-            </div>
-            <div class="modal-body">
+    <div id="MemberHistory" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#0698ef;">
+                    <h5 class="modal-title" style="color:white;">Membership History</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body  memberhistory">
 
-                <div class="form-group">
-                    <label>New MemberID (Required)</label>
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="ti-user" aria-hidden="true" style="font-size: initial"></i></div>
-                        <input type="text" class="form-control" id="CustomMember_ID" placeholder="@Model.CustomMemberID"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>New MembershipJoiningDate(Required)</label>
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="font-size: initial"></i></div>
-                        <input type="text" readonly class="form-control clsDatePicker" id="MembershipJoining_Date" onchange="enableDatesAccToStartDate();"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>New MembershipExpiryDate(Required)</label>
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="font-size: initial"></i></div>
-                        <input type="text" readonly class="form-control clsDatePicker" id="MembershipExpiry_Date"/>
-                    </div>
+                    
+
+
                 </div>
 
-              
-                <i>
-                    <div id="error" style="color: red; font-size: 13px; font-weight: 400;"></div>
-                </i>
-            </div>
 
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="close_create_order_Modal();">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="Renewal();">Update</button>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
+    <div id="Renewal_Member" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#0698ef;">
+                    <h4 class="modal-title" style="color:white;">Renewal Membership</h4>
+                </div>
+                <div class="modal-body renewpopup">
+                    <i>
+                        <div id="error" style="color: red; font-size: 13px; font-weight: 400;"></div>
+                    </i>
+                    @*<div class="form-group">
+                        <label>New MemberID (Required)</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user" aria-hidden="true" style="font-size: initial"></i></div>
+                            <input type="text" class="form-control" id="CustomMember_ID" placeholder="@Model.CustomMemberID" />
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label style="font-size: large;">Membership Plan :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email" style="font-size: initial"></i></div>
+                            <select id="MembershipPlan" class="form-control" onchange="ChangePlan()">
+
+                                @foreach (var s in ViewBag.MembershipPlans)
+                                {
+                                    <option value="@s.ID">@s.PlanName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <i>
+                        <label style="color: green; font-size: 13px; font-weight: 400;">Plan Amount:<span id="planAmount"></span></label>
+
+                    </i>
+                    <div class="form-group">
+                        <label>New MembershipJoiningDate(Required)</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true" style="font-size: initial"></i></div>
+                            <input type="text" readonly class="form-control clsDatePicker" id="MembershipJoining_Date" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <label>Amount Paid <span class="complusoryFields">*</span></label>
+                            <input type="text" class="form-control floatNo requiredFields" id="amountrenew" />
+                        </div>
+                        <div class="col-md-6 col-sm-6" id="mode_pay">
+                            <label>Mode of Payment :</label>
+                            <select onchange="paymentMode();" class="form-control" id="paymentModeRenew">
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </div>
+                        <div id="cheque" style="display: none;" class="col-md-6 col-sm-6">
+                            <label>Cheque No. <span class="complusoryFields">*</span></label>
+                            <input type="text" class="form-control requiredFields" id="chequeNorenew" />
+                        </div>
+                        <div id="cheque1" style="display: none;" class="col-md-6 col-sm-6">
+                            <label>Bank Name <span class="complusoryFields">*</span></label>
+                            <input type="text" class="form-control requiredFields" id="bankNamerenew" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6" style="margin: 10px 0;">
+                            <label>Plan Amount</label>
+                            <input type="text" readonly class="form-control" id="pamtreNew" value="0" />
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="margin: 10px 0;">
+                            <label style="color: black; font-weight: 500;">GST (18%)</label>
+                            <input type="text" readonly class="form-control" id="Pgstrenew" value="0" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="close_create_order_Modal();">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="Renewal();">Update</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </body>
 <script>
+    function ChangePlan() {
+        
+        @foreach (var s in ViewBag.MembershipPlans)
+        {
+            <text>
+        if (@s.ID == $("#MembershipPlan").val())
+        {
+            $("#planAmount").html('@s.PlanAmount');
+            
+        }
+        </text>
+        }
+            
+        };
+    $("#amountrenew").on("keypress keyup blur", function (event) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+    $("#amountrenew").focusout(function () {
+        
+        var amt = $("#amountrenew").val().trim();
+        var planAmt = 0;
+        var gst = 0;
+        if (parseFloat(amt) > 0) {                          // Tax 18%
+            planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+            gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+
+            $("#pamtreNew").val(planAmt);
+            $("#Pgstrenew").val(gst);
+        }
+        else {
+            $("#pamtreNew").val('0');
+            $("#Pgstrenew").val('0');
+        }
+    });
+    function paymentMode() {
+      
+        var mode = $("#paymentModeRenew").val();
+        if (mode == "Cheque") {
+            $("#cheque").css("display", "block");
+            $("#cheque1").css("display", "block");
+            $("#chequeNorenew").val('');
+            $("#bankNamerenew").val('');
+        }
+        //else if (mode == "Card")
+        //{
+        //    $("#cheque").css("display", "none");
+        //    $("#card").css("display", "block");
+        //}
+        else {
+            $("#cheque").css("display", "none");
+            $("#cheque1").css("display", "none");
+            $("#chequeNorenew").val('');
+            $("#bankNamerenew").val('');
+        }
+    }
     function close_create_order_Modal() {
-        $("#CustomMember_ID").val('');
-        $("#MembershipJoining_Date").val('');
+        //$("#CustomMember_ID").val('');
+        $("#MembershipPlan").val(@Model.MembershipPlanIDForUser);
         $('#error').html('');
-        $("#MembershipExpiry_Date").val('');
+        $("#amountrenew").val('');
+        $("#chequeNorenew").val('');
+        $("#bankNamerenew").val('');
+        $("#pamtreNew").val('');
+        $("#Pgstrenew").val('');
         $("#Renewal_Member").modal('hide');
     }
     function Renewal() {
-        if($("#CustomMember_ID").val()!=""){
-        if($("#MembershipJoining_Date").val()< $("#MembershipExpiry_Date").val()){
+        //if ($("#CustomMember_ID").val() == "") {
+        //    $("#error").html('');
+        //    $("#error").html("enter new memberid");
+        //    return false;
+        //}
+            if ($("#amountrenew").val().trim()=="") {
+                $(".preloader").css("display", "none");
+                $("#error").html('');
+                $("#error").html("Amount paid is required.");
+                return false;
+            }
+
+            var mode = $("#paymentModeRenew").val();
+            var chequeNo = $("#chequeNorenew").val().trim();
+            var bankName = $("#bankNamerenew").val().trim();
+            if (mode == "Cheque" && (chequeNo == "" || bankName == "")) {
+                $(".preloader").css("display", "none");
+                $("#error").html('');
+                $("#error").html("Cheque no. & Bank Name are compulsory.");
+                return false;
+            }
             
            
                 $.ajax({
@@ -400,14 +577,76 @@
                     //data: JSON.stringify({ prf }),
                     data:JSON.stringify({
                         UserID: @Model.ID,
-                        CustomMemberID: $("#CustomMember_ID").val().trim(),
                         MembershipJoiningDate: $("#MembershipJoining_Date").val(),
-                        MembershipExpiryDate: $("#MembershipExpiry_Date").val()
+                        MembershipPlanID: $("#MembershipPlan").val(),
+                        Amount_Paid: $("#amountrenew").val(),
+                        Cheque_No: chequeNo,
+                        Mode_Of_Payment: mode,
+                        BankName: bankName
                     }),
                     dataType: "json",
           
                     success: function (response) {
-                        if(response=="Updated"){
+                        if (response!="") {
+                            newWin = window.open("");
+                            //==================================================================================
+
+                            var amt = $("#amountrenew").val();
+                            var planAmt = 0;
+                            var gst = 0;
+                            if (parseFloat(amt) > 0) {                          // Tax 18%
+                                planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
+                                gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+                            }
+
+                            var tbl = '';
+                            tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
+                            tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+
+                            tbl += '<table id="memberData" style="width:100%;margin:0 auto; ">' +
+                                '<tbody  style="text-align: left;" >' +
+                                '<tr style="font-size: 9px;">' +
+                                '<td style="padding: 5px 0;">Customer Name : ' + '@Model.F_Name' + " " + '@Model.L_Name' + '</td>' +
+                                '<td style="padding: 5px 0;">Phone No. : ' +'@Model.PhoneNo' + '</td>' +
+
+                                '</tr>' +
+                                '<tr style="font-size: 9px;">' +
+                                '<td style="padding: 5px 0;">Membership Plan : ' + $("#MembershipPlan  option:selected").text() + '</td>' +
+                                '<td style="padding: 5px 0;">Joining Date : ' + $('#MembershipJoining_Date').val() + '</td>' +
+
+                                '</tr>' +
+                                '<tr style="font-size: 9px;">' +
+                                '<td style="padding: 5px 0;">Expiry Date : ' + response.ExpiryDate + '</td>' +
+                                '<td style="padding: 5px 0;">Plan Amount : ₹ ' + planAmt + '</td>' +
+
+                                '</tr>' +
+                                '<tr style="font-size: 9px;">' +
+                                '<td style="padding: 5px 0;">GST(18%) : ₹ ' + gst + '</td>' +
+                                '<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentModeRenew").val() + '</td>' +
+
+                                '</tr>' +
+                                '<tr style="font-size: 9px;">' +
+                                '<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amountrenew").val() + '</td>' +
+                                '<td style="padding: 5px 0;"></td>' +
+                                '</tr>' +
+                                '</tbody></table>';
+
+                            var htmlToPrint = '' +
+                                '<style type="text/css">' +
+                                'body{font-family: arial;}' +
+                                '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
+                                '</style>';
+                            htmlToPrint += tbl;
+                            newWin.document.open();
+                            newWin.document.write(htmlToPrint);
+                            newWin.print();
+                            newWin.close();
+
+
+
+
+
+
                             bootbox.confirm("Member Updated Successfully.", function (result) {
                                 close_create_order_Modal();
                                 window.location.reload();
@@ -421,32 +660,38 @@
                     }
     
                 });
-        }else{
-            $("#error").html('');
-            $("#error").html("enter valid date format");
-            }
-        }else{
-            $("#error").html('');
-            $("#error").html("enter new memberid");
-        }
+        
+       
+            
+       
     }
-    function enableDatesAccToStartDate() {
-        $('#MembershipExpiry_Date').val("");
-        var startDate = $('#MembershipJoining_Date').val();
-        $('#MembershipExpiry_Date').removeAttr('disabled');
-        $('#MembershipExpiry_Date').datepicker("option", "minDate", startDate);
-    }
-    $(document).ready(function () {
+    function GetMemberHistory(ID) {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "/Member/GetMembershipHistoryByUserID/?userId="+ID,
+             dataType: "HTML",
 
-        $('#MembershipJoining_Date,#MembershipExpiry_Date').datepicker({
+            success: function (response) {
+                $(".memberhistory").html();
+                $(".memberhistory").html(response);
+                $("#MemberHistory").modal("show");
+            }
+        })
+    };
+
+    $(document).ready(function () {
+        var date = new Date();
+        $('#MembershipJoining_Date').datepicker({
             changeMonth: true,
             changeYear: true,
             dateFormat: 'mm/dd/yy',
-            yearRange: "-116:+0",
-         
+            minDate: date
         });
-        $('#MembershipExpiry_Date').attr("disabled", "true");
-        
+       
+        $("#MembershipJoining_Date").datepicker("setDate", new Date());
+        $("#MembershipPlan").val(@Model.MembershipPlanIDForUser);
+        ChangePlan();
         //-------------
         var jsonString = '@Model.billingDetailsInJson';
         if (jsonString != "") {

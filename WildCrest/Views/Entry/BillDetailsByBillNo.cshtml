@@ -125,14 +125,14 @@ flex-direction: row-reverse;
                '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
                '</tr>' +
                '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-               '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
-               '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
+                        '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+                        '<td style="padding: 5px 0;">Total Price : ₹ ' + response.Total_Amount + '</td>' +
                '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
                '</tr>' +
                '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
                '<td style="padding: 5px 0;">Billing Date : ' + $.date(response.DateofBilling) + '</td>' +
                '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
-               '<td style="padding: 5px 0;"></td>' +
+                        '<td style="padding: 5px 0;">Token No :' + response.TokenNo + '</td>' +
                '</tr>' +
                '</tbody></table><br>';
 
@@ -151,15 +151,15 @@ flex-direction: row-reverse;
                     tbl += '<tr style="font-size: 12px;text-align: left;">' +
                   '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
 
-        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
+        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 300 + '</label></td>' +
         '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
-        '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</label></td>' +
+                        '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.Total_Amount + '</label></td>' +
 
         '</tr>';
                     tbl += '<tr style="font-size: 12px;" class="border-top">' +
                                     '<td colspan="2" class="border-left"></td>' +
                                               '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
-                                              '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + parseFloat(246) * parseFloat(response.Total_Member) + '</td>' +
+                        '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + response.Total_Amount + '</td>' +
                                             '</tr>' +
 
 
@@ -176,8 +176,8 @@ flex-direction: row-reverse;
 
                                             '<tr style="font-size: 12px;">' +
                                              '<td colspan="2" class="border-left"></td>' +
-                                              '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
-                                              '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.AmountPaid + '</td>' +
+                        '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
+                        '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + response.AmountPaid + '</td>' +
                                             '</tr>';
                 }
                 else {
@@ -257,14 +257,14 @@ flex-direction: row-reverse;
                            '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
                            '</tr>' +
                            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
-                           '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
-                           '<td style="padding: 5px 0;">Total Price : ₹ ' + response.AmountPaid + '</td>' +
+                                    '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+                                    '<td style="padding: 5px 0;">Total Price : ₹ ' + response.Total_Amount + '</td>' +
                            '<td style="padding: 5px 0;">GST(18%) : ₹ ' + response.GstAmount + '</td>' +
                            '</tr>' +
                            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
                            '<td style="padding: 5px 0;">Billing Date : ' +$.date(response.DateofBilling) + '</td>' +
                            '<td style="padding: 5px 0;">Payment Mode : ' + response.ModeOfPayment + '</td>' +
-                           '<td style="padding: 5px 0;"></td>' +
+                                    '<td style="padding: 5px 0;">Token No :' + response.TokenNo + '</td>' +
                            '</tr>' +
                            '</tbody></table><br>';
 
@@ -283,15 +283,15 @@ flex-direction: row-reverse;
                                 tbl += '<tr style="font-size: 12px;text-align: left;">' +
                               '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
 
-                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 246 + '</label></td>' +
+                    '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 300 + '</label></td>' +
                     '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
-                    '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' +parseFloat(246)*parseFloat( response.Total_Member) + '</label></td>' +
+                                    '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.Total_Amount + '</label></td>' +
 
                     '</tr>';
                                 tbl += '<tr style="font-size: 12px;" class="border-top">' +
                                                 '<td colspan="2" class="border-left"></td>' +
                                                           '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
-                                                          '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + parseFloat(246)*parseFloat( response.Total_Member) + '</td>' +
+                                    '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + response.Total_Amount + '</td>' +
                                                         '</tr>' +
 
 
