@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -181,6 +182,7 @@
     <Compile Include="Members_Checked_Out_Rooms_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WildCrestModels\MembershipHistoryModel.cs" />
     <Compile Include="Models\WildCrestModels\AdvancedInfoOfRoomBooking.cs" />
     <Compile Include="Models\WildCrestModels\BillingDetails.cs" />
     <Compile Include="Models\WildCrestModels\Buffet_ConsumableItems.cs" />
@@ -1169,6 +1171,7 @@
     <Content Include="Views\Entry\EntryBillsIndex.cshtml" />
     <Content Include="Views\Entry\BillDetailsByBillNo.cshtml" />
     <Content Include="Views\Entry\_EntryBillsDataAccToDay.cshtml" />
+    <Content Include="Views\Shared\Membership\_MembershipHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1200,7 +1203,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64534</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:64421/</IISUrl>
+          <IISUrl>http://localhost:64420/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

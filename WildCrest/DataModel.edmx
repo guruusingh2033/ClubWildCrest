@@ -190,6 +190,7 @@
           <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Member_ID" Type="int" />
+          <Property Name="TokenNo" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tbl_EntryMembers">
           <Key>
@@ -375,6 +376,7 @@
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Discount" Type="float" />
+          <Property Name="Customer_GstNO" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
           <Key>
@@ -1586,6 +1588,7 @@
           <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Billed_By" Type="Int32" />
           <Property Name="Discount" Type="Double" />
+          <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
           <Key>
@@ -2251,6 +2254,7 @@
           <Property Name="Date_Of_Billing" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Billed_By" Type="Int32" />
           <Property Name="Member_ID" Type="Int32" />
+          <Property Name="TokenNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_BillingMode">
           <Key>
@@ -2605,6 +2609,7 @@
           <EntitySetMapping Name="tbl_MenusBillingSection">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_MenusBillingSection">
               <MappingFragment StoreEntitySet="tbl_MenusBillingSection">
+                <ScalarProperty Name="Customer_GstNO" ColumnName="Customer_GstNO" />
                 <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -3104,6 +3109,7 @@
           <EntitySetMapping Name="tbl_EntryMember_Billing">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMember_Billing">
               <MappingFragment StoreEntitySet="tbl_EntryMember_Billing">
+                <ScalarProperty Name="TokenNo" ColumnName="TokenNo" />
                 <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
                 <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
                 <ScalarProperty Name="Date_Of_Billing" ColumnName="Date_Of_Billing" />

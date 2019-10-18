@@ -330,6 +330,7 @@
     <EntitySetMapping Name="tbl_MenusBillingSection">
       <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_MenusBillingSection">
         <MappingFragment StoreEntitySet="tbl_MenusBillingSection">
+          <ScalarProperty Name="Customer_GstNO" ColumnName="Customer_GstNO" />
           <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
           <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -829,6 +830,7 @@
     <EntitySetMapping Name="tbl_EntryMember_Billing">
       <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMember_Billing">
         <MappingFragment StoreEntitySet="tbl_EntryMember_Billing">
+          <ScalarProperty Name="TokenNo" ColumnName="TokenNo" />
           <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
           <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
           <ScalarProperty Name="Date_Of_Billing" ColumnName="Date_Of_Billing" />

@@ -185,6 +185,7 @@
     <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Member_ID" Type="int" />
+    <Property Name="TokenNo" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="tbl_EntryMembers">
     <Key>
@@ -370,6 +371,7 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Discount" Type="float" />
+    <Property Name="Customer_GstNO" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
     <Key>
