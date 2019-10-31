@@ -666,6 +666,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.Phone = data.Phone;
                 menusDetails.PaymentDate = data.PaymentDate;
                 menusDetails.Bill_Number = data.Bill_Number;
+                menusDetails.MenuBillNo = data.menubillno;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
                 menusDetails.Discount = data.Discount != null ? data.Discount : 0;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
@@ -732,6 +733,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
                 menusDetails.Discount = data.Discount != null ? data.Discount : 0;
+                menusDetails.MenuBillNo = data.menubillno;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;

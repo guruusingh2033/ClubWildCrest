@@ -29,5 +29,6 @@ namespace WildCrest
         public string Mode_Of_Payment { get; set; }
         public Nullable<int> Billed_By { get; set; }
         public Nullable<double> Discount { get; set; }
+        public string Winebillno { get; set; }
     }
 }

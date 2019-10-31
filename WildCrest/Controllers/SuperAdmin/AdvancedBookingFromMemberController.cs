@@ -439,7 +439,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 booking.Discount = bookingData.Discount;
                 booking.GST = bookingData.GST;
                 booking.NoOfNightStays = bookingData.NoOfNightStays;
-
+                booking.Roombillno = bookingData.Roombillno;
                 var roomDet = context.tbl_RoomBooking_Details.Where(b => b.Booking_ID == bookingID).ToList();
                 foreach (var i in roomDet)
                 {

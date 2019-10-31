@@ -26,7 +26,6 @@
     <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="virkcorp_adminModel.tbl_MembersWhileStayingWithUser" />
     <EntitySet Name="tbl_Menu" EntityType="virkcorp_adminModel.tbl_Menu" />
     <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.tbl_MenusBillingDetailsWithBillNo" />
-    <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
     <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="virkcorp_adminModel.tbl_NonGST_BarBillDetWithBillNo" />
     <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="virkcorp_adminModel.tbl_NonGST_BarBillingSection" />
     <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="virkcorp_adminModel.tbl_NonGST_MenusBillDetWithBillNo" />
@@ -134,9 +133,9 @@
       <Parameter Name="membershipID" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="tbl_EntryMembers" EntityType="virkcorp_adminModel.tbl_EntryMembers" />
-    <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
-    <EntitySet Name="tbl_BillingMode" EntityType="virkcorp_adminModel.tbl_BillingMode" />
     <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
+    <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
+    <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
   </EntityContainer>
   <EntityType Name="tbl_BarBillingDetailsWithBillNo">
     <Key>
@@ -170,6 +169,7 @@
     <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="Billed_By" Type="Int32" />
     <Property Name="Discount" Type="Double" />
+    <Property Name="Barbillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tbl_BarInventory">
     <Key>
@@ -448,32 +448,6 @@
     <Property Name="QtyUpdatedDate" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="QtyUpdatedBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
   </EntityType>
-  <EntityType Name="tbl_MenusBillingSection">
-    <Key>
-      <PropertyRef Name="Bill_Number" />
-    </Key>
-    <Property Name="Bill_Number" Type="Int32" Nullable="false" />
-    <Property Name="Customer_Name" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Phone" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="FoodItemName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Price" Type="Double" />
-    <Property Name="Quantity" Type="Double" />
-    <Property Name="FakeQuantity" Type="Int32" />
-    <Property Name="FakeQtyAddedDate" Type="DateTime" Precision="3" />
-    <Property Name="FakeQtyAddedBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="UserID" Type="Int32" />
-    <Property Name="PaymentDate" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="GST" Type="Double" />
-    <Property Name="PriceWithoutTax" Type="Double" />
-    <Property Name="TableID" Type="Int32" />
-    <Property Name="Table_Status" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Order_Time" Type="Time" Precision="0" />
-    <Property Name="OrderTakenBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Billed_By" Type="Int32" />
-    <Property Name="Discount" Type="Double" />
-    <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
     <Key>
       <PropertyRef Name="ID" />
@@ -690,6 +664,7 @@
     <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="Cheque_No" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="BankName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="Roombillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tbl_RoomBooking_Details">
     <Key>
@@ -863,6 +838,7 @@
     <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="Billed_By" Type="Int32" />
     <Property Name="Discount" Type="Double" />
+    <Property Name="Winebillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tbl_WineInventory">
     <Key>
@@ -1123,6 +1099,42 @@
     <Property Name="EntryFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="TotalAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="tbl_BarBillingMode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bar_Bill_Number" Type="Int32" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_MenusBillingSection">
+    <Key>
+      <PropertyRef Name="Bill_Number" />
+    </Key>
+    <Property Name="Bill_Number" Type="Int32" Nullable="false" />
+    <Property Name="Customer_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FoodItemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Quantity" Type="Double" />
+    <Property Name="FakeQuantity" Type="Int32" />
+    <Property Name="FakeQtyAddedDate" Type="DateTime" Precision="3" />
+    <Property Name="FakeQtyAddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="PaymentDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="GST" Type="Double" />
+    <Property Name="PriceWithoutTax" Type="Double" />
+    <Property Name="TableID" Type="Int32" />
+    <Property Name="Table_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Order_Time" Type="Time" Precision="0" />
+    <Property Name="OrderTakenBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Billed_By" Type="Int32" />
+    <Property Name="Discount" Type="Double" />
+    <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="menubillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="tbl_EntryMember_Billing">
     <Key>
       <PropertyRef Name="Bill_ID" />
@@ -1138,24 +1150,7 @@
     <Property Name="Date_Of_Billing" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Billed_By" Type="Int32" />
     <Property Name="Member_ID" Type="Int32" />
-    <Property Name="TokenNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="tbl_BillingMode">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tbl_Bill_ID" Type="Int32" />
-    <Property Name="Amount" Type="Double" />
-    <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="tbl_BarBillingMode">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Bar_Bill_Number" Type="Int32" />
-    <Property Name="Amount" Type="Double" />
-    <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TokenNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Entrybillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

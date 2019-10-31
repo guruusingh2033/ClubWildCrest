@@ -30,5 +30,6 @@ namespace WildCrest
         public string Mode_Of_Payment { get; set; }
         public string Cheque_No { get; set; }
         public string BankName { get; set; }
+        public string Roombillno { get; set; }
     }
 }

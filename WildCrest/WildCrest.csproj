@@ -243,9 +243,6 @@
     <Compile Include="tbl_BillingDetails.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tbl_BillingMode.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="tbl_BookingTable.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

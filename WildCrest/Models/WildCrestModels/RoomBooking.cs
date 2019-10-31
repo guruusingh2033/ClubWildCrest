@@ -13,6 +13,7 @@ namespace WildCrest.Models.WildCrestModels
         //public string Check_Out { get; set; }
         //public Nullable<int> UserID { get; set; }
         public int Booking_ID { get; set; }
+        public string Roombillno { get; set; }
         public Nullable<double> AdvancedPayment { get; set; }
         public string Check_In { get; set; }
         public string Check_Out { get; set; }

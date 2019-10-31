@@ -46,6 +46,7 @@
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Discount" Type="float" />
+          <Property Name="Barbillno" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_BarInventory">
           <Key>
@@ -99,15 +100,6 @@
           <Property Name="Transaction_No" Type="varchar(max)" />
           <Property Name="UserStay_ID" Type="int" />
           <Property Name="UserID" Type="int" />
-        </EntityType>
-        <EntityType Name="tbl_BillingMode">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="tbl_Bill_ID" Type="int" />
-          <Property Name="Amount" Type="float" />
-          <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tbl_BookingTable">
           <Key>
@@ -190,7 +182,8 @@
           <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Member_ID" Type="int" />
-          <Property Name="TokenNo" Type="varchar(max)" />
+          <Property Name="TokenNo" Type="varchar" MaxLength="500" />
+          <Property Name="Entrybillno" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_EntryMembers">
           <Key>
@@ -377,6 +370,7 @@
           <Property Name="Billed_By" Type="int" />
           <Property Name="Discount" Type="float" />
           <Property Name="Customer_GstNO" Type="varchar" MaxLength="200" />
+          <Property Name="menubillno" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
           <Key>
@@ -586,6 +580,7 @@
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Cheque_No" Type="varchar(max)" />
           <Property Name="BankName" Type="varchar(max)" />
+          <Property Name="Roombillno" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_RoomBooking_Details">
           <Key>
@@ -744,6 +739,7 @@
           <Property Name="Mode_Of_Payment" Type="varchar(max)" />
           <Property Name="Billed_By" Type="int" />
           <Property Name="Discount" Type="float" />
+          <Property Name="Winebillno" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tbl_WineInventory">
           <Key>
@@ -994,7 +990,6 @@
           <EntitySet Name="tbl_BarInventoryUsage" EntityType="Self.tbl_BarInventoryUsage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_BarMenu" EntityType="Self.tbl_BarMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_BillingDetails" EntityType="Self.tbl_BillingDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_BillingMode" EntityType="Self.tbl_BillingMode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_BookingTable" EntityType="Self.tbl_BookingTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Buffet_ConsumableItems" EntityType="Self.tbl_Buffet_ConsumableItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Buffet_Menu" EntityType="Self.tbl_Buffet_Menu" Schema="dbo" store:Type="Tables" />
@@ -1142,7 +1137,6 @@
           <EntitySet Name="tbl_MembersWhileStayingWithUser" EntityType="virkcorp_adminModel.tbl_MembersWhileStayingWithUser" />
           <EntitySet Name="tbl_Menu" EntityType="virkcorp_adminModel.tbl_Menu" />
           <EntitySet Name="tbl_MenusBillingDetailsWithBillNo" EntityType="virkcorp_adminModel.tbl_MenusBillingDetailsWithBillNo" />
-          <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
           <EntitySet Name="tbl_NonGST_BarBillDetWithBillNo" EntityType="virkcorp_adminModel.tbl_NonGST_BarBillDetWithBillNo" />
           <EntitySet Name="tbl_NonGST_BarBillingSection" EntityType="virkcorp_adminModel.tbl_NonGST_BarBillingSection" />
           <EntitySet Name="tbl_NonGST_MenusBillDetWithBillNo" EntityType="virkcorp_adminModel.tbl_NonGST_MenusBillDetWithBillNo" />
@@ -1250,9 +1244,9 @@
             <Parameter Name="membershipID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="tbl_EntryMembers" EntityType="virkcorp_adminModel.tbl_EntryMembers" />
-          <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
-          <EntitySet Name="tbl_BillingMode" EntityType="virkcorp_adminModel.tbl_BillingMode" />
           <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
+          <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
+          <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
         </EntityContainer>
         <EntityType Name="tbl_BarBillingDetailsWithBillNo">
           <Key>
@@ -1286,6 +1280,7 @@
           <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Billed_By" Type="Int32" />
           <Property Name="Discount" Type="Double" />
+          <Property Name="Barbillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_BarInventory">
           <Key>
@@ -1564,32 +1559,6 @@
           <Property Name="QtyUpdatedDate" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="QtyUpdatedBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
         </EntityType>
-        <EntityType Name="tbl_MenusBillingSection">
-          <Key>
-            <PropertyRef Name="Bill_Number" />
-          </Key>
-          <Property Name="Bill_Number" Type="Int32" Nullable="false" />
-          <Property Name="Customer_Name" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Phone" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="FoodItemName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Price" Type="Double" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="FakeQuantity" Type="Int32" />
-          <Property Name="FakeQtyAddedDate" Type="DateTime" Precision="3" />
-          <Property Name="FakeQtyAddedBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="PaymentDate" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="GST" Type="Double" />
-          <Property Name="PriceWithoutTax" Type="Double" />
-          <Property Name="TableID" Type="Int32" />
-          <Property Name="Table_Status" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Order_Time" Type="Time" Precision="0" />
-          <Property Name="OrderTakenBy" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Billed_By" Type="Int32" />
-          <Property Name="Discount" Type="Double" />
-          <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
           <Key>
             <PropertyRef Name="ID" />
@@ -1806,6 +1775,7 @@
           <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Cheque_No" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="BankName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Roombillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_RoomBooking_Details">
           <Key>
@@ -1979,6 +1949,7 @@
           <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Billed_By" Type="Int32" />
           <Property Name="Discount" Type="Double" />
+          <Property Name="Winebillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_WineInventory">
           <Key>
@@ -2239,6 +2210,42 @@
           <Property Name="EntryFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TotalAmount" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_BarBillingMode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bar_Bill_Number" Type="Int32" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_MenusBillingSection">
+          <Key>
+            <PropertyRef Name="Bill_Number" />
+          </Key>
+          <Property Name="Bill_Number" Type="Int32" Nullable="false" />
+          <Property Name="Customer_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FoodItemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="FakeQuantity" Type="Int32" />
+          <Property Name="FakeQtyAddedDate" Type="DateTime" Precision="3" />
+          <Property Name="FakeQtyAddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="PaymentDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GST" Type="Double" />
+          <Property Name="PriceWithoutTax" Type="Double" />
+          <Property Name="TableID" Type="Int32" />
+          <Property Name="Table_Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Order_Time" Type="Time" Precision="0" />
+          <Property Name="OrderTakenBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Payment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Billed_By" Type="Int32" />
+          <Property Name="Discount" Type="Double" />
+          <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="menubillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="tbl_EntryMember_Billing">
           <Key>
             <PropertyRef Name="Bill_ID" />
@@ -2254,25 +2261,8 @@
           <Property Name="Date_Of_Billing" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Billed_By" Type="Int32" />
           <Property Name="Member_ID" Type="Int32" />
-          <Property Name="TokenNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tbl_BillingMode">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tbl_Bill_ID" Type="Int32" />
-          <Property Name="Amount" Type="Double" />
-          <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tbl_BarBillingMode">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bar_Bill_Number" Type="Int32" />
-          <Property Name="Amount" Type="Double" />
-          <Property Name="Mode_Of_Pay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TokenNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Entrybillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2297,6 +2287,7 @@
           <EntitySetMapping Name="tbl_BarBillingSection">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BarBillingSection">
               <MappingFragment StoreEntitySet="tbl_BarBillingSection">
+                <ScalarProperty Name="Barbillno" ColumnName="Barbillno" />
                 <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -2606,33 +2597,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_MenusBillingSection">
-            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_MenusBillingSection">
-              <MappingFragment StoreEntitySet="tbl_MenusBillingSection">
-                <ScalarProperty Name="Customer_GstNO" ColumnName="Customer_GstNO" />
-                <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
-                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="FoodItemName" ColumnName="FoodItemName" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="FakeQuantity" ColumnName="FakeQuantity" />
-                <ScalarProperty Name="FakeQtyAddedDate" ColumnName="FakeQtyAddedDate" />
-                <ScalarProperty Name="FakeQtyAddedBy" ColumnName="FakeQtyAddedBy" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="GST" ColumnName="GST" />
-                <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
-                <ScalarProperty Name="TableID" ColumnName="TableID" />
-                <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
-                <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
-                <ScalarProperty Name="OrderTakenBy" ColumnName="OrderTakenBy" />
-                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
-                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_NonGST_BarBillDetWithBillNo">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_NonGST_BarBillDetWithBillNo">
               <MappingFragment StoreEntitySet="tbl_NonGST_BarBillDetWithBillNo">
@@ -2837,6 +2801,7 @@
           <EntitySetMapping Name="tbl_RoomBooking">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_RoomBooking">
               <MappingFragment StoreEntitySet="tbl_RoomBooking">
+                <ScalarProperty Name="Roombillno" ColumnName="Roombillno" />
                 <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
                 <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />
                 <ScalarProperty Name="Check_In" ColumnName="Check_In" />
@@ -3009,6 +2974,7 @@
           <EntitySetMapping Name="tbl_WineBillingSection">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_WineBillingSection">
               <MappingFragment StoreEntitySet="tbl_WineBillingSection">
+                <ScalarProperty Name="Winebillno" ColumnName="Winebillno" />
                 <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -3106,9 +3072,48 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BarBillingMode">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BarBillingMode">
+              <MappingFragment StoreEntitySet="tbl_BarBillingMode">
+                <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Bar_Bill_Number" ColumnName="Bar_Bill_Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MenusBillingSection">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_MenusBillingSection">
+              <MappingFragment StoreEntitySet="tbl_MenusBillingSection">
+                <ScalarProperty Name="menubillno" ColumnName="menubillno" />
+                <ScalarProperty Name="Customer_GstNO" ColumnName="Customer_GstNO" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+                <ScalarProperty Name="OrderTakenBy" ColumnName="OrderTakenBy" />
+                <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
+                <ScalarProperty Name="Table_Status" ColumnName="Table_Status" />
+                <ScalarProperty Name="TableID" ColumnName="TableID" />
+                <ScalarProperty Name="PriceWithoutTax" ColumnName="PriceWithoutTax" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FakeQtyAddedBy" ColumnName="FakeQtyAddedBy" />
+                <ScalarProperty Name="FakeQtyAddedDate" ColumnName="FakeQtyAddedDate" />
+                <ScalarProperty Name="FakeQuantity" ColumnName="FakeQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="FoodItemName" ColumnName="FoodItemName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Bill_Number" ColumnName="Bill_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_EntryMember_Billing">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_EntryMember_Billing">
               <MappingFragment StoreEntitySet="tbl_EntryMember_Billing">
+                <ScalarProperty Name="Entrybillno" ColumnName="Entrybillno" />
                 <ScalarProperty Name="TokenNo" ColumnName="TokenNo" />
                 <ScalarProperty Name="Member_ID" ColumnName="Member_ID" />
                 <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
@@ -3121,26 +3126,6 @@
                 <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
                 <ScalarProperty Name="Price_Without_Gst" ColumnName="Price_Without_Gst" />
                 <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_BillingMode">
-            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BillingMode">
-              <MappingFragment StoreEntitySet="tbl_BillingMode">
-                <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="tbl_Bill_ID" ColumnName="tbl_Bill_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_BarBillingMode">
-            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_BarBillingMode">
-              <MappingFragment StoreEntitySet="tbl_BarBillingMode">
-                <ScalarProperty Name="Mode_Of_Pay" ColumnName="Mode_Of_Pay" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Bar_Bill_Number" ColumnName="Bar_Bill_Number" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

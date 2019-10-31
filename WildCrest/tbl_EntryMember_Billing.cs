@@ -26,5 +26,6 @@ namespace WildCrest
         public Nullable<int> Billed_By { get; set; }
         public Nullable<int> Member_ID { get; set; }
         public string TokenNo { get; set; }
+        public string Entrybillno { get; set; }
     }
 }

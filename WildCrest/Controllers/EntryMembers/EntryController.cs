@@ -62,7 +62,61 @@ namespace WildCrest.Controllers.EntryMembers
             ViewBag.FilterFromReport = filterFromReport;
             return View();
         }
+        string GetBillNO()
+        {
 
+            string BillNo = context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).FirstOrDefault().Entrybillno;
+
+            if (!string.IsNullOrEmpty(BillNo))
+            {
+                int lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                DateTime AprilDay = new DateTime(DateTime.Today.Year, 4, 01);
+                int compareValue = AprilDay.CompareTo(DateTime.Today);
+                string dateformat = "";
+                string nextyear = "";
+                switch (compareValue)
+                {
+                    case 0:
+                        string paymentDate = context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).FirstOrDefault().Date_Of_Billing;
+                        if (paymentDate == AprilDay.ToString("MM/dd/yyyy"))
+                        {
+                            lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                        }
+                        else
+                        {
+                            lastno = 1;
+                        }
+                        nextyear = DateTime.Now.AddYears(1).Year.ToString().Substring(2);
+                        dateformat = "Entry/" + DateTime.Now.Year.ToString() + "-" + nextyear + "/00" + lastno;
+
+                        break;
+                    case -1:
+                        string LastpaymentDate = context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).FirstOrDefault().Date_Of_Billing;
+                        int compare = AprilDay.CompareTo(Convert.ToDateTime(LastpaymentDate));
+                        if (compare == 1)
+                        {
+                            lastno = 1;
+                        }
+                        else
+                        {
+                            lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                        }
+                        nextyear = DateTime.Now.AddYears(1).Year.ToString().Substring(2);
+                        dateformat = "Entry/" + DateTime.Now.Year.ToString() + "-" + nextyear + "/00" + lastno;
+                        break;
+
+                    case 1:
+                        lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+
+                        nextyear = DateTime.Now.Year.ToString().Substring(2);
+                        dateformat = "Entry/" + DateTime.Now.AddYears(-compareValue).Year.ToString() + "-" + nextyear + "/00" + lastno;
+                        break;
+                }
+
+                return dateformat;
+            }
+            return string.Empty;
+        }
         int GetTokenNo(string Token)
         {
             var StartIndex = Token.LastIndexOf('_') + 3;
@@ -89,7 +143,8 @@ namespace WildCrest.Controllers.EntryMembers
                     li.GstAmount = data.Gst_Amount;
                     li.Total_Amount = data.Total_Amount;
                     li.Price_Without_Gst = data.Price_Without_Gst;
-                    li.TokenNo = data.TokenNo;
+                    li.TokenNo = data.TokenNo==null?string.Empty:data.TokenNo;
+                    li.Entrybillno = data.Entrybillno;
                     return Json(li);
                 }
                 else
@@ -128,6 +183,7 @@ namespace WildCrest.Controllers.EntryMembers
                     model.Mode_Of_Payment = PayMode;
                     model.Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
                     model.Member_ID = ID;
+                    model.Entrybillno = GetBillNO();
                     model.Date_Of_Billing = DateTime.Now.ToString("MM/dd/yyyy");
                     context.tbl_EntryMember_Billing.Add(model);
                     context.SaveChanges();
@@ -143,6 +199,7 @@ namespace WildCrest.Controllers.EntryMembers
                     li.Price_Without_Gst = model.Price_Without_Gst;
                     li.Total_Amount = model.Total_Amount;
                     li.TokenNo = model.TokenNo;
+                    li.Entrybillno = model.Entrybillno;
                     return Json(li);
                 }
             }

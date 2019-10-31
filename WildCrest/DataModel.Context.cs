@@ -53,7 +53,6 @@ namespace WildCrest
         public DbSet<tbl_MembersWhileStayingWithUser> tbl_MembersWhileStayingWithUser { get; set; }
         public DbSet<tbl_Menu> tbl_Menu { get; set; }
         public DbSet<tbl_MenusBillingDetailsWithBillNo> tbl_MenusBillingDetailsWithBillNo { get; set; }
-        public DbSet<tbl_MenusBillingSection> tbl_MenusBillingSection { get; set; }
         public DbSet<tbl_NonGST_BarBillDetWithBillNo> tbl_NonGST_BarBillDetWithBillNo { get; set; }
         public DbSet<tbl_NonGST_BarBillingSection> tbl_NonGST_BarBillingSection { get; set; }
         public DbSet<tbl_NonGST_MenusBillDetWithBillNo> tbl_NonGST_MenusBillDetWithBillNo { get; set; }
@@ -85,9 +84,9 @@ namespace WildCrest
         public DbSet<tbl_WineInventoryUsage> tbl_WineInventoryUsage { get; set; }
         public DbSet<tbl_WineMenu> tbl_WineMenu { get; set; }
         public DbSet<tbl_EntryMembers> tbl_EntryMembers { get; set; }
-        public DbSet<tbl_EntryMember_Billing> tbl_EntryMember_Billing { get; set; }
-        public DbSet<tbl_BillingMode> tbl_BillingMode { get; set; }
         public DbSet<tbl_BarBillingMode> tbl_BarBillingMode { get; set; }
+        public DbSet<tbl_MenusBillingSection> tbl_MenusBillingSection { get; set; }
+        public DbSet<tbl_EntryMember_Billing> tbl_EntryMember_Billing { get; set; }
     
         public virtual int checkAvailabilityOfRooms(string checkin, string checkout)
         {

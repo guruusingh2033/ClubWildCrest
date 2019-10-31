@@ -27,5 +27,6 @@ namespace WildCrest.Models.WildCrestModels
         public string DateofBilling { get; set; }
         public Nullable<double> AmountPaid { get; set; }
         public string TokenNo { get; set; }
+        public string Entrybillno { get; set; }
     }
 }

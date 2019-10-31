@@ -1137,6 +1137,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
                 menusDetails.Price = data.Price;
+                menusDetails.Winebillno = data.Winebillno;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -1176,6 +1177,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menusDetails.Bill_Number = data.Bill_Number;
                 menusDetails.MenusBillingDetailsWithBillNo = details;
                 menusDetails.Discount = data.Discount;
+                menusDetails.Winebillno = data.Winebillno;
                 menusDetails.Temp_Day_Data = (Session["Day"] != null) ? Convert.ToInt32(Session["Day"].ToString()) : 1;
                 menusDetails.Temp_Tax_Data = (Session["Tax"] != null) ? Session["Tax"].ToString() : "gst";
                 menusDetails.Temp_AdminID_Data = (Session["AdminID"] != null) ? Convert.ToInt32(Session["AdminID"].ToString()) : 0;
@@ -1549,7 +1551,61 @@ namespace WildCrest.Controllers.SuperAdmin
             }*/
             return View(getdata);
         }
+        string GetBillNO()
+        {
 
+            string BillNo = context.tbl_WineBillingSection.OrderByDescending(obj => obj.Bill_Number).FirstOrDefault().Winebillno;
+
+            if (!string.IsNullOrEmpty(BillNo))
+            {
+                int lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                DateTime AprilDay = new DateTime(DateTime.Today.Year, 4, 01);
+                int compareValue = AprilDay.CompareTo(DateTime.Today);
+                string dateformat = "";
+                string nextyear = "";
+                switch (compareValue)
+                {
+                    case 0:
+                        string paymentDate = context.tbl_WineBillingSection.OrderByDescending(obj => obj.Bill_Number).FirstOrDefault().PaymentDate;
+                        if (paymentDate == AprilDay.ToString("MM/dd/yyyy"))
+                        {
+                            lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                        }
+                        else
+                        {
+                            lastno = 1;
+                        }
+                        nextyear = DateTime.Now.AddYears(1).Year.ToString().Substring(2);
+                        dateformat = "Wine/" + DateTime.Now.Year.ToString() + "-" + nextyear + "/00" + lastno;
+
+                        break;
+                    case -1:
+                        string LastpaymentDate = context.tbl_WineBillingSection.OrderByDescending(obj => obj.Bill_Number).FirstOrDefault().PaymentDate;
+                        int compare = AprilDay.CompareTo(Convert.ToDateTime(LastpaymentDate));
+                        if (compare == 1)
+                        {
+                            lastno = 1;
+                        }
+                        else
+                        {
+                            lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+                        }
+                        nextyear = DateTime.Now.AddYears(1).Year.ToString().Substring(2);
+                        dateformat = "Wine/" + DateTime.Now.Year.ToString() + "-" + nextyear + "/00" + lastno;
+                        break;
+
+                    case 1:
+                        lastno = int.Parse(BillNo.Substring(BillNo.LastIndexOf("/") + 1)) + 1;
+
+                        nextyear = DateTime.Now.Year.ToString().Substring(2);
+                        dateformat = "Wine/" + DateTime.Now.AddYears(-compareValue).Year.ToString() + "-" + nextyear + "/00" + lastno;
+                        break;
+                }
+
+                return dateformat;
+            }
+            return string.Empty;
+        }
         [HttpPost]
         public JsonResult CreateOrder(MenusBillingSection model)
         {
@@ -1653,7 +1709,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 menus.TableID = model.TableID;
                 menus.OrderTakenBy = model.OrderTakenBy;
                 menus.Table_Status = "opened";
-
+                menus.Winebillno = GetBillNO();
                 menus.PaymentDate = DateFormat;
                 menus.Order_Time = time;
                 context.tbl_WineBillingSection.Add(menus);
@@ -1714,7 +1770,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var data = ViewDetails(tableID);
             return Json(data);
         }
-
+        
         [Authorize(Roles = "1,2")]
         public ActionResult CreateTableBill(int tableID)
         {

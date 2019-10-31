@@ -35,5 +35,6 @@ namespace WildCrest
         public Nullable<int> Billed_By { get; set; }
         public Nullable<double> Discount { get; set; }
         public string Customer_GstNO { get; set; }
+        public string menubillno { get; set; }
     }
 }

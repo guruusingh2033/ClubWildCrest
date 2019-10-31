@@ -41,6 +41,7 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Discount" Type="float" />
+    <Property Name="Barbillno" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="tbl_BarInventory">
     <Key>
@@ -94,15 +95,6 @@
     <Property Name="Transaction_No" Type="varchar(max)" />
     <Property Name="UserStay_ID" Type="int" />
     <Property Name="UserID" Type="int" />
-  </EntityType>
-  <EntityType Name="tbl_BillingMode">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="tbl_Bill_ID" Type="int" />
-    <Property Name="Amount" Type="float" />
-    <Property Name="Mode_Of_Pay" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="tbl_BookingTable">
     <Key>
@@ -185,7 +177,8 @@
     <Property Name="Date_Of_Billing" Type="varchar" MaxLength="500" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Member_ID" Type="int" />
-    <Property Name="TokenNo" Type="varchar(max)" />
+    <Property Name="TokenNo" Type="varchar" MaxLength="500" />
+    <Property Name="Entrybillno" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="tbl_EntryMembers">
     <Key>
@@ -372,6 +365,7 @@
     <Property Name="Billed_By" Type="int" />
     <Property Name="Discount" Type="float" />
     <Property Name="Customer_GstNO" Type="varchar" MaxLength="200" />
+    <Property Name="menubillno" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="tbl_NonGST_BarBillDetWithBillNo">
     <Key>
@@ -581,6 +575,7 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Cheque_No" Type="varchar(max)" />
     <Property Name="BankName" Type="varchar(max)" />
+    <Property Name="Roombillno" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="tbl_RoomBooking_Details">
     <Key>
@@ -739,6 +734,7 @@
     <Property Name="Mode_Of_Payment" Type="varchar(max)" />
     <Property Name="Billed_By" Type="int" />
     <Property Name="Discount" Type="float" />
+    <Property Name="Winebillno" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="tbl_WineInventory">
     <Key>
@@ -989,7 +985,6 @@
     <EntitySet Name="tbl_BarInventoryUsage" EntityType="Self.tbl_BarInventoryUsage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BarMenu" EntityType="Self.tbl_BarMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BillingDetails" EntityType="Self.tbl_BillingDetails" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tbl_BillingMode" EntityType="Self.tbl_BillingMode" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_BookingTable" EntityType="Self.tbl_BookingTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Buffet_ConsumableItems" EntityType="Self.tbl_Buffet_ConsumableItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Buffet_Menu" EntityType="Self.tbl_Buffet_Menu" Schema="dbo" store:Type="Tables" />

@@ -8,6 +8,9 @@ namespace WildCrest.Models.WildCrestModels
     public class MenusBillingSection
     {
         public int Bill_Number { get; set; }
+        public string MenuBillNo { get; set; }
+        public string Barbillno { get; set; }
+        public string Winebillno { get; set; }
         public string Customer_Name { get; set; }
         public string Phone { get; set; }
         public string FoodItemName { get; set; }

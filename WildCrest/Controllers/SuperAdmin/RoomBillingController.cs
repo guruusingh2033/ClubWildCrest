@@ -162,7 +162,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var jsonResult = new
             {
                 stayData = stayData,
-                BillNo = bookingDet.Bill_Number,
+                BillNo = bookingDet.Roombillno,
                 csgst = bookingDet.GST,
                 discount = bookingDet.Discount,
                 AmtToBePaid = bookingDet.AmtToBePaid

@@ -30,7 +30,6 @@
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MembersWhileStayingWithUser" Width="1.5" PointX="10.5" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_Menu" Width="1.5" PointX="18.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingDetailsWithBillNo" Width="1.5" PointX="16.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingSection" Width="1.5" PointX="18.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_BarBillDetWithBillNo" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_BarBillingSection" Width="1.5" PointX="19.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_NonGST_MenusBillDetWithBillNo" Width="1.5" PointX="6.75" PointY="19.75" IsExpanded="true" />
@@ -78,9 +77,9 @@
         <AssociationConnector Association="virkcorp_adminModel.FK_tbl_UsersOrder_tbl_UsersStay" ManuallyRouted="false" />
         <AssociationConnector Association="virkcorp_adminModel.FK_tbl_VoucherUsedByUser_tbl_Voucher" ManuallyRouted="false" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMembers" Width="1.5" PointX="5.375" PointY="23.75" />
-        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" Width="1.5" PointX="11.375" PointY="23.75" />
-        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BillingMode" Width="1.5" PointX="24.375" PointY="4.75" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingMode" Width="1.5" PointX="17.375" PointY="24.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingSection" Width="1.5" PointX="19.375" PointY="24.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" Width="1.5" PointX="11.375" PointY="23.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
