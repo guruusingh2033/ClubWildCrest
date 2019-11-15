@@ -860,5 +860,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tbl_custombilling">
+      <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_custombilling">
+        <MappingFragment StoreEntitySet="tbl_custombilling">
+          <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="BillingDate" ColumnName="BillingDate" />
+          <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
+          <ScalarProperty Name="Amount_Without_Gst" ColumnName="Amount_Without_Gst" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="ServiceBillNO" ColumnName="ServiceBillNO" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

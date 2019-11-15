@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Add";
+}
+
+
+<body class="fix-header card-no-border">
+
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div><span class="complusoryFields">*(Complusory Fields)</span></div>
+                        @if (Request.Cookies["UserType"].Value != "5")
+                        {
+                            <a href="/CustomBilling/Index" class="btn btn-primary" style="margin-bottom: 20px;">Bills</a>
+                        }
+                        <h4 class="card-title">Add New Bill</h4>
+                        <div class="form p-t-20">
+                            <div class="form-group">
+                                <label style="font-size:large;">Service Name<span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="SName" class="form-control requiredFields" placeholder="Enter Service Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">Customer Name<span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="Cname" class="form-control requiredFields" placeholder="Enter Customer Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">Contact No.<span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="phone" class="form-control requiredFields" placeholder="Phone No" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size:large;">Amount W/O GST<span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="Awogst" class="form-control requiredFields" placeholder="Enter Amount W/O GST" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">GST</label>
+                                <div class="input-group" style="margin-top: 5px;">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <select id="Gst" class="form-control">
+                                        <option value="5">5%</option>
+                                        <option value="12">12%</option>
+                                        <option value="18">18%</option>
+                                        <option value="28">28%</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size:large;">Qty<span class="complusoryFields"> *</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="number" min="1" value="1" id="qty" class="form-control requiredFields" placeholder="Enter Quantity" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label style="font-size: large;">Mode of Payment :</label>
+                                <div class="input-group" style="margin-top: 5px;">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                    <select onchange="" class="form-control" id="Paymode">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Paytm">Paytm</option>
+                                        <option value="Card">Card</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: large;">Details</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true" style="width: 20px; font-size: initial"></i></div>
+                                    <textarea id="notes" rows="3" class="form-control" placeholder="Details"></textarea>
+                                </div>
+                            </div>
+                            <input id="addMember" type="button" value="Save" onclick="SaveOnly()" class="btn btn-primary" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#phone,#qty").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    });
+    function SaveOnly() {
+        if ($("#Cname").val().trim() == '' || $("#Awogst").val().trim() == '' || $("#SName").val().trim() == '' || $("#Paymode").val().trim() == '' || $("#qty").val().trim() == ''
+            || $("#phone").val().trim() == '' || $("#notes").val().trim() == '' || $("#Gst").val().trim() == '') {
+            bootbox.alert("all field with astrisk(*) is required.");
+            return;
+        }
+
+        var model = {
+            Customer: $("#Cname").val(),
+            Amount_Without_Gst: $("#Awogst").val(),
+            ServiceName: $("#SName").val(),
+            Mode_Of_Payment: $("#Paymode").val(),
+            Qty: $("#qty").val(),
+            PhoneNo: $("#phone").val(),
+            Details: $("#notes").val(),
+            Gst_Amount: $("#Gst").val()
+        }
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/CustomBilling/SaveBill",
+            data: JSON.stringify(model),
+            dataType: "Json",
+            success: function (response) {
+                if (response != '') {
+                    bootbox.alert("Saved Successfully.");
+                } else {
+                    bootbox.alert("not saved");
+                    return;
+                }
+
+                window.location = '/CustomBilling/Index';
+
+            }
+        });
+    }
+</script>

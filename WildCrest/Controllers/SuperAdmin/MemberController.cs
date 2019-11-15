@@ -447,6 +447,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     var billingDetailsData = context.tbl_MembersBillingDetails.FirstOrDefault(f => f.UserID == id);
                     if (billingDetailsData != null)
                     {
+                        prf.ID = billingDetailsData.ID;
                         BillingDetails bill = new BillingDetails();
                         bill.Mode_Of_Payment = billingDetailsData.Mode_Of_Payment;
                         bill.Amount_Paid = billingDetailsData.TotalAmount;

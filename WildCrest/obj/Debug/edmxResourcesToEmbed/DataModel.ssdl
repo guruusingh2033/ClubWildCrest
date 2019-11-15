@@ -162,6 +162,24 @@
     <Property Name="Quantity" Type="float" />
     <Property Name="MeasurementUnit" Type="varchar(max)" />
   </EntityType>
+  <EntityType Name="tbl_custombilling">
+    <Key>
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceName" Type="varchar" MaxLength="500" />
+    <Property Name="ServiceBillNO" Type="varchar" MaxLength="500" />
+    <Property Name="Customer" Type="varchar" MaxLength="300" />
+    <Property Name="Amount_Without_Gst" Type="float" />
+    <Property Name="Gst_Amount" Type="float" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Details" Type="varchar(max)" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
+    <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="20" />
+    <Property Name="BillingDate" Type="date" />
+    <Property Name="TotalAmount" Type="float" />
+    <Property Name="Billed_By" Type="int" />
+  </EntityType>
   <EntityType Name="tbl_EntryMember_Billing">
     <Key>
       <PropertyRef Name="Bill_ID" />
@@ -991,6 +1009,7 @@
     <EntitySet Name="tbl_Consumable_BarItems" EntityType="Self.tbl_Consumable_BarItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Consumable_WineItems" EntityType="Self.tbl_Consumable_WineItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_ConsumableItems" EntityType="Self.tbl_ConsumableItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_custombilling" EntityType="Self.tbl_custombilling" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_EntryMember_Billing" EntityType="Self.tbl_EntryMember_Billing" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_EntryMembers" EntityType="Self.tbl_EntryMembers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Events" EntityType="Self.tbl_Events" Schema="dbo" store:Type="Tables" />

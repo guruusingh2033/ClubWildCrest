@@ -76,14 +76,14 @@
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Customer Name</label>
-                                    <input type="text" id="CustName" readonly value="@Model.Customer_Name" class="form-control">
+                                    <input type="text" id="CustName" value="@Model.Customer_Name" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Phone No.</label>
-                                    <input type="text" id="phone" readonly value="@Model.Phone" class="form-control">
+                                    <input type="text" id="phone" value="@Model.Phone" class="form-control">
                                 </div>
                             </div>
 
@@ -280,10 +280,14 @@
         });
     });
     function updateGSTNO() {
-       
+
+       if( $("#CustName").val().trim()==''){
+     bootbox.alert("Customer name is required.");
+       return;
+    }
         $.ajax({
             type: "post",
-            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',gstno:$("#custGSTNO").val() }),
+            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',gstno:$("#custGSTNO").val(),CustomerName:$("#CustName").val(),Phone:$("#phone").val() }),
             url: "/Billing/UpdateBillByBillNo",
             contentType: "application/json;charset=utf-8",
             datatype: "json",
@@ -669,7 +673,7 @@
                            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tP.toFixed(2) + '</td>' +
                 '</tr>';
             tbl += '<tr style=""> <td style="border:0;" colspan="3"><div style="margin-top:50px"><b>Amount (in words):</b>' + convertNumberToWords(tP.toFixed(2))+' Only.</div> </td></tr>'
-         
+
             tbl += '<tr><td style="border:0;" colspan="3"></td><td style="border:0;" ><div style="margin-top:50px">For club wild crest </div></td></tr><tr> <td colspan="3" style="border:0"></td> <td style="border:0; margin-top:0" > <div style="margin-top:40px">Incharge/Auth. Signature </div></td></tr>'
         }
         else {

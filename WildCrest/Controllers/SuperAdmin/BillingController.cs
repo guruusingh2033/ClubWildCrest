@@ -744,12 +744,14 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult UpdateBillByBillNo(int Bill_Number,string gstno)
+        public JsonResult UpdateBillByBillNo(int Bill_Number,string gstno,string CustomerName,string Phone)
         {
             var data = context.tbl_MenusBillingSection.SingleOrDefault(x => x.Bill_Number == Bill_Number);
             if (data != null)
             {
                 data.Customer_GstNO = gstno;
+                data.Customer_Name = CustomerName;
+                data.Phone = Phone;
                 context.Entry(data).State = EntityState.Modified;
                 context.SaveChanges();
                 return Json("updated");

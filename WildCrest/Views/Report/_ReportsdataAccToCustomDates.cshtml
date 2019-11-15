@@ -24,184 +24,194 @@
         <tbody>
             <tr>
                 <td class="hide">1</td>
-                <td>@if (Model.Menus_Total != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","gst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("Food Billing", "BillsIndex", "Billing", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {<span>Food Billing</span>}</td>
-                <td>@Model.Menus_Sale</td>
-                <td>@Model.Menus_Discount</td>
-                <td>@Model.Menus_GST</td>
-                 <td>@Model.Food_CashPay</td>
-                 <td>@Model.Food_PaytmPay</td>
-                 <td>@Model.Food_CardPay</td>
-                <td>@Model.Food_ChequePay</td>
-                <td>@Model.Menus_Total</td>
-            </tr>
-            @*<tr>
-                <td class="hide">2</td>
-                <td>@if (Model.NonMenusGst_Total != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","nonGst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("NonGST Food Billing", "BillsIndex", "Billing", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {<span>NonGST Food Billing</span>}</td>
-                <td>@Model.NonMenusGst_Sale</td>
-                <td>@Model.NonMenusGst_Discount</td>
-                <td>@Model.NonMenusGst_GST</td>
-                <td>@Model.NonGst_Food_CashPay</td>
-                <td>@Model.NonGst_Food_PaytmPay</td>
-                <td>@Model.NonGst_Food_CardPay</td>
-                 <td>@Model.NonGst_Food_ChequePay</td>
-                <td>@Model.NonMenusGst_Total</td>
-            </tr>*@
-            <tr>
-                <td class="hide">3</td>
-                <td>@if (Model.Room_Total != 0)
-                    {@Html.ActionLink("Room Billing", "PreviousBookings", "AdvancedBookingFromMember", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
-                    else
-                    {<span>Room Billing</span>}</td>
-                <td>@Model.Room_Sale</td>
-                <td>@Model.Room_Discount</td>
-                <td>@Model.Room_GST</td>
-                 <td>@Model.Room_CashPay</td>
-                 <td>@Model.Room_PaytmPay</td>
-                 <td>@Model.Room_CardPay</td>
-                  <td>@Model.Room_ChequePay</td>
-                <td>@Model.Room_Total</td>
-            </tr>
-            <tr>
-                <td class="hide">4</td>              
-                <td>@if (Model.MemBill_Total != 0)
-                    {@Html.ActionLink("Members Billing(Membership)", "Members_Membership_Info", "Report", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
-                    else
-                    {<span>Members Billing(Membership)</span>}</td>
-                <td>@Model.MemBill_Sale</td>
-                <td>@Model.MemBill_Discount</td>
-                <td>@Model.MemBill_GST</td>
-                <td>@Model.MemBill_CashPay</td>
-                 <td>@Model.MemBill_PaytmPay</td>
-                 <td>@Model.MemBill_CardPay</td>
-                  <td>@Model.MemBill_ChequePay</td>
-                <td>@Model.MemBill_Total</td>
-            </tr>
-            <tr>
-                <td class="hide">5</td>
-                <td>@if (Model.Bar_Total != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","gst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("Bar Billing", "BarBillsIndex", "Bar", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {
-                        <span>Bar Billing</span>}</td>
-                <td>@Model.Bar_Sale</td>
-                <td>@Model.Bar_Discount</td>
-                <td>@Model.Bar_GST</td>
-                 <td>@Model.Bar_CashPay</td>
-                 <td>@Model.Bar_PaytmPay</td>
-                 <td>@Model.Bar_CardPay</td>
-                <td>@Model.Bar_ChequePay</td>
-                <td>@Model.Bar_Total</td>
-            </tr>
-            @*<tr>
-                <td class="hide">6</td>
-                <td>@if (Model.NonGst_BarTotal != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","nonGst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("NonGST Bar Billing", "BarBillsIndex", "Bar", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {
-                        <span>NonGST Bar Billing</span>}</td>
-                <td>@Model.NonGst_BarSale</td>
-                <td>@Model.NonGst_BarDiscount</td>
-                <td>@Model.NonGst_BarGST</td>
-                <td>@Model.NonGst_BarTotal</td>
-            </tr>*@
-           <tr>
-                <td class="hide">6</td>
-                <td>@if (Model.Wine_Total != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","gst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("Wine Billing", "WineBillsIndex", "Wine", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {<span>Wine Billing</span>}</td>
-                <td>@Model.Wine_Sale</td>
-                <td>@Model.Wine_Discount</td>
-                <td>@Model.Wine_GST</td>
-                 <td>@Model.Wine_CashPay</td>
-               <td>@Model.Wine_PaytmPay</td>
-               <td>@Model.Wine_CardPay</td>
-                <td>@Model.Wine_ChequePay</td>
-                <td>@Model.Wine_Total</td>
-
-            </tr>
-             @*<tr>
-                <td class="hide">8</td>
-                <td>@if (Model.NonGst_WineTotal != 0)
-                    {
-                        var arr = new[,]{ 
-                            {"Temp_Tax_Data","nonGst"},
-                            {"Temp_Day_Data","7"},
-                            {"Temp_AdminID_Data","0"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
-                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);                       
-                        @Html.ActionLink("NonGST Wine Billing", "BarBillsIndex", "Wine", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
-                    else
-                    {
-                        <span>NonGST Wine Billing</span>}</td>
-                <td>@Model.NonGst_WineSale</td>
-                <td>@Model.NonGst_WineDiscount</td>
-                <td>@Model.NonGst_WineGST</td>
-                <td>@Model.NonGst_WineTotal</td>
-            </tr>*@
-            <tr>
-                <td class="hide">7</td>
                 <td>
-                    @if (Model.Entry_Total != 0)
+                    @if (Model.Menus_Total != 0)
+                    {
+                        var arr = new[,]{
+                                    {"Temp_Tax_Data","gst"},
+                                    {"Temp_Day_Data","7"},
+                                    {"Temp_AdminID_Data","0"},
+                                    {"Temp_SDate_Data",Model.StartDate},
+                                    {"Temp_EndDate_Data",Model.EndDate}
+                                    };
+                        var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                        @Html.ActionLink("Food Billing", "BillsIndex", "Billing", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                    else
+                    {<span>Food Billing</span>}
+            </td>
+            <td>@Model.Menus_Sale</td>
+            <td>@Model.Menus_Discount</td>
+            <td>@Model.Menus_GST</td>
+            <td>@Model.Food_CashPay</td>
+            <td>@Model.Food_PaytmPay</td>
+            <td>@Model.Food_CardPay</td>
+            <td>@Model.Food_ChequePay</td>
+            <td>@Model.Menus_Total</td>
+        </tr>
+        @*<tr>
+        <td class="hide">2</td>
+        <td>@if (Model.NonMenusGst_Total != 0)
+            {
+                var arr = new[,]{
+                    {"Temp_Tax_Data","nonGst"},
+                    {"Temp_Day_Data","7"},
+                    {"Temp_AdminID_Data","0"},
+                    {"Temp_SDate_Data",Model.StartDate},
+                    {"Temp_EndDate_Data",Model.EndDate}
+                    };
+                var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                @Html.ActionLink("NonGST Food Billing", "BillsIndex", "Billing", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+            else
+            {<span>NonGST Food Billing</span>}</td>
+        <td>@Model.NonMenusGst_Sale</td>
+        <td>@Model.NonMenusGst_Discount</td>
+        <td>@Model.NonMenusGst_GST</td>
+        <td>@Model.NonGst_Food_CashPay</td>
+        <td>@Model.NonGst_Food_PaytmPay</td>
+        <td>@Model.NonGst_Food_CardPay</td>
+         <td>@Model.NonGst_Food_ChequePay</td>
+        <td>@Model.NonMenusGst_Total</td>
+    </tr>*@
+        <tr>
+            <td class="hide">3</td>
+            <td>
+                @if (Model.Room_Total != 0)
+                {@Html.ActionLink("Room Billing", "PreviousBookings", "AdvancedBookingFromMember", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
+            else
+            {<span>Room Billing</span>}
+        </td>
+        <td>@Model.Room_Sale</td>
+        <td>@Model.Room_Discount</td>
+        <td>@Model.Room_GST</td>
+        <td>@Model.Room_CashPay</td>
+        <td>@Model.Room_PaytmPay</td>
+        <td>@Model.Room_CardPay</td>
+        <td>@Model.Room_ChequePay</td>
+        <td>@Model.Room_Total</td>
+        </tr>
+        <tr>
+            <td class="hide">4</td>
+            <td>
+                @if (Model.MemBill_Total != 0)
+                {@Html.ActionLink("Members Billing(Membership)", "Members_Membership_Info", "Report", new { sDate = Model.StartDate, eDate = Model.EndDate }, new { @class = "btn btn-link" })}
+            else
+            {<span>Members Billing(Membership)</span>}
+        </td>
+        <td>@Model.MemBill_Sale</td>
+        <td>@Model.MemBill_Discount</td>
+        <td>@Model.MemBill_GST</td>
+        <td>@Model.MemBill_CashPay</td>
+        <td>@Model.MemBill_PaytmPay</td>
+        <td>@Model.MemBill_CardPay</td>
+        <td>@Model.MemBill_ChequePay</td>
+        <td>@Model.MemBill_Total</td>
+        </tr>
+        <tr>
+            <td class="hide">5</td>
+            <td>
+                @if (Model.Bar_Total != 0)
                 {
                     var arr = new[,]{
-                          {"Temp_Day_Data","7"},
-                            {"Temp_SDate_Data",Model.StartDate},
-                            {"Temp_EndDate_Data",Model.EndDate}
-                            };
+                                {"Temp_Tax_Data","gst"},
+                                {"Temp_Day_Data","7"},
+                                {"Temp_AdminID_Data","0"},
+                                {"Temp_SDate_Data",Model.StartDate},
+                                {"Temp_EndDate_Data",Model.EndDate}
+                                };
+                    var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                    @Html.ActionLink("Bar Billing", "BarBillsIndex", "Bar", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                else
+                {
+                    <span>Bar Billing</span>}
+        </td>
+        <td>@Model.Bar_Sale</td>
+        <td>@Model.Bar_Discount</td>
+        <td>@Model.Bar_GST</td>
+        <td>@Model.Bar_CashPay</td>
+        <td>@Model.Bar_PaytmPay</td>
+        <td>@Model.Bar_CardPay</td>
+        <td>@Model.Bar_ChequePay</td>
+        <td>@Model.Bar_Total</td>
+        </tr>
+        @*<tr>
+        <td class="hide">6</td>
+        <td>@if (Model.NonGst_BarTotal != 0)
+            {
+                var arr = new[,]{
+                    {"Temp_Tax_Data","nonGst"},
+                    {"Temp_Day_Data","7"},
+                    {"Temp_AdminID_Data","0"},
+                    {"Temp_SDate_Data",Model.StartDate},
+                    {"Temp_EndDate_Data",Model.EndDate}
+                    };
+                var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                @Html.ActionLink("NonGST Bar Billing", "BarBillsIndex", "Bar", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+            else
+            {
+                <span>NonGST Bar Billing</span>}</td>
+        <td>@Model.NonGst_BarSale</td>
+        <td>@Model.NonGst_BarDiscount</td>
+        <td>@Model.NonGst_BarGST</td>
+        <td>@Model.NonGst_BarTotal</td>
+    </tr>*@
+        <tr>
+            <td class="hide">6</td>
+            <td>
+                @if (Model.Wine_Total != 0)
+                {
+                    var arr = new[,]{
+                                {"Temp_Tax_Data","gst"},
+                                {"Temp_Day_Data","7"},
+                                {"Temp_AdminID_Data","0"},
+                                {"Temp_SDate_Data",Model.StartDate},
+                                {"Temp_EndDate_Data",Model.EndDate}
+                                };
+                    var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                    @Html.ActionLink("Wine Billing", "WineBillsIndex", "Wine", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                else
+                {<span>Wine Billing</span>}
+        </td>
+        <td>@Model.Wine_Sale</td>
+        <td>@Model.Wine_Discount</td>
+        <td>@Model.Wine_GST</td>
+        <td>@Model.Wine_CashPay</td>
+        <td>@Model.Wine_PaytmPay</td>
+        <td>@Model.Wine_CardPay</td>
+        <td>@Model.Wine_ChequePay</td>
+        <td>@Model.Wine_Total</td>
+
+        </tr>
+        @*<tr>
+        <td class="hide">8</td>
+        <td>@if (Model.NonGst_WineTotal != 0)
+            {
+                var arr = new[,]{
+                    {"Temp_Tax_Data","nonGst"},
+                    {"Temp_Day_Data","7"},
+                    {"Temp_AdminID_Data","0"},
+                    {"Temp_SDate_Data",Model.StartDate},
+                    {"Temp_EndDate_Data",Model.EndDate}
+                    };
+                var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                @Html.ActionLink("NonGST Wine Billing", "BarBillsIndex", "Wine", new { filter = filter,filterFromReport="Yes" }, new { @class = "btn btn-link" })}
+            else
+            {
+                <span>NonGST Wine Billing</span>}</td>
+        <td>@Model.NonGst_WineSale</td>
+        <td>@Model.NonGst_WineDiscount</td>
+        <td>@Model.NonGst_WineGST</td>
+        <td>@Model.NonGst_WineTotal</td>
+    </tr>*@
+        <tr>
+            <td class="hide">7</td>
+            <td>
+                @if (Model.Entry_Total != 0)
+                {
+                    var arr = new[,]{
+                              {"Temp_Day_Data","7"},
+                                {"Temp_SDate_Data",Model.StartDate},
+                                {"Temp_EndDate_Data",Model.EndDate}
+                                };
                     var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
                     @Html.ActionLink("Entry Billing", "EntryBillsIndex", "Entry", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
                 else
@@ -217,19 +227,43 @@
             <td>@Model.Entry_Total</td>
 
         </tr>
+        <tr>
+            <td class="hide">7</td>
+            <td>
+                @if (Model.CustomBill_Total != 0)
+                {
+                    var arr = new[,]{
+                              {"Temp_Day_Data","7"},
+                                {"Temp_SDate_Data",Model.StartDate},
+                                {"Temp_EndDate_Data",Model.EndDate}
+                                };
+                    var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                    @Html.ActionLink("Custom Billing", "Index", "CustomBilling", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                else
+                {<span>Custom Billing</span>}
+            </td>
+            <td>@Model.CustomBill_Sale</td>
+            <td>0</td>
+            <td>@Model.CustomBill_GST</td>
+            <td>@Model.CustomBill_CashPay</td>
+            <td>@Model.CustomBill_PaytmPay</td>
+            <td>@Model.CustomBill_CardPay</td>
+            <td>@Model.CustomBill_ChequePay</td>
+            <td>@Model.CustomBill_Total</td>
 
-            <tr>
-                <td class="hide">8</td>
-                <td>Total</td>
-                <td>@Model.Total_Sale</td>
-                <td>@Model.Total_Discount</td>
-                <td>@Model.Total_GST</td>
-                <td>@Model.Total_Cash</td>
-                <td>@Model.Total_Paytm</td>
-                <td>@Model.Total_Card</td>
-                  <td>@Model.Total_ChequePay</td>
-                <td>@Model.Total_Amount</td>
-            </tr>
+        </tr>
+        <tr>
+            <td class="hide">8</td>
+            <td>Total</td>
+            <td>@Model.Total_Sale</td>
+            <td>@Model.Total_Discount</td>
+            <td>@Model.Total_GST</td>
+            <td>@Model.Total_Cash</td>
+            <td>@Model.Total_Paytm</td>
+            <td>@Model.Total_Card</td>
+            <td>@Model.Total_ChequePay</td>
+            <td>@Model.Total_Amount</td>
+        </tr>
         </tbody>
     </table>
     <input type="button" value="Print" class="btn btn-primary" onclick="PrintReport();" />

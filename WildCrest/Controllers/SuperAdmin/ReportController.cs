@@ -62,6 +62,9 @@ namespace WildCrest.Controllers.SuperAdmin
             var entryReport = "select  Cast(IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_GST,Cast((IsNull(Sum(mbs.Amount_Paid),0))-IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) Entry_Sale,Cast(IsNull(Sum(mbs.Amount_Paid),0) as decimal(18,2)) Entry_Total from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)";
             var entryData = context.Database.SqlQuery<EntryReports>(entryReport).FirstOrDefault();
 
+            var CustomBillReport = "select  Cast(IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) CustomBill_GST,Cast(IsNull(Sum(mbs.Amount_Without_Gst),0) as decimal(18,2)) CustomBill_Sale,Cast(IsNull(Sum(mbs.TotalAmount),0) as decimal(18,2)) CustomBill_Total from tbl_custombilling mbs where Cast(mbs.BillingDate  as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate  as date)<=Cast('" + eDate + "' as date)";
+            var CustomBillData = context.Database.SqlQuery<CustomBillReports>(CustomBillReport).FirstOrDefault();
+
 
             Reports sale_Report = new Reports();
             #region Menus definition
@@ -196,8 +199,6 @@ namespace WildCrest.Controllers.SuperAdmin
             sale_Report.NonGst_WineTotal = nonGstWineData.NonGst_WineTotal;
 
             #endregion
-
-
             #region Entry
             var Entry_Cash_Payment = "select Cast((IsNull(sum(mbs.Amount_Paid),0)) as decimal(18,2)) Entry_CashPay from tbl_EntryMember_Billing mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cash'";
             var EntryCashapay = context.Database.SqlQuery<EntryPayment>(Entry_Cash_Payment).FirstOrDefault();
@@ -218,19 +219,39 @@ namespace WildCrest.Controllers.SuperAdmin
             //sale_Report.Menus_Total = menusData.Menus_Total;
             sale_Report.Entry_Total = entryData.Entry_Total;
             #endregion
+
+            #region CustomBill
+            var CustomBill_Cash_Payment = "select Cast((IsNull(sum(mbs.TotalAmount),0)) as decimal(18,2)) CustomBill_CashPay from tbl_custombilling mbs where Cast(mbs.BillingDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cash'";
+            var CustomBillCashapay = context.Database.SqlQuery<CustomBillPayment>(CustomBill_Cash_Payment).FirstOrDefault();
+            var CustomBill_Paytm_Payment = "select Cast((IsNull(sum(mbs.TotalAmount),0)) as decimal(18,2)) CustomBill_PaytmPay from tbl_custombilling mbs where Cast(mbs.BillingDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Paytm'";
+            var CustomBillPaytmapay = context.Database.SqlQuery<CustomBillPayment>(CustomBill_Paytm_Payment).FirstOrDefault();
+            var CustomBill_Card_Payment = "select Cast((IsNull(sum(mbs.TotalAmount),0)) as decimal(18,2)) CustomBill_CardPay from tbl_custombilling mbs where Cast(mbs.BillingDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Card'";
+            var CustomBillCardapay = context.Database.SqlQuery<CustomBillPayment>(CustomBill_Card_Payment).FirstOrDefault();
+            var CustomBill_Cheque_Payment = "select Cast((IsNull(sum(mbs.TotalAmount),0)) as decimal(18,2)) CustomBill_ChequePay from tbl_custombilling mbs where Cast(mbs.BillingDate as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cheque'";
+            var CustomBillChequepay = context.Database.SqlQuery<CustomBillPayment>(CustomBill_Cheque_Payment).FirstOrDefault();
+
+            sale_Report.CustomBill_Sale = CustomBillData.CustomBill_Sale;
+            sale_Report.CustomBill_GST = CustomBillData.CustomBill_GST;
+            sale_Report.CustomBill_CashPay = Convert.ToDecimal(CustomBillCashapay.CustomBill_CashPay);
+            sale_Report.CustomBill_CardPay = Convert.ToDecimal(CustomBillCardapay.CustomBill_CardPay);
+            sale_Report.CustomBill_PaytmPay = Convert.ToDecimal(CustomBillPaytmapay.CustomBill_PaytmPay);
+            sale_Report.CustomBill_ChequePay = Convert.ToDecimal(CustomBillChequepay.CustomBill_ChequePay);
+            //sale_Report.Menus_Total = menusData.Menus_Total;
+            sale_Report.CustomBill_Total = CustomBillData.CustomBill_Total;
+            #endregion
             //sale_Report.Total_Sale = (menusData.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale);
 
-            sale_Report.Total_Sale = (sale_Report.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale+entryData.Entry_Sale);
+            sale_Report.Total_Sale = (sale_Report.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale+entryData.Entry_Sale+CustomBillData.CustomBill_Sale);
             sale_Report.Total_Discount = (menusData.Menus_Discount + nonGstMenusData.NonMenusGst_Discount + roomData.Room_Discount + membersMemShipData.MemBill_Discount + barData.Bar_Discount + nonGstBarData.NonGst_BarDiscount + WineData.Wine_Discount + nonGstWineData.NonGst_WineDiscount);
-            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST + barData.Bar_GST + nonGstBarData.NonGst_BarGST + WineData.Wine_GST + nonGstWineData.NonGst_WineGST+ entryData.Entry_GST);
+            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST + barData.Bar_GST + nonGstBarData.NonGst_BarGST + WineData.Wine_GST + nonGstWineData.NonGst_WineGST+ entryData.Entry_GST+ CustomBillData.CustomBill_GST);
 
-            sale_Report.Total_Cash = (FoodCashapay.Food_CashPay + NonGstFoodCashapay.NonGst_Food_CashPay + RoomCashapay.Room_CashPay + MemBillCashapay.MemBill_CashPay + BarCashapay.Bar_CashPay + WineCashapay.Wine_CashPay+EntryCashapay.Entry_CashPay);
-            sale_Report.Total_Card = (FoodCardapay.Food_CardPay + NonGstFoodCardapay.NonGst_Food_CardPay + RoomCardapay.Room_CardPay + MemBillCardapay.MemBill_CardPay + BarCardapay.Bar_CardPay + WineCardapay.Wine_CardPay+ EntryCashapay.Entry_CardPay);
-            sale_Report.Total_Paytm = (FoodPaytmapay.Food_PaytmPay + NonGstFoodPaytmapay.NonGst_Food_PaytmPay + RoomPaytmapay.Room_PaytmPay + MemBillPaytmapay.MemBill_PaytmPay + BarPaytmapay.Bar_PaytmPay + WinePaytmapay.Wine_PaytmPay+ EntryCashapay.Entry_PaytmPay);
-            sale_Report.Total_ChequePay = (FoodChequepay.Food_ChequePay + NonGstFoodChequepay.NonGst_Food_ChequePay + RoomChequepay.Room_ChequePay + MemBillChequepay.MemBill_ChequePay + BarChequepay.Bar_ChequePay + WineChequepay.Wine_ChequePay+ EntryCashapay.Entry_ChequePay);
+            sale_Report.Total_Cash = (FoodCashapay.Food_CashPay + NonGstFoodCashapay.NonGst_Food_CashPay + RoomCashapay.Room_CashPay + MemBillCashapay.MemBill_CashPay + BarCashapay.Bar_CashPay + WineCashapay.Wine_CashPay+EntryCashapay.Entry_CashPay+ CustomBillCashapay.CustomBill_CashPay);
+            sale_Report.Total_Card = (FoodCardapay.Food_CardPay + NonGstFoodCardapay.NonGst_Food_CardPay + RoomCardapay.Room_CardPay + MemBillCardapay.MemBill_CardPay + BarCardapay.Bar_CardPay + WineCardapay.Wine_CardPay+ EntryCashapay.Entry_CardPay+ CustomBillCashapay.CustomBill_CardPay);
+            sale_Report.Total_Paytm = (FoodPaytmapay.Food_PaytmPay + NonGstFoodPaytmapay.NonGst_Food_PaytmPay + RoomPaytmapay.Room_PaytmPay + MemBillPaytmapay.MemBill_PaytmPay + BarPaytmapay.Bar_PaytmPay + WinePaytmapay.Wine_PaytmPay+ EntryCashapay.Entry_PaytmPay+ CustomBillCashapay.CustomBill_PaytmPay);
+            sale_Report.Total_ChequePay = (FoodChequepay.Food_ChequePay + NonGstFoodChequepay.NonGst_Food_ChequePay + RoomChequepay.Room_ChequePay + MemBillChequepay.MemBill_ChequePay + BarChequepay.Bar_ChequePay + WineChequepay.Wine_ChequePay+ EntryCashapay.Entry_ChequePay+ CustomBillCashapay.CustomBill_ChequePay);
 
             //sale_Report.Total_Amount = (menusData.Menus_Total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal);
-            sale_Report.Total_Amount = (total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal+entryData.Entry_Total);
+            sale_Report.Total_Amount = (total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal+entryData.Entry_Total+ CustomBillData.CustomBill_Total);
             sale_Report.StartDate = sDate;
             sale_Report.EndDate = eDate;
 

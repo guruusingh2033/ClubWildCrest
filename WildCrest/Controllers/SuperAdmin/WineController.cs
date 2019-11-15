@@ -1990,5 +1990,19 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             return Json(menusDetailList);
         }
+
+        public JsonResult UpdateBillByBillNo(int Bill_Number, string CustomerName, string Phone)
+        {
+            var data = context.tbl_WineBillingSection.SingleOrDefault(x => x.Bill_Number == Bill_Number);
+            if (data != null)
+            {
+                data.Customer_Name = CustomerName;
+                data.Phone = Phone;
+                context.Entry(data).State = EntityState.Modified;
+                context.SaveChanges();
+                return Json("updated");
+            }
+            return Json("");
+        }
     }
 }

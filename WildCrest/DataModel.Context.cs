@@ -87,6 +87,7 @@ namespace WildCrest
         public DbSet<tbl_BarBillingMode> tbl_BarBillingMode { get; set; }
         public DbSet<tbl_MenusBillingSection> tbl_MenusBillingSection { get; set; }
         public DbSet<tbl_EntryMember_Billing> tbl_EntryMember_Billing { get; set; }
+        public DbSet<tbl_custombilling> tbl_custombilling { get; set; }
     
         public virtual int checkAvailabilityOfRooms(string checkin, string checkout)
         {

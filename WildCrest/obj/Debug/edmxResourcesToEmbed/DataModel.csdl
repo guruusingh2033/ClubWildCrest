@@ -136,6 +136,7 @@
     <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
     <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
     <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
+    <EntitySet Name="tbl_custombilling" EntityType="virkcorp_adminModel.tbl_custombilling" />
   </EntityContainer>
   <EntityType Name="tbl_BarBillingDetailsWithBillNo">
     <Key>
@@ -1152,5 +1153,23 @@
     <Property Name="Member_ID" Type="Int32" />
     <Property Name="TokenNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Entrybillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_custombilling">
+    <Key>
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceBillNO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Customer" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="Amount_Without_Gst" Type="Double" />
+    <Property Name="Gst_Amount" Type="Double" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Payment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillingDate" Type="DateTime" Precision="0" />
+    <Property Name="TotalAmount" Type="Double" />
+    <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Billed_By" Type="Int32" />
   </EntityType>
 </Schema>

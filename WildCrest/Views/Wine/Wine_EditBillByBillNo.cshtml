@@ -75,14 +75,14 @@
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Customer Name</label>
-                                    <input type="text" id="CustName" readonly value="@Model.Customer_Name" class="form-control">
+                                    <input type="text" id="CustName"  value="@Model.Customer_Name" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Phone No.</label>
-                                    <input type="text" id="phone" readonly value="@Model.Phone" class="form-control">
+                                    <input type="text" id="phone"  value="@Model.Phone" class="form-control">
                                 </div>
                             </div>
 
@@ -110,8 +110,9 @@
                                     <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
                                 </div>
                             </div>
-                             <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
+                            <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
                                 <input type="button" value="Add More" data-toggle="modal" data-target="#addMoreModal" class="btn btn-primary" />
+                                <input type="button" value="Update" onclick="updateWineBill()" class="btn btn-primary" />
                             </div>
                             @if (Model.MenusBillingDetailsWithBillNo.Count != 0)
                             {
@@ -540,6 +541,30 @@
                 }
             });
         }
+    }
+    function updateWineBill(){
+
+     if( $("#CustName").val().trim()==''){
+     bootbox.alert("Customer name is required.");
+       return;
+    }
+        $.ajax({
+            type: "post",
+            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',CustomerName:$("#CustName").val(),Phone:$("#phone").val() }),
+            url: "/Wine/UpdateBillByBillNo",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                if (response != "") {
+                    bootbox.alert("Update Successfully.");
+                } else {
+                    bootbox.alert("Not Updated.");
+                }
+            },
+            error: function () {
+                alert('Some error occured.Try again after refresh.');
+            }
+        });
     }
 
     function PrintFoodBill() {

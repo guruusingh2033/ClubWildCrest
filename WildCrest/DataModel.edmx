@@ -167,6 +167,24 @@
           <Property Name="Quantity" Type="float" />
           <Property Name="MeasurementUnit" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_custombilling">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="500" />
+          <Property Name="ServiceBillNO" Type="varchar" MaxLength="500" />
+          <Property Name="Customer" Type="varchar" MaxLength="300" />
+          <Property Name="Amount_Without_Gst" Type="float" />
+          <Property Name="Gst_Amount" Type="float" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Details" Type="varchar(max)" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
+          <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="20" />
+          <Property Name="BillingDate" Type="date" />
+          <Property Name="TotalAmount" Type="float" />
+          <Property Name="Billed_By" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_EntryMember_Billing">
           <Key>
             <PropertyRef Name="Bill_ID" />
@@ -996,6 +1014,7 @@
           <EntitySet Name="tbl_Consumable_BarItems" EntityType="Self.tbl_Consumable_BarItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Consumable_WineItems" EntityType="Self.tbl_Consumable_WineItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ConsumableItems" EntityType="Self.tbl_ConsumableItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_custombilling" EntityType="Self.tbl_custombilling" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_EntryMember_Billing" EntityType="Self.tbl_EntryMember_Billing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_EntryMembers" EntityType="Self.tbl_EntryMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Events" EntityType="Self.tbl_Events" Schema="dbo" store:Type="Tables" />
@@ -1247,6 +1266,7 @@
           <EntitySet Name="tbl_BarBillingMode" EntityType="virkcorp_adminModel.tbl_BarBillingMode" />
           <EntitySet Name="tbl_MenusBillingSection" EntityType="virkcorp_adminModel.tbl_MenusBillingSection" />
           <EntitySet Name="tbl_EntryMember_Billing" EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" />
+          <EntitySet Name="tbl_custombilling" EntityType="virkcorp_adminModel.tbl_custombilling" />
         </EntityContainer>
         <EntityType Name="tbl_BarBillingDetailsWithBillNo">
           <Key>
@@ -2264,6 +2284,24 @@
           <Property Name="TokenNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Entrybillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tbl_custombilling">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceBillNO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Customer" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Amount_Without_Gst" Type="Double" />
+          <Property Name="Gst_Amount" Type="Double" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Payment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BillingDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalAmount" Type="Double" />
+          <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Billed_By" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3126,6 +3164,25 @@
                 <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
                 <ScalarProperty Name="Price_Without_Gst" ColumnName="Price_Without_Gst" />
                 <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_custombilling">
+            <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_custombilling">
+              <MappingFragment StoreEntitySet="tbl_custombilling">
+                <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="BillingDate" ColumnName="BillingDate" />
+                <ScalarProperty Name="Mode_Of_Payment" ColumnName="Mode_Of_Payment" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Gst_Amount" ColumnName="Gst_Amount" />
+                <ScalarProperty Name="Amount_Without_Gst" ColumnName="Amount_Without_Gst" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="ServiceBillNO" ColumnName="ServiceBillNO" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

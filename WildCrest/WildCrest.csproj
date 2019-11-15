@@ -138,6 +138,7 @@
     <Compile Include="Controllers\SuperAdmin\BarController.cs" />
     <Compile Include="Controllers\SuperAdmin\BillingController.cs" />
     <Compile Include="Controllers\SuperAdmin\BuffetMenuController.cs" />
+    <Compile Include="Controllers\SuperAdmin\CustomBillingController.cs" />
     <Compile Include="Controllers\SuperAdmin\EventsController.cs" />
     <Compile Include="Controllers\SuperAdmin\InventoryController.cs" />
     <Compile Include="Controllers\SuperAdmin\MemberController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Members_Checked_Out_Rooms_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WildCrestModels\CustomBillingModel.cs" />
     <Compile Include="Models\WildCrestModels\MembershipHistoryModel.cs" />
     <Compile Include="Models\WildCrestModels\AdvancedInfoOfRoomBooking.cs" />
     <Compile Include="Models\WildCrestModels\BillingDetails.cs" />
@@ -259,6 +261,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Consumable_WineItems.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_custombilling.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_EntryMembers.cs">
@@ -1169,6 +1174,10 @@
     <Content Include="Views\Entry\BillDetailsByBillNo.cshtml" />
     <Content Include="Views\Entry\_EntryBillsDataAccToDay.cshtml" />
     <Content Include="Views\Shared\Membership\_MembershipHistory.cshtml" />
+    <Content Include="Views\CustomBilling\Add.cshtml" />
+    <Content Include="Views\CustomBilling\Index.cshtml" />
+    <Content Include="Views\CustomBilling\_CustomBillsDataAccToDay.cshtml" />
+    <Content Include="Views\CustomBilling\BillDetailByBillNo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -75,14 +75,14 @@
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Customer Name</label>
-                                    <input type="text" id="CustName" readonly value="@Model.Customer_Name" class="form-control">
+                                    <input type="text" id="CustName"  value="@Model.Customer_Name" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Phone No.</label>
-                                    <input type="text" id="phone" readonly value="@Model.Phone" class="form-control">
+                                    <input type="text" id="phone"  value="@Model.Phone" class="form-control">
                                 </div>
                             </div>
 
@@ -110,8 +110,10 @@
                                     <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
                                 </div>
                             </div>
-                             <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
+                            <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
                                 <input type="button" value="Add More" data-toggle="modal" data-target="#addMoreModal" class="btn btn-primary" />
+                                
+                                 <input type="button" value="Update" onclick="updateBarBill()" class="btn btn-primary" />
                             </div>
                             @if (Model.MenusBillingDetailsWithBillNo.Count != 0)
                             {
@@ -541,7 +543,30 @@
             });
         }
     }
+     function updateBarBill(){
 
+     if( $("#CustName").val().trim()==''){
+     bootbox.alert("Customer name is required.");
+       return;
+    }
+        $.ajax({
+            type: "post",
+            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',CustomerName:$("#CustName").val(),Phone:$("#phone").val() }),
+            url: "/Bar/UpdateBillByBillNo",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function (response) {
+                if (response != "") {
+                    bootbox.alert("Update Successfully.");
+                } else {
+                    bootbox.alert("Not Updated.");
+                }
+            },
+            error: function () {
+                alert('Some error occured.Try again after refresh.');
+            }
+        });
+    }
     function PrintFoodBill() {
         $(".preloader").css("display", "block");
         var gst = "@Model.GST";
@@ -630,7 +655,7 @@
                            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tP.toFixed(2) + '</td>' +
                 '</tr>';
             tbl += '<tr style=""> <td style="border:0;" colspan="3"><div style="margin-top:50px"><b>Amount (in words):</b>' + convertNumberToWords(tP.toFixed(2))+' Only.</div> </td></tr>'
-         
+
             tbl += '<tr><td style="border:0;" colspan="3"></td><td style="border:0;" ><div style="margin-top:50px">For club wild crest </div></td></tr><tr> <td colspan="3" style="border:0"></td> <td style="border:0; margin-top:0" > <div style="margin-top:40px">Incharge/Auth. Signature </div></td></tr>'
         }
         else {

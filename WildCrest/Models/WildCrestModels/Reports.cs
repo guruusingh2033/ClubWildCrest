@@ -15,6 +15,10 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Entry_GST { get; set; }
         public decimal Entry_Discount { get; set; }
         public decimal Entry_Total { get; set; }
+        public decimal CustomBill_Sale { get; set; }
+        public decimal CustomBill_GST { get; set; }
+        public decimal CustomBill_Discount { get; set; }
+        public decimal CustomBill_Total { get; set; }
 
         public decimal Food_CardPay { get; set; }
         public decimal Food_CashPay { get; set; }
@@ -24,6 +28,10 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Entry_CashPay { get; set; }
         public decimal Entry_PaytmPay { get; set; }
         public decimal Entry_ChequePay { get; set; }
+        public decimal CustomBill_CardPay { get; set; }
+        public decimal CustomBill_CashPay { get; set; }
+        public decimal CustomBill_PaytmPay { get; set; }
+        public decimal CustomBill_ChequePay { get; set; }
 
         public decimal NonMenusGst_Sale { get; set; }
         public decimal NonMenusGst_Discount { get; set; }
@@ -123,6 +131,12 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Entry_Discount { get; set; }
         public decimal Entry_Total { get; set; }
     }
+    public class CustomBillReports
+    {
+        public decimal CustomBill_Sale { get; set; }
+        public decimal CustomBill_GST { get; set; }
+        public decimal CustomBill_Total { get; set; }
+    }
 
     public class NonMenusGstReports
     {
@@ -199,6 +213,14 @@ namespace WildCrest.Models.WildCrestModels
         public decimal Entry_CashPay { get; set; }
         public decimal Entry_PaytmPay { get; set; }
         public decimal Entry_ChequePay { get; set; }
+    }
+    public class CustomBillPayment
+    {
+        public decimal CustomBill_CardPay { get; set; }
+        public decimal CustomBill_CashPay { get; set; }
+        public decimal CustomBill_PaytmPay { get; set; }
+        public decimal CustomBill_ChequePay { get; set; }
+
     }
     public class NonGstFoodPayment
     {

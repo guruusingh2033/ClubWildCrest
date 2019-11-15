@@ -80,6 +80,7 @@
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_BarBillingMode" Width="1.5" PointX="17.375" PointY="24.75" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_MenusBillingSection" Width="1.5" PointX="19.375" PointY="24.75" />
         <EntityTypeShape EntityType="virkcorp_adminModel.tbl_EntryMember_Billing" Width="1.5" PointX="11.375" PointY="23.75" />
+        <EntityTypeShape EntityType="virkcorp_adminModel.tbl_custombilling" Width="1.5" PointX="24.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
