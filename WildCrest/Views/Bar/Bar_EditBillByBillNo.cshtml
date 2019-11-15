@@ -107,7 +107,11 @@
                             <div class="col-md-4 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Payment Mode :</label>
-                                    <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
+                                    <select class="form-control" id="paymentMode">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Paytm">Paytm</option>
+                                        <option value="Card">Card</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12 form-profile-in" style="margin-bottom:10px;">
@@ -265,6 +269,7 @@
                 event.preventDefault();
             }
         });
+        $("#paymentMode").val('@Model.Mode_Of_Payment');
     });
 
     $('#itemList').on('click','input:checkbox', function(event) {
@@ -551,7 +556,7 @@
     }
         $.ajax({
             type: "post",
-            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number',CustomerName:$("#CustName").val(),Phone:$("#phone").val() }),
+            data: JSON.stringify({ Bill_Number: '@Model.Bill_Number', CustomerName: $("#CustName").val(), Phone: $("#phone").val(), payMode: $("#paymentMode").val() }),
             url: "/Bar/UpdateBillByBillNo",
             contentType: "application/json;charset=utf-8",
             datatype: "json",

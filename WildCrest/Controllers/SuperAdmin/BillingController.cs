@@ -744,7 +744,7 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult UpdateBillByBillNo(int Bill_Number,string gstno,string CustomerName,string Phone)
+        public JsonResult UpdateBillByBillNo(int Bill_Number,string gstno,string CustomerName,string Phone,string payMode)
         {
             var data = context.tbl_MenusBillingSection.SingleOrDefault(x => x.Bill_Number == Bill_Number);
             if (data != null)
@@ -752,6 +752,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 data.Customer_GstNO = gstno;
                 data.Customer_Name = CustomerName;
                 data.Phone = Phone;
+                data.Mode_Of_Payment = payMode;
                 context.Entry(data).State = EntityState.Modified;
                 context.SaveChanges();
                 return Json("updated");
