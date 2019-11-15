@@ -458,5 +458,84 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             return Json(booking);
         }
+
+        public ActionResult RoomBookingEditByBookingID(int bookingID)
+        {
+            var bookingData = context.tbl_RoomBooking.SingleOrDefault(s => s.Booking_ID == bookingID);
+            RoomBooking booking = new RoomBooking();
+            List<RoomBooking_Details> details = new List<RoomBooking_Details>();
+            if (bookingData != null)
+            {
+                var prf = context.tbl_Profile.SingleOrDefault(b => b.ID == bookingData.UserID);
+
+                booking.Booking_ID = bookingID;
+                booking.AdvancedPayment = bookingData.AdvancedPayment;
+                booking.Amount = bookingData.Amount;
+                booking.AmtToBePaid = bookingData.AmtToBePaid;
+                booking.Bill_Number = bookingData.Bill_Number;
+                booking.Check_In = bookingData.Check_In;
+                booking.Check_Out = bookingData.Check_Out;
+                booking.Customer = prf != null ? (prf.F_Name + " " + ((string.IsNullOrEmpty(prf.L_Name)) ? "" : prf.L_Name)) : "";
+                booking.Discount = bookingData.Discount;
+                booking.GST = bookingData.GST;
+                booking.NoOfNightStays = bookingData.NoOfNightStays;
+                booking.Roombillno = bookingData.Roombillno;
+                booking.Mode_Of_Payment = bookingData.Mode_Of_Payment;
+                var roomDet = context.tbl_RoomBooking_Details.Where(b => b.Booking_ID == bookingID).ToList();
+                foreach (var i in roomDet)
+                {
+                    details.Add(new RoomBooking_Details()
+                    {
+                        ID = i.ID,
+                        RoomID = i.RoomID,
+                        RoomNo = context.tbl_Rooms.SingleOrDefault(a => a.ID == i.RoomID).RoomNo,
+                        NoOfPerson = i.NoOfPerson,
+                        ExtraBed = i.ExtraBed,
+                        ComplementaryStays = i.ComplementaryStays==null?0: i.ComplementaryStays,
+                        TAmtPerRoom = i.TAmtPerRoom
+                    });
+                }
+
+
+                booking.roomDetails = details;
+            }
+            return View(booking);
+        }
+
+        public JsonResult UpdateRoomInfo(int bookingID,string MemberName,Double Amount)
+        {
+           var Item= context.tbl_RoomBooking.SingleOrDefault(x => x.Booking_ID == bookingID);
+            if (Item != null)
+            {
+               var User= context.tbl_Profile.SingleOrDefault(x => x.ID == Item.UserID);
+                if (User != null)
+                {
+                    string[] Name = MemberName.Split(null);
+                    if (Name.Length == 2)
+                    {
+                        User.F_Name = Name[0];
+                        User.L_Name = Name[1];
+                    }
+                    else
+                    {
+                        User.F_Name = Name[0];
+                        User.L_Name = "";
+                    }
+                   
+                    context.Entry(User).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                Amount = Amount - Math.Round(Convert.ToDouble(Item.Discount),2);
+                Double actualAmt = Math.Round(((Amount * 100) / 118), 2);
+               var gst = Math.Round(((actualAmt * 18 / 100)),2);
+                Item.Amount = Amount;
+                Item.GST = gst;
+                context.Entry(Item).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return Json("Updated");
+            }
+            return Json("");
+        }
     }
 }

@@ -1,0 +1,156 @@
+﻿@model WildCrest.Models.WildCrestModels.RoomBooking
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
+
+<body class="fix-header card-no-border">
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-md-12 info_common">
+                <div class="card">
+                    <div class="card-block">
+                       
+                        @Html.ActionLink("Go Back", "PreviousBookings", "AdvancedBookingFromMember", new { @class = "btn btn-primary", @style = "margin-bottom:5px;" })
+                        <h4 class="card-title"> Bill Detail</h4>
+                        <div class="form p-t-20">
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Invoice No.</label>
+                                    <input type="text" id="invoice" readonly value="@Model.Booking_ID" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Member Name</label>
+                                    <input type="text" id="CustName"  value="@Model.Customer" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Check-in Date</label>
+                                    <input type="text" readonly value="@Model.Check_In" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Check-out Date</label>
+                                    <input type="text" id="phone" readonly value="@Model.Check_Out" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Payment Mode :</label>
+                                    <input type="text" id="paymentMode" readonly value="@Model.Mode_Of_Payment" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">GST Amount:</label>
+                                    <input type="text" id="csgst" readonly value="@Model.GST" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Total Amount :</label>
+                                    <input type="text" id="Amount"  value="@Model.Amount" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Discount :</label>
+                                    <input type="text" id="csgst" readonly value="@Model.Discount" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">No. Of Stay:</label>
+                                    <input type="text" id="csgst" readonly value="@Model.NoOfNightStays" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 col-sm-12 form-profile-in">
+                                <input type="button" value="Update" class="btn btn-primary" onclick="UpdateRoomInfo()"/>
+                            </div>
+                            @if (Model.roomDetails != null && Model.roomDetails.Count > 0)
+                            {
+
+                                <div class="row">
+                                    <div class="col-md-12 info_common member_stay_details">
+                                        <div class="card">
+                                            <div class="card-block">
+                                                <h4 class="card-title d-flex align-items-center">Member Stays Details</h4>
+
+                                                <div class="table-responsive m-t-40">
+                                                    <table id="memberList" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Room(s)</th>
+                                                                <th>No. of Members</th>
+                                                                <th>Extra Bed</th>
+                                                                <th>Complementary Stays Taken</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model.roomDetails)
+                                                            {
+
+
+                                                                <tr>
+                                                                    <td>@item.RoomNo</td>
+                                                                    <td>@item.NoOfPerson</td>
+                                                                    <td>@(Html.Raw(item.ExtraBed==true?"Yes":"No"))</td>
+                                                                    <td>@item.ComplementaryStays</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    function UpdateRoomInfo() {
+        if ($("#CustName").val().trim() == "") {
+            bootbox.alert("Member name is required.");
+            return;
+        }
+        if ($("#Amount").val().trim() == "") {
+            bootbox.alert("Total Amount is required.");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/AdvancedBookingFromMember/UpdateRoomInfo",
+            data: JSON.stringify({
+                bookingID: '@Model.Booking_ID', MemberName: $("#CustName").val(), Amount: $("#Amount").val()
+            }),
+            dataType: "Json",
+            success: function (response) {
+                if (response!="") {
+                    bootbox.alert("Updated Successfully.");
+                } else {
+                    bootbox.alert("Not Updated");
+                }
+            }
+        });
+    }
+</script>

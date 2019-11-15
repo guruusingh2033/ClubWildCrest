@@ -1178,6 +1178,7 @@
     <Content Include="Views\CustomBilling\Index.cshtml" />
     <Content Include="Views\CustomBilling\_CustomBillsDataAccToDay.cshtml" />
     <Content Include="Views\CustomBilling\BillDetailByBillNo.cshtml" />
+    <Content Include="Views\AdvancedBookingFromMember\RoomBookingEditByBookingID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

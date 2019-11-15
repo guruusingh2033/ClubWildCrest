@@ -44,7 +44,10 @@
                                     </a>
                             </td>*@
                     <td style="@stylecolor">
-                        <input type="button" value="Print (A4)" onclick="PrintBill(@i.Booking_ID);" class="btn btn-primary"/></td>
+                        <input type="button" value="Print (A4)" onclick="PrintBill(@i.Booking_ID);" class="btn btn-primary"/> 
+                    <a title="Details" href="@Url.Action("RoomBookingEditByBookingID", "AdvancedBookingFromMember", new { bookingID = i.Booking_ID }, null)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a> </td>
                     <td style="@stylecolor">@i.Bill_Number</td>
                     <td style="@stylecolor">
                         @i.Customer
