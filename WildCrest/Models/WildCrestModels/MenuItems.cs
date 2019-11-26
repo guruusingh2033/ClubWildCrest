@@ -10,6 +10,7 @@ namespace WildCrest.Models.WildCrestModels
         public int ID { get; set; }
         public string Food_Item_Name { get; set; }
         public string Details { get; set; }
+        public decimal ItemPrice { get; set; }
         public Nullable<double> Price { get; set; }
         public Nullable<bool> NewItemApprvFrmSuperAdm { get; set; }
         public Nullable<bool> DelItemApprvFromSuperAdm { get; set; }

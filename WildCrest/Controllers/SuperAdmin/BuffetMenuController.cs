@@ -29,45 +29,23 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 if (Request.Cookies["PageSetting"]["MenuItemsPermission"] != "None")
                 {
-                    var data = context.tbl_Buffet_Menu.OrderByDescending(a => a.ID).Where(s => s.NewItemApprvFrmSuperAdm != false && s.DelItemApprvFromSuperAdm != true).ToList();
+                    var data = context.Database.SqlQuery<MenuItems>("exec sp_GetAllBuffetMenuItems").ToList();
 
                     foreach (var i in data)
                     {
-                        var menuItemConsumable = context.tbl_Buffet_ConsumableItems.Where(a => a.BuffetItem_ID == i.ID).ToList();
-                        var price = 0.0;
-                        foreach (var j in menuItemConsumable)
+                        items.Add(new MenuItems()
                         {
-                            price += Convert.ToDouble(context.tbl_Inventory.FirstOrDefault(a => a.ID == j.Inventory_ID).Price * j.Quantity);
-                        }
-                        var buffedata = context.tbl_Buffet_Menu.SingleOrDefault(a => a.ID == i.ID);
-                        if (buffedata != null)
-                        {
-                            if (buffedata.InventoryID > 0)
-                            {
-                                buffedata.Consumption_Cost = context.tbl_Inventory.SingleOrDefault(x => x.ID == buffedata.InventoryID).Price;
-                                context.Entry(buffedata).State = EntityState.Modified;
-                                context.SaveChanges();
-                            }
-                            else
-                            {
-                                buffedata.Consumption_Cost = price;
-                                context.Entry(buffedata).State = EntityState.Modified;
-                                context.SaveChanges();
-                            }
-                        }
-                      
-                            items.Add(new MenuItems()
-                            {
-                                ID = i.ID,
-                                Food_Item_Name = i.Buffet_Item_Name,
-                                Details = i.Details,
-                                Price = i.Consumption_Cost ?? 0.0,
-                                FoodType = i.FoodType,
-                                AddedBy = i.AddedBy,
-                                InventoryID = i.InventoryID
-                            });
-                        
+                            ID = i.ID,
+                            Food_Item_Name = i.Food_Item_Name,
+                            Details = i.Details,
+                            Price = i.Price ?? 0.0,
+                            FoodType = i.FoodType,
+                            AddedBy = i.AddedBy,
+                            InventoryID = i.InventoryID
+                        });
                     }
+                        
+                    
                     return View(items);
                 }
                 else
@@ -77,40 +55,18 @@ namespace WildCrest.Controllers.SuperAdmin
             }
             else
             {
-                var data = context.tbl_Buffet_Menu.OrderByDescending(a => a.ID).Where(s => s.NewItemApprvFrmSuperAdm != false && s.DelItemApprvFromSuperAdm != true).ToList();
+
+
+                var data = context.Database.SqlQuery<MenuItems>("exec sp_GetAllBuffetMenuItems").ToList();
 
                 foreach (var i in data)
                 {
-                    var menuItemConsumable = context.tbl_Buffet_ConsumableItems.Where(a => a.BuffetItem_ID == i.ID).ToList();
-                    var price = 0.0;
-                    foreach (var j in menuItemConsumable)
-                    {
-                        price += Convert.ToDouble(context.tbl_Inventory.FirstOrDefault(a => a.ID == j.Inventory_ID).Price * j.Quantity);
-                    }
-                    var buffedata = context.tbl_Buffet_Menu.SingleOrDefault(a => a.ID == i.ID);
-                    if (buffedata != null)
-                    {
-                        if (buffedata.InventoryID > 0)
-                        {
-                            buffedata.Consumption_Cost = context.tbl_Inventory.SingleOrDefault(x => x.ID == buffedata.InventoryID).Price;
-                            context.Entry(buffedata).State = EntityState.Modified;
-                            context.SaveChanges();
-                        }
-                        else
-                        {
-                            buffedata.Consumption_Cost = price;
-                            context.Entry(buffedata).State = EntityState.Modified;
-                            context.SaveChanges();
-                        }
-                    }
-                   
-
-                        items.Add(new MenuItems()
+                    items.Add(new MenuItems()
                         {
                             ID = i.ID,
-                            Food_Item_Name = i.Buffet_Item_Name,
+                            Food_Item_Name = i.Food_Item_Name,
                             Details = i.Details,
-                            Price = i.Consumption_Cost ?? 0.0,
+                            Price = (double?)i.ItemPrice,
                             FoodType = i.FoodType,
                             AddedBy = i.AddedBy,
                             InventoryID = i.InventoryID
