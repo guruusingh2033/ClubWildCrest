@@ -541,6 +541,7 @@
     <Property Name="Total_Amount" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="Party_Date" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="Gst" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="CustomerGstNO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="tbl_Party_FoodMenu">
     <Key>
@@ -1164,9 +1165,9 @@
     <Property Name="Amount_Without_Gst" Type="Double" />
     <Property Name="Gst_Amount" Type="Double" />
     <Property Name="Qty" Type="Int32" />
-    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Mode_Of_Payment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Mode_Of_Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="BillingDate" Type="DateTime" Precision="0" />
     <Property Name="TotalAmount" Type="Double" />
     <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />

@@ -24,5 +24,6 @@ namespace WildCrest
         public string Total_Amount { get; set; }
         public string Party_Date { get; set; }
         public string Gst { get; set; }
+        public string CustomerGstNO { get; set; }
     }
 }

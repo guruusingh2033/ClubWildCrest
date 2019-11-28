@@ -167,17 +167,17 @@
       <PropertyRef Name="ServiceID" />
     </Key>
     <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ServiceName" Type="varchar" MaxLength="500" />
     <Property Name="ServiceBillNO" Type="varchar" MaxLength="500" />
     <Property Name="Customer" Type="varchar" MaxLength="300" />
     <Property Name="Amount_Without_Gst" Type="float" />
     <Property Name="Gst_Amount" Type="float" />
     <Property Name="Qty" Type="int" />
-    <Property Name="Details" Type="varchar(max)" />
-    <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
-    <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="20" />
+    <Property Name="Details" Type="varchar" MaxLength="500" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+    <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="50" />
     <Property Name="BillingDate" Type="date" />
     <Property Name="TotalAmount" Type="float" />
+    <Property Name="ServiceName" Type="varchar" MaxLength="500" />
     <Property Name="Billed_By" Type="int" />
   </EntityType>
   <EntityType Name="tbl_EntryMember_Billing">
@@ -477,6 +477,7 @@
     <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
     <Property Name="Party_Date" Type="varchar" MaxLength="500" />
     <Property Name="Gst" Type="varchar" MaxLength="500" />
+    <Property Name="CustomerGstNO" Type="varchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="tbl_Party_FoodMenu">
     <Key>

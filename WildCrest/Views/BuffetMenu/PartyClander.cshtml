@@ -100,7 +100,10 @@ opacity: .8;
                                                 {
                                                     foreach (var i in ViewBag.FoodMenu)
                                                     {
+                                                        if (i.Consumption_Cost != null)
+                                                        {
                                                     <option value="@i.Consumption_Cost">@i.Buffet_Item_Name</option>
+                                                        }
                                                     }
                                                 }
                                             </select>

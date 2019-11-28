@@ -172,17 +172,17 @@
             <PropertyRef Name="ServiceID" />
           </Key>
           <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceName" Type="varchar" MaxLength="500" />
           <Property Name="ServiceBillNO" Type="varchar" MaxLength="500" />
           <Property Name="Customer" Type="varchar" MaxLength="300" />
           <Property Name="Amount_Without_Gst" Type="float" />
           <Property Name="Gst_Amount" Type="float" />
           <Property Name="Qty" Type="int" />
-          <Property Name="Details" Type="varchar(max)" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
-          <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="20" />
+          <Property Name="Details" Type="varchar" MaxLength="500" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+          <Property Name="Mode_Of_Payment" Type="varchar" MaxLength="50" />
           <Property Name="BillingDate" Type="date" />
           <Property Name="TotalAmount" Type="float" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="500" />
           <Property Name="Billed_By" Type="int" />
         </EntityType>
         <EntityType Name="tbl_EntryMember_Billing">
@@ -482,6 +482,7 @@
           <Property Name="Total_Amount" Type="varchar" MaxLength="500" />
           <Property Name="Party_Date" Type="varchar" MaxLength="500" />
           <Property Name="Gst" Type="varchar" MaxLength="500" />
+          <Property Name="CustomerGstNO" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="tbl_Party_FoodMenu">
           <Key>
@@ -1671,6 +1672,7 @@
           <Property Name="Total_Amount" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
           <Property Name="Party_Date" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
           <Property Name="Gst" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="CustomerGstNO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_Party_FoodMenu">
           <Key>
@@ -2294,9 +2296,9 @@
           <Property Name="Amount_Without_Gst" Type="Double" />
           <Property Name="Gst_Amount" Type="Double" />
           <Property Name="Qty" Type="Int32" />
-          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Mode_Of_Payment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mode_Of_Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BillingDate" Type="DateTime" Precision="0" />
           <Property Name="TotalAmount" Type="Double" />
           <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -2722,6 +2724,7 @@
           <EntitySetMapping Name="tbl_Party">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_Party">
               <MappingFragment StoreEntitySet="tbl_Party">
+                <ScalarProperty Name="CustomerGstNO" ColumnName="CustomerGstNO" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Party_Name" ColumnName="Party_Name" />
                 <ScalarProperty Name="Party_Owner" ColumnName="Party_Owner" />

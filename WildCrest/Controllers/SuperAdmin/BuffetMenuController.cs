@@ -670,7 +670,7 @@ namespace WildCrest.Controllers.SuperAdmin
         public ActionResult PartyClander()
         {
             List<string> dates = new List<string>();
-            ViewBag.FoodMenu = context.tbl_Buffet_Menu.ToList(); //new SelectList(context.tbl_Buffet_Menu.ToList(), "Consumption_Cost", "Buffet_Item_Name");
+            ViewBag.FoodMenu = context.tbl_Buffet_Menu.OrderBy(x=>x.Buffet_Item_Name).ToList(); //new SelectList(context.tbl_Buffet_Menu.ToList(), "Consumption_Cost", "Buffet_Item_Name");
             var data = context.tbl_Party.ToList();
             if (data != null)
             {
@@ -777,6 +777,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 model.Phone_No = PartyModel.Phone_No??"";
                 model.Description = PartyModel.Description??"";
                 model.Total_Member = PartyModel.Total_Member;
+            model.CustomerGstNO = PartyModel.CustomerGstNO;
                 model.Gst = (Convert.ToDouble(PartyModel.Price) * (Convert.ToDouble(PartyModel.Gst) / (double)100)).ToString();
                 model.Party_Date = PartyModel.Party_Date;
                 //var price = (double.Parse(PartyModel.Price) + double.Parse(model.Gst)).ToString();
@@ -1186,7 +1187,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 li.BillNo = billdata.Bill_ID;
                 li.IsAdvance_Payment = billdata.IsAdvance_Payment;
                 li.ID = Convert.ToInt32(billdata.Party_ID);
-
+                li.CustomerGstNO = data.CustomerGstNO;
                 li.Price = billdata.Price_With_Gst;
                 li.Gst = billdata.Gst_Amount;
                
@@ -1214,25 +1215,45 @@ namespace WildCrest.Controllers.SuperAdmin
 
         }
         [HttpPost]
-        public JsonResult PrintPartyBill(int billl_id=0)
+        public JsonResult PrintPartyBill(int billl_id = 0)
         {
             if (billl_id > 0)
             {
                 var model = context.tbl_PartyBilling.SingleOrDefault(x => x.Bill_ID == billl_id);
-               
-                int? partyid = context.tbl_PartyBilling.SingleOrDefault(x => x.Bill_ID == billl_id).Party_ID;
-                var jsonResult = new
-                {
-                    partyBill = context.tbl_PartyBilling.SingleOrDefault(x => x.Bill_ID == billl_id),
-                    Party_Owner = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Owner,
-                    Phone_No = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Phone_No,
-                    Party_Name = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Name,
-                    Party_Date = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Date
 
-                };
-                return Json(jsonResult);
+                int? partyid = context.tbl_PartyBilling.SingleOrDefault(x => x.Bill_ID == billl_id).Party_ID;
+                List<tbl_Buffet_Menu> menus = new List<tbl_Buffet_Menu>();
+                var menulist = context.tbl_Party_FoodMenu.Where(x => x.Party_ID == partyid).ToList();
+                if (menulist != null)
+                {
+
+                    foreach (var d in menulist)
+                    {
+                        if (context.tbl_Buffet_Menu.Where(x => x.ID == d.Buffet_Menu_Id).Any())
+                        {
+                            menus.Add(new tbl_Buffet_Menu()
+                            {
+
+
+                                Buffet_Item_Name = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Buffet_Item_Name,
+                                Consumption_Cost = context.tbl_Buffet_Menu.SingleOrDefault(x => x.ID == d.Buffet_Menu_Id).Consumption_Cost
+                            });
+                        }
+                    }
+                    var jsonResult = new
+                    {
+                        partyBill = context.tbl_PartyBilling.SingleOrDefault(x => x.Bill_ID == billl_id),
+                        Party_Owner = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Owner,
+                        Phone_No = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Phone_No,
+                        Party_Name = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Name,
+                        Party_Date = context.tbl_Party.SingleOrDefault(x => x.ID == partyid).Party_Date,
+                        MenuItems = menus
+                    };
+                    return Json(jsonResult);
+                }
+               
             }
-           return Json("");
+            return Json("");
         }
 
         void Save_InventoryUsage(tbl_PartyBilling model)

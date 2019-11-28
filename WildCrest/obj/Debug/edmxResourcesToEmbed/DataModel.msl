@@ -415,6 +415,7 @@
     <EntitySetMapping Name="tbl_Party">
       <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_Party">
         <MappingFragment StoreEntitySet="tbl_Party">
+          <ScalarProperty Name="CustomerGstNO" ColumnName="CustomerGstNO" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Party_Name" ColumnName="Party_Name" />
           <ScalarProperty Name="Party_Owner" ColumnName="Party_Owner" />

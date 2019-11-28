@@ -27,6 +27,7 @@ namespace WildCrest.Models.WildCrestModels
         public string ModeOfPayment { get; set; }
         public string DateofBilling { get; set; }
          public string AmountPaid { get; set; }
+        public string CustomerGstNO { get; set; }
     }
    
 }

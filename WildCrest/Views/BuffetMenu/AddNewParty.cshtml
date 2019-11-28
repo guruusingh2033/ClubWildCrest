@@ -21,10 +21,10 @@
                                         <label style="font-size: large;">Party Name</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
-                                           <input type="text" id="Pname" class="form-control requiredFields" placeholder="" />
-                                              
+                                            <input type="text" id="Pname" class="form-control requiredFields" placeholder="" />
+
                                         </div>
-                                       
+
                                     </div>
 
 
@@ -50,39 +50,39 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div class="col-md-11">
-                                        <label style="font-size: large;">Food Menu :<span class="complusoryFields">*</span></label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
-                                            <select id="consumableItem" class="form-control" onchange="">
-                                                <option value="-1">Select Food Item</option>
-                                                @if (ViewBag.partyFoodMenu != null)
-                                                {
-                                                    foreach (var i in ViewBag.partyFoodMenu)
+                                        <div class="col-md-11">
+                                            <label style="font-size: large;">Food Menu :<span class="complusoryFields">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                                <select id="consumableItem" class="form-control" onchange="">
+                                                    <option value="-1">Select Food Item</option>
+                                                    @if (ViewBag.partyFoodMenu != null)
                                                     {
-                                                    <option value="@i.Consumption_Cost">@i.Buffet_Item_Name</option>
+                                                        foreach (var i in ViewBag.partyFoodMenu)
+                                                        {
+                                                            <option value="@i.Consumption_Cost">@i.Buffet_Item_Name</option>
+                                                        }
                                                     }
-                                                }
-                                            </select>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-1" style="padding-top: 35px;">
+                                            <a title="Add More Items" style="cursor: pointer;" onclick="AddMore();">
+                                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                            </a>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    <div class="col-md-1" style="padding-top: 35px;">
-                                        <a title="Add More Items" style="cursor: pointer;" onclick="AddMore();">
-                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </div>
                                     <div class="row">
-                                    <div class="col-md-10 col-sm-10">
-                                        <table style="width: 100%;" class="table">
-                                            <tbody id="selectedItems"></tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-2"></div>
+                                        <div class="col-md-10 col-sm-10">
+                                            <table style="width: 100%;" class="table">
+                                                <tbody id="selectedItems"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-2"></div>
 
-                                </div>
+                                    </div>
                                     <div class="form-group">
                                         <label style="font-size: large;margin-top:2px;">Total Members<span class="complusoryFields">*</span></label>
                                         <div class="input-group" style="margin-top: 5px;">
@@ -98,18 +98,25 @@
                                                 <option value="5">5%</option>
                                                 <option value="12">12%</option>
                                                 <option value="18">18%</option>
-                                                  
+
                                             </select>
                                         </div>
                                     </div>
-                                     <div class="form-group">
+                                    <div class="form-group">
+                                        <label style="font-size: large;">Gst No.</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <input type="text" id="gstnumber" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label style="font-size: large;">Price<span class="complusoryFields">*</span></label>
                                         <div class="input-group" style="margin-top: 5px;">
                                             <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
                                             <input type="text" id="price" class="form-control" />
                                         </div>
                                     </div>
-                                     <div class="form-group">
+                                    <div class="form-group">
                                         <label style="font-size: large;">Total Amount</label>
                                         <div class="input-group" style="margin-top: 5px;">
                                             <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
@@ -215,7 +222,7 @@
                 'Total_Member': $("#Tmember").val(),
                 'Party_Date':'@ViewBag.partyDate',//$("#startDate").val(),
                 'Gst': $("#Gst option:selected").val(),
-
+                'CustomerGstNO': $("#gstnumber").val(),
                 'Price': $("#price").val(),
             };
             $.ajax({
