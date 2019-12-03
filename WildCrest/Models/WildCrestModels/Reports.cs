@@ -19,6 +19,10 @@ namespace WildCrest.Models.WildCrestModels
         public decimal CustomBill_GST { get; set; }
         public decimal CustomBill_Discount { get; set; }
         public decimal CustomBill_Total { get; set; }
+        public decimal Buffet_Sale { get; set; }
+        public decimal Buffet_GST { get; set; }
+        public decimal Buffet_Discount { get; set; }
+        public decimal Buffet_Total { get; set; }
 
         public decimal Food_CardPay { get; set; }
         public decimal Food_CashPay { get; set; }
@@ -32,6 +36,11 @@ namespace WildCrest.Models.WildCrestModels
         public decimal CustomBill_CashPay { get; set; }
         public decimal CustomBill_PaytmPay { get; set; }
         public decimal CustomBill_ChequePay { get; set; }
+
+        public decimal Buffet_CardPay { get; set; }
+        public decimal Buffet_CashPay { get; set; }
+        public decimal Buffet_PaytmPay { get; set; }
+        public decimal Buffet_ChequePay { get; set; }
 
         public decimal NonMenusGst_Sale { get; set; }
         public decimal NonMenusGst_Discount { get; set; }
@@ -137,6 +146,12 @@ namespace WildCrest.Models.WildCrestModels
         public decimal CustomBill_GST { get; set; }
         public decimal CustomBill_Total { get; set; }
     }
+    public class BuffetReports
+    {
+        public decimal BuffetBill_Sale { get; set; }
+        public decimal BuffetBill_GST { get; set; }
+        public decimal BuffetBill_Total { get; set; }
+    }
 
     public class NonMenusGstReports
     {
@@ -220,6 +235,14 @@ namespace WildCrest.Models.WildCrestModels
         public decimal CustomBill_CashPay { get; set; }
         public decimal CustomBill_PaytmPay { get; set; }
         public decimal CustomBill_ChequePay { get; set; }
+
+    }
+    public class BuffetPayment
+    {
+        public decimal Buffet_CardPay { get; set; }
+        public decimal Buffet_CashPay { get; set; }
+        public decimal Buffet_PaytmPay { get; set; }
+        public decimal Buffet_ChequePay { get; set; }
 
     }
     public class NonGstFoodPayment

@@ -158,6 +158,7 @@ namespace WildCrest.Controllers.SuperAdmin
             var data = context.tbl_Inventory.SingleOrDefault(s => s.ID == newItem.ID);
             if (data != null)
             {
+                data.Quantity=data.Quantity == null ? 0 : data.Quantity;
                 data.Price = newItem.Price;
                 data.Quantity = newItem.Quantity + data.Quantity;
                 data.Added_Date = DateFormat;

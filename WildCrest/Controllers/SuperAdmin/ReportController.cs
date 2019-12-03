@@ -65,6 +65,8 @@ namespace WildCrest.Controllers.SuperAdmin
             var CustomBillReport = "select  Cast(IsNull(Sum(mbs.Gst_Amount),0) as decimal(18,2)) CustomBill_GST,Cast(IsNull(Sum(mbs.Amount_Without_Gst),0) as decimal(18,2)) CustomBill_Sale,Cast(IsNull(Sum(mbs.TotalAmount),0) as decimal(18,2)) CustomBill_Total from tbl_custombilling mbs where Cast(mbs.BillingDate  as date)>=Cast('" + sDate + "' as date) and Cast(mbs.BillingDate  as date)<=Cast('" + eDate + "' as date)";
             var CustomBillData = context.Database.SqlQuery<CustomBillReports>(CustomBillReport).FirstOrDefault();
 
+            var BuffetReport = "select  Cast(IsNull(Sum(isnull(cast(mbs.Gst_Amount as float),0) * isnull(cast(mbs.Qty as float),0) ),0) as decimal(18,2)) BuffetBill_GST,Cast(IsNull(Sum(isnull(cast(mbs.Amount_Paid as float),0)),0) - IsNull(Sum(isnull(cast(mbs.Gst_Amount as float),0)*isnull(cast(mbs.Qty as float),0)),0) as decimal(18,2)) BuffetBill_Sale,Cast(IsNull(Sum(isnull(cast(mbs.Amount_Paid  as float),0)),0) as decimal(18,2)) BuffetBill_Total from tbl_PartyBilling mbs where Cast(mbs.Date_Of_Billing  as date)>=Cast('" + sDate +"' as date) and Cast(mbs.Date_Of_Billing  as date)<=Cast('"+ eDate +"' as date)";
+            var BuffetData = context.Database.SqlQuery<BuffetReports>(BuffetReport).FirstOrDefault();
 
             Reports sale_Report = new Reports();
             #region Menus definition
@@ -239,19 +241,40 @@ namespace WildCrest.Controllers.SuperAdmin
             //sale_Report.Menus_Total = menusData.Menus_Total;
             sale_Report.CustomBill_Total = CustomBillData.CustomBill_Total;
             #endregion
+
+            #region Buffet
+            var Buffet_Cash_Payment = "select Cast((IsNull(sum(isnull(cast(mbs.Amount_Paid  as float),0)),0)) as decimal(18,2)) Buffet_CashPay from tbl_PartyBilling mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('"+sDate+"' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('"+eDate+"' as date)  and mbs.Mode_Of_Payment='Cash'";
+            var BuffetCashapay = context.Database.SqlQuery<BuffetPayment>(Buffet_Cash_Payment).FirstOrDefault();
+            var Buffet_Paytm_Payment = "select Cast((IsNull(sum(isnull(cast(mbs.Amount_Paid  as float),0)),0)) as decimal(18,2)) Buffet_PaytmPay from tbl_PartyBilling mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Paytm'";
+            var BuffetPaytmapay = context.Database.SqlQuery<BuffetPayment>(Buffet_Paytm_Payment).FirstOrDefault();
+            var Buffet_Card_Payment = "select Cast((IsNull(sum(isnull(cast(mbs.Amount_Paid  as float),0)),0)) as decimal(18,2)) Buffet_CardPay from tbl_PartyBilling mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Card'";
+            var BuffetCardapay = context.Database.SqlQuery<BuffetPayment>(Buffet_Card_Payment).FirstOrDefault();
+            var Buffet_Cheque_Payment = "select Cast((IsNull(sum(isnull(cast(mbs.Amount_Paid  as float),0)),0)) as decimal(18,2)) Buffet_ChequePay from tbl_PartyBilling mbs where Cast(mbs.Date_Of_Billing as date)>=Cast('" + sDate + "' as date) and Cast(mbs.Date_Of_Billing as date)<=Cast('" + eDate + "' as date)  and mbs.Mode_Of_Payment='Cheque'";
+            var BuffetChequepay = context.Database.SqlQuery<BuffetPayment>(Buffet_Cheque_Payment).FirstOrDefault();
+
+            sale_Report.Buffet_Sale = BuffetData.BuffetBill_Sale;
+            sale_Report.Buffet_GST = BuffetData.BuffetBill_GST;
+            sale_Report.Buffet_CashPay = Convert.ToDecimal(BuffetCashapay.Buffet_CashPay);
+            sale_Report.Buffet_CardPay = Convert.ToDecimal(BuffetCardapay.Buffet_CardPay);
+            sale_Report.Buffet_PaytmPay = Convert.ToDecimal(BuffetPaytmapay.Buffet_PaytmPay);
+            sale_Report.Buffet_ChequePay = Convert.ToDecimal(BuffetChequepay.Buffet_ChequePay);
+
+            //sale_Report.Menus_Total = menusData.Menus_Total;
+            sale_Report.Buffet_Total = BuffetData.BuffetBill_Total;
+            #endregion
             //sale_Report.Total_Sale = (menusData.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale);
 
-            sale_Report.Total_Sale = (sale_Report.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale+entryData.Entry_Sale+CustomBillData.CustomBill_Sale);
+            sale_Report.Total_Sale = (sale_Report.Menus_Sale + nonGstMenusData.NonMenusGst_Sale + roomData.Room_Sale + membersMemShipData.MemBill_Sale + barData.Bar_Sale + nonGstBarData.NonGst_BarSale + WineData.Wine_Sale + nonGstWineData.NonGst_WineSale+entryData.Entry_Sale+CustomBillData.CustomBill_Sale+BuffetData.BuffetBill_Sale);
             sale_Report.Total_Discount = (menusData.Menus_Discount + nonGstMenusData.NonMenusGst_Discount + roomData.Room_Discount + membersMemShipData.MemBill_Discount + barData.Bar_Discount + nonGstBarData.NonGst_BarDiscount + WineData.Wine_Discount + nonGstWineData.NonGst_WineDiscount);
-            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST + barData.Bar_GST + nonGstBarData.NonGst_BarGST + WineData.Wine_GST + nonGstWineData.NonGst_WineGST+ entryData.Entry_GST+ CustomBillData.CustomBill_GST);
+            sale_Report.Total_GST = (menusData.Menus_GST + nonGstMenusData.NonMenusGst_GST + roomData.Room_GST + membersMemShipData.MemBill_GST + barData.Bar_GST + nonGstBarData.NonGst_BarGST + WineData.Wine_GST + nonGstWineData.NonGst_WineGST+ entryData.Entry_GST+ CustomBillData.CustomBill_GST+BuffetData.BuffetBill_GST);
 
-            sale_Report.Total_Cash = (FoodCashapay.Food_CashPay + NonGstFoodCashapay.NonGst_Food_CashPay + RoomCashapay.Room_CashPay + MemBillCashapay.MemBill_CashPay + BarCashapay.Bar_CashPay + WineCashapay.Wine_CashPay+EntryCashapay.Entry_CashPay+ CustomBillCashapay.CustomBill_CashPay);
-            sale_Report.Total_Card = (FoodCardapay.Food_CardPay + NonGstFoodCardapay.NonGst_Food_CardPay + RoomCardapay.Room_CardPay + MemBillCardapay.MemBill_CardPay + BarCardapay.Bar_CardPay + WineCardapay.Wine_CardPay+ EntryCashapay.Entry_CardPay+ CustomBillCashapay.CustomBill_CardPay);
-            sale_Report.Total_Paytm = (FoodPaytmapay.Food_PaytmPay + NonGstFoodPaytmapay.NonGst_Food_PaytmPay + RoomPaytmapay.Room_PaytmPay + MemBillPaytmapay.MemBill_PaytmPay + BarPaytmapay.Bar_PaytmPay + WinePaytmapay.Wine_PaytmPay+ EntryCashapay.Entry_PaytmPay+ CustomBillCashapay.CustomBill_PaytmPay);
-            sale_Report.Total_ChequePay = (FoodChequepay.Food_ChequePay + NonGstFoodChequepay.NonGst_Food_ChequePay + RoomChequepay.Room_ChequePay + MemBillChequepay.MemBill_ChequePay + BarChequepay.Bar_ChequePay + WineChequepay.Wine_ChequePay+ EntryCashapay.Entry_ChequePay+ CustomBillCashapay.CustomBill_ChequePay);
+            sale_Report.Total_Cash = (FoodCashapay.Food_CashPay + NonGstFoodCashapay.NonGst_Food_CashPay + RoomCashapay.Room_CashPay + MemBillCashapay.MemBill_CashPay + BarCashapay.Bar_CashPay + WineCashapay.Wine_CashPay+EntryCashapay.Entry_CashPay+ CustomBillCashapay.CustomBill_CashPay+BuffetCashapay.Buffet_CashPay);
+            sale_Report.Total_Card = (FoodCardapay.Food_CardPay + NonGstFoodCardapay.NonGst_Food_CardPay + RoomCardapay.Room_CardPay + MemBillCardapay.MemBill_CardPay + BarCardapay.Bar_CardPay + WineCardapay.Wine_CardPay+ EntryCashapay.Entry_CardPay+ CustomBillCashapay.CustomBill_CardPay+ BuffetCardapay.Buffet_CardPay);
+            sale_Report.Total_Paytm = (FoodPaytmapay.Food_PaytmPay + NonGstFoodPaytmapay.NonGst_Food_PaytmPay + RoomPaytmapay.Room_PaytmPay + MemBillPaytmapay.MemBill_PaytmPay + BarPaytmapay.Bar_PaytmPay + WinePaytmapay.Wine_PaytmPay+ EntryCashapay.Entry_PaytmPay+ CustomBillCashapay.CustomBill_PaytmPay+BuffetPaytmapay.Buffet_PaytmPay);
+            sale_Report.Total_ChequePay = (FoodChequepay.Food_ChequePay + NonGstFoodChequepay.NonGst_Food_ChequePay + RoomChequepay.Room_ChequePay + MemBillChequepay.MemBill_ChequePay + BarChequepay.Bar_ChequePay + WineChequepay.Wine_ChequePay+ EntryCashapay.Entry_ChequePay+ CustomBillCashapay.CustomBill_ChequePay+BuffetChequepay.Buffet_ChequePay);
 
             //sale_Report.Total_Amount = (menusData.Menus_Total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal);
-            sale_Report.Total_Amount = (total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal+entryData.Entry_Total+ CustomBillData.CustomBill_Total);
+            sale_Report.Total_Amount = (total + nonGstMenusData.NonMenusGst_Total + roomData.Room_Total + membersMemShipData.MemBill_Total + barData.Bar_Total + nonGstBarData.NonGst_BarTotal + WineData.Wine_Total + nonGstWineData.NonGst_WineTotal+entryData.Entry_Total+ CustomBillData.CustomBill_Total+BuffetData.BuffetBill_Total);
             sale_Report.StartDate = sDate;
             sale_Report.EndDate = eDate;
 

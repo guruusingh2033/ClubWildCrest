@@ -254,6 +254,31 @@
         </tr>
         <tr>
             <td class="hide">8</td>
+            <td>
+                @if (Model.Buffet_Total != 0)
+                {
+                    var arr = new[,]{
+                                  {"Temp_Day_Data","7"},
+                                    {"Temp_SDate_Data",Model.StartDate},
+                                    {"Temp_EndDate_Data",Model.EndDate}
+                                    };
+                    var filter = Newtonsoft.Json.JsonConvert.SerializeObject(arr);
+                    @Html.ActionLink("Buffet Billing", "PartyBillsIndex", "BuffetMenu", new { filter = filter, filterFromReport = "Yes" }, new { @class = "btn btn-link" })}
+                else
+                {<span>Buffet Billing</span>}
+            </td>
+            <td>@Model.Buffet_Sale</td>
+            <td>0</td>
+            <td>@Model.Buffet_GST</td>
+            <td>@Model.Buffet_CashPay</td>
+            <td>@Model.Buffet_PaytmPay</td>
+            <td>@Model.Buffet_CardPay</td>
+            <td>@Model.Buffet_ChequePay</td>
+            <td>@Model.Buffet_Total</td>
+
+        </tr>
+            <tr>
+            <td class="hide">8</td>
             <td>Total</td>
             <td>@Model.Total_Sale</td>
             <td>@Model.Total_Discount</td>

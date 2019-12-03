@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -1146,33 +1147,153 @@ namespace WildCrest.Controllers.SuperAdmin
 
         }
          [Authorize(Roles = "1,2")]
-        public ActionResult PartyBillsIndex()
+        public ActionResult PartyBillsIndex(string filter = "", string filterFromReport = "")
         {
-            List<partyModel> li = new List<partyModel>();
-            var data = context.tbl_PartyBilling.ToList();
-            if (data != null)
+            if (filter != "")
             {
-                foreach (var d in data)
-                {
-                    li.Add(new partyModel() {
-              BillNo=d.Bill_ID,
-              Total_Amount=d.Total_Amount,
-              IsAdvance_Payment=d.IsAdvance_Payment,
-                 ModeOfPayment=d.Mode_Of_Payment,
-                 Party_Name=context.tbl_Party.SingleOrDefault(x=>x.ID==d.Party_ID).Party_Name,
-              Party_Owner = context.tbl_Party.SingleOrDefault(x => x.ID == d.Party_ID).Party_Owner,
-              Phone_No = context.tbl_Party.SingleOrDefault(x => x.ID == d.Party_ID).Phone_No,
-              DateofBilling= d.Date_Of_Billing != null && d.Date_Of_Billing != string.Empty ? Convert.ToDateTime(d.Date_Of_Billing).ToString("dd/MM/yyyy") : d.Date_Of_Billing,
-             Total_Member=d.Qty,
-             AmountPaid=d.Amount_Paid
+                var Data = JsonConvert.DeserializeObject<dynamic>(filter);
 
-                    });
+
+                ViewBag.Day = Data[1];
+                ViewBag.SDate = Data[3];
+                ViewBag.EDate = Data[5];
+
+            }
+            ViewBag.FilterFromReport = filterFromReport;
+            return View();
+        }
+        public ActionResult BillsDataAccToDay(int day = 1, string sDate = "", string eDate = "")
+        {
+            int Billed_By = Convert.ToInt32(Request.Cookies["UserID"].Value);
+            int UserType = Convert.ToInt32(Request.Cookies["UserType"].Value);
+            DateTime startdate = DateTime.Now;
+            DateTime LastDate = DateTime.Now;
+
+            Session["Day"] = day;
+
+            Session["StartDate"] = sDate;
+            Session["EndDate"] = eDate;
+
+            switch (day)
+            {
+                //Today
+                case (2):
+                    startdate = DateTime.Today;
+                    LastDate = DateTime.Now;
+                    break;
+                //Yesterday
+                case (3):
+                    startdate = DateTime.Today.AddDays(-1);
+                    LastDate = DateTime.Today.AddDays(-1);
+                    break;
+                //ThisWeek
+                case (4):
+                    startdate = StartOfWeek(DateTime.Now);
+                    LastDate = DateTime.Now;
+                    break;
+                //ThisMonth
+                case (5):
+                    startdate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    LastDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                    break;
+                //This Year
+                case (6):
+                    var year = DateTime.Now.Year;
+                    startdate = new DateTime(year, 1, 1);
+                    LastDate = new DateTime(year, 12, DateTime.DaysInMonth(year, 12));
+                    break;
+                //Custom
+                case (7):
+                    string[] arrDate = sDate.Split('/');
+                    string[] arrDate1 = eDate.Split('/');
+                    startdate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+                    LastDate = new DateTime(Convert.ToInt32(arrDate1[2]), Convert.ToInt32(arrDate1[0]), Convert.ToInt32(arrDate1[1]));
+                    break;
+                default:
+                    startdate = new DateTime(1900, 1, 1);
+                    LastDate = DateTime.Now;
+                    break;
+            }
+            string startDateFormat = startdate.ToString(@"MM\/dd\/yyyy");
+            string LastDateFormat = LastDate.ToString(@"MM\/dd\/yyyy");
+            //var data = context.tbl_MenusBillingSection.ToList();
+
+            if (!string.IsNullOrEmpty(startDateFormat))
+            {
+                string queryForBills = "";
+                if (UserType == 1 || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
+                {
+
+                    queryForBills = "select m.Bill_ID as BillNo,IsNull(m.Amount_Paid,0) as AmountPaid ,m.Gst_Amount as Gst,m.Mode_Of_Payment as ModeOfPayment " +
+                        ",p.Party_Name as Party_Name,p.Party_Owner as Party_Owner,p.Phone_No as Phone_No,convert(varchar,m.Date_Of_Billing,106) as DateofBilling,m.Qty as Total_Member from tbl_PartyBilling m join tbl_Party p on p.ID=m.Party_ID"+
+                        " where m.Date_Of_Billing>= cast('" + startDateFormat + "' as date) and m.Date_Of_Billing <= cast('" + LastDateFormat + "' as date)";
+
                 }
+                else
+                {
+                    queryForBills = "select m.Bill_ID as BillNo,IsNull(m.Amount_Paid,0) as AmountPaid ,m.Gst_Amount as Gst,m.Mode_Of_Payment as ModeOfPayment " +
+                        ",p.Party_Name as Party_Name,p.Party_Owner as Party_Owner,p.Phone_No as Phone_No,convert(varchar,m.Date_Of_Billing,106) as DateofBilling,m.Qty as Total_Member from tbl_PartyBilling m join tbl_Party p on p.ID=m.Party_ID " +
+                        " where m.Date_Of_Billing>= cast('" + startDateFormat + "' as date) and m.Date_Of_Billing <= cast('" + LastDateFormat + "' as date) and m.Billed_By=" + Billed_By;
+
+                }
+                var data = context.Database.SqlQuery<partyModel>(queryForBills);
+                double? finaltotalVal = 0;
+                double? finalcsgst = 0;
+                List<partyModel> menusBill = new List<partyModel>();
+                foreach (var i in data)
+                {
+                    //double? totalVal = 0;
+                    //double? csgst = 0;
+                    menusBill.Add(new partyModel()
+                    {
+                        BillNo = i.BillNo,
+                        Total_Amount = i.Total_Amount,
+                        IsAdvance_Payment = i.IsAdvance_Payment,
+                        ModeOfPayment = i.ModeOfPayment,
+                        Party_Name = i.Party_Name,
+                        Party_Owner = i.Party_Owner,
+                        Phone_No = i.Phone_No,
+                        DateofBilling = i.DateofBilling,
+                        Total_Member = i.Total_Member,
+                        AmountPaid = i.AmountPaid
+                    });
+                    finaltotalVal += Convert.ToDouble(i.AmountPaid);
+                    finalcsgst += Math.Round(Convert.ToDouble(i.Gst)*Convert.ToDouble(i.Total_Member),2);
+
+                    //var d = context.tbl_MenusBillingDetailsWithBillNo.Where(a => a.BillNo == i.Bill_Number).ToList();
+                    //foreach (var ii in d)
+                    //{
+                    //    totalVal = totalVal + (ii.Price * ii.Quantity);
+                    //}
+                    //csgst = totalVal * (2.5 / 100);
+                    //csgst = (csgst * 2);
+                    //finaltotalVal += totalVal;
+                    //finalcsgst += csgst;
+                }
+
+                finaltotalVal = Math.Round((Double)finaltotalVal, 2);
+                ViewBag.TotalAmount = finaltotalVal - finalcsgst;
+                ViewBag.CSGST = Math.Round((Double)finalcsgst, 2);
+                return PartialView("~/Views/BuffetMenu/_BuffetBillsDataAccToDay.cshtml", menusBill);
+            }
+            return null;
+        }
+        public DateTime StartOfWeek(DateTime d)
+        {
+            if (d == DateTime.MinValue)
+            {
+                return d;
+            }
+            var result = d.DayOfWeek - DayOfWeek.Sunday;
+
+            if (result < 0)
+            {
+                result += 7;
             }
 
-            return View(li);
+            return d.AddDays(result * -1);
         }
-         [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "1,2")]
         public ActionResult BillDetailsByBillNo(int id)
         {
             partyModel li = new partyModel();
