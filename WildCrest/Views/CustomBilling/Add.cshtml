@@ -46,6 +46,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label style="font-size:large;">Customer GST NO<span class="complusoryFields"></span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-user" style="width: 20px;font-size:initial"></i></div>
+                                    <input type="text" id="custGSTNO" class="form-control requiredFields" placeholder="Enter Customer GST NO">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label style="font-size: large;">GST</label>
                                 <div class="input-group" style="margin-top: 5px;">
                                     <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
@@ -110,7 +117,7 @@
     });
     function SaveOnly() {
         if ($("#Cname").val().trim() == '' || $("#Awogst").val().trim() == '' || $("#SName").val().trim() == '' || $("#Paymode").val().trim() == '' || $("#qty").val().trim() == ''
-            || $("#phone").val().trim() == '' || $("#notes").val().trim() == '' || $("#Gst").val().trim() == '') {
+            || $("#phone").val().trim() == '' || $("#Gst").val().trim() == '') {
             bootbox.alert("all field with astrisk(*) is required.");
             return;
         }
@@ -123,7 +130,8 @@
             Qty: $("#qty").val(),
             PhoneNo: $("#phone").val(),
             Details: $("#notes").val(),
-            Gst_Amount: $("#Gst").val()
+            Gst_Amount: $("#Gst").val(),
+            Customer_GstNO: $("#custGSTNO").val()
         }
         $.ajax({
             type: "POST",

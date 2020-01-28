@@ -65,10 +65,16 @@
                                     <input type="text" id="csgst" readonly value="@Model.TotalAmount" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-6 form-profile-in">
+                                <div class="form-group">
+                                    <label class="control-label">Customer GST NO :</label>
+                                    <input type="text" id="csgst" readonly value="@Model.Customer_GstNO" class="form-control">
+                                </div>
+                            </div>
                             <div class="col-md-12 col-sm-6 form-profile-in">
                                 <div class="form-group">
                                     <label class="control-label">Detail :</label>
-                                 
+
                                     <textarea id="notes" rows="3" readonly class="form-control" placeholder="Details">@Model.Details</textarea>
                                 </div>
                             </div>
@@ -132,7 +138,8 @@
    '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
    '<td style="padding: 5px 0;">Billing Date : ' + $.date('@Model.BillingDate') + '</td>' +
    '<td style="padding: 5px 0;">Payment Mode : ' + '@Model.Mode_Of_Payment' + '</td>' +
-   
+   '<td style="padding: 5px 0;">customer Gst No. : ' + '@Model.Customer_GstNO' + '</td>' +
+
    '</tr>' +
    '</tbody></table><br>';
 

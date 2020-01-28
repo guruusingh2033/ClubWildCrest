@@ -43,7 +43,7 @@ namespace WildCrest.Models.WildCrestModels
         public string DeletedBy { get; set; }
 
         public BillingDetails billingDet { get; set; }
-
+        public int MembersBillingID { get; set; }
         public string billingDetailsInJson { get; set; }
 
         //public List<MembershipPlans> MembershipWithYear = new List<MembershipPlans>();

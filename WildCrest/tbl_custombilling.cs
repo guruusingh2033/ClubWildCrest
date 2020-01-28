@@ -27,5 +27,6 @@ namespace WildCrest
         public Nullable<double> TotalAmount { get; set; }
         public string ServiceName { get; set; }
         public Nullable<int> Billed_By { get; set; }
+        public string Customer_GstNO { get; set; }
     }
 }

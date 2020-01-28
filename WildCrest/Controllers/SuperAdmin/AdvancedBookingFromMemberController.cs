@@ -511,28 +511,47 @@ namespace WildCrest.Controllers.SuperAdmin
                 if (User != null)
                 {
                     string[] Name = MemberName.Split(null);
-                    if (Name.Length == 2)
+                    switch (Name.Length)
                     {
-                        User.F_Name = Name[0];
-                        User.L_Name = Name[1];
+                        case 1:
+                            User.F_Name = Name[0];
+                            break;
+                        case 2:
+                            User.F_Name = Name[0];
+                            User.L_Name = Name[1];
+                            break;
+                        case 3:
+                            User.F_Name = Name[0];
+                            User.L_Name = Name[1]+" "+Name[2];
+                            break;
+                        default:
+                            User.F_Name = User.F_Name;
+                            User.L_Name = User.L_Name;
+                            break;
                     }
-                    else
-                    {
-                        User.F_Name = Name[0];
-                        User.L_Name = "";
-                    }
+                    
                    
                     context.Entry(User).State = EntityState.Modified;
                     context.SaveChanges();
                 }
-                Amount = Amount - Math.Round(Convert.ToDouble(Item.Discount),2);
-                Double actualAmt = Math.Round(((Amount * 100) / 118), 2);
-               var gst = Math.Round(((actualAmt * 18 / 100)),2);
-                Item.Amount = Amount;
-                Item.GST = gst;
-                context.Entry(Item).State = EntityState.Modified;
-                context.SaveChanges();
+                if (Item.Amount != Amount)
+                {
+                    Amount = Amount - Math.Round(Convert.ToDouble(Item.Discount), 2);
+                    Double actualAmt = Math.Round(((Amount * 100) / 118), 2);
+                    var gst = Math.Round(((actualAmt * 18 / 100)), 2);
+                    Item.Amount = Amount;
+                    Item.GST = gst;
+                    context.Entry(Item).State = EntityState.Modified;
+                    context.SaveChanges();
 
+                    var RoomBookingDetail = context.tbl_RoomBooking_Details.SingleOrDefault(x => x.Booking_ID == bookingID);
+                    if (RoomBookingDetail != null)
+                    {
+                        RoomBookingDetail.TAmtPerRoom = Amount;
+                        context.Entry(RoomBookingDetail).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
+                }
                 return Json("Updated");
             }
             return Json("");

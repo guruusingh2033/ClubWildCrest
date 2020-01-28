@@ -1172,5 +1172,6 @@
     <Property Name="TotalAmount" Type="Double" />
     <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Billed_By" Type="Int32" />
+    <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

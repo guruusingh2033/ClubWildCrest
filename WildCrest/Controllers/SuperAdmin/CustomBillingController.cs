@@ -284,6 +284,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 Item.Details = data.Details;
                 Item.BillingDate = data.BillingDate;
                 Item.Amount_Without_Gst = data.Amount_Without_Gst;
+                Item.Customer_GstNO = data.Customer_GstNO;
             }
             return View(Item);
         }

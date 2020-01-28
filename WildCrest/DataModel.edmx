@@ -184,6 +184,7 @@
           <Property Name="TotalAmount" Type="float" />
           <Property Name="ServiceName" Type="varchar" MaxLength="500" />
           <Property Name="Billed_By" Type="int" />
+          <Property Name="Customer_GstNO" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbl_EntryMember_Billing">
           <Key>
@@ -2303,6 +2304,7 @@
           <Property Name="TotalAmount" Type="Double" />
           <Property Name="ServiceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Billed_By" Type="Int32" />
+          <Property Name="Customer_GstNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3173,6 +3175,7 @@
           <EntitySetMapping Name="tbl_custombilling">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_custombilling">
               <MappingFragment StoreEntitySet="tbl_custombilling">
+                <ScalarProperty Name="Customer_GstNO" ColumnName="Customer_GstNO" />
                 <ScalarProperty Name="Billed_By" ColumnName="Billed_By" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />

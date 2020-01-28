@@ -100,7 +100,7 @@
                 var tbl = '';
                 //var csgst=(parseFloat(response.GST)/2).toString().substring(0, (parseFloat(response.GST)/2).toString().indexOf(".") + 3);
                 var csgst=(parseFloat(response.GST)/2).toFixed(2);
-                var tp=parseFloat(response.AdvancedPayment)+parseFloat(response.AmtToBePaid);
+                var tp = parseFloat(response.Amount);
                 var AmtWithoutGST=parseFloat(tp)-parseFloat(response.GST);
                 tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Invoice<br>Club Wild Crest";
                 tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
