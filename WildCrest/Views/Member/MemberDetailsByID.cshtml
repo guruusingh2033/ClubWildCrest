@@ -594,48 +594,109 @@
                             var amt = $("#amountrenew").val();
                             var planAmt = 0;
                             var gst = 0;
+                            var scgst = 0;
                             if (parseFloat(amt) > 0) {                          // Tax 18%
                                 planAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
                                 gst = (parseFloat(planAmt) * (18 / 100)).toFixed(2);
+                                scgst = (parseFloat(gst) / 2).toFixed(2);
                             }
 
                             var tbl = '';
-                            tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Club Wild Crest";
-                            tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+        tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Invoice<br>Club Wild Crest";
+        tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
 
-                            tbl += '<table id="memberData" style="width:100%;margin:0 auto; ">' +
-                                '<tbody  style="text-align: left;" >' +
-                                '<tr style="font-size: 9px;">' +
-                                '<td style="padding: 5px 0;">Customer Name : ' + '@Model.F_Name' + " " + '@Model.L_Name' + '</td>' +
-                                '<td style="padding: 5px 0;">Phone No. : ' +'@Model.PhoneNo' + '</td>' +
 
-                                '</tr>' +
-                                '<tr style="font-size: 9px;">' +
-                                '<td style="padding: 5px 0;">Membership Plan : ' + $("#MembershipPlan  option:selected").text() + '</td>' +
-                                '<td style="padding: 5px 0;">Joining Date : ' + $('#MembershipJoining_Date').val() + '</td>' +
+        tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+            '<tbody  style="text-align: left;" >' +
+            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+            '<td style="padding: 5px 0;">Customer Name : ' + '@Model.F_Name' + " " + '@Model.L_Name' + '</td>' +
+            '<td style="padding: 5px 0;">Bill No. : ' + response.BillNo + '</td>' +
+            '<td style="padding: 5px 0;">Phone No. :  ' + '@Model.PhoneNo' + '</td>' +
+            '</tr>' +
+            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+            '<td style="padding: 5px 0;">Membership Plan : ' + $("#MembershipPlan  option:selected").text() + '</td>' +
+            '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+            '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+            '</tr>' +
+            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+                '<td style="padding: 5px 0;">GST(18%) : ₹ ' + gst + '</td>' +
+                '<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentModeRenew").val() + '</td>' +
+                '<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amountrenew").val() + '</td>' +
+            '</tr>' +
+            '</tbody></table><br>';
+        tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto;">' +
+            '<thead  style="text-align: left;" >' +
+            '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+            '<th style="padding: 5px 5px;">Customer Name </th>' +
+            '<th style="padding: 5px 5px;">Membership</th>' +
+            '<th style="padding: 5px 5px;">Membership Amount</th>' +
+            '<th style="padding: 5px 5px;">Membership Joining Date</th>' +
+            '<th style="padding: 5px 5px;text-align: right;">Total</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';
 
-                                '</tr>' +
-                                '<tr style="font-size: 9px;">' +
-                                '<td style="padding: 5px 0;">Expiry Date : ' + response.ExpiryDate + '</td>' +
-                                '<td style="padding: 5px 0;">Plan Amount : ₹ ' + planAmt + '</td>' +
+        tbl += '<tr style="font-size: 12px;text-align: left;">' +
+            '<td class="border-bottom" style="padding: 8px 5px;">' + '@Model.F_Name' + " " + '@Model.L_Name' + '</td>' +
 
-                                '</tr>' +
-                                '<tr style="font-size: 9px;">' +
-                                '<td style="padding: 5px 0;">GST(18%) : ₹ ' + gst + '</td>' +
-                                '<td style="padding: 5px 0;">Payment Mode : ' + $("#paymentModeRenew").val() + '</td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + $("#MembershipPlan option:selected").text() + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + planAmt + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + $('#MembershipJoining_Date').val() + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + planAmt + '</label></td>' +
 
-                                '</tr>' +
-                                '<tr style="font-size: 9px;">' +
-                                '<td style="padding: 5px 0;">Amount Paid : ₹ ' + $("#amountrenew").val() + '</td>' +
-                                '<td style="padding: 5px 0;"></td>' +
-                                '</tr>' +
-                                '</tbody></table>';
+            '</tr>';
 
-                            var htmlToPrint = '' +
-                                '<style type="text/css">' +
-                                'body{font-family: arial;}' +
-                                '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
-                                '</style>';
+        tbl += '<tr style="font-size: 12px;" class="border-top">' +
+
+            '<td colspan="3" class="border-left"></td>' +
+            '<th class="border-bottom" style="text-align: right;padding: 10px 11px 0px 11px;">Total : </th>' +
+            '<td class="border-bottom" style="text-align: right;padding: 10px 2px 2px 2px;">₹ ' + planAmt + '</td>' +
+            '</tr>' +
+
+
+            '<tr style="font-size: 12px;">' +
+            '<td colspan="3" class="border-left"></td>' +
+            '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">SGST (9%) : </td>' +
+            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+            '</tr>' +
+            '<tr style="font-size: 12px;">' +
+            '<td colspan="3" class="border-left"></td>' +
+            '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST (9%) : </td>' +
+            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + scgst + '</td>' +
+            '</tr>' +
+
+            '<tr style="font-size: 12px;">' +
+            '<td colspan="3" class="border-left"></td>' +
+            '<th class="border-bottom" style="text-align: right;padding: 0px 11px;">Net Amount(including GST) : </th>' +
+            '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + $("#amountrenew").val() + '</td>' +
+            '</tr>';
+        tbl += '<tr style=""> <td style="border:0;" colspan="3"><div style="margin-top:50px"><b>Amount (in words):</b>' + convertNumberToWords($("#amountrenew").val()) + ' Only.</div> </td> </tr>'
+
+        tbl += '<tr><td style="border:0;" colspan="3"></td><td style="border:0;" ><div style="margin-top:50px">For club wild crest </div></td></tr> <tr> <td colspan="3" style="border:0"></td> <td style="border:0; margin-top:0" > <div style="margin-top:40px">Incharge/Auth. Signature </div></td></tr>'
+
+
+       
+
+        var htmlToPrint = '' +
+            '<style type="text/css">' +
+            'body{font-family: arial;}' +
+            'table#tabel-heading,#tabel-heading th,#tabel-heading td{' +
+            'border-collapse:collapse;}' +
+
+            '#tabel-heading th {' +
+            'border:1px solid black;' +
+            '}' +
+            '#tabel-heading td {' +
+            'border-right:1px solid black;' +
+            'border-left:1px solid black;}' +
+
+            '#tabel-heading .border-bottom {' +
+            'border-bottom:1px solid black;}' +
+            '#tabel-heading .border-top {' +
+            'border-top:1px solid black;}' +
+            '#tabel-heading .border-left {' +
+            'border-left:none;}' +
+            '</style>';
                             htmlToPrint += tbl;
                             newWin.document.open();
                             newWin.document.write(htmlToPrint);

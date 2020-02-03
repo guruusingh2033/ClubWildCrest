@@ -546,7 +546,8 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 var result = new
                 {
-                    ExpiryDate = expDate
+                    ExpiryDate = expDate,
+                    BillNo=CurrentBillDtl.ID
                 };
                 return Json(result);
 
@@ -876,6 +877,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
             int id = prf.ID;
             string expDate = "";
+            int BillNo=0;
             if (id != 0)
             {
                 //var date = DateTime.Today;
@@ -922,7 +924,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
                 context.tbl_MembersBillingDetails.Add(bill);
                 context.SaveChanges();
-
+                BillNo = bill.ID;
                 //===================================================================================
 
                 if (newMember.MemberPhoto != null)
@@ -993,7 +995,8 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 currentUserTypeLoggedin = currentUserTypeLoggedin,
                 //userID = id,
-                ExpiryDate = expDate
+                ExpiryDate = expDate,
+                BillNo = BillNo
             };
             return Json(result);
         }
