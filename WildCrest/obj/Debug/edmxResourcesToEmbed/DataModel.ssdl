@@ -596,6 +596,7 @@
     <Property Name="Cheque_No" Type="varchar(max)" />
     <Property Name="BankName" Type="varchar(max)" />
     <Property Name="Roombillno" Type="varchar" MaxLength="500" />
+    <Property Name="GstPercent" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_RoomBooking_Details">
     <Key>

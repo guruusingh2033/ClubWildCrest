@@ -31,5 +31,6 @@ namespace WildCrest
         public string Cheque_No { get; set; }
         public string BankName { get; set; }
         public string Roombillno { get; set; }
+        public int GstPercent { get; set; }
     }
 }

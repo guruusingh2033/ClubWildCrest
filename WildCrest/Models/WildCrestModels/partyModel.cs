@@ -28,6 +28,7 @@ namespace WildCrest.Models.WildCrestModels
         public string DateofBilling { get; set; }
          public string AmountPaid { get; set; }
         public string CustomerGstNO { get; set; }
+        public bool DisableDelete { get; set; }
     }
    
 }

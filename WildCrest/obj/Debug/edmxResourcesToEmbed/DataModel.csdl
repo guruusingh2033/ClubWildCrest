@@ -667,6 +667,7 @@
     <Property Name="Cheque_No" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="BankName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="Roombillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="GstPercent" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="tbl_RoomBooking_Details">
     <Key>

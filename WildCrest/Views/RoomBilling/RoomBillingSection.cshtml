@@ -72,10 +72,10 @@
                                     <label style="font-size: large;"><b>Amount to be Paid :  ₹ <span id="amtAfterAdvanced"></span></b></label>
                                 </div>
                                 <div class="form-group">
-                                    <label style="font-size: large; font-weight: 400;">SGST : 9%  ->  ₹ <span id="sgst"></span></label>
+                                    <label style="font-size: large; font-weight: 400;display:flex;"><label id="sgstlbl">SGST : 9%  ->  ₹ </label><span id="sgst"></span></label>
                                 </div>
                                 <div class="form-group">
-                                    <label style="font-size: large; font-weight: 400;">CGST : 9%  ->  ₹ <span id="cgst"></span></label>
+                                    <label  style="font-size: large; font-weight: 400;display:flex;"><label id="cgstlbl"> : 9%  ->  ₹ </label><span id="cgst"></span></label>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 col-sm-6" style="margin: 10px 0;">
@@ -113,6 +113,7 @@
                                     <label style="font-size: large; display: none; font-weight: 400;">Amount after Discount : ₹ <span id="AmtAfterDiscount"></span></label>
                                 </div>*@
                                 <input type="button" value="Print" onclick="PrintRoomBill();" class="btn btn-primary" />
+                                <input type="number" hidden="hidden" value="0" id="gstpercent" />
                             </div>
                         </div>
                     </div>
@@ -198,16 +199,17 @@
         var advPay=$("#advancedPayment").val();
         var actualAmt = 0;
         var gst = 0;
+        var gstPercent = parseInt($("#gstpercent").val());
         if(parseInt(amt)>0){
             //var sgst = ((parseInt(amt)) * (9 / 100)).toFixed(2);
             //var cgst = ((parseInt(amt)) * (9 / 100)).toFixed(2);
             //var total = (parseInt(amt) + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
-            actualAmt = ((parseFloat(amt) * 100) / 118).toFixed(2);
-            gst = (parseFloat(actualAmt) * (18 / 100)).toFixed(2);
+            actualAmt = ((parseFloat(amt) * 100) / (100 + gstPercent)).toFixed(2);
+            gst = (parseFloat(actualAmt) * (gstPercent / 100)).toFixed(2);
             var amtPaid=parseFloat(amt)-parseFloat(advPay);
             $("#amtAfterAdvanced").html(amtPaid);
-            $("#sgst").html(parseFloat(gst)/2);
-            $("#cgst").html(parseFloat(gst)/2);
+            $("#sgst").html((parseFloat(gst) / 2).toFixed(2));
+            $("#cgst").html((parseFloat(gst) / 2).toFixed(2));
             //$("#netAmt").html(total);
         }
         else{
@@ -292,6 +294,10 @@
                         $("#amount").html(response.TotalAmount);
                         $("#phone").val(response.PhoneNo);
                         $("#advancedPayment").val(response.advancedPayment);
+                        $("#gstpercent").val(response.gstPercent);
+                        var chng = (parseFloat(response.gstPercent) / 2);
+                        $("#sgstlbl").html("SGST : " + chng + "% ->  ₹ ");
+                        $("#cgstlbl").html("CGST : "+chng+"% ->  ₹ ");
                         if(response.Bill_Number!=0){
                             $("#discount").val(response.Discount);
                             $("#discount").attr("readonly",true);
@@ -331,7 +337,7 @@
                             $("#discount").attr("readonly",false);
                             $("#Bill_Number").empty();
                             //$("#Bill_Number").html('@ViewBag.BillNumber');   
-                            $("#showBillNo").css("display", "none");
+                            $("#showBillNo").css("display", "none");                            
                             calculateTotalAmount();
                             //discount();
                             //$("#netAmt").closest("label").css("display", "block");
@@ -402,99 +408,124 @@
                 data: JSON.stringify({ model }),
                 dataType: "json",
                 success: function (response) {
-                    var tbl = '';
-                    tbl += "<center><p style='padding:0px;margin:0px;font-size:12px;'>Invoice<br>Club Wild Crest";
-                    tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
-                    //tbl+="<br>8765438976</p></center><hr>";
-                    tbl += "<p style='font-size:10px;'>GSTIN : 09AAECV4514H1ZA";
-                    tbl += "<br>Bill No. : " +response.BillNo;
-                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : " + time;
-                    tbl += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date : " + strDate;
-                    tbl += "<br>Customer : " + $("#RNo option:selected").text();
-                    tbl += "<br>Customer PhoneNo : " + $("#phone").val() + "</p>";
+                            var tbl = '';                
+                var csgst=(parseFloat(response.csgst)/2).toFixed(2);
+                var tp = parseFloat(response.Amount);
+                var AmtWithoutGST=parseFloat(tp)-parseFloat(response.csgst);
+                tbl += "<center><p style='padding:0px;margin:0px;font-size:15px;'>Invoice<br>Club Wild Crest";
+                tbl += "<br>A Venture of Virk Gold Farms Pvt. Ltd.</p></center><hr>";
+                
+                tbl += '<table id="bookingData" style="width:100%;margin:0 auto; ">' +
+           '<tbody  style="text-align: left;" >' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">Customer Name: '+ $("#RNo option:selected").text() + '</td>' +
+                    '<td style="padding: 5px 0;">Bill No. : '+ response.BillNo + '</td>' +
+           '<td style="padding: 5px 0;">GSTIN : 09AAECV4514H1ZA</td>' +
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">CIN : U70102UP2013PTC056045</td>' +
+           '<td style="padding: 5px 0;">Check-IN: '+ response.Check_In + '</td>' +
+           '<td style="padding: 5px 0;">Check-OUT: '+ response.Check_Out + '</td>' +
+         
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+             '<td style="padding: 5px 0;">No. of Stays: '+ response.NoOfNightStays + '</td>' +
+           '<td style="padding: 5px 0;">Amount: ₹ '+ response.Amount + '</td>' +
+           '<td style="padding: 5px 0;">Advanced Payment: ₹ '+ response.AdvancedPayment + '</td>' +
+           
+           '</tr>' +
+           '<tr style="font-size: 12px;font-weight:400; text-align: left;">' +
+           '<td style="padding: 5px 0;">Discount: ₹ '+ response.Discount + '</td>' +
+           '<td style="padding: 5px 0;">GST: ₹'+ response.csgst + '</td>' +
+           '<td style="padding: 5px 0;">Paid Amount: ₹ '+ response.AmtToBePaid + '</td>' +           
+           '</tr>' +
+           '</tbody></table><br>';
 
-
-                    tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
-            '<thead  style="text-align: center;" >' +
-            '<tr style="font-size: 9px;font-weight:400; text-align: center;">' +
-            '<td style="padding: 5px 0;">RNo. </td>' +
+                tbl += '<table id="tabel-heading" style="width:100%;margin:0 auto; ">' +
+          '<thead  style="text-align: center;" >' +
+          '<tr style="font-size: 12px;font-weight:400; text-align: center;">' +
+          '<th style="padding: 5px 5px;">RNo. </th>' +
             
-            '<td style="padding: 5px 0;">Check-IN</td>' +
-            '<td style="padding: 5px 0;">Check-OUT</td>' +
+          '<th style="padding: 5px 5px;">No. of Person</th>' +
+          '<th style="padding: 5px 5px;">Extra-Bed</th>' +
             
-            '<td style="padding: 5px 0;">No. Of Members</td>' +
-            '<td style="padding: 5px 0;text-align: right;">Amount</td>' +
-            '</tr>' +
-            '</thead>' +
-            '<tbody>';
+          '<th style="padding: 5px 5px;">Complementary Stays</th>' +
+          '<th style="padding: 5px 5px;text-align: right;">Amount/Room</th>' +
+          '</tr>' +
+          '</thead>' +
+          '<tbody>';
+                if(response.stayData.length!=0){
                     for(var i =0;i<response.stayData.length;i++)
                     {
-                        tbl+=  '<tr style="font-size: 9px;text-align: center;">' +
-            '<td style="padding: 8px 0;">' + response.stayData[i].RoomNo + '</td>' +
+                        tbl+=  '<tr style="font-size: 12px;text-align: center;">' +
+            '<td style="padding: 8px 5px;">' + response.stayData[i].RoomNo + '</td>' +
                        
-            '<td style="padding: 8px 0;"><label>' + response.stayData[i].Check_In + '</label></td>' +
-            '<td style="padding: 8px 0;"><label>' + response.stayData[i].Check_Out + '</label></td>' +
-            '<td style="padding: 8px 0;"><label>' + response.stayData[i].NoOfPerson + '</label></td>' +
-            '<td style="padding: 8px 0;text-align: right;"><label>₹ ' + response.stayData[i].TAmtPerRoom + '</label></td>' +
-                    
+            '<td style="padding: 8px 5px;"><label>' + response.stayData[i].NoOfPerson + '</label></td>' +
+            '<td style="padding: 8px 5px;"><label>' + ((response.stayData[i].ExtraBed==true)?'Yes':'No') + '</label></td>' +
+            '<td style="padding: 8px 5px;"><label>' + ((response.stayData[i].ComplementaryStays!=null)?response.stayData[i].ComplementaryStays:'0') + '</label></td>' +
+            '<td style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.stayData[i].TAmtPerRoom + '</label></td>' +
             '</tr>';
                     }
-             
-                    tbl+= '<tr style="font-size: 9px;">' +
-            '<th colspan="4"   style="text-align: right;padding: 3px 0px;">Total : </th>' +
-            '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + total + '</label></td>' +
-            '</tr>' +
-            
-            '<tr style="font-size: 9px;">' +
-            '<td colspan="4"   style="text-align: right;padding: 3px 0px; ">SGST (9%) : </td>' +
-            '<td  style="text-align: right;padding:3px 0px;width:30%;"><label>₹ ' + (parseFloat(response.csgst)/2).toFixed(2) + '</label></td>' +
-            '</tr>' +
-            '<tr style="font-size: 9px;">' +
-            '<td colspan="4"   style="text-align: right;padding: 3px 0px;">CGST (9%) : </td></label>' +
-            '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + (parseFloat(response.csgst)/2).toFixed(2) + '</label></td>' +
-            '</tr>' +
-            '<tr style="font-size: 9px;">' +
-            '<td colspan="4"   style="text-align: right;padding:3px 0px">Discount : </td>' +
-            '<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + response.discount + '</label></td>' +
-            '</tr>' +
-            //'<tr style="font-size: 9px;">' +
-            //'<td colspan="4"   style="text-align: right;padding: 3px 0px;">Net Amount : </td>' +
-            //'<td  style="text-align: right;padding: 3px 0px;width:30%;"><label>₹ ' + newAmt + '</label></td>' +
-            //'</tr>' +
-            
-            //'<tr>' +
-            //'<th colspan="4"   style="text-align: right;padding: 0px 11px;">Total Amount after Discount : </th>' +
-            //'<td  style="text-align: right;padding: 8px;"><label>₹ ' + $("#AmtAfterDiscount").html() + '</label></td>' +
-            //'</tr>' +
-            '<tr style="font-size: 9px;">' +
-            '<th colspan="4"   style="text-align: right;padding:3px 0px;">Amount to be Paid : </th>' +
-            '<td  style="text-align: right;padding:3px 0px;width:30%;"><label>₹ ' + response.AmtToBePaid + '</label></td>' +
-                        '</tr>' +
+                    tbl += '<tr style="font-size: 12px;" class="border-top">' +
+                        
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">Amount (without GST) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + AmtWithoutGST.toFixed(2) + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                        '<td colspan="3" class="border-left"></td>'+
+                           '<td  class="border-bottom"  style="text-align: right;padding: 0px 11px; ">SGST ('+(parseFloat(response.gstPercent)/2)+'%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + csgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<td class="border-bottom" style="text-align: right;padding: 0px 11px; ">CGST ('+(parseFloat(response.gstPercent)/2)+'%) : </td>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + csgst + '</td>' +
+                         '</tr>' +
+                         '<tr style="font-size: 12px;">' +
+                         '<td colspan="3" class="border-left"></td>'+
+                           '<th class="border-bottom"   style="text-align: right;padding: 0px 11px;">Net Amount : </th>' +
+                           '<td class="border-bottom" style="text-align: right;padding: 2px;">₹ ' + tp.toFixed(2) + '</td>' +
+                        '</tr>';
+                    tbl += '<tr style="font-size:12px;"> <td style="border:0;" colspan="3"><div style="margin-top:50px"><b>Amount (in words):</b>' + convertNumberToWords(tp.toFixed(2)) + ' Only.</div> </td> </tr>'
 
-                        '<tr style="font-size: 9px;"> <td style="border:0;" colspan="4"><div style="margin-top:50px"><b>Amount (in words):</b>' + convertNumberToWords(response.AmtToBePaid) + ' Only.</div> </td></tr>'+
+                    tbl += '<tr><td style="border:0;" colspan="3"></td><td style="border:0;" ><div style="margin-top:50px">For club wild crest </div></td></tr><tr style="font-size:12px;"> <td colspan="3" style="border:0"></td> <td style="border:0; margin-top:0" > <div style="margin-top:40px">Incharge/Auth. Signature </div></td></tr>'
+                }
+                else{
+                    tbl+=  '<tr class="border-bottom" style="font-size: 12px;text-align: center;">' +
+                '<td colspan="5" style="padding: 8px 0;">No Data Available.</td>' +
+                '</tr>';
+                }
+                tbl+="</tbody></table>";
 
-                    '<tr><td style="border:0;" colspan="3"></td><td style="border:0;" ><div style="margin-top:50px">For club wild crest </div></td></tr><tr style="font-size: 9px;"> <td colspan="4" style="border:0"></td> <td style="border:0; margin-top:0" > <div style="margin-top:40px">Incharge/Auth. Signature </div></td></tr>'+
-                
-            '</tbody>' +
-
-            '</table>';
-
-                    var htmlToPrint = '' +
-                        '<style type="text/css">' +
-                        //'table, th, td {' +
-                        //'border-collapse: collapse;' +
-                        //'}' +
-                        'body{font-family: arial;}' +
-                        '@@media print{@@page{size: 72mm auto;margin:5px;}}' +
-                        '</style>';
-                    htmlToPrint += tbl;
+                var htmlToPrint = '' +
+                           '<style type="text/css">' +
+                           'body{font-family: arial;}' +
+                            'table#tabel-heading,#tabel-heading th,#tabel-heading td{'+
+                                'border-collapse:collapse;}'+
+                            
+                '#tabel-heading th {'+
+                    'border:1px solid black;'+
+                '}'+
+                '#tabel-heading td {'+
+                    'border-right:1px solid black;'+
+                    'border-left:1px solid black;}'+
+               
+                '#tabel-heading .border-bottom {'+
+                   'border-bottom:1px solid black;}'+
+                '#tabel-heading .border-top {'+
+                   'border-top:1px solid black;}'+
+                '#tabel-heading .border-left {'+
+                    'border-left:none;}'+
+                           '</style>';
+                htmlToPrint += tbl;
                     
                     newWin.document.write(htmlToPrint);
                     newWin.print();
                     newWin.close();
 
                     window.location.reload();
-
+                    $(".preloader").css("display", "none");
                 },
                 error: function () {
                     $(".preloader").css("display", "none");

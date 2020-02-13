@@ -689,8 +689,20 @@ namespace WildCrest.Controllers.SuperAdmin
       [Authorize(Roles = "1,2")]
         public ActionResult Booked_Party(string PartyDate)
         {
+            List<partyModel> Items = new List<partyModel>();
+           var items= context.tbl_Party.Where(x => x.Party_Date == PartyDate).ToList();
+            foreach(var i in items)
+            {
+                Items.Add(new partyModel()
+                  {ID=i.ID,
+                   Party_Name=i.Party_Name,
+                    Party_Date=i.Party_Date,
+                    Party_Owner=i.Party_Owner,
+                    DisableDelete= context.tbl_PartyBilling.Any(x => x.Party_ID == i.ID)
+                });
+            }
+            ViewBag.partydetails = Items;
 
-            ViewBag.partydetails = context.tbl_Party.Where(x => x.Party_Date == PartyDate).ToList();
             ViewBag.partyBookDate = PartyDate;
             return View();
 
@@ -801,6 +813,36 @@ namespace WildCrest.Controllers.SuperAdmin
             return Json("Saved");
         }
         #endregion
+
+        #region [Remove/Modify party]
+       [HttpPost]
+        public JsonResult RemovePartybyID(int PartyID)
+        {
+        if(context.tbl_PartyBilling.Any(x=>x.Party_ID==PartyID))
+            return Json("");
+            else
+            {
+              var fooditems= context.tbl_Party_FoodMenu.Where(x => x.Party_ID == PartyID).ToList();
+                if (fooditems.Count > 0)
+                {
+                    foreach(var item in fooditems)
+                    {
+                        context.Entry(item).State = EntityState.Deleted;
+                        context.SaveChanges();
+                    }
+                    
+                }
+                var party = context.tbl_Party.SingleOrDefault(x => x.ID == PartyID);
+                if (party != null)
+                {
+                    context.Entry(party).State = EntityState.Deleted;
+                    context.SaveChanges();
+                }
+                return Json("removed");
+            }
+        }
+        #endregion
+
         #region Buffet Party Billing
         [Authorize(Roles = "1,2")]
         public ActionResult Billing()

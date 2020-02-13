@@ -93,6 +93,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     Payment_Mode=data.Mode_Of_Payment,
                     ChequeNo = data.Cheque_No != null ? data.Cheque_No : "",
                     BankName = data.BankName != null ? data.BankName : "",
+                    gstPercent=data.GstPercent,
                 };
                 return Json(jsonResult);
             }
@@ -152,18 +153,25 @@ namespace WildCrest.Controllers.SuperAdmin
             {
                 stayData.Add(new RoomBooking_Details()
                 {
-                    Check_In = bookingDet.Check_In,
-                    Check_Out = bookingDet.Check_Out,
                     RoomNo = context.tbl_Rooms.SingleOrDefault(s => s.ID == i.RoomID).RoomNo,
                     TAmtPerRoom = i.TAmtPerRoom,
-                    NoOfPerson = i.NoOfPerson
+                    NoOfPerson = i.NoOfPerson,
+                     ExtraBed=i.ExtraBed,
+                     ComplementaryStays=i.ComplementaryStays,
                 });
             }
             var jsonResult = new
             {
+                Check_In = bookingDet.Check_In,
+                Check_Out = bookingDet.Check_Out,
+                NoOfNightStays = bookingDet.NoOfNightStays,
+                AdvancedPayment = bookingDet.AdvancedPayment,
+                Discount = bookingDet.Discount,
+                Amount = bookingDet.Amount,
                 stayData = stayData,
-                BillNo = bookingDet.Roombillno,
+                BillNo = bookingDet.Bill_Number,
                 csgst = bookingDet.GST,
+                gstPercent = bookingDet.GstPercent,
                 discount = bookingDet.Discount,
                 AmtToBePaid = bookingDet.AmtToBePaid
             };

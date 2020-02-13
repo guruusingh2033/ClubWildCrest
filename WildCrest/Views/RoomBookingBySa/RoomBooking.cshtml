@@ -58,7 +58,7 @@
                                                     {
                                                         if (i.Walk_In_Member == false)
                                                         {
-                                                        <option value="@i.ID">@i.F_Name @i.L_Name</option>
+                                                            <option value="@i.ID">@i.F_Name @i.L_Name</option>
                                                         }
                                                     }
                                                 </optgroup>
@@ -67,7 +67,7 @@
                                                     {
                                                         if (i.Walk_In_Member == true)
                                                         {
-                                                        <option value="@i.ID">@i.F_Name @i.L_Name</option>
+                                                            <option value="@i.ID">@i.F_Name @i.L_Name</option>
                                                         }
                                                     }
                                                 </optgroup>
@@ -93,7 +93,18 @@
                                             <input type="text" id="priceToPay" class="form-control" />
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label style="font-size: large;">GST</label>
+                                        <div class="input-group" style="margin-top: 5px;">
+                                            <div class="input-group-addon"><i class="ti-user" style="width: 20px; font-size: initial"></i></div>
+                                            <select id="Gst" class="form-control">
+                                                <option value="5">5%</option>
+                                                <option value="12">12%</option>
+                                                <option value="18" selected>18%</option>
 
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row main-border-class">
                                         <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                                             <label style="font-size: large;">Room No. <span class="complusoryFields">*</span></label>
@@ -115,10 +126,10 @@
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12 col-12 extra_bed_data">
                                             @*<label>*@
-                                                <label style="font-size: large;">Extra Bed : </label>
+                                            <label style="font-size: large;">Extra Bed : </label>
 
-                                                <input type="checkbox" id="extraBed" />
-                                                ₹ 500
+                                            <input type="checkbox" id="extraBed" />
+                                            ₹ 500
                                             @*</label>*@
                                         </div>
 
@@ -135,8 +146,8 @@
                                                 <label style="font-size: large;">Give Complementary Stays :</label>
                                                 <div style="margin-top: 5px; padding: 0.5rem 0;" id="staysCheckbox">
                                                     @*<div class="input-group-addon"><i class="fa fa-sort-numeric-asc" style="width: 20px; font-size: initial"></i></div>
-                                            <select id="giveStays" class="form-control" onclick="complementaryStays();">
-                                            </select>*@
+                        <select id="giveStays" class="form-control" onclick="complementaryStays();">
+                        </select>*@
 
                                                 </div>
                                             </div>
@@ -157,7 +168,7 @@
                                     </div>
 
 
-                                 
+
                                     <div class="row">
                                         <div class="col-md-11">
                                             <table style="width: 100%;">
@@ -515,7 +526,7 @@
                 type: "post",
                 contentType: "application/json; charset=utf-8",
                 url: "/RoomBookingBySa/addStayOfCustomer",
-                data: JSON.stringify({ checkin: checkIn, checkout: checkOut, UserID: $("#UserID").val(), membershipID: $("#membershipID").val(), memberName: MName, phno: $("#phone").val(), noOfNights: totalNightsStay, roomInfo: roomList, advancedPayment: advancedPayment }),
+                data: JSON.stringify({ checkin: checkIn, checkout: checkOut, UserID: $("#UserID").val(), membershipID: $("#membershipID").val(), memberName: MName, phno: $("#phone").val(), noOfNights: totalNightsStay, roomInfo: roomList, advancedPayment: advancedPayment ,gstPercent: $("#Gst").val()}),
                 dataType: "json",
                 success: function (response) {
                     $(".preloader").css("display", "none");

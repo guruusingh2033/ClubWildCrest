@@ -533,6 +533,7 @@
     <EntitySetMapping Name="tbl_RoomBooking">
       <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_RoomBooking">
         <MappingFragment StoreEntitySet="tbl_RoomBooking">
+          <ScalarProperty Name="GstPercent" ColumnName="GstPercent" />
           <ScalarProperty Name="Roombillno" ColumnName="Roombillno" />
           <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
           <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />

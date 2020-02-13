@@ -220,7 +220,7 @@ namespace WildCrest.Controllers.SuperAdmin
             return string.Empty;
         }
         [HttpPost]
-        public JsonResult addStayOfCustomer(string checkin, string checkout, string UserID, string membershipID, string memberName, string phno, int noOfNights, List<RoomBooking_Details> roomInfo, double? advancedPayment)
+        public JsonResult addStayOfCustomer(string checkin, string checkout, string UserID, string membershipID, string memberName, string phno, int noOfNights, List<RoomBooking_Details> roomInfo, double? advancedPayment,int gstPercent)
         {
             double? amt = 0;
             if (UserID == "0")
@@ -268,6 +268,7 @@ namespace WildCrest.Controllers.SuperAdmin
             else
                 usrStay.AdvancedPayment = 0;
 
+            usrStay.GstPercent = gstPercent;
             context.tbl_RoomBooking.Add(usrStay);
             context.SaveChanges();
 

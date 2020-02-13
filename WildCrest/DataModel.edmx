@@ -601,6 +601,7 @@
           <Property Name="Cheque_No" Type="varchar(max)" />
           <Property Name="BankName" Type="varchar(max)" />
           <Property Name="Roombillno" Type="varchar" MaxLength="500" />
+          <Property Name="GstPercent" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_RoomBooking_Details">
           <Key>
@@ -1799,6 +1800,7 @@
           <Property Name="Cheque_No" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="BankName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Roombillno" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GstPercent" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_RoomBooking_Details">
           <Key>
@@ -2844,6 +2846,7 @@
           <EntitySetMapping Name="tbl_RoomBooking">
             <EntityTypeMapping TypeName="virkcorp_adminModel.tbl_RoomBooking">
               <MappingFragment StoreEntitySet="tbl_RoomBooking">
+                <ScalarProperty Name="GstPercent" ColumnName="GstPercent" />
                 <ScalarProperty Name="Roombillno" ColumnName="Roombillno" />
                 <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
                 <ScalarProperty Name="AdvancedPayment" ColumnName="AdvancedPayment" />
