@@ -57,7 +57,7 @@ flex-direction: row-reverse;
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label style="font-size:large;">Entery  Fee:<span style="color:green;font-size: 16px;font-weight:400">(300) </span></label>
+                                <label style="font-size:large;">Entery  Fee:<span style="color:green;font-size: 16px;font-weight:400">(150) </span></label>
                                 
                             </div>
                             <div class="form-group">
@@ -106,7 +106,7 @@ flex-direction: row-reverse;
     });
     $("#nMembers").focusout(function () {
 
-        $('#totalAmt').html(parseInt($("#nMembers").val()) * 300);
+        $('#totalAmt').html(parseInt($("#nMembers").val()) * 150);
     });
     });
     function SaveOnly() {
@@ -115,8 +115,8 @@ flex-direction: row-reverse;
                 Name: $('#FName').val(),
                 MobileNo: $('#phone').val(),
                 qty: $('#nMembers').val(),
-                EntryFee:'300',
-                TotalAmount: 300 * parseInt($('#nMembers').val())
+                EntryFee:'150',
+                TotalAmount: 150 * parseInt($('#nMembers').val())
             }
             $.ajax({
                 type: "POST",
@@ -202,7 +202,7 @@ flex-direction: row-reverse;
                         tbl += '<tr style="font-size: 12px;text-align: left;">' +
                       '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
 
-            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 300 + '</label></td>' +
+            '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 150 + '</label></td>' +
             '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
                             '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.Total_Amount + '</label></td>' +
 
@@ -336,7 +336,7 @@ flex-direction: row-reverse;
                                     tbl += '<tr style="font-size: 12px;text-align: left;">' +
                                   '<td class="border-bottom" style="padding: 8px 5px;">' + response.Name + '</td>' +
 
-                        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 300 + '</label></td>' +
+                        '<td class="border-bottom" style="padding: 8px 5px;"><label>' + 150 + '</label></td>' +
                                         '<td class="border-bottom" style="padding: 8px 5px;"><label>' + response.Total_Member + '</label></td>' +
                                         '<td class="border-bottom" style="padding: 8px 5px;text-align: right;"><label>₹ ' + response.Total_Amount + '</label></td>' +
 

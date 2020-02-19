@@ -64,8 +64,8 @@ namespace WildCrest.Controllers.EntryMembers
         }
         string GetBillNO()
         {
-
-            string BillNo = context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).FirstOrDefault().Entrybillno;
+            bool EntryBillNoExist = context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).Any();
+            string BillNo = EntryBillNoExist?context.tbl_EntryMember_Billing.OrderByDescending(obj => obj.Bill_ID).FirstOrDefault().Entrybillno:null;
 
             if (!string.IsNullOrEmpty(BillNo))
             {
@@ -154,12 +154,13 @@ namespace WildCrest.Controllers.EntryMembers
                     var DateForToken = date.ToString("ddMMyyyy");
                     string Token = "";
                     Token = DateForToken + "_001";
-                    var LastToken=context.tbl_EntryMember_Billing.ToList().LastOrDefault().TokenNo;
+                    var LastToken=context.tbl_EntryMember_Billing.ToList().LastOrDefault();
                     if (LastToken != null)
                     {
-                        if (LastToken.Contains(DateForToken))
+                        var LastTokenNumber = context.tbl_EntryMember_Billing.ToList().LastOrDefault().TokenNo;
+                        if (LastTokenNumber.Contains(DateForToken))
                         {
-                            int CurrentValue = GetTokenNo(LastToken) + 1;
+                            int CurrentValue = GetTokenNo(LastTokenNumber) + 1;
                             model.TokenNo = DateForToken + "_00" + CurrentValue;
                         }
                         else
