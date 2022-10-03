@@ -1617,7 +1617,9 @@ namespace WildCrest.Controllers.SuperAdmin
 
             TimeSpan time = DateTime.Now.TimeOfDay;
             var tableDetails = context.tbl_TablesForBooking.SingleOrDefault(v => v.ID == model.TableID && v.Wine_Status == "closed");
-            if (tableDetails != null)
+            var IsTableAlreadyOpened = context.tbl_WineBillingSection.Where(o => o.TableID == model.TableID && o.Table_Status == "opened").SingleOrDefault();
+
+            if (tableDetails != null && IsTableAlreadyOpened == null)
             {
                 if (model.UserID == 0 && model.Customer_Name != "" && model.Customer_Name != null)
                 {

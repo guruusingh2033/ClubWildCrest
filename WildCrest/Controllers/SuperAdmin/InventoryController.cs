@@ -436,8 +436,10 @@ namespace WildCrest.Controllers.SuperAdmin
                     IsBuffetFood=q.IsBuffetFood??false
                 });
             }
-           
-            return Json(usageList);
+
+            JsonResult jsonResult = Json(usageList);
+            jsonResult.MaxJsonLength = Int32.MaxValue;
+            return jsonResult;
         }
     }
 }

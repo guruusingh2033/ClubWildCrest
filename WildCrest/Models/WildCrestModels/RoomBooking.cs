@@ -23,6 +23,7 @@ namespace WildCrest.Models.WildCrestModels
         public Nullable<int> NoOfNightStays { get; set; }
         public Nullable<double> Discount { get; set; }
         public Nullable<double> GST { get; set; }
+        public Nullable<int> GstPercent { get; set; }
         public Nullable<double> AmtToBePaid { get; set; }
         public Nullable<int> Bill_Number { get; set; }
 

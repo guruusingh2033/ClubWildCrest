@@ -379,9 +379,9 @@ namespace WildCrest.Controllers.SuperAdmin
 
             //var roomBills = "select m.* from tbl_RoomBilling m where cast(m.CheckInDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.CheckInDate as date)<=cast('" + LastDateFormat + "' as date)";
 
-            var roomBills = "select rb.* from tbl_RoomBooking rb  where cast(rb.Check_In as date)>=cast('" + startDateFormat + "' as date) and cast(rb.Check_In as date)<=cast('" + LastDateFormat + "' as date)  and rb.Bill_Number IS NOT NULL";
+            //var roomBills = "select rb.* from tbl_RoomBooking rb  where cast(rb.Check_In as date)>=cast('" + startDateFormat + "' as date) and cast(rb.Check_In as date)<=cast('" + LastDateFormat + "' as date)  and rb.Bill_Number IS NOT NULL";
                 //var roomBills = context.tbl_RoomBilling.ToList();
-            var data = context.Database.SqlQuery<RoomBooking>(roomBills);
+            var data = context.Database.SqlQuery<RoomBooking>("GetRoomBookingsByDate @StartDate={0},@LastDate={1}",startDateFormat,LastDateFormat).ToList();
             List<RoomBooking> bookedRoomsBills = new List<RoomBooking>();
                 double? finaltotalVal = 0;
                 double? finalcsgst = 0;
@@ -390,13 +390,12 @@ namespace WildCrest.Controllers.SuperAdmin
                 {
                     foreach (var i in data)
                     {
-                        var prf = context.tbl_Profile.SingleOrDefault(b => b.ID == i.UserID);
                         bookedRoomsBills.Add(new RoomBooking()
                         {
                             Booking_ID = i.Booking_ID,
                             Check_In = i.Check_In,
                             Check_Out = i.Check_Out,
-                            Customer = prf != null ? (prf.F_Name + " " + ((string.IsNullOrEmpty(prf.L_Name)) ? "" : prf.L_Name)) : "",
+                            Customer = i.Customer,
                             UserID = i.UserID,
                             //Total = i.Amount + i.GST,
                             Total = i.Amount,
@@ -440,6 +439,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 booking.GST = bookingData.GST;
                 booking.NoOfNightStays = bookingData.NoOfNightStays;
                 booking.Roombillno = bookingData.Roombillno;
+                booking.GstPercent = bookingData.GstPercent;
                 var roomDet = context.tbl_RoomBooking_Details.Where(b => b.Booking_ID == bookingID).ToList();
                 foreach (var i in roomDet)
                 {

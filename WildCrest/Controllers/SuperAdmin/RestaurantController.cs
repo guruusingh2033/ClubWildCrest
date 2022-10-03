@@ -113,7 +113,9 @@ namespace WildCrest.Controllers.SuperAdmin
 
             TimeSpan time = DateTime.Now.TimeOfDay;
             var tableDetails = context.tbl_TablesForBooking.SingleOrDefault(v => v.ID == model.TableID && v.Table_Status == "closed");
-            if (tableDetails != null)
+            var IsTableAlreadyOpened = context.tbl_MenusBillingSection.Where(o => o.TableID == model.TableID && o.Table_Status == "opened").SingleOrDefault();
+
+            if (tableDetails != null && IsTableAlreadyOpened == null)
             {
                 if (model.UserID == 0 && model.Customer_Name != "" && model.Customer_Name != null)
                 {
@@ -133,7 +135,8 @@ namespace WildCrest.Controllers.SuperAdmin
                     context.SaveChanges();
                     model.UserID = prf.ID;
                 }
-                var billDet = context.tbl_MenusBillingSection.ToList().LastOrDefault();
+                var billDet = context.Database.SqlQuery<tbl_MenusBillingSection>("sp_GetLastBillDetails").FirstOrDefault();
+
 
                 foreach (var f in model.MenusBillingDetailsWithBillNo)
                 {
@@ -184,8 +187,8 @@ namespace WildCrest.Controllers.SuperAdmin
                             usage.MenusBillingDetailsID = menusdetails.ID;
                             usage.GST_NonGST_Bill = "GST";
                             context.tbl_InventoryUsage.Add(usage);
-                            context.SaveChanges();
                         }
+                        context.SaveChanges();
                     }
                 }
                 //gst = amtWithoutTax * (2.5 / 100);
@@ -218,6 +221,7 @@ namespace WildCrest.Controllers.SuperAdmin
                     context.Entry(tblOrder).State = EntityState.Modified;
                     context.SaveChanges();
                 }
+
                 return Json("Saved");
             }
             return Json("Already opened");
