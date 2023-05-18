@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 //using System.Linq.Dynamic;
 using System.Web;
@@ -398,25 +399,7 @@ namespace WildCrest.Controllers.SuperAdmin
 
             }
             ViewBag.FilterFromReport = filterFromReport;
-            //var data = context.tbl_MenusBillingSection.ToList();
-            //foreach (var i in data)
-            //{
-            //    double? gst = 0;
-            //    double? withoutTaxPrice = 0;
-            //    var d = context.tbl_MenusBillingDetailsWithBillNo.Where(a => a.BillNo == i.Bill_Number).ToList();
-            //    foreach (var e in d)
-            //    {
-            //        withoutTaxPrice += (e.Price * e.Quantity);
-            //    }
-            //    gst = withoutTaxPrice * (2.5 / 100);
-            //    gst = Math.Round((double)(gst * 2), 2);
-
-            //    i.PriceWithoutTax = Math.Round((double)withoutTaxPrice, 2);
-            //    i.GST = gst;
-            //    context.Entry(i).State = EntityState.Modified;
-            //    context.SaveChanges();
-
-            //}
+     
             return View();
         }
 
@@ -484,8 +467,8 @@ namespace WildCrest.Controllers.SuperAdmin
                 if (UserType == 1 || (Request.Cookies["UserType"].Value == "2" && Request.Cookies["PageSetting"] != null && Request.Cookies["PageSetting"]["FoodBillingEditPermission"] == "All"))
                 {
                     if (adminID == 0)
-                        queryForBills = "select m.Bill_Number as Bill_Number,IsNull(m.Discount,0) as Discount,m.OrderTakenBy,m.Price as Price,m.PriceWithoutTax as PriceWithoutTax,m.GST as GST,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_MenusBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Table_Status is null";
-                    else
+                        queryForBills = "select m.Bill_Number as Bill_Number,IsNull(m.Discount,0) as Discount,m.OrderTakenBy,m.Price as Price,m.PriceWithoutTax as PriceWithoutTax,m.GST as GST,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_MenusBillingSection m   where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Table_Status is null";
+                    else 
                         queryForBills = "select m.Bill_Number as Bill_Number,IsNull(m.Discount,0) as Discount,m.OrderTakenBy,m.Price as Price,m.PriceWithoutTax as PriceWithoutTax,m.GST as GST,m.Customer_Name as Customer_Name,m.Phone as Phone,m.PaymentDate as PaymentDate,m.Mode_Of_Payment,m.Billed_By from tbl_MenusBillingSection m where cast(m.PaymentDate as date)>=cast('" + startDateFormat + "' as date) and cast(m.PaymentDate as date)<=cast('" + LastDateFormat + "' as date) and m.Table_Status is null and m.Billed_By=" + adminID;
                 }
                 else
@@ -499,31 +482,23 @@ namespace WildCrest.Controllers.SuperAdmin
                 List<MenusBillingSection> menusBill = new List<MenusBillingSection>();
                 foreach (var i in data)
                 {
-                    //double? totalVal = 0;
-                    //double? csgst = 0;
                     menusBill.Add(new MenusBillingSection()
                     {
                         Bill_Number = i.Bill_Number,
                         Customer_Name = i.Customer_Name,
                         Phone = i.Phone,
-                        PaymentDate = i.PaymentDate,
+                        //PaymentDate = i.PaymentDate,
+                        pDate = DateTime.ParseExact(i.PaymentDate, "MM/dd/yyyy", CultureInfo.InvariantCulture),
                         Price = Math.Round((Double)(i.Price - i.Discount), 2),
                         Mode_Of_Payment = i.Mode_Of_Payment,
                         OrderTakenBy = i.OrderTakenBy,
                         Discount = i.Discount
                     });
+
                     finaltotalVal += i.Price-i.Discount;
                     finalcsgst += i.GST;
                     finalDiscount += i.Discount;
-                    //var d = context.tbl_MenusBillingDetailsWithBillNo.Where(a => a.BillNo == i.Bill_Number).ToList();
-                    //foreach (var ii in d)
-                    //{
-                    //    totalVal = totalVal + (ii.Price * ii.Quantity);
-                    //}
-                    //csgst = totalVal * (2.5 / 100);
-                    //csgst = (csgst * 2);
-                    //finaltotalVal += totalVal;
-                    //finalcsgst += csgst;
+               
                 }
 
                 finaltotalVal = Math.Round((Double)finaltotalVal, 2);

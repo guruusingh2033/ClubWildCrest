@@ -1,0 +1,244 @@
+﻿@*@using WildCrest.Models.WildCrestModels;
+    @model List<Inventory>;*@
+
+
+<html>
+<head>
+
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    
+    <style>
+        .borderClass {
+            border-color: #f70404;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+
+        .loader_gif {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/bxSlider/images/bx_loader.gif') 50% 50% no-repeat rgb(249,249,249,0.44);
+            opacity: .8;
+        }
+
+        .billing_list {
+            text-align: right;
+        }
+
+
+        div#inventoryUsedList_wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dataTables_length label {
+            margin-bottom: 0;
+        }
+
+        table#inventoryUsedList {
+            margin-top: 20px;
+        }
+
+       
+
+    </style>
+
+</head>
+<body>
+
+
+    <div class="loader_gif" style="display:none;"></div>
+    <div class="card">
+        <div class="card-block">
+            <div class="row" style="margin-bottom:20px;">
+                @Html.ActionLink("Go back", "Index", "Inventory", null, new { @class = "btn btn-primary btn-margin" })
+            </div>
+            <ul class="list-inline list-unstyled billing_list">
+                <li>
+                    <div class="dropdowncls ">
+                        <select id="dataAccToDay" onchange="loadDatatable();" class="form-control">
+                            <option value="1">All</option>
+                            <option value="2">Today</option>
+                            <option value="3">Yesterday</option>
+                            <option value="4">This Week</option>
+                            <option value="5">This Month</option>
+                            <option value="6">This Year</option>
+                            <option value="7">Custom</option>
+                        </select>
+                    </div>
+                </li>
+                <li style="display: none;" id="CustomDates">
+                    <input type="text" readonly id="startDate" class="form-control" placeholder="Start Date" onchange="enableDatesAccToStartDate();" />&nbsp;&nbsp;
+                    <input type="text" readonly id="endDate" class="form-control" placeholder="End Date" onchange="dataAccToCustomDates();" />
+                </li>
+            </ul>
+
+            @*<div style="float: right; margin-bottom: 5px;">
+            <input type="button" value="Print(A4)" class="btn btn-primary" onclick="printAll();" />
+        </div>*@
+
+            <div class="table-responsive m-t-40">
+                <table id="inventoryUsedList" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Item Name</th>
+                            <th>Type</th>
+                            <th>Inventory Used</th>
+                            <th>Measurement</th>
+                            <th>Price</th>
+                            <th>Vendor Name</th>
+                            <th>Usage Date</th>
+
+                        </tr>
+                    </thead>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+    
+    <script>
+
+        $(document).ready(function () {
+            loadDatatable();
+            $('#startDate,#endDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy',
+                yearRange: "-116:+0",
+            });
+            $('#endDate').attr("disabled", "true");
+
+        });
+
+
+        function loadDatatable() {
+            var day = $("#dataAccToDay").val();
+
+            if (day != 7) {
+                $("#startDate").hide();
+                $("#endDate").hide();
+                $('#inventoryUsedList').DataTable(
+                    {
+                        dom: 'lBfrtip',
+                        buttons: ['print'],
+                        "ajax": {
+                            "url": "/Inventory/InventoryUsedTable?day=" + day,
+                            dataSrc: ""
+
+                        },
+                        columns: [
+                            { 'data': 'ID' },
+                            { 'data': 'Item_Name' },
+                            { 'data': 'Type' },
+                            {
+                                'data': 'UsedQuantity',
+                                mRender: function (data, type, full) {
+                                    return data.toFixed(2);
+                                }
+                            },
+                            { 'data': 'Measurement' },
+                            { 'data': 'Price' },
+
+                            { 'data': 'VendorName' },
+                            { 'data': 'UsageDate' },
+
+                        ],
+
+                        "paginate": true,
+                        "lengthChange": true,
+                        "searching": false,
+                        "bInfo": true,
+                        "destroy": true,
+                    });
+
+            }
+            else {
+                $("#startDate").show();
+                $("#endDate").show();
+                $("#CustomDates").css("display", "inline-flex");
+                var startDate = $("#startDate").val().trim();
+                var endDate = $("#endDate").val().trim();
+
+            }
+
+        }
+
+
+        function enableDatesAccToStartDate() {
+            $('#endDate').val("");
+            var startDate = $('#startDate').val();
+            $('#endDate').removeAttr('disabled');
+            $('#endDate').datepicker("option", "minDate", startDate);
+        }
+
+
+        function dataAccToCustomDates() {
+            var day = $("#dataAccToDay").val();
+
+            var startDate = $("#startDate").val().trim();
+            var endDate = $("#endDate").val().trim();
+            if (startDate != "" && endDate != "") {
+                // $(".loader_gif").css("display", "block");
+                $('#inventoryUsedList').DataTable(
+                    {
+
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'print'
+                        ],
+                        "ajax": {
+                            "url": "/Inventory/InventoryUsedTable?day=" + day + "&sDate=" + startDate + "&eDate=" + endDate,
+                            dataSrc: ""
+
+                        },
+
+                        columns: [
+                            { 'data': 'ID' },
+                            { 'data': 'Item_Name' },
+                            { 'data': 'Type' },
+                            {
+                                'data': 'UsedQuantity',
+                                mRender: function (data, type, full) {
+                                    return data.toFixed(2);
+                                }
+                            },
+                            { 'data': 'Measurement' },
+                            { 'data': 'Price' },
+                            { 'data': 'VendorName' },
+
+                            { 'data': 'UsageDate' },
+
+                        ],
+                        "paginate": true,
+                        //"pageLength": 50,
+                        "lengthChange": true,
+                        "searching": true,
+                        "bInfo": true,
+                        "destroy": true
+
+
+                    });
+
+            }
+        }
+
+
+    </script>
+
+
+
+</body>
+</html>

@@ -11,7 +11,8 @@ namespace WildCrest
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class tbl_InventoryUsage
     {
         public int ID { get; set; }
@@ -23,5 +24,8 @@ namespace WildCrest
         public Nullable<int> BillNo { get; set; }
         public string GST_NonGST_Bill { get; set; }
         public Nullable<bool> IsBuffetFood { get; set; }
+
+        [NotMapped]
+        public string TotalQuantity { get; set; }
     }
 }

@@ -1,9 +1,15 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Dynamic;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using WildCrest.Models.WildCrestModels;
 
 namespace WildCrest.Controllers.SuperAdmin
@@ -15,53 +21,38 @@ namespace WildCrest.Controllers.SuperAdmin
         [Authorize(Roles = "1,2")]
         public ActionResult Index()
         {
-            var data = context.tbl_Inventory.ToList();
-            List<Inventory> invList = new List<Inventory>();
-            foreach (var i in data)
-            {
-                string[] arrDate = i.Added_Date.Split('/');
-                DateTime Added_Date = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+            var data = (from i in context.tbl_Inventory
+                        join v in context.tbl_Vendors on i.VendorID equals v.ID
+                        join iu in context.tbl_InventoryUsage on i.ID equals iu.InventoryID
+                        group new { iu } by i into g
+                        select new Inventory()
+                        {
+                            ID = g.Key.ID,
+                            Item_Name = g.Key.Item_Name,
+                            Type = g.Key.Type,
+                            Price = g.Key.Price,
+                            Quantity = g.Key.Quantity,
+                            VendorID = g.Key.VendorID,
+                            VendorName = g.Key.tbl_Vendors.Vendor_First_Name + " " + g.Key.tbl_Vendors.Vendor_Last_Name,
+                            Added_Date = g.Key.Added_Date,
+                            InStock = g.Key.Quantity - g.Sum(o=>o.iu.Used_Qty) ,
+                            Measurement = g.Key.Measurement
+                        }).ToList();
 
-                var r = context.tbl_InventoryUsage.Where(a => a.InventoryID == i.ID).ToList();
-                double? usedStock = 0;
-                if (r.Count() > 0)
-                {
-                    foreach (var a in r)
-                    {
-                        usedStock = usedStock + a.Used_Qty;
-                    }
-                }
-                usedStock= Math.Round(Convert.ToDouble(usedStock), 2);
-                invList.Add(new Inventory()
-                {
-                    ID = i.ID,
-                    Item_Name = i.Item_Name,
-                    Type = i.Type,
-                    Price = i.Price,
-                    Quantity = i.Quantity,
-                    VendorID = i.VendorID,
-                    VendorName = context.tbl_Vendors.SingleOrDefault(s => s.ID == i.VendorID).Vendor_First_Name + " " + context.tbl_Vendors.SingleOrDefault(s => s.ID == i.VendorID).Vendor_Last_Name,
-                    //Added_Date = i.Added_Date,
-                    AddedDate1 = Added_Date,
-                    InStock = Math.Round(Convert.ToDouble(i.Quantity - usedStock),2),
-                    Measurement = i.Measurement
-                });
-            }
 
-            var vendorList = context.tbl_Vendors.ToList();
-            List<Vendors> vendors = new List<Vendors>();
-            foreach (var v in vendorList)
-            {
-                vendors.Add(new Vendors()
-                {
-                    ID = v.ID,
-                    Vendor_First_Name = v.Vendor_First_Name,
-                    Vendor_Last_Name = v.Vendor_Last_Name
-                });
-            }
+
+            var vendors = (from v in context.tbl_Vendors
+                           select new Vendors
+                           {
+                               ID = v.ID,
+                               Vendor_First_Name = v.Vendor_First_Name,
+                               Vendor_Last_Name = v.Vendor_Last_Name
+                           }).ToList();
+
+
             ViewBag.VendorsList = vendors;
-            invList = invList.OrderByDescending(s => s.AddedDate1).ToList();
-            return View(invList);
+            data = data.OrderByDescending(s => DateTime.ParseExact(s.Added_Date, "dd/mm/yyyy", CultureInfo.InvariantCulture)).ToList();
+            return View(data);
         }
 
         [Authorize(Roles = "1,2")]
@@ -378,6 +369,109 @@ namespace WildCrest.Controllers.SuperAdmin
             return View(lst);
         }
 
+        [Authorize(Roles = "1,2")]
+        public ActionResult InventoryUsedRecord(int day = 1, string sDate = "", string eDate = "")
+        {
+            
+            return View();
+        }
+
+        public ActionResult InventoryUsedTable(int day = 1, string sDate = "", string eDate = "")
+        {
+            DateTime startdate = DateTime.Now;
+            DateTime LastDate = DateTime.Now;
+            //Session["Day"] = day;
+            //Session["StartDate"] = sDate;
+            //Session["EndDate"] = eDate;
+
+            switch (day)
+            {
+                //Today
+                case (2):
+                    startdate = DateTime.Today;
+                    LastDate = DateTime.Now;
+                    break;
+                //Yesterday
+                case (3):
+                    startdate = DateTime.Today.AddDays(-1);
+                    LastDate = DateTime.Today.AddDays(-1);
+                    break;
+                //ThisWeek
+                case (4):
+                    startdate = StartOfWeek(DateTime.Now);
+                    LastDate = DateTime.Now;
+                    break;
+                //ThisMonth
+                case (5):
+                    startdate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    LastDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                    break;
+                //This Year
+                case (6):
+                    var year = DateTime.Now.Year;
+                    startdate = new DateTime(year, 1, 1);
+                    LastDate = new DateTime(year, 12, DateTime.DaysInMonth(year, 12));
+                    break;
+                //Custom
+                case (7):
+                    string[] arrDate = sDate.Split('/');
+                    string[] arrDate1 = eDate.Split('/');
+                    startdate = new DateTime(Convert.ToInt32(arrDate[2]), Convert.ToInt32(arrDate[0]), Convert.ToInt32(arrDate[1]));
+                    LastDate = new DateTime(Convert.ToInt32(arrDate1[2]), Convert.ToInt32(arrDate1[0]), Convert.ToInt32(arrDate1[1]));
+                    break;
+                default:
+                    startdate = new DateTime(1900, 1, 1);
+                    LastDate = DateTime.Now;
+                    break;
+            }
+            string startDateFormat = startdate.ToString(@"MM\/dd\/yyyy");
+            string LastDateFormat = LastDate.ToString(@"MM\/dd\/yyyy");
+            var data = (from i in context.tbl_Inventory
+                        join iu in context.tbl_InventoryUsage on i.ID equals iu.InventoryID
+                        join v in context.tbl_Vendors on i.VendorID equals v.ID
+                        group new { iu } by new { i } into g
+                        select new Inventory()
+                        {
+                            ID = g.Key.i.ID,
+                            Item_Name = g.Key.i.Item_Name,
+                            Type = g.Key.i.Type,
+                            Price = g.Key.i.Price,
+                            VendorName = g.Key.i.tbl_Vendors.Vendor_First_Name + " " + g.Key.i.tbl_Vendors.Vendor_Last_Name,
+                            UsedQuantity = g.Sum(o => o.iu.Used_Qty),
+                            Measurement = g.Key.i.Measurement,
+                            UsageDate = g.OrderByDescending(x => x.iu.ID).FirstOrDefault().iu.Used_Date
+                        }).ToList(); ;
+
+            var filteredList = data.Where(x => DateTime.ParseExact(x.UsageDate, "MM/dd/yyyy", CultureInfo.InvariantCulture) >= startdate && DateTime.ParseExact(x.UsageDate, "MM/dd/yyyy", CultureInfo.InvariantCulture) <= LastDate);
+            return Json(filteredList, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        public DateTime GetUsageDate(string sd)
+        {
+            DateTime d = DateTime.Parse(sd);
+            return d;
+        }
+
+
+        public DateTime StartOfWeek(DateTime d)
+        {
+            if (d == DateTime.MinValue)
+            {
+                return d;
+            }
+            var result = d.DayOfWeek - DayOfWeek.Sunday;
+
+            if (result < 0)
+            {
+                result += 7;
+            }
+
+            return d.AddDays(result * -1);
+        }
+
         [HttpPost]
         public JsonResult getQtyFromInventory(int invID)
        {
@@ -421,25 +515,30 @@ namespace WildCrest.Controllers.SuperAdmin
             List<InventoryUsage> usageList = new List<InventoryUsage>();
             
             var data = context.tbl_Inventory.Find(inventoryID);
-            var usage = context.tbl_InventoryUsage.OrderByDescending(a => a.ID).Where(w => w.InventoryID == inventoryID).ToList();
-            foreach (var q in usage)
-            {
+            var usage = context.tbl_InventoryUsage.Where(w => w.InventoryID == inventoryID).ToList();
+            //foreach (var q in usage)
+            //{
 
-                usageList.Add(new InventoryUsage()
-                {
-                    Used_Qty = q.Used_Qty,
-                    Description = q.Description,
-                    TotalQuantity = data.Quantity,
-                    Used_Date = q.Used_Date,
-                    BillNo = q.BillNo,
-                    GST_NonGST_Bill = q.GST_NonGST_Bill,
-                    IsBuffetFood=q.IsBuffetFood??false
-                });
-            }
+            //    usageList.Add(new InventoryUsage()
+            //    {
+            //        Used_Qty = q.Used_Qty,
+            //        Description = q.Description,
+            //        TotalQuantity = data.Quantity,
+            //        Used_Date = q.Used_Date,
+            //        BillNo = q.BillNo,
+            //        GST_NonGST_Bill = q.GST_NonGST_Bill,
+            //        IsBuffetFood = q.IsBuffetFood ?? false
+            //    });
+            //}
+ 
 
-            JsonResult jsonResult = Json(usageList);
+            JsonResult jsonResult = Json(usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }));
             jsonResult.MaxJsonLength = Int32.MaxValue;
             return jsonResult;
         }
+
+        
+
+
     }
 }

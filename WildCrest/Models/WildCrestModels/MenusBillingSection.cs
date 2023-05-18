@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -43,6 +44,10 @@ namespace WildCrest.Models.WildCrestModels
         public string Temp_SDate_Data { get; set; }
         public string Temp_EndDate_Data { get; set; }
         public string Customer_GstNO { get; set; }
+
+        [NotMapped]
+       public  DateTime pDate { get; set; }
+
     }
 
     public class MenusBillingDetailsWithBillNo

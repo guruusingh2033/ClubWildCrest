@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -21,6 +22,11 @@ namespace WildCrest.Models.WildCrestModels
         public string Measurement { get; set; }
 
         public DateTime AddedDate1 { get; set; }
-        
+
+        [NotMapped]
+        public double? UsedQuantity { get; set; }
+
+        [NotMapped]
+        public string UsageDate {get;set;}
     }
 }

@@ -18,11 +18,12 @@
 
     </div>
 </div>
-@* Load datatable css *@
+
 <link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet" />
 
-@* Load DataTable js here *@
+
 <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#myTable").DataTable({
@@ -40,17 +41,17 @@
                 {
                     "data": function (o) {
                         return "<div >" +
-                        "<a style='padding:5px;' href='/Billing/BillDetailsByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-info-circle'></i></a>" +
-                        "<a style='padding:5px;margin-left:5px;' href='/Billing/EditBillByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-pencil'></i></a>"; +"</div>";
+                            "<a style='padding:5px;' href='/Billing/BillDetailsByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-info-circle'></i></a>" +
+                            "<a style='padding:5px;margin-left:5px;' href='/Billing/EditBillByBillNo?Id=" + o.Bill_Number + "' class='btn btn-info'><i class='fa fa-pencil'></i></a>"; +"</div>";
                     }, "name": "Bill_Number"
                 },
-                    { "data": "Bill_Number", "name": "Bill_Number", "autoWidth": true },
-                    { "data": "Customer_Name", "name": "Customer_Name", "autoWidth": true },
-                    { "data": "Phone", "name": "Phone", "autoWidth": true },
-                    { "data": "OrderTakenBy", "name": "OrderTakenBy", "autoWidth": true },
-                    { "data": "Price", "name": "Price", "autoWidth": true },
-                    { "data": "Mode_Of_Payment", "name": "Mode_Of_Payment", "autoWidth": true },
-                    { "data": "PaymentDate", "name": "PaymentDate", "autoWidth": true }
+                { "data": "Bill_Number", "name": "Bill_Number", "autoWidth": true },
+                { "data": "Customer_Name", "name": "Customer_Name", "autoWidth": true },
+                { "data": "Phone", "name": "Phone", "autoWidth": true },
+                { "data": "OrderTakenBy", "name": "OrderTakenBy", "autoWidth": true },
+                { "data": "Price", "name": "Price", "autoWidth": true },
+                { "data": "Mode_Of_Payment", "name": "Mode_Of_Payment", "autoWidth": true },
+                { "data": "PaymentDate", "name": "PaymentDate", "autoWidth": true }
             ]
         });
     });

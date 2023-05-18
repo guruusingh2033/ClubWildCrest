@@ -270,8 +270,8 @@
                                 <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing</span></a>
                             </li>
                             @*<li>
-            <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing Reports</span></a>
-        </li>*@
+                                    <a class="has-arrow" href="/Billing/BillsIndex" aria-expanded="false"><i class="fa fa-money" aria-hidden="true"></i><span class="hide-menu">Food Billing Reports</span></a>
+                                </li>*@
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-bed" aria-hidden="true"></i><span class="hide-menu">Room Booking & Billing</span></a>
                                 <ul aria-expanded="false" class="collapse">
@@ -385,15 +385,15 @@
                                 </li>
                             }
 
-                                <li>
-                                    <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="/BuffetMenu/Index">MenuItems</a></li>
-                                        <li><a href="/BuffetMenu/PartyClander">Party Calendar </a></li>
-                                        <li><a href="/BuffetMenu/PartyBillsIndex">Billing</a></li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Food Buffet</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="/BuffetMenu/Index">MenuItems</a></li>
+                                    <li><a href="/BuffetMenu/PartyClander">Party Calendar </a></li>
+                                    <li><a href="/BuffetMenu/PartyBillsIndex">Billing</a></li>
 
-                                    </ul>
-                                </li>
+                                </ul>
+                            </li>
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false"><i class="fa fa-glass" aria-hidden="true"></i><span class="hide-menu">Wine</span></a>
                                 <ul aria-expanded="false" class="collapse">
@@ -494,87 +494,90 @@
                             <li>
                                 <a class="has-arrow" href="/Entry/AddNewEntry" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
                             </li>
-                            </ul>
-                            </nav>
-                   </div>
-                </aside>
-                            }
-                            else
-                            {
-                            <aside class="left-sidebar">
-                                <div class="scroll-sidebar" style="margin-top:75px;">
-                                    <nav class="sidebar-nav">
-                                        <ul id="sidebarnav">
-                                            <li>
-                                                <div class="user-profile">
-                                                    <div class="profile-text">
-                                                        <a href="#" class="dropdown-toggle link u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="~/assets/images/Users/^539FBDDC25A1AEDC2C0DF6A1C996BC1F005320BFDE7727C1FE^pimgpsh_fullsize_distr.png" /> <span class="caret"></span></a>
-                                                        <div class="dropdown-menu animated flipInY">
-                                                            <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                                                            <div class="dropdown-divider"></div> <a href="/Login/LogOut" class="dropdown-item iLogout"><i class="fa fa-power-off"></i> Logout</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow" href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">View Profile </span></a>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow " href="/Stays/index" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Stays</span></a>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow " href="/MembershipDetails/Index" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Membership Plans</span></a>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow" href="/EventsToUsers/Index" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Events</span></a>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow" href="/Entry/EntryBillsIndex" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
-                                            </li>
-                                            <li>
-                                                <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Advanced Order Booking</span></a>
-                                                <ul aria-expanded="false" class="collapse">
-                                                    <li><a href="/RoomBooking/Index">Room Booking</a></li>
-                                                    <li><a href="/TableBooking/Index">Table Booking</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nav-devider"></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <div class="sidebar-footer">
-                                    <a href="/Login/LogOut" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
-                                </div>
-                            </aside>
-                            }
-                            <div class="page-wrapper">
-                                <div class="container-fluid">
-                                    <div class="col-lg-12">
-                                        @RenderBody()
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+        }
+        else
+        {
+            <aside class="left-sidebar">
+                <div class="scroll-sidebar" style="margin-top:75px;">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li>
+                                <div class="user-profile">
+                                    <div class="profile-text">
+                                        <a href="#" class="dropdown-toggle link u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="~/assets/images/Users/^539FBDDC25A1AEDC2C0DF6A1C996BC1F005320BFDE7727C1FE^pimgpsh_fullsize_distr.png" /> <span class="caret"></span></a>
+                                        <div class="dropdown-menu animated flipInY">
+                                            <a href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                                            <div class="dropdown-divider"></div> <a href="/Login/LogOut" class="dropdown-item iLogout"><i class="fa fa-power-off"></i> Logout</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="/UserProfile/EditProfilebyID?id=@Request.Cookies["UserID"].Value" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">View Profile </span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow " href="/Stays/index" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Stays</span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow " href="/MembershipDetails/Index" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Membership Plans</span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="/EventsToUsers/Index" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Events</span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="/Entry/EntryBillsIndex" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Entry</span></a>
+                            </li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Advanced Order Booking</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="/RoomBooking/Index">Room Booking</a></li>
+                                    <li><a href="/TableBooking/Index">Table Booking</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-devider"></li>
+                        </ul>
+                    </nav>
                 </div>
+                <div class="sidebar-footer">
+                    <a href="/Login/LogOut" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                </div>
+            </aside>
+        }
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="col-lg-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <script src="~/Scripts/bootbox.min.js"></script>
-                <script src="~/bxSlider/jquery.bxslider.min.js"></script>
-                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/bxSlider/jquery.bxslider.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>*@
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
-                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-                <script src="~/assets/plugins/bootstrap/js/tether.min.js"></script>
-                <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/tether.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
-                <script src="~/js/jquery.slimscroll.js"></script>
+    <script src="~/js/jquery.slimscroll.js"></script>
 
-                <script src="~/js/waves.js"></script>
+    <script src="~/js/waves.js"></script>
 
-                <script src="~/js/sidebarmenu.js"></script>
+    <script src="~/js/sidebarmenu.js"></script>
 
-                <script src="~/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="~/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
 
-                <script src="~/js/custom.min.js"></script>
+    <script src="~/js/custom.min.js"></script>
 
-                <script src="~/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="~/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
 </body>
 </html>

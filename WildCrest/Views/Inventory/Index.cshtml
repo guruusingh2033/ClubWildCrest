@@ -43,7 +43,8 @@ opacity: .8;
     <div class="card-block">
         <div class="row">
             @Html.ActionLink("Add New Item", "AddNewItem", "Inventory", new { @class = "btn btn-primary btn-margin" })
-            @Html.ActionLink("Inventory Usage", "InventoryUsage", "Inventory", new { @class = "btn btn-primary btn-margin" })
+            @Html.ActionLink("Add Inventory Used", "InventoryUsage", "Inventory", new { @class = "btn btn-primary btn-margin" })
+            @Html.ActionLink("Inventory Used", "InventoryUsedRecord", "Inventory", new { @class = "btn btn-primary btn-margin" })
         </div>
         <div class="table-responsive m-t-40">
             <table id="inventoryList" class="display table table-hover table-striped table-bordered" cellspacing="0" width="100%">
@@ -73,9 +74,9 @@ opacity: .8;
                                 <a title="Detail" href="@Url.Action("InventoryDetailsByID", "Inventory", new { id = i.ID }, null)">
                                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                                 </a>
-                                @*<a title="Edit" href="@Url.Action("AdminDetailsByID", "Admin", new { id = i.ID, editDetail = "Edit" }, null)">
+                                <a title="Edit" href="@Url.Action("AdminDetailsByID", "Admin", new { id = i.ID, editDetail = "Edit" }, null)">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-        </a>*@
+        </a>
 
                                 <a href="#" title="Delete" onclick="DeleteInventoryById(@i.ID);">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
@@ -93,7 +94,8 @@ opacity: .8;
                             <td>@(String.Format("{0:0.##}", i.InStock)) (@i.Measurement)</td>
                             <td>₹ @i.Price</td>
                             <td>@i.VendorName</td>
-                            <td>@i.AddedDate1.ToString("dd/MM/yyyy")</td>
+                            <td>@i.Added_Date
+                            </td>
                             <td>
                                 <input type="button" class="btn-link" onclick="stockInfo(@i.ID,'@i.Item_Name');" value="Stock Info" style="cursor:pointer;outline:none;" /></td>
 
@@ -198,7 +200,8 @@ opacity: .8;
                     for (var i = 0; i < response.length; i++) {
                         var stylecolor=(response[i].Used_Qty==0)?"background-color:#fdd2d2;":"";
                         tbl += "<tr style='" + stylecolor + "'><td>" + response[i].Used_Qty + "</td>";
-                        if(response[i].GST_NonGST_Bill!="" && response[i].GST_NonGST_Bill!=null){
+                        if (response[i].GST_NonGST_Bill != "" && response[i].GST_NonGST_Bill != null)
+                        {
                             if(response[i].GST_NonGST_Bill=="NonGST"){
                                 tbl += "<td><a target='_blank' href='/Billing/NonGstBillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
                             }
@@ -208,7 +211,7 @@ opacity: .8;
                                 }else{
                                     tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
                                 }
-                                }
+                         }
                         }
                         else{
                             tbl += "<td>" + response[i].Description + "</td>";

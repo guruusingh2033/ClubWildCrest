@@ -44,7 +44,7 @@
             {
                 var stylecolor = (i.Mode_Of_Payment != "Paytm") ? ((i.Mode_Of_Payment == "Card") ? "background-color:#f5c8c8" : "background-color:#f7f9fd") : "background-color:#b4e0fb";
             <tr>
-                <td style="width: 10%;@stylecolor;">
+                <td style="width: 10%;@stylecolor">
                     <a title="Details" href="@Url.Action("BillDetailsByBillNo", "Billing", new { id = i.Bill_Number }, null)">
                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </a>
@@ -64,13 +64,14 @@
                         }
                     }
                 </td>
-                <td style="@stylecolor;">@i.Bill_Number</td>
-                <td style="@stylecolor;">@i.Customer_Name</td>
-                <td style="@stylecolor;">@i.Phone</td>
-                <td style="@stylecolor;">@i.OrderTakenBy</td>
-                <td style="@stylecolor;">@i.Price</td>
-                <td style="@stylecolor;">@i.Mode_Of_Payment</td>
-                <td style="@stylecolor;">@(i.PaymentDate != null && i.PaymentDate != string.Empty ? Convert.ToDateTime(i.PaymentDate).ToString("dd/MM/yyyy") : i.PaymentDate)</td>
+                <td style="@stylecolor">@i.Bill_Number</td>
+                <td style="@stylecolor">@i.Customer_Name</td>
+                <td style="@stylecolor">@i.Phone</td>
+                <td style="@stylecolor">@i.OrderTakenBy</td>
+                <td style="@stylecolor">@i.Price</td>
+                <td style="@stylecolor">@i.Mode_Of_Payment</td>
+                <!--<td style="@stylecolor">-->@*@(i.pDate != null && i.pDate != string.Empty ? i.pDate.ToString("MM/dd/yyyy") : i.pDate)*@ <!--@i.pDate</td>-->
+            <td style="@stylecolor">@i.pDate.ToString("MM/dd/yyyy") </td>
             </tr>
             <script>
                 tbl += '<tr><td>@i.Bill_Number</td><td>@i.Customer_Name</td>' +
@@ -83,6 +84,7 @@
             </script>
             }
         }
+
         else
         {
             <script>
