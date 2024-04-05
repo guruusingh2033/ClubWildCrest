@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Objects.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -399,7 +400,7 @@ namespace WildCrest.Controllers.SuperAdmin
                 //ThisWeek
                 case (4):
                     startdate = StartOfWeek(DateTime.Now);
-                    LastDate = DateTime.Now;
+                    LastDate = DateTime.Now; 
                     break;
                 //ThisMonth
                 case (5):
@@ -420,29 +421,19 @@ namespace WildCrest.Controllers.SuperAdmin
                     LastDate = new DateTime(Convert.ToInt32(arrDate1[2]), Convert.ToInt32(arrDate1[0]), Convert.ToInt32(arrDate1[1]));
                     break;
                 default:
-                    startdate = new DateTime(1900, 1, 1);
+                   startdate = new DateTime(2000, 1, 1);
                     LastDate = DateTime.Now;
                     break;
             }
-            string startDateFormat = startdate.ToString(@"MM\/dd\/yyyy");
-            string LastDateFormat = LastDate.ToString(@"MM\/dd\/yyyy");
-            var data = (from i in context.tbl_Inventory
-                        join iu in context.tbl_InventoryUsage on i.ID equals iu.InventoryID
-                        join v in context.tbl_Vendors on i.VendorID equals v.ID
-                        group new { iu } by new { i } into g
-                        select new Inventory()
-                        {
-                            ID = g.Key.i.ID,
-                            Item_Name = g.Key.i.Item_Name,
-                            Type = g.Key.i.Type,
-                            Price = g.Key.i.Price,
-                            VendorName = g.Key.i.tbl_Vendors.Vendor_First_Name + " " + g.Key.i.tbl_Vendors.Vendor_Last_Name,
-                            UsedQuantity = g.Sum(o => o.iu.Used_Qty),
-                            Measurement = g.Key.i.Measurement,
-                            UsageDate = g.OrderByDescending(x => x.iu.ID).FirstOrDefault().iu.Used_Date
-                        }).ToList(); ;
 
-            var filteredList = data.Where(x => DateTime.ParseExact(x.UsageDate, "MM/dd/yyyy", CultureInfo.InvariantCulture) >= startdate && DateTime.ParseExact(x.UsageDate, "MM/dd/yyyy", CultureInfo.InvariantCulture) <= LastDate);
+            var data = new List<Inventory>();
+            using (var context = new ClubWildCrestEntities())
+            {
+                data = context.Database.SqlQuery<Inventory>("[GetInventoryUsageData] @StartDate={0},@EndDate={1}",
+                    startdate, LastDate
+                    ).ToList();
+            }
+            var filteredList = data;
             return Json(filteredList, JsonRequestBehavior.AllowGet);
         }
 
@@ -530,15 +521,10 @@ namespace WildCrest.Controllers.SuperAdmin
             //        IsBuffetFood = q.IsBuffetFood ?? false
             //    });
             //}
- 
-
-            JsonResult jsonResult = Json(usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }));
+            var result = usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }).OrderByDescending(x => DateTime.ParseExact(x.Used_Date, "MM/dd/yyyy", CultureInfo.InvariantCulture)).ToList();
+            JsonResult jsonResult = Json(result);
             jsonResult.MaxJsonLength = Int32.MaxValue;
             return jsonResult;
         }
-
-        
-
-
     }
 }
