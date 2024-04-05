@@ -18,7 +18,7 @@ SELECT inv.ID,
 		Left JOIN tbl_InventoryUsage AS iu ON inv.ID = iu.InventoryID
 		JOIN dbo.tbl_Vendors AS v ON inv.VendorID = v.ID
 		Where CAST(iu.Used_Date AS date) >= CONVERT(date, @StartDate) and CAST(iu.Used_Date AS date) <= CONVERT(date, @EndDate)
-		group by inv.ID, inv.Item_Name, inv.Type, inv.Price, v.Vendor_First_Name, v.Vendor_Last_Name, inv.Measurement;
+		group by inv.ID, inv.Item_Name, inv.Type, inv.Price, v.Vendor_First_Name, v.Vendor_Last_Name, inv.Measurement
 		
 		          
               

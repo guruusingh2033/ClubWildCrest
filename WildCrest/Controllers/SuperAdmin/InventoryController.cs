@@ -521,8 +521,8 @@ namespace WildCrest.Controllers.SuperAdmin
             //        IsBuffetFood = q.IsBuffetFood ?? false
             //    });
             //}
-            var result = usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }).OrderByDescending(x => DateTime.ParseExact(x.Used_Date, "MM/dd/yyyy", CultureInfo.InvariantCulture)).ToList();
-            JsonResult jsonResult = Json(result);
+            usage = usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }).OrderByDescending(x => DateTime.ParseExact(x.Used_Date, "MM/dd/yyyy", CultureInfo.InvariantCulture)).ToList();
+            JsonResult jsonResult = Json(usage);
             jsonResult.MaxJsonLength = Int32.MaxValue;
             return jsonResult;
         }
