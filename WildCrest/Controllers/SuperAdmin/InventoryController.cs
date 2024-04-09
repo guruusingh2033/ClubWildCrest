@@ -11,6 +11,7 @@ using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using WildCrest.Models.ViewModels;
 using WildCrest.Models.WildCrestModels;
 
 namespace WildCrest.Controllers.SuperAdmin
@@ -504,24 +505,14 @@ namespace WildCrest.Controllers.SuperAdmin
         public JsonResult stockInfo(int inventoryID)
         {
             List<InventoryUsage> usageList = new List<InventoryUsage>();
-            
-            var data = context.tbl_Inventory.Find(inventoryID);
-            var usage = context.tbl_InventoryUsage.Where(w => w.InventoryID == inventoryID).ToList();
-            //foreach (var q in usage)
-            //{
-
-            //    usageList.Add(new InventoryUsage()
-            //    {
-            //        Used_Qty = q.Used_Qty,
-            //        Description = q.Description,
-            //        TotalQuantity = data.Quantity,
-            //        Used_Date = q.Used_Date,
-            //        BillNo = q.BillNo,
-            //        GST_NonGST_Bill = q.GST_NonGST_Bill,
-            //        IsBuffetFood = q.IsBuffetFood ?? false
-            //    });
-            //}
-            usage = usage.Select(x => { x.TotalQuantity = String.Format("{0:0.##}", data.Quantity); return x; }).OrderByDescending(x => DateTime.ParseExact(x.Used_Date, "MM/dd/yyyy", CultureInfo.InvariantCulture)).ToList();
+            var usage = new StockInfoVM();
+            var TotalUsedQuantity = context.tbl_InventoryUsage.Where(x => x.InventoryID == inventoryID).Sum(x => x.Used_Qty);
+            using (var context = new ClubWildCrestEntities())
+            {
+                usageList = context.Database.SqlQuery<InventoryUsage>("[GetStockInfo] @InventoryID={0}", inventoryID).ToList();
+            }
+            usage.TotalUsedQuantity = TotalUsedQuantity;
+            usage.Records = usageList;
             JsonResult jsonResult = Json(usage);
             jsonResult.MaxJsonLength = Int32.MaxValue;
             return jsonResult;

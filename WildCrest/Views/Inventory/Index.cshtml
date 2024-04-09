@@ -186,9 +186,9 @@ opacity: .8;
             data: JSON.stringify({ inventoryID: inventoryID }),
             dataType: "json",
             success: function (response) {
-                //console.log(response);
-
-                if (response.length > 0) {
+            
+                var list = response.Records;
+                if (list.length > 0) {
 
                     $('#stcktitle').html('Stock Info '+'('+itemName+')');
                     var tbl = '';
@@ -196,38 +196,39 @@ opacity: .8;
                     var used = 0;
                     var left = 0;
                     tbl += "<table id='dt_tbl' class='display table table-hover table-striped table-bordered'> <thead><tr><th>Used Quantity</th><th>Description</th><th>Used_Date</th></tr></thead>";
-                    tbl+="<tbody>";
-                    for (var i = 0; i < response.length; i++) {
-                        var stylecolor=(response[i].Used_Qty==0)?"background-color:#fdd2d2;":"";
-                        tbl += "<tr style='" + stylecolor + "'><td>" + response[i].Used_Qty + "</td>";
-                        if (response[i].GST_NonGST_Bill != "" && response[i].GST_NonGST_Bill != null)
+                    tbl += "<tbody>";
+                    for (var i = 0; i < list.length; i++) {
+                        var stylecolor = (list[i].Used_Qty==0)?"background-color:#fdd2d2;":"";
+                        tbl += "<tr style='" + stylecolor + "'><td>" + list[i].Used_Qty + "</td>";
+                        if (list[i].GST_NonGST_Bill != "" && list[i].GST_NonGST_Bill != null)
                         {
-                            if(response[i].GST_NonGST_Bill=="NonGST"){
-                                tbl += "<td><a target='_blank' href='/Billing/NonGstBillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                            if (list[i].GST_NonGST_Bill=="NonGST"){
+                                tbl += "<td><a target='_blank' href='/Billing/NonGstBillDetailsByBillNo/" + list[i].BillNo + "'>" + list[i].Description + "</a></td>";
                             }
-                            else if(response[i].GST_NonGST_Bill=="GST"){
-                                if(response[i].IsBuffetFood==true){
-                                    tbl += "<td><a target='_blank' href='/BuffetMenu/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                            else if (list[i].GST_NonGST_Bill=="GST"){
+                                if (list[i].IsBuffetFood==true){
+                                    tbl += "<td><a target='_blank' href='/BuffetMenu/BillDetailsByBillNo/" + list[i].BillNo + "'>" + list[i].Description + "</a></td>";
                                 }else{
-                                    tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/"+response[i].BillNo+"'>" + response[i].Description + "</a></td>";
+                                    tbl += "<td><a target='_blank' href='/Billing/BillDetailsByBillNo/" + list[i].BillNo + "'>" + list[i].Description + "</a></td>";
                                 }
                          }
                         }
                         else{
-                            tbl += "<td>" + response[i].Description + "</td>";
+                            tbl += "<td>" + list[i].Description + "</td>";
                         }
 
-                        tbl += "<td>" + $.date(response[i].Used_Date) + "</td></tr>";
-                        totalQuantity = response[i].TotalQuantity;
-                        used = used + response[i].Used_Qty;
+                        tbl += "<td>" + $.date(list[i].Used_Date) + "</td></tr>";
+                        totalQuantity = list[i].TotalQuantity;
+                       // used = used + response[i].Used_Qty;
                     }
+                    used = response.TotalUsedQuantity;
                     var qtyTemp=used.toFixed(3);
                     left = (totalQuantity - qtyTemp);
                     left=Number.isInteger(left)?left:left.toFixed(2);
                     used=Number.isInteger(used)?used:qtyTemp;
                     tbl+="</tbody>";
                     tbl += "</table>";
-                    var totalQty= "<br><b>Total Quantity = " + totalQuantity + "</b>" +
+                    var totalQty = "<br><b>Total Quantity = " + totalQuantity.toFixed(2) + "</b>" +
                         "<br><b>Used Quantity = " + used + "</b>" +
                         "<br><b>Left Quantity = " + left + "</b>";
 
