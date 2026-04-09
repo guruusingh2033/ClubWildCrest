@@ -269,28 +269,62 @@ namespace WildCrest.Controllers.SuperAdmin
         }
 
         [HttpPost]
-        public JsonResult addQuantity(Inventory newItem)
+        public JsonResult addQuantity(Inventory newItem, string operation = "add")
         {
             var date = DateTime.Today;
             string DateFormat = date.ToString(@"MM\/dd\/yyyy");
             var data = context.tbl_BarInventory.SingleOrDefault(s => s.ID == newItem.ID);
             if (data != null)
             {
-                data.Price = newItem.Price;
-                data.Quantity = newItem.Quantity + data.Quantity;
+                var inputQty = Convert.ToDouble(newItem.Quantity);
+                if (inputQty <= 0)
+                {
+                    return Json("invalid_qty");
+                }
+
+                var isRemove = string.Equals(operation, "remove", StringComparison.OrdinalIgnoreCase);
+                data.Quantity = data.Quantity == null ? 0 : data.Quantity;
                 data.Added_Date = DateFormat;
-                data.VendorID = newItem.VendorID;
-                context.Entry(data).State = EntityState.Modified;
-                context.SaveChanges();
 
                 tbl_BarInventoryUsage usg = new tbl_BarInventoryUsage();
                 usg.BarInventoryID = data.ID;
                 usg.Used_Qty = 0;
-                usg.Description = newItem.Quantity + " " + data.Measurement + " added.";
                 usg.Used_Date = DateFormat;
+
+                if (isRemove)
+                {
+                    var usedQty = context.tbl_BarInventoryUsage
+                        .Where(a => a.BarInventoryID == data.ID)
+                        .Sum(a => (double?)a.Used_Qty) ?? 0;
+
+                    var inStock = Convert.ToDouble(data.Quantity) - Convert.ToDouble(usedQty);
+                    if (inputQty > inStock)
+                    {
+                        return Json("insufficient_stock");
+                    }
+
+                    data.Quantity = Convert.ToDouble(data.Quantity) - inputQty;
+                    usg.Description = inputQty + " " + data.Measurement + " removed.";
+                }
+                else
+                {
+                    data.Price = newItem.Price;
+                    data.Quantity = Convert.ToDouble(data.Quantity) + inputQty;
+                    data.VendorID = newItem.VendorID;
+                    usg.Description = inputQty + " " + data.Measurement + " added.";
+                }
+                data.Added_Date = DateFormat;
+                context.Entry(data).State = EntityState.Modified;
+                context.SaveChanges();
                 context.tbl_BarInventoryUsage.Add(usg);
                 context.SaveChanges();
             }
+
+            if (string.Equals(operation, "remove", StringComparison.OrdinalIgnoreCase))
+            {
+                return Json("updated");
+            }
+
             return Json("Modified");
         }
 

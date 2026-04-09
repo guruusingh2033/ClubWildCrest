@@ -18,6 +18,10 @@
         font-size: 19px;
         color: #272c33;
     }
+    .fa-minus-square {
+        font-size: 19px;
+        color: #272c33;
+    }
   .fa-edit:before{
     
     font-size: 19px;
@@ -82,7 +86,8 @@ opacity: .8;
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                                 @*<a class="plusItem" title="Add More Quantity" href="/Inventory/AddNewItem"><i class="fa fa-plus-square" aria-hidden="true"></i></a>*@
-                                <button type="button" title="Add More Quantity" class="btn btn-link" style="box-shadow:none;" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Price="@i.Price" data-toggle="modal" data-target="#qtyModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                <button type="button" title="Add More Quantity" class="btn btn-link qtyActionBtn" style="box-shadow:none;" data-Operation="add" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Price="@i.Price" data-toggle="modal" data-target="#qtyModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                <button type="button" title="Subtract Quantity" class="btn btn-link qtyActionBtn" style="box-shadow:none;" data-Operation="remove" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Price="@i.Price" data-toggle="modal" data-target="#qtyModal"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
                                 @if (Request.Cookies["UserType"].Value == "1")
                                 {
                                     <button type="button" title="Edit Quantity" class="btn btn-link" style="box-shadow:none;" data-ItemName="@i.Item_Name" data-InventoryID="@i.ID" data-VendorID="@i.VendorID" data-Qty="@(String.Format("{0:0.##}", i.Quantity))" data-InStock="@i.InStock" data-toggle="modal" data-target="#qtyupdateModal"><i class="fa fa-edit"></i></button>
@@ -108,6 +113,7 @@ opacity: .8;
 </div>
 
 <input type="hidden" id="Inventory_ID" value="" />
+<input type="hidden" id="QtyOperation" value="add" />
 
 <script>
     var itemprice = '';
@@ -287,16 +293,30 @@ opacity: .8;
         var InventoryID = $(e.relatedTarget).data('inventoryid');
         var Item_Name = $(e.relatedTarget).data('itemname');
         var price = $(e.relatedTarget).data('price');
+        var operation = ($(e.relatedTarget).data('operation') || 'add').toLowerCase();
       
         var vendorID = $(e.relatedTarget).data('vendorid');
         $("#Inventory_ID").val(InventoryID);
+        $("#QtyOperation").val(operation);
         $("#Item_Name").html(Item_Name);
         $("#price").val(price);
         itemprice = $("#price").val();
         $("#vendorID").val(vendorID);
+        $("#qty").val("");
+        $("#errorMsg").empty();
+        if (operation == "remove") {
+            $("#qtyModalActionText").text("Subtract Quantity for");
+            $("#qtyActionBtn").val("Subtract");
+            $("#qty").attr("placeholder", "");
+        } else {
+            $("#qtyModalActionText").text("Add Quantity for");
+            $("#qtyActionBtn").val("Add");
+            $("#qty").attr("placeholder", "");
+        }
     });
     function closeModal() {
         $("#Inventory_ID").val("");
+        $("#QtyOperation").val("add");
         $("#Item_Name").empty();
         $("#qty").val("");
         $("#price").val("");
@@ -334,28 +354,40 @@ opacity: .8;
 
         var invID=$("#Inventory_ID").val();
         var qty=$("#qty").val();
+        var parsedQty = parseFloat(qty);
         var price=$("#price").val();
         var vendorID=$("#vendorID").val();
+        var operation = $("#QtyOperation").val() || "add";
         if(invID!="" && qty!="" && price!="" && vendorID!=0)
         {
+            if (isNaN(parsedQty) || parsedQty <= 0) {
+                $("#errorMsg").empty();
+                $("#errorMsg").append("Quantity must be greater than 0.");
+                return;
+            }
             var newItem = {
                 ID: invID,
                 Price: price,
-                Quantity: qty,
+                Quantity: parsedQty,
                 VendorID: vendorID,
             };
            
-            if (itemprice != price) {
+            if (operation == "add" && itemprice != price) {
                 bootbox.confirm("do you want to update price of related menuitem.", function (result) {
                     if (result) {
 
                         $.ajax({
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
-                            url: "/Inventory/addQuantity",
-                            data: JSON.stringify({ newItem }),
+                            url: "/Inventory/addQuantity?operation=" + operation,
+                            data: JSON.stringify({ newItem: newItem }),
                             dataType: "Json",
                             success: function (data) {
+                                if (data == "insufficient_stock") {
+                                    $("#errorMsg").empty();
+                                    $("#errorMsg").append("Not enough stock to subtract this quantity.");
+                                    return;
+                                }
                               
                                 if (data.length > 0) {
                                     var id = [];
@@ -407,10 +439,15 @@ opacity: .8;
                         $.ajax({
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
-                            url: "/Inventory/addQuantity",
-                            data: JSON.stringify({ newItem }),
+                            url: "/Inventory/addQuantity?operation=" + operation,
+                            data: JSON.stringify({ newItem: newItem }),
                             dataType: "Json",
                             success: function (data) {
+                                if (data == "insufficient_stock") {
+                                    $("#errorMsg").empty();
+                                    $("#errorMsg").append("Not enough stock to subtract this quantity.");
+                                    return;
+                                }
                                 //closeModal();
                                 location.reload();
                             },
@@ -425,10 +462,15 @@ opacity: .8;
                 $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    url: "/Inventory/addQuantity",
-                    data: JSON.stringify({ newItem }),
+                    url: "/Inventory/addQuantity?operation=" + operation,
+                    data: JSON.stringify({ newItem: newItem }),
                     dataType: "Json",
                     success: function (data) {
+                        if (data == "insufficient_stock") {
+                            $("#errorMsg").empty();
+                            $("#errorMsg").append("Not enough stock to subtract this quantity.");
+                            return;
+                        }
                         //closeModal();
                         location.reload();
                     },
@@ -537,7 +579,7 @@ opacity: .8;
         <div class="modal-content">
             <div class="modal-header">
 
-                <h4 class="modal-title">Add Quantity for <span id="Item_Name"></span></h4>
+                <h4 class="modal-title"><span id="qtyModalActionText">Add Quantity for</span> <span id="Item_Name"></span></h4>
                 <button type="button" class="close" onclick="closeModal();">&times;</button>
             </div>
             <div class="modal-body1">
@@ -574,7 +616,7 @@ opacity: .8;
                 <div id="errorMsg" style="margin-left: 25px; color: red; font-size: 13px; font-weight: 400;"></div>
             </i>
             <div class="modal-footer">
-                <input type="button" value="Add" onclick="addQuantity();" class="btn btn-primary" />
+                <input type="button" id="qtyActionBtn" value="Add" onclick="addQuantity();" class="btn btn-primary" />
 
                 <button type="button" class="btn btn-default" onclick="closeModal();">Close</button>
             </div>
